@@ -1,8 +1,8 @@
-# CapyCourse - Plataforma de Cursos Online
+# CapyCourses - Plataforma de Cursos Online
 
 ## Introdução
 
-O CapyCourse é um sistema web desenvolvido para gerenciar cursos online. Construído utilizando [Java, JPA e MySql ou PostgreSQL], o projeto tem como objetivo facilitar a gestão de cursos e proporcionar uma experiência de aprendizado online completa para alunos e professores.
+O CapyCourses é um sistema web desenvolvido para gerenciar cursos online. Construído utilizando [Java, JPA e MySql ou PostgreSQL], o projeto tem como objetivo facilitar a gestão de cursos e proporcionar uma experiência de aprendizado online completa para alunos e professores.
 
 ## Funcionalidades
 
