@@ -18,8 +18,8 @@ public class CourseReader {
                 String description = values[1];
                 int hours = Integer.parseInt(values[2]);
                 double rating = Double.parseDouble(values[3]);
-
-                Course course = new Course(name, rating, hours, description);
+                String type = values[4];
+                Course course = new Course(name, rating, hours, description, type);
                 courses.add(course);
             }
         } catch (IOException e) {
