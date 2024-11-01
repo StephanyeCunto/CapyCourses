@@ -1,0 +1,7 @@
+com\model\Student.class
+com\model\Course.class
+com\model\StudentCreateUpdate.class
+module-info.class
+com\model\PaginaLoginModel.class
+com\model\PaginaCadastroModel.class
+com\view\elements\Menu.class
