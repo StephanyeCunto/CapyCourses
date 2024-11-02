@@ -19,7 +19,11 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:controller="com.teste" stylesheets="@style/style.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:controller="com.teste" stylesheets="@style/style.css" maxHeight="-Infinity"
+    maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+    prefWidth="1280.0"
+    style="-fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);"
+    xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="220.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1060.0" />
@@ -28,11 +32,14 @@
         <RowConstraints minHeight="10.0" prefHeight="800.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-    <VBox  fx:id="sideMenu" spacing="15" style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-padding: 25; -fx-background-radius: 0 20 20 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);">
-    </VBox>
+        <VBox fx:id="sideMenu" spacing="15"
+            style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-padding: 25; -fx-background-radius: 0 20 20 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);">
+        </VBox>
 
         <!-- Conteúdo Principal -->
-        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;" GridPane.columnIndex="1">
+        <ScrollPane fitToWidth="true"
+            style="-fx-background: transparent; -fx-background-color: transparent;"
+            GridPane.columnIndex="1">
             <content>
                 <VBox spacing="30" style="-fx-padding: 25;">
                     <!-- Cabeçalho da Página -->
@@ -58,17 +65,23 @@
 
                     <!-- Menu de Navegação Rápida -->
                     <HBox spacing="15" style="-fx-padding: 10 0;">
-                        <Button prefHeight="40.0" style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;" text="Em Andamento">
+                        <Button prefHeight="40.0"
+                            style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;"
+                            text="Em Andamento">
                             <font>
                                 <Font name="Franklin Gothic Medium" size="14.0" />
                             </font>
                         </Button>
-                        <Button prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;" text="Concluídos">
+                        <Button prefHeight="40.0"
+                            style="-fx-background-color: rgba(255,255,255,0.1); -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;"
+                            text="Concluídos">
                             <font>
                                 <Font name="Franklin Gothic Medium" size="14.0" />
                             </font>
                         </Button>
-                        <Button prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;" text="Todos">
+                        <Button prefHeight="40.0"
+                            style="-fx-background-color: rgba(255,255,255,0.1); -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;"
+                            text="Todos">
                             <font>
                                 <Font name="Franklin Gothic Medium" size="14.0" />
                             </font>
@@ -76,7 +89,8 @@
                     </HBox>
 
                     <!-- Barra de Pesquisa -->
-                    <HBox maxWidth="300" style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 12; -fx-padding: 12;">
+                    <HBox maxWidth="300"
+                        style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 12; -fx-padding: 12;">
                         <Label text="🔍" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
@@ -100,22 +114,27 @@
                         </columnConstraints>
 
                         <!-- Curso Java -->
-                        <VBox style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 15;" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                                <StackPane>
-                                   <ImageView fitHeight="160" fitWidth="480" preserveRatio="false">
-                                <image>
-                                    <Image url="@../br/com/images/python-course.jpg" />
-                                </image>
-                            </ImageView>
-                                    <Label style="-fx-background-color: rgba(108, 99, 255, 0.9); -fx-padding: 5 10; -fx-background-radius: 5;" text="Em Andamento" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
-                                        <StackPane.margin>
-                                            <Insets right="10.0" top="10.0" />
-                                        </StackPane.margin>
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="12.0" />
-                                        </font>
-                                    </Label>
-                                </StackPane>
+                        <VBox
+                            style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 15;"
+                            GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <StackPane>
+                                <ImageView fitHeight="160" fitWidth="480" preserveRatio="false">
+                                    <image>
+                                        <Image url="@../br/com/images/python-course.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Label
+                                    style="-fx-background-color: rgba(108, 99, 255, 0.9); -fx-padding: 5 10; -fx-background-radius: 5;"
+                                    text="Em Andamento" textFill="WHITE"
+                                    StackPane.alignment="TOP_RIGHT">
+                                    <StackPane.margin>
+                                        <Insets right="10.0" top="10.0" />
+                                    </StackPane.margin>
+                                    <font>
+                                        <Font name="Franklin Gothic Medium" size="12.0" />
+                                    </font>
+                                </Label>
+                            </StackPane>
                             <VBox spacing="10" style="-fx-padding: 20;">
                                 <Label text="Programação em Java" textFill="WHITE">
                                     <font>
@@ -149,38 +168,47 @@
                                         </font>
                                     </Label>
                                 </HBox>
-                                <Label text="Aprenda programação Java do básico ao avançado, incluindo POO, coleções e APIs." textFill="#ffffff80" wrapText="true">
+                                <Label
+                                    text="Aprenda programação Java do básico ao avançado, incluindo POO, coleções e APIs."
+                                    textFill="#ffffff80" wrapText="true">
                                     <font>
                                         <Font name="Franklin Gothic Medium" size="14.0" />
                                     </font>
                                 </Label>
                                 <HBox spacing="10">
-                                    <Button prefHeight="35.0" style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.5), 10, 0, 0, 4);" text="Continuar">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Button>
+                                    <Button prefHeight="35.0"
+                                        style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.5), 10, 0, 0, 4);"
+                                        text="Continuar">
+                                        <font>
+                                            <Font name="Franklin Gothic Medium" size="14.0" />
+                                        </font>
+                                    </Button>
                                 </HBox>
                             </VBox>
                         </VBox>
 
                         <!-- Curso Python -->
-                        <VBox style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                           <StackPane>
-                                   <ImageView fitHeight="160" fitWidth="480" preserveRatio="false">
-                                <image>
-                                    <Image url="@../br/com/images/python-course.jpg" />
-                                </image>
-                            </ImageView>
-                                    <Label style="-fx-background-color: rgba(108, 99, 255, 0.9); -fx-padding: 5 10; -fx-background-radius: 5;" text="Em Andamento" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
-                                        <StackPane.margin>
-                                            <Insets right="10.0" top="10.0" />
-                                        </StackPane.margin>
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="12.0" />
-                                        </font>
-                                    </Label>
-                                </StackPane>
+                        <VBox
+                            style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 15;"
+                            GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <StackPane>
+                                <ImageView fitHeight="160" fitWidth="480" preserveRatio="false">
+                                    <image>
+                                        <Image url="@../br/com/images/python-course.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Label
+                                    style="-fx-background-color: rgba(108, 99, 255, 0.9); -fx-padding: 5 10; -fx-background-radius: 5;"
+                                    text="Em Andamento" textFill="WHITE"
+                                    StackPane.alignment="TOP_RIGHT">
+                                    <StackPane.margin>
+                                        <Insets right="10.0" top="10.0" />
+                                    </StackPane.margin>
+                                    <font>
+                                        <Font name="Franklin Gothic Medium" size="12.0" />
+                                    </font>
+                                </Label>
+                            </StackPane>
                             <VBox spacing="10" style="-fx-padding: 20;">
                                 <Label text="Python para Iniciantes" textFill="WHITE">
                                     <font>
@@ -214,36 +242,46 @@
                                         </font>
                                     </Label>
                                 </HBox>
-                                <Label text="Aprenda Python desde o básico até análise de dados e automação." textFill="#ffffff80" wrapText="true">
+                                <Label
+                                    text="Aprenda Python desde o básico até análise de dados e automação."
+                                    textFill="#ffffff80" wrapText="true">
                                     <font>
                                         <Font name="Franklin Gothic Medium" size="14.0" />
                                     </font>
                                 </Label>
                                 <HBox spacing="10">
-                                    <Button prefHeight="35.0" style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.5), 10, 0, 0, 4);" text="Continuar">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Button>
+                                    <Button prefHeight="35.0"
+                                        style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.5), 10, 0, 0, 4);"
+                                        text="Continuar">
+                                        <font>
+                                            <Font name="Franklin Gothic Medium" size="14.0" />
+                                        </font>
+                                    </Button>
                                 </HBox>
                             </VBox>
-                        </VBox><!-- Curso JavaScript -->
-                        <VBox style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 15;" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        </VBox><!--
+                        Curso JavaScript -->
+                        <VBox
+                            style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 15;"
+                            GridPane.columnIndex="0" GridPane.rowIndex="1">
                             <StackPane>
-                                   <ImageView fitHeight="160" fitWidth="480" preserveRatio="false">
-                                <image>
-                                    <Image url="@../br/com/images/python-course.jpg" />
-                                </image>
-                            </ImageView>
-                                    <Label style="-fx-background-color: rgba(108, 99, 255, 0.9); -fx-padding: 5 10; -fx-background-radius: 5;" text="Em Andamento" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
-                                        <StackPane.margin>
-                                            <Insets right="10.0" top="10.0" />
-                                        </StackPane.margin>
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="12.0" />
-                                        </font>
-                                    </Label>
-                                </StackPane>
+                                <ImageView fitHeight="160" fitWidth="480" preserveRatio="false">
+                                    <image>
+                                        <Image url="@../br/com/images/python-course.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Label
+                                    style="-fx-background-color: rgba(108, 99, 255, 0.9); -fx-padding: 5 10; -fx-background-radius: 5;"
+                                    text="Em Andamento" textFill="WHITE"
+                                    StackPane.alignment="TOP_RIGHT">
+                                    <StackPane.margin>
+                                        <Insets right="10.0" top="10.0" />
+                                    </StackPane.margin>
+                                    <font>
+                                        <Font name="Franklin Gothic Medium" size="12.0" />
+                                    </font>
+                                </Label>
+                            </StackPane>
                             <VBox spacing="10" style="-fx-padding: 20;">
                                 <Label text="JavaScript Moderno" textFill="WHITE">
                                     <font>
@@ -271,44 +309,53 @@
                                             <Font size="14.0" />
                                         </font>
                                     </Label>
-                                                                        <Label text="30%" textFill="#ffffff80">
+                                    <Label text="30%" textFill="#ffffff80">
                                         <font>
                                             <Font name="Franklin Gothic Medium" size="14.0" />
                                         </font>
                                     </Label>
                                 </HBox>
-                                <Label text="Domine JavaScript ES6+, promises, async/await e desenvolvimento web moderno." textFill="#ffffff80" wrapText="true">
+                                <Label
+                                    text="Domine JavaScript ES6+, promises, async/await e desenvolvimento web moderno."
+                                    textFill="#ffffff80" wrapText="true">
                                     <font>
                                         <Font name="Franklin Gothic Medium" size="14.0" />
                                     </font>
                                 </Label>
                                 <HBox spacing="10">
-                                    <Button prefHeight="35.0" style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.5), 10, 0, 0, 4);" text="Continuar">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Button>
+                                    <Button prefHeight="35.0"
+                                        style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.5), 10, 0, 0, 4);"
+                                        text="Continuar">
+                                        <font>
+                                            <Font name="Franklin Gothic Medium" size="14.0" />
+                                        </font>
+                                    </Button>
                                 </HBox>
                             </VBox>
                         </VBox>
 
                         <!-- Curso React -->
-                        <VBox style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <VBox
+                            style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 15;"
+                            GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <StackPane>
-                                   <ImageView fitHeight="160" fitWidth="480" preserveRatio="false">
-                                <image>
-                                    <Image url="@../br/com/images/python-course.jpg" />
-                                </image>
-                            </ImageView>
-                                    <Label style="-fx-background-color: rgba(108, 99, 255, 0.9); -fx-padding: 5 10; -fx-background-radius: 5;" text="Em Andamento" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
-                                        <StackPane.margin>
-                                            <Insets right="10.0" top="10.0" />
-                                        </StackPane.margin>
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="12.0" />
-                                        </font>
-                                    </Label>
-                                </StackPane>
+                                <ImageView fitHeight="160" fitWidth="480" preserveRatio="false">
+                                    <image>
+                                        <Image url="@../br/com/images/python-course.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Label
+                                    style="-fx-background-color: rgba(108, 99, 255, 0.9); -fx-padding: 5 10; -fx-background-radius: 5;"
+                                    text="Em Andamento" textFill="WHITE"
+                                    StackPane.alignment="TOP_RIGHT">
+                                    <StackPane.margin>
+                                        <Insets right="10.0" top="10.0" />
+                                    </StackPane.margin>
+                                    <font>
+                                        <Font name="Franklin Gothic Medium" size="12.0" />
+                                    </font>
+                                </Label>
+                            </StackPane>
                             <VBox spacing="10" style="-fx-padding: 20;">
                                 <Label text="React.js Avançado" textFill="WHITE">
                                     <font>
@@ -342,24 +389,28 @@
                                         </font>
                                     </Label>
                                 </HBox>
-                                <Label text="Desenvolvimento de aplicações modernas com React, Redux, Hooks e boas práticas." textFill="#ffffff80" wrapText="true">
+                                <Label
+                                    text="Desenvolvimento de aplicações modernas com React, Redux, Hooks e boas práticas."
+                                    textFill="#ffffff80" wrapText="true">
                                     <font>
                                         <Font name="Franklin Gothic Medium" size="14.0" />
                                     </font>
                                 </Label>
                                 <HBox spacing="10">
-                                    <Button prefHeight="35.0" style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.5), 10, 0, 0, 4);" text="Continuar">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Button>
+                                    <Button prefHeight="35.0"
+                                        style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.5), 10, 0, 0, 4);"
+                                        text="Continuar">
+                                        <font>
+                                            <Font name="Franklin Gothic Medium" size="14.0" />
+                                        </font>
+                                    </Button>
                                 </HBox>
                             </VBox>
                         </VBox>
-                  <rowConstraints>
-                     <RowConstraints />
-                     <RowConstraints />
-                  </rowConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
                     </GridPane>
                 </VBox>
             </content>

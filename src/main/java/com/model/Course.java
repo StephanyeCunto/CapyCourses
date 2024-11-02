@@ -12,5 +12,4 @@ public class Course {
     private double rating;
     private int hours;
     private String description;
-    private String type;
 }

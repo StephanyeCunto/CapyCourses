@@ -10,7 +10,7 @@ public class CourseReader {
     public List<Course> readCourses() {
         List<Course> courses = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\com\\bd_curso.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_curso.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
@@ -18,8 +18,7 @@ public class CourseReader {
                 String description = values[1];
                 int hours = Integer.parseInt(values[2]);
                 double rating = Double.parseDouble(values[3]);
-                String type = values[4];
-                Course course = new Course(name, rating, hours, description, type);
+                Course course = new Course(name, rating, hours, description);
                 courses.add(course);
             }
         } catch (IOException e) {

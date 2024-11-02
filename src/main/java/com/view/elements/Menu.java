@@ -130,13 +130,12 @@ public class Menu {
         try {
             String pageNext = getNextPage(button);
             if (pageNext != null) {
-                Parent currentNode = sideMenu.getScene().getRoot();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(pageNext));
-                Parent newRoot = loader.load();
-                Scene currentScene = currentNode.getScene();
-                currentScene.setRoot(newRoot);
-                Stage stage = (Stage) currentScene.getWindow();
-                stage.setMaximized(true);
+                Stage stage = (Stage) sideMenu.getScene().getWindow(); 
+                Parent root = FXMLLoader.load(getClass().getResource(pageNext)); 
+                Scene currentScene = stage.getScene();
+                Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
+                stage.setScene(newScene);
+                stage.show(); 
             }
         } catch (Exception e) {
             e.printStackTrace();

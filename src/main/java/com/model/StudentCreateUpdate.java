@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class StudentCreateUpdate {
     public StudentCreateUpdate(String name){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src\\main\\resources\\com\\bd_student.csv", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_student.csv", true))) {
             writer.write(name+","+" "+","+" ");
             writer.newLine();
         } catch (IOException e) {
