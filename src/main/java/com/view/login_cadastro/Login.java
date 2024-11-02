@@ -36,11 +36,16 @@ public class Login extends BaseLoginCadastro implements Initializable {
     @FXML
     private void logar() {
         LoginController plc = new LoginController();
+        UserSession.getInstance().setUserEmail(user.getText());
+        String isCheck = plc.isCheck(user.getText(), password.getText());
+        Stage stage = (Stage) leftSection.getScene().getWindow();
 
-        if (plc.isCheck(user.getText(), password.getText())) {
-            Stage stage = (Stage) leftSection.getScene().getWindow();
-            UserSession.getInstance().setUserEmail(user.getText());
-            super.redirectTo("/com/login_cadastro/paginaInical.fxml", stage);
+        if (isCheck =="true") {
+            super.redirectTo("/com/paginaInical.fxml", stage);
+        }else if(isCheck == "incomplete student") {
+            super.redirectTo("/com/login_cadastro/login_cadastroStudent.fxml", stage);
+        }else{
+            UserSession.getInstance().clearSession();
         }
     }
 }

@@ -5,12 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -40,15 +35,33 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
     private VBox leftSection;
     @FXML
     private VBox rightSection;
+    @FXML
+    private ComboBox comboBoxEducation;
+    @FXML
+    private DatePicker datePicker;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
         
+        loadComboBox();
         logar.setOnAction(event -> {
             Stage stage = (Stage) leftSection.getScene().getWindow();
             redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
         });
     }
 
+    private void loadComboBox(){
+        comboBoxEducation.getItems().addAll(
+            "Ensino Fundamental Incompleto",
+            "Ensino Fundamental Completo",
+            "Ensino Médio Incompleto",
+            "Ensino Médio Completo",
+            "Ensino Superior Incompleto",
+            "Ensino Superior Completo",
+            "Pós-graduação",
+            "Mestrado",
+            "Doutorado"
+        );
+    }
 }

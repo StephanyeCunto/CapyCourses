@@ -3,17 +3,16 @@ package com.model.login_cadastro;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.UserSession;
 
-public class Cadastro {
-    public Cadastro(String name, String email, String password, LocalDateTime dateRegister, String typeUser) {
+public class CadastroStudent {
+    public CadastroStudent(Date dateOfBirth, String CPF, int telephone, String education, String areaOfInterest) {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_user.csv", true))) {
-            writer.write(name + "," + email + "," + password + "," + dateRegister + "," + typeUser);
+            writer.write(UserSession.getInstance().getUserName() + "," + dateOfBirth + "," + CPF + "," + telephone + ","+ education + "," + areaOfInterest + "," + ",");
             writer.newLine();
-            UserSession.getInstance().setUserEmail(email);
         } catch (IOException e) {
             e.printStackTrace();
         }
