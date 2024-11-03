@@ -55,9 +55,6 @@ public class BaseLoginCadastro {
             Parent root = FXMLLoader.load(getClass().getResource(pageNext));
             Scene currentScene = stage.getScene();
             Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
-            stage.setMinWidth(1000); 
-            stage.setMinHeight(600);
-
             stage.setScene(newScene);
             stage.show();
         } catch (Exception e) {

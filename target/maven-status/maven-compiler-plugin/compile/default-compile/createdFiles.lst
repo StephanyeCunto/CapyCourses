@@ -1,7 +1,3 @@
-com\model\Student.class
-com\model\Course.class
-com\model\StudentCreateUpdate.class
+com\App.class
 module-info.class
-com\model\PaginaLoginModel.class
-com\model\PaginaCadastroModel.class
-com\view\elements\Menu.class
+com\view\login_cadastro\BaseLoginCadastro.class

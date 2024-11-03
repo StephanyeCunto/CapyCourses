@@ -15,8 +15,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/login_cadastro/style.css"
-    fx:controller="com.view.Login">
+<StackPane fx:id="container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/style.css"
+    fx:controller="com.view.login_cadastro.Login">
     <GridPane fx:id="mainPane" alignment="CENTER"
         StackPane.alignment="CENTER">
         <columnConstraints>

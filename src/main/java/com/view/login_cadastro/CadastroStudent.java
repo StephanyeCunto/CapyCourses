@@ -3,6 +3,8 @@ package com.view.login_cadastro;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.DateInputPopup;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -39,19 +41,23 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
     private ComboBox comboBoxEducation;
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private VBox date;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
-        
+
         loadComboBox();
+        addDateInputField(); 
+
         logar.setOnAction(event -> {
             Stage stage = (Stage) leftSection.getScene().getWindow();
             redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
         });
     }
 
-    private void loadComboBox(){
+    private void loadComboBox() {
         comboBoxEducation.getItems().addAll(
             "Ensino Fundamental Incompleto",
             "Ensino Fundamental Completo",
@@ -63,5 +69,12 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
             "Mestrado",
             "Doutorado"
         );
+    }
+
+    private void addDateInputField() {
+        DateInputPopup dateInputPopup = new DateInputPopup();
+        VBox dateContainer = new VBox(5); 
+        dateContainer.getChildren().add(dateInputPopup.getDateInputField());
+        date.getChildren().add(dateContainer);
     }
 }

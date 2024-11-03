@@ -20,8 +20,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ComboBox?>
 
-<StackPane fx:id="container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/login_cadastro/style.css"
-    fx:controller="com.view.Cadastro">
+<StackPane fx:id="container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/style.css"
+    fx:controller="com.view.login_cadastro.CadastroStudent">
     <GridPane fx:id="mainPane" alignment="CENTER"
         StackPane.alignment="CENTER">
         <columnConstraints>
@@ -47,20 +47,13 @@
                         <Font name="Franklin Gothic Medium" size="30.0" />
                     </font>
                 </Label>
-                <VBox spacing="8">
+                <VBox spacing="8" fx:id="date">
                     <Label text="DATA DE NASCIMENTO" textFill="#ffffff80">
                         <font>
                             <Font name="Franklin Gothic Medium" size="14.0" />
                         </font>
                     </Label>
-                    <DatePicker fx:id="datePicker"
-                        styleClass="date-picker"
-                        prefHeight="45.0"
-                        prefWidth="Infinity">
-                        <VBox.margin>
-                            <Insets top="4" bottom="4" />
-                        </VBox.margin>
-                    </DatePicker>
+                    
                 </VBox>
                 <VBox spacing="8">
                     <Label text="CPF" textFill="#ffffff80">
