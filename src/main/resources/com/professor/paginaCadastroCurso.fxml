@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="800.0" prefWidth="1280.0" styleClass="main-container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" maxWidth="275.0" minWidth="200.0" prefWidth="230.0" />
+        <ColumnConstraints hgrow="ALWAYS" minWidth="400.0" prefWidth="1050.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="600.0" vgrow="ALWAYS" />
+    </rowConstraints>
+    
+    <children>
+        <!-- Menu Lateral Aprimorado -->
+        <VBox fx:id="sideMenu" maxWidth="275.0" minWidth="200.0" prefWidth="230.0" spacing="20" styleClass="side-menu">
+            <children>
+                <!-- Botão Voltar com Ícone -->
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Button styleClass="outline-button" text="← VOLTAR" />
+                </HBox>
+                
+                <!-- Progress Tracker -->
+                <VBox spacing="15" styleClass="progress-tracker">
+                    <Label styleClass="section-title" text="Progresso do Cadastro" />
+                    <ProgressBar progress="0.33" styleClass="custom-progress-bar" />
+                    <Label styleClass="progress-text" text="33% Completo" />
+                    
+                    <!-- Etapas -->
+                    <VBox spacing="10" styleClass="steps-container">
+                        <Label styleClass="step-completed" text="✓ Informações Básicas" />
+                        <Label styleClass="step-current" text="→ Módulos" />
+                        <Label styleClass="step-pending" text="Configurações" />
+                    </VBox>
+                </VBox>
+                
+                <!-- Dicas Rápidas -->
+                <VBox spacing="10" styleClass="quick-tips">
+                    <Label styleClass="section-title" text="Dicas Rápidas" />
+                    <Label styleClass="tip-text" text="• Adicione uma descrição clara e objetiva" wrapText="true" />
+                    <Label styleClass="tip-text" text="• Organize os módulos em ordem lógica" wrapText="true" />
+                    <Label styleClass="tip-text" text="• Defina uma carga horária realista" wrapText="true" />
+                </VBox>
+            </children>
+        </VBox>
+
+        <!-- Conteúdo Principal Aprimorado -->
+        <ScrollPane fitToWidth="true" styleClass="main-scroll" GridPane.columnIndex="1">
+            <content>
+                <VBox spacing="30" styleClass="main-content">
+                    <!-- Cabeçalho da Página -->
+                    <VBox spacing="15" styleClass="page-header">
+                        <HBox alignment="CENTER_LEFT" spacing="20">
+                            <VBox spacing="8">
+                                <Label styleClass="page-title" text="Cadastrar Novo Curso" />
+                                <Label styleClass="page-subtitle" text="Preencha as informações do curso" />
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button styleClass="outline-button" text="Salvar Rascunho" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- Grid Principal -->
+                    <GridPane hgap="30" vgap="25">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="70" />
+                            <ColumnConstraints percentWidth="30" />
+                        </columnConstraints>
+
+                        <!-- Coluna Principal -->
+                        <VBox spacing="25" GridPane.columnIndex="0">
+                            <!-- Informações Básicas -->
+                            <VBox spacing="20" styleClass="content-card">
+                                <HBox alignment="CENTER_LEFT" spacing="15">
+                                    <Label styleClass="card-title" text="Informações Básicas" />
+                                    <Label styleClass="required-fields" text="*Campos obrigatórios" />
+                                </HBox>
+                                
+                                <VBox spacing="20">
+                                    <!-- Campo de Título com Contador -->
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Título do Curso*" />
+                                        <HBox alignment="CENTER" spacing="10">
+                                            <TextField promptText="Ex: Desenvolvimento Web Completo" styleClass="custom-text-field" HBox.hgrow="ALWAYS" />
+                                            <Label styleClass="char-counter" text="0/100" />
+                                        </HBox>
+                                    </VBox>
+                                    
+                                    <!-- Descrição com Rich Text -->
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Descrição do Curso*" />
+                                        <HBox spacing="10" styleClass="rich-text-toolbar">
+                                            <Button styleClass="format-button" text="B" />
+                                            <Button styleClass="format-button" text="I" />
+                                            <Button styleClass="format-button" text="U" />
+                                            <Separator orientation="VERTICAL" />
+                                            <Button styleClass="format-button" text="•" />
+                                            <Button styleClass="format-button" text="1." />
+                                        </HBox>
+                                        <TextArea prefRowCount="4" promptText="Descreva o conteúdo e objetivos do curso..." styleClass="custom-text-area" />
+                                    </VBox>
+                                    
+                                    <!-- Seleção de Categoria e Nível -->
+                                    <HBox spacing="15">
+                                        <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                            <Label styleClass="field-label" text="Categoria*" />
+                                            <ComboBox maxWidth="Infinity" promptText="Selecione uma categoria" styleClass="combo-box" />
+                                        </VBox>
+                                        <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                            <Label styleClass="field-label" text="Nível*" />
+                                            <ComboBox maxWidth="Infinity" promptText="Selecione o nível" styleClass="combo-box" />
+                                        </VBox>
+                                    </HBox>
+                                    
+                                    <!-- Tags do Curso -->
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Tags" />
+                                        <FlowPane hgap="10" styleClass="tags-container" vgap="10">
+                                            <Button styleClass="interest-button" text="JavaScript" />
+                                            <Button styleClass="interest-button" text="Frontend" />
+                                            <Button styleClass="interest-button" text="+ Adicionar" />
+                                        </FlowPane>
+                                    </VBox>
+                                </VBox>
+                            </VBox>
+
+                            <!-- Módulos do Curso -->
+                            <VBox spacing="20" styleClass="content-card">
+                                <HBox alignment="CENTER_LEFT" spacing="20">
+                                    <VBox spacing="5">
+                                        <Label styleClass="card-title" text="Módulos do Curso" />
+                                        <Label styleClass="card-subtitle" text="Arraste para reordenar" />
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button styleClass="modern-button" text="+ Adicionar Módulo" />
+                                </HBox>
+                                
+                                <!-- Lista de Módulos -->
+                                <VBox spacing="15" styleClass="modules-list">
+                                    <!-- Módulo Exemplo -->
+                                    <VBox spacing="15" styleClass="module-card">
+                                        <HBox alignment="CENTER_LEFT" spacing="15">
+                                            <Label styleClass="module-number" text="1" />
+                                            <VBox spacing="15" HBox.hgrow="ALWAYS">
+                                                <TextField promptText="Título do Módulo" styleClass="custom-text-field" />
+                                                <HBox spacing="15">
+                                                    <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                                        <Label styleClass="field-label" text="Duração (horas)" />
+                                                        <TextField promptText="Ex: 2.5" styleClass="custom-text-field" />
+                                                    </VBox>
+                                                    <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                                        <Label styleClass="field-label" text="Ordem" />
+                                                        <TextField styleClass="custom-text-field" text="1" />
+                                                    </VBox>
+                                                </HBox>
+                                                <TextArea prefRowCount="3" promptText="Descrição do módulo..." styleClass="custom-text-area" />
+                                            </VBox>
+                                            <VBox spacing="10">
+                                                <Button styleClass="outline-button" text="X" />
+                                            </VBox>
+                                        </HBox>
+                                        
+                                        <!-- Lista de Aulas -->
+                                        <VBox spacing="10" styleClass="lessons-list">
+                                            <Button styleClass="modern-button" text="+ Adicionar Aula" />
+                                        </VBox>
+                                    </VBox>
+                                </VBox>
+                            </VBox>
+                        </VBox>
+
+                        <!-- Coluna Lateral -->
+                        <VBox spacing="20" GridPane.columnIndex="1">
+                            <!-- Preview do Curso -->
+                            <VBox spacing="15" styleClass="content-card">
+                                <Label styleClass="card-title" text="Preview" />
+                                <ImageView fitHeight="120" fitWidth="200" styleClass="course-preview-image" />
+                                <Button maxWidth="Infinity" styleClass="outline-button" text="Fazer Upload da Capa" />
+                            </VBox>
+
+                            <!-- Configurações -->
+                            <VBox spacing="15" styleClass="content-card">
+                                <Label styleClass="card-title" text="Configurações" />
+                                
+                                <VBox spacing="20">
+                                    <!-- Duração -->
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Duração Total (horas)*" />
+                                        <TextField promptText="Ex: 40" styleClass="custom-text-field" />
+                                    </VBox>
+                                    
+                                    <!-- Datas -->
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Período do Curso" />
+                                        <HBox spacing="10">
+                                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                                <Label styleClass="sub-label" text="Início" />
+                                                <DatePicker promptText="DD/MM/AAAA" styleClass="custom-date-picker" />
+                                            </VBox>
+                                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                                <Label styleClass="sub-label" text="Fim" />
+                                                <DatePicker promptText="DD/MM/AAAA" styleClass="custom-date-picker" />
+                                            </VBox>
+                                        </HBox>
+                                    </VBox>
+                                    
+                                    <!-- Certificação -->
+                                    <VBox spacing="15">
+                                        <Label styleClass="field-label" text="Certificação" />
+                                        <CheckBox styleClass="custom-checkbox" text="Emitir certificado ao concluir" />
+                                        <CheckBox styleClass="custom-checkbox" text="Exigir nota mínima" />
+                                    </VBox>
+                                    
+                                    <!-- Visibilidade -->
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Visibilidade" />
+                                        <ComboBox maxWidth="Infinity" promptText="Selecione" styleClass="custom-combo-box" />
+                                    </VBox>
+                                </VBox>
+                            </VBox>
+
+                            <!-- Botões de Ação -->
+                            <VBox spacing="15">
+                                <Button maxWidth="Infinity" styleClass="modern-button" text="Publicar Curso" />
+                                <Button maxWidth="Infinity" styleClass="outline-button" text="Salvar como Rascunho" />
+                                <Button maxWidth="Infinity" styleClass="simple-button" text="Visualizar">
+                           <padding>
+                              <Insets bottom="12.0" top="12.0" />
+                           </padding></Button>
+                            </VBox>
+                        </VBox>
+                  <rowConstraints>
+                     <RowConstraints />
+                  </rowConstraints>
+                    </GridPane>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</GridPane>

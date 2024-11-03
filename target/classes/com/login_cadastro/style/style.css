@@ -126,7 +126,6 @@
     -fx-text-fill: rgba(255, 255, 255, 0.5);
 }
 
-/* Base ComboBox Styling */
 .combo-box {
     -fx-background-color: rgba(255, 255, 255, 0.08);
     -fx-background-radius: 12;
@@ -140,21 +139,18 @@
     -fx-transition: -fx-background-color 0.2s, -fx-border-color 0.2s, -fx-effect 0.2s;
 }
 
-/* Hover State */
 .combo-box:hover {
     -fx-background-color: rgba(255, 255, 255, 0.12);
     -fx-border-color: rgba(255, 255, 255, 0.2);
     -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.2), 8, 0, 0, 2);
 }
 
-/* Focused State */
 .combo-box:focused {
     -fx-background-color: rgba(255, 255, 255, 0.15);
     -fx-border-color: #6c63ff;
     -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.4), 10, 0, 0, 4);
 }
 
-/* Arrow Button Styling */
 .combo-box .arrow-button {
     -fx-background-color: transparent;
     -fx-background-radius: 0 12 12 0;
@@ -173,7 +169,6 @@
     -fx-background-color: #6c63ff;
 }
 
-/* Popup/List Styling */
 .combo-box-popup .list-view {
     -fx-background-color: rgb(41, 47, 76);
     -fx-background-radius: 12;
@@ -201,7 +196,6 @@
     -fx-text-fill: white;
 }
 
-/* Scroll Bar Styling */
 .combo-box-popup .list-view .scroll-bar:vertical {
     -fx-background-color: transparent;
     -fx-padding: 0 4;
@@ -216,12 +210,10 @@
     -fx-background-color: rgba(255,255,255,0.3);
 }
 
-/* Prompt Text (Placeholder) */
 .combo-box .text-input {
     -fx-text-fill: white;
 }
 
-/* Animation for popup */
 .combo-box-popup {
     -fx-animation: popupFade 0.15s ease-out;
 }
@@ -242,7 +234,6 @@
     -fx-border-color: #6c63ff;
 }
 
-/* Ensure text stays white in all states */
 .combo-box > .cell {
     -fx-text-fill: white;
 }
@@ -260,7 +251,6 @@
     -fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);
 }
 
-/* Interest Button Styling */
 .interest-button {
     -fx-background-color: rgba(255, 255, 255, 0.08);
     -fx-text-fill: white;
@@ -280,7 +270,6 @@
     -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.2), 8, 0, 0, 2);
 }
 
-/* Selected state */
 .interest-button.selected {
     -fx-background-color: #6c63ff;
     -fx-border-color: #6c63ff;
@@ -292,7 +281,6 @@
     -fx-border-color: #5b52ff;
 }
 
-/* Animation for button selection */
 .interest-button {
     -fx-animation: buttonAppear 0.5s ease-out;
 }
@@ -310,7 +298,6 @@
     }
 }
 
-/* Selection animation */
 .interest-button.selected {
     -fx-animation: selectPulse 0.3s ease-out;
 }
