@@ -24,7 +24,7 @@ public class Login {
                         if (completeRegistration(elements[4])) {
                             return "true";
                         }
-                        return "incomplete "+elements[4];
+                        return "incomplete " + elements[4];
                     }
                 }
             }
@@ -39,17 +39,32 @@ public class Login {
         if (type == "student") {
             return isCheckStudent();
         }
-        return false;
+        return isCheckTeacher();
     }
 
     private boolean isCheckStudent() {
-        UserSession.getInstance().getUserName();
         try (BufferedReader br = new BufferedReader(
                 new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_student.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (UserSession.getInstance().getUserName() == values[0]) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean isCheckTeacher() {
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_teacher.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (UserSession.getInstance().getUserEmail() == values[0]) {
                     return true;
                 }
             }

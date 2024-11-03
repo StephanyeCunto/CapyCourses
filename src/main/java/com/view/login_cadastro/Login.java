@@ -43,7 +43,10 @@ public class Login extends BaseLoginCadastro implements Initializable {
         if (isCheck =="true") {
             super.redirectTo("/com/paginaInical.fxml", stage);
         }else if(isCheck == "incomplete student") {
-            super.redirectTo("/com/login_cadastro/login_cadastroStudent.fxml", stage);
+            super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);
+        }
+        else if(isCheck == "incomplete teacher") {
+            super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);
         }else{
             UserSession.getInstance().clearSession();
         }
