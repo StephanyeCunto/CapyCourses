@@ -1,5 +1,6 @@
 package com;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -32,72 +33,84 @@ public class DateInputPopup{
         dateInputField = createDateInputField();
     }
 
-    public VBox getDateInputField() {
-        VBox root = new VBox(10);
-        root.setPadding(new Insets(15));
-        root.setStyle("""
-            -fx-background-color: %s;
-            -fx-background-radius: 12;
-            """.formatted(BACKGROUND_COLOR));
-
-        dateInputField = createDateInputField();
-        Button calendarButton = createCalendarButton();
-
+    public HBox getDateInputField() {
         HBox inputContainer = new HBox(0);
         inputContainer.setAlignment(Pos.CENTER_LEFT);
-        inputContainer.setStyle("""
-            -fx-background-color: rgba(255, 255, 255, 0.08);
-            -fx-background-radius: 12;
-            -fx-border-radius: 12;
-            -fx-border-color: rgba(255, 255, 255, 0.1);
-            -fx-border-width: 1;
-            """);
+        
+        dateInputField = createDateInputField();
+        Button calendarButton = createCalendarButton();
+        
         inputContainer.getChildren().addAll(dateInputField, calendarButton);
-        root.getChildren().add(inputContainer);
-
-        return root;
+        
+        return inputContainer;
     }
 
-    private void showDatePopup() {
-        closeAllPopups();
-        Popup popup = new Popup();
-        VBox popupContent = createPopupContent();
-        popup.getContent().add(popupContent);
-        popup.setAutoHide(true);
-        popup.setOnHiding(e -> closeAllPopups());
-        dateInputField.getScene().getWindow().setOnShowing(e -> {
-            popup.setX(dateInputField.localToScreen(0, 0).getX());
-            popup.setY(dateInputField.localToScreen(0, 0).getY() + dateInputField.getHeight() + 5);
-        });
-        activePopups.add(popup);
-        popup.show(dateInputField.getScene().getWindow());
-    }
-
-    private void closeAllPopups() {
-        List<Popup> popupsToClose = new ArrayList<>(activePopups);
-        for (Popup popup : popupsToClose) {
-            popup.hide();
+    public String getDate() {
+        if (selectedDate != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            return selectedDate.format(formatter);
         }
-        activePopups.clear();
+        return "";
     }
 
+    private HBox createHeader() {
+        HBox header = new HBox(10);
+        header.setAlignment(Pos.CENTER);
+        header.setPadding(new Insets(0, 0, 8, 0));
+        
+        Button prevMonth = createNavigationButton("❮");
+        Button nextMonth = createNavigationButton("❯");
+        
+        monthLabel = new Label(selectedDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()));
+        yearLabel = new Label(String.valueOf(selectedDate.getYear()));
+        
+        String labelStyle = """
+                -fx-font-weight: bold;
+                -fx-font-size: 15px;
+                -fx-text-fill: %s;
+                -fx-cursor: hand;
+                """.formatted(TEXT_COLOR);
+    
+        monthLabel.setStyle(labelStyle);
+        yearLabel.setStyle(labelStyle);
+        
+        // Adicionar os event handlers para mês e ano
+        monthLabel.setOnMouseClicked(e -> showMonthPopup());
+        yearLabel.setOnMouseClicked(e -> showYearPopup());
+        
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        
+        header.getChildren().addAll(prevMonth, monthLabel, yearLabel, spacer, nextMonth);
+        return header;
+    }
+    
     private void showSelectionPopup(boolean isMonthSelection) {
-        closeAllPopups(); 
+        closeAllPopups();
         Popup selectionPopup = new Popup();
         VBox content = createSelectionPopupContent(isMonthSelection);
         selectionPopup.getContent().add(content);
-        selectionPopup.setAutoHide(false); 
-        selectionPopup.setOnHiding(e -> {
-            activePopups.remove(selectionPopup);
-            showDatePopup();
-        });
+        selectionPopup.setAutoHide(true);
+        
+        // Calcular a posição do popup
+        double xOffset = dateInputField.localToScreen(0, 0).getX();
+        double yOffset = dateInputField.localToScreen(0, 0).getY() + dateInputField.getHeight() + 5;
+        
+        selectionPopup.show(dateInputField.getScene().getWindow(), xOffset, yOffset);
         activePopups.add(selectionPopup);
-        selectionPopup.show(dateInputField.getScene().getWindow());
     }
-
+    
+    private void showMonthPopup() {
+        showSelectionPopup(true);
+    }
+    
+    private void showYearPopup() {
+        showSelectionPopup(false);
+    }
+    
     private VBox createSelectionPopupContent(boolean isMonthSelection) {
-        VBox content = new VBox(10);
-        content.setPadding(new Insets(12));
+        VBox content = new VBox(8);
+        content.setPadding(new Insets(20));
         content.setStyle("""
                 -fx-background-color: %s;
                 -fx-background-radius: 12;
@@ -105,7 +118,7 @@ public class DateInputPopup{
                 -fx-border-color: %s;
                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 12, 0, 0, 6);
                 """.formatted(BACKGROUND_COLOR, BORDER_COLOR));
-
+    
         if (isMonthSelection) {
             content.getChildren().add(createMonthGrid());
         } else {
@@ -113,68 +126,85 @@ public class DateInputPopup{
             GridPane yearGrid = createYearGrid();
             content.getChildren().addAll(yearNavigation, yearGrid);
         }
-
+    
         return content;
     }
-
-    private void updateYearPopup() {
-        Popup currentPopup = activePopups.stream()
-                .filter(popup -> popup.getContent().size() > 0)
-                .findFirst()
-                .orElse(null);
-        if (currentPopup != null) {
-            VBox newContent = createSelectionPopupContent(false);
-            currentPopup.getContent().clear();
-            currentPopup.getContent().add(newContent);
-        } else {
-            currentPopup.hide();
-            VBox newContent = createSelectionPopupContent(false);
-            currentPopup.getContent().clear();
-            currentPopup.getContent().add(newContent);
+    
+    private GridPane createMonthGrid() {
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setAlignment(Pos.CENTER);
+    
+        int row = 0;
+        int col = 0;
+        for (Month month : Month.values()) {
+            Button button = createSelectionButton(
+                    month.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
+                    () -> {
+                        selectedDate = selectedDate.withMonth(month.getValue());
+                        updateCalendar();
+                        closeAllPopups();
+                        showDatePopup(); 
+                    });
+            grid.add(button, col, row);
+            col++;
+            if (col > 2) {
+                col = 0;
+                row++;
+            }
         }
+        return grid;
     }
-
-    private int coutYearGridStartYear = 0;
-
+    
+    int countyearGridStartYear=0;
     private HBox createYearNavigationHeader() {
         HBox header = new HBox(10);
         header.setAlignment(Pos.CENTER);
         header.setPadding(new Insets(0, 0, 8, 0));
+        
         Button prevYear = createNavigationButton("❮");
         Button nextYear = createNavigationButton("❯");
-        if (coutYearGridStartYear == 0) {
+        
+        if (countyearGridStartYear == 0) {
             yearGridStartYear = selectedDate.getYear() - 5;
-            coutYearGridStartYear = +1;
+            countyearGridStartYear=1;
         }
+        
         Label yearRangeLabel = new Label(yearGridStartYear + " - " + (yearGridStartYear + 11));
         yearRangeLabel.setStyle("""
                 -fx-font-weight: bold;
-                -fx-font-size: 15px;
+                -fx-font-size: 12px;
                 -fx-text-fill: %s;
                 """.formatted(TEXT_COLOR));
+                
         prevYear.setOnAction(e -> {
-            yearGridStartYear = yearGridStartYear - 12; 
-            updateYearRangeLabel(); 
-            updateYearPopup(); 
+            yearGridStartYear -= 12;
+            updateYearPopup();
         });
+        
         nextYear.setOnAction(e -> {
             yearGridStartYear += 12;
-            updateYearRangeLabel(); 
-            updateYearPopup(); 
+            updateYearPopup();
         });
+        
         header.getChildren().addAll(prevYear, yearRangeLabel, nextYear);
-        return header; 
+        return header;
     }
-
-    private void updateYearRangeLabel() {
-        yearLabel.setText(yearGridStartYear + " - " + (yearGridStartYear + 11));
+    
+    private void updateYearPopup() {
+        Popup currentPopup = activePopups.get(activePopups.size() - 1);
+        VBox newContent = createSelectionPopupContent(false);
+        currentPopup.getContent().clear();
+        currentPopup.getContent().add(newContent);
     }
-
+    
     private GridPane createYearGrid() {
         GridPane grid = new GridPane();
         grid.setHgap(5);
         grid.setVgap(5);
         grid.setAlignment(Pos.CENTER);
+        
         int row = 0;
         int col = 0;
         for (int i = 0; i < 12; i++) {
@@ -184,7 +214,8 @@ public class DateInputPopup{
                     () -> {
                         selectedDate = selectedDate.withYear(year);
                         updateCalendar();
-                        closeAllPopups(); 
+                        closeAllPopups();
+                        showDatePopup(); 
                     });
             grid.add(button, col, row);
             col++;
@@ -195,7 +226,57 @@ public class DateInputPopup{
         }
         return grid;
     }
+    
+    private Button createSelectionButton(String text, Runnable action) {
+        Button button = new Button(text);
+        button.setStyle("""
+                -fx-background-color: transparent;
+                -fx-text-fill: %s;
+                -fx-padding: 8;
+                -fx-cursor: hand;
+                -fx-background-radius: 6;
+                -fx-font-size: 12px;
+                """.formatted(TEXT_COLOR));
+    
+        button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
+                "-fx-background-color: " + HOVER_COLOR + ";"));
+        button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
+                "-fx-background-color: " + HOVER_COLOR + ";", "")));
+    
+        button.setOnAction(e -> action.run());
+        return button;
+    }
+    
+    private void updateCalendar() {
+        monthLabel.setText(selectedDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()));
+        yearLabel.setText(String.valueOf(selectedDate.getYear()));
+        updateDateInput(dateInputField);
+    }
 
+    private void showDatePopup() {
+        closeAllPopups();
+        Popup popup = new Popup();
+        VBox popupContent = createPopupContent();
+        popup.getContent().add(popupContent);
+        popup.setAutoHide(true);
+        popup.setOnHiding(e -> closeAllPopups());
+        
+        // Calculate position relative to the input field
+        double xOffset = dateInputField.localToScreen(0, 0).getX();
+        double yOffset = dateInputField.localToScreen(0, 0).getY() + dateInputField.getHeight() + 5;
+        
+        popup.show(dateInputField.getScene().getWindow(), xOffset, yOffset);
+        activePopups.add(popup);
+    }
+
+    private void closeAllPopups() {
+        List<Popup> popupsToClose = new ArrayList<>(activePopups);
+        for (Popup popup : popupsToClose) {
+            popup.hide();
+        }
+        activePopups.clear();
+    }
+  
     private TextField createDateInputField() {
         TextField field = new TextField();
         field.setEditable(false);
@@ -205,57 +286,38 @@ public class DateInputPopup{
                 -fx-background-color: transparent;
                 -fx-text-fill: white;
                 -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);
-                -fx-padding: 12 16;
+                -fx-padding: 8 0;
                 -fx-font-size: 14px;
-                -fx-background-radius: 12 0 0 12;
+                -fx-focus-color: transparent;
+                -fx-faint-focus-color: transparent;
                 """);
+        field.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                field.setStyle(field.getStyle() + "-fx-background-color: transparent;");
+                Platform.runLater(() -> field.deselect());
+            }
+        });
         updateDateInput(field);
         return field;
-    }
-
-    private GridPane createMonthGrid() {
-        GridPane grid = new GridPane();
-        grid.setHgap(5);
-        grid.setVgap(5);
-        grid.setAlignment(Pos.CENTER);
-
-        int row = 0;
-        int col = 0;
-        for (Month month : Month.values()) {
-            Button button = createSelectionButton(
-                    month.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
-                    () -> {
-                        selectedDate = selectedDate.withMonth(month.getValue());
-                        updateCalendar();
-                        closeAllPopups(); 
-                    });
-            grid.add(button, col, row);
-            col++;
-            if (col > 2) {
-                col = 0;
-                row++;
-            }
-        }
-        return grid;
     }
 
     private Button createCalendarButton() {
         Button button = new Button("📅");
         button.setStyle("""
                 -fx-background-color: transparent;
-                -fx-text-fill: %s;
-                -fx-font-size: 16px;
+                -fx-text-fill: white;
+                -fx-font-size: 14px;
                 -fx-cursor: hand;
-                -fx-background-radius: 0 12 12 0;
-                -fx-padding: 12 0;
-                """.formatted(ACCENT_COLOR));
-        button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
-                "-fx-background-color: " + HOVER_COLOR + ";"));
+                -fx-padding: 8 12;
+                """);
+        button.setOnMouseEntered(e -> button.setStyle(button.getStyle() + 
+                "-fx-text-fill: " + ACCENT_COLOR + ";"));
         button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
-                "-fx-background-color: " + HOVER_COLOR + ";", "")));
+                "-fx-text-fill: " + ACCENT_COLOR + ";", "-fx-text-fill: white;")));
         button.setOnAction(e -> showDatePopup());
         return button;
     }
+
 
     private VBox createPopupContent() {
         VBox content = new VBox(10);
@@ -267,44 +329,13 @@ public class DateInputPopup{
                 -fx-border-color: %s;
                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 12, 0, 0, 6);
                 """.formatted(BACKGROUND_COLOR, BORDER_COLOR));
+        
         HBox header = createHeader();
         GridPane weekDaysHeader = createWeekDaysHeader();
         GridPane calendarGrid = createCalendarGrid();
+        
         content.getChildren().addAll(header, weekDaysHeader, calendarGrid);
         return content;
-    }
-
-    private HBox createHeader() {
-        HBox header = new HBox(10);
-        header.setAlignment(Pos.CENTER);
-        header.setPadding(new Insets(0, 0, 8, 0));
-        Button prevMonth = createNavigationButton("❮");
-        Button nextMonth = createNavigationButton("❯");
-        prevMonth.setOnAction(e -> {
-            selectedDate = selectedDate.minusMonths(1); 
-            updateCalendar();
-        });
-        nextMonth.setOnAction(e -> {
-            selectedDate = selectedDate.plusMonths(1); 
-            updateCalendar(); 
-        });
-        monthLabel = new Label(selectedDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()));
-        yearLabel = new Label(String.valueOf(selectedDate.getYear()));
-        String labelStyle = """
-                -fx-font-weight: bold;
-                -fx-font-size: 15px;
-                -fx-text-fill: %s;
-                -fx-cursor: hand;
-                """.formatted(TEXT_COLOR);
-
-        monthLabel.setStyle(labelStyle);
-        yearLabel.setStyle(labelStyle);
-        monthLabel.setOnMouseClicked(e -> showMonthPopup());
-        yearLabel.setOnMouseClicked(e -> showYearPopup());
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-        header.getChildren().addAll(prevMonth, monthLabel, yearLabel, spacer, nextMonth);
-        return header;
     }
 
     private Button createNavigationButton(String text) {
@@ -428,49 +459,11 @@ public class DateInputPopup{
     }
 
     private void updateDateInput(TextField field) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        field.setText(selectedDate.format(formatter));
-    }
-
-    private void updateCalendar() {
-        updateMonthYearLabels(); 
-        Popup currentPopup = (Popup) monthLabel.getScene().getWindow();
-        VBox newContent = createPopupContent(); 
-        currentPopup.getContent().clear();
-        currentPopup.getContent().add(newContent); 
-    }
-
-    private void updateMonthYearLabels() {
-        monthLabel.setText(selectedDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()));
-        yearLabel.setText(String.valueOf(selectedDate.getYear()));
-    }
-
-    private void showMonthPopup() {
-        showSelectionPopup(true);
-    }
-
-    private void showYearPopup() {
-        showSelectionPopup(false); 
-    }
-
-    private Button createSelectionButton(String text, Runnable action) {
-        Button button = new Button(text);
-        button.setStyle("""
-                -fx-background-color: transparent;
-                -fx-text-fill: %s;
-                -fx-min-width: 80px;
-                -fx-padding: 8;
-                -fx-cursor: hand;
-                -fx-background-radius: 6;
-                -fx-font-size: 13px;
-                """.formatted(TEXT_COLOR));
-
-        button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
-                "-fx-background-color: " + HOVER_COLOR + ";"));
-        button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
-                "-fx-background-color: " + HOVER_COLOR + ";", "")));
-
-        button.setOnAction(e -> action.run());
-        return button;
+        if (selectedDate != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            field.setText(selectedDate.format(formatter));
+        } else {
+            field.setText("");
+        }
     }
 }

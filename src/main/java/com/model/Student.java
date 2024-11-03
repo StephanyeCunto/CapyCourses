@@ -19,6 +19,5 @@ public class Student {
         this.name = name;
         this.coursesCompleted = new ArrayList<>();
         this.coursesInitiates = new HashMap<>();
-        new StudentCreateUpdate(name);
     }
 }

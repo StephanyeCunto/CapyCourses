@@ -8,10 +8,10 @@ import java.util.Date;
 import com.UserSession;
 
 public class CadastroStudent {
-    public CadastroStudent(Date dateOfBirth, String CPF, int telephone, String education, String areaOfInterest) {
+    public CadastroStudent(Date dateOfBirth, String CPF, long telephone, String education, String areaOfInterest) {
         try (BufferedWriter writer = new BufferedWriter(
-                new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_user.csv", true))) {
-            writer.write(UserSession.getInstance().getUserName() + "," + dateOfBirth + "," + CPF + "," + telephone + ","+ education + "," + areaOfInterest + "," + ",");
+                new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_student.csv", true))) {
+            writer.write(UserSession.getInstance().getUserEmail() + "," + dateOfBirth + "," + CPF + "," + telephone + ","+ education + "," + areaOfInterest + "," + ",");
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();

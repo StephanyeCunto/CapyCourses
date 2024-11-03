@@ -10,6 +10,6 @@
     -fx-border-radius: 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
     -fx-alignment: center;
-    -fx-max-width: 800px;
-    -fx-max-height: 550px;
+    -fx-max-width: 850px;
+    -fx-max-height: 600px;
 }
