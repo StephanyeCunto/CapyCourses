@@ -1,24 +1,27 @@
 package com.view.login_cadastro;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lombok.Getter;
 
+import com.view.elements.Calendario;
+
+@Getter
 public class BaseLoginCadastro {
     @FXML
     private GridPane mainPane;
@@ -44,6 +47,17 @@ public class BaseLoginCadastro {
     private VBox leftSection;
     @FXML
     private VBox rightSection;
+    @FXML
+    private ComboBox<String> comboBoxEducation;
+    @FXML
+    private FlowPane interestContainer;
+    @FXML
+    private VBox date;
+    @FXML
+    private Label selectedCount;
+
+    private Set<String> selectedInterests = new HashSet<>();
+    private Calendario dateInputPopup = new Calendario();
 
     protected void initializeCommon() {
         loadAnimation();
@@ -137,5 +151,60 @@ public class BaseLoginCadastro {
             mainPane.getColumnConstraints().get(0).setPercentWidth(0);
             mainPane.getColumnConstraints().get(1).setPercentWidth(100);
         }
+    }
+
+    protected void loadComboBox() {
+        comboBoxEducation.getItems().addAll(
+                "Ensino Fundamental Incompleto",
+                "Ensino Fundamental Completo",
+                "Ensino Médio Incompleto",
+                "Ensino Médio Completo",
+                "Ensino Superior Incompleto",
+                "Ensino Superior Completo",
+                "Pós-graduação",
+                "Mestrado",
+                "Doutorado");
+    }
+
+    protected void addDateInputField() {
+        VBox dateContainer = new VBox(5);
+        dateContainer.getChildren().add(dateInputPopup.getDateInputField());
+        date.getChildren().add(dateContainer);
+    }
+
+    protected void setupInterestButtons() {
+        interestContainer.getChildren().forEach(node -> {
+            if (node instanceof Button) {
+                Button button = (Button) node;
+                button.setOnAction(e -> toggleInterest(button));
+            }
+        });
+
+        updateSelectedCount();
+    }
+
+    private void toggleInterest(Button button) {
+        String interest = button.getText();
+
+        if (selectedInterests.contains(interest)) {
+            selectedInterests.remove(interest);
+            button.getStyleClass().remove("selected");
+        } else {
+            selectedInterests.add(interest);
+            button.getStyleClass().add("selected");
+        }
+
+        updateSelectedCount();
+    }
+
+    private void updateSelectedCount() {
+        int count = selectedInterests.size();
+        if(selectedCount!=null){
+            selectedCount.setText(count + (count == 1 ? " área selecionada" : " áreas selecionadas"));
+        }
+    }
+
+    protected Set<String> getSelectedInterests() {
+        return new HashSet<>(selectedInterests);
     }
 }

@@ -58,7 +58,7 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
             super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);
         } else if (radioButtonTeacher.isSelected()) {
             typeUser = "teacher";
-            super.redirectTo("/com/login_cadastro/paginaLogin.fxml", stage);
+            super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);
         }
 
         LocalDateTime date = LocalDateTime.now();

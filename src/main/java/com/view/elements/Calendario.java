@@ -1,4 +1,4 @@
-package com;
+package com.view.elements;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class DateInputPopup{
+public class Calendario{
     private LocalDate selectedDate = LocalDate.now();
     private TextField dateInputField;
     private Label monthLabel;
@@ -29,7 +29,7 @@ public class DateInputPopup{
     private List<Popup> activePopups = new ArrayList<>();
     private int yearGridStartYear;
 
-    public DateInputPopup() {
+    public Calendario() {
         dateInputField = createDateInputField();
     }
 
