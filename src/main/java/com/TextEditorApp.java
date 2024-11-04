@@ -8,7 +8,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-import javafx.scene.control.ColorPicker;
 
 import java.util.Arrays;
 import java.util.List;
@@ -100,6 +99,15 @@ public class TextEditorApp extends Application {
 
         // Adiciona o texto formatado ao TextFlow
         textFlow.getChildren().add(formattedText);
+    }
+
+        private void updateFont() {
+        Text selectedText = new Text("Texto formatado"); // Exemplo de texto selecionado para formatação
+        selectedText.setFont(Font.font(((ComboBox<String>) ((HBox) ((ToolBar) ((BorderPane) textFlow.getParent()).getTop()).getItems().get(0)).getChildren().get(0)).getValue(), fontWeight, fontPosture, fontSize));
+        selectedText.setFill(fontColor);
+
+        // Adiciona o texto formatado ao TextFlow
+        textFlow.getChildren().add(selectedText);
     }
 
     public static void main(String[] args) {

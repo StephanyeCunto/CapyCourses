@@ -345,15 +345,6 @@
     -fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);
 }
 
-.side-menu {
-    -fx-background-color: rgba(41, 47, 76, 0.85);
-    -fx-background-radius: 0 20 20 0;
-    -fx-padding: 25;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 0);
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-    -fx-border-width: 0 1 0 0;
-}
-
 .progress-tracker {
     -fx-padding: 20;
     -fx-background-color: rgba(255, 255, 255, 0.05);
@@ -389,8 +380,6 @@
     -fx-background-radius: 0 20 20 0;
     -fx-padding: 25;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 0);
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-    -fx-border-width: 0 1 0 0;
 }
 
 .module-card {
@@ -465,7 +454,6 @@
     }
 }
 
-/* Activity items */
 .activity-item {
     -fx-background-color: rgba(255,255,255,0.05);
     -fx-background-radius: 10;
@@ -476,20 +464,17 @@
     -fx-background-color: rgba(255,255,255,0.08);
 }
 
-/* Course rating */
 .rating-label {
     -fx-text-fill: #6c63ff;
     -fx-font-family: "Franklin Gothic Medium";
     -fx-font-size: 18px;
 }
 
-/* Circle avatar */
 .avatar-circle {
     -fx-fill: #6c63ff;
     -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.4), 8, 0, 0, 4);
 }
 
-/* Base Theme Colors and Variables */
 * {
     -fx-primary: #6366f1;
     -fx-primary-dark: #4f46e5;
@@ -505,40 +490,18 @@
     -fx-text-muted: rgba(255, 255, 255, 0.5);
 }
 
-/* Improved Side Menu */
 .side-menu {
     -fx-background-color: rgba(49, 46, 129, 0.6);
     -fx-background-radius: 0 20 20 0;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
-    -fx-border-width: 0 1 0 0;
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-}
 
-/* Back Button Container */
-.back-button-container {
-    -fx-padding: 8 10;
-    -fx-background-color: rgba(255, 255, 255, 0.05);
-    -fx-background-radius: 8;
-    -fx-spacing: 8;
+    -fx-background-radius: 0 20 20 0;
+    -fx-padding: 25;
 }
 
 .section-title, .tip-text, .progress-text{
     -fx-text-fill:white;
 }
 
-.back-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: -fx-text-secondary;
-    -fx-font-size: 14;
-    -fx-cursor: hand;
-}
-
-.back-button-text {
-    -fx-text-fill: -fx-text-secondary;
-    -fx-font-size: 14;
-}
-
-/* Progress Tracker */
 .progress-tracker {
     -fx-background-color: rgba(255, 255, 255, 0.03);
     -fx-background-radius: 12;
@@ -687,12 +650,4 @@
 
 .content-card:hover {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0, 0, 4);
-}
-
-#htmlEditorContainer {
-    -fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246);
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-    -fx-background-radius: 20;
-    -fx-padding: 10;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
 }
