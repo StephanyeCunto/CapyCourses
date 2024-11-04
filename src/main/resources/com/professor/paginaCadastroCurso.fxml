@@ -152,43 +152,7 @@
                                 </HBox>
 
                                 <VBox spacing="15" styleClass="modules-list" fx:id="modulesList">
-                                    <children>
-                                        <VBox spacing="15" styleClass="module-card">
-                                            <HBox alignment="CENTER_LEFT" spacing="15">
-                                                <Label styleClass="module-number" text="1" />
-                                                <VBox spacing="15" HBox.hgrow="ALWAYS">
-                                                    <TextField promptText="Título do Módulo"
-                                                        styleClass="custom-text-field" />
-                                                    <HBox spacing="15">
-                                                        <VBox spacing="8" HBox.hgrow="ALWAYS">
-                                                            <Label styleClass="field-label"
-                                                                text="Duração (horas)" />
-                                                            <TextField promptText="Ex: 2.5"
-                                                                styleClass="custom-text-field" />
-                                                        </VBox>
-                                                        <VBox spacing="8" HBox.hgrow="ALWAYS">
-                                                            <Label styleClass="field-label"
-                                                                text="Ordem" />
-                                                            <TextField
-                                                                styleClass="custom-text-field"
-                                                                text="1" />
-                                                        </VBox>
-                                                    </HBox>
-                                                    <TextArea prefRowCount="3"
-                                                        promptText="Descrição do módulo..."
-                                                        styleClass="custom-text-area" />
-                                                </VBox>
-                                                <VBox spacing="10">
-                                                    <Button styleClass="outline-button" text="X" />
-                                                </VBox>
-                                            </HBox>
-
-                                            <VBox spacing="10" styleClass="lessons-list">
-                                                <Button styleClass="modern-button"
-                                                    fx:id="addLessonButton01" text="+ Adicionar Aula" />
-                                            </VBox>
-                                        </VBox>
-                                    </children>
+                                  
                                 </VBox>
                             </VBox>
                         </VBox>
