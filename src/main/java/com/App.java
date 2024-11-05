@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.IOException; 
+import java.io.IOException;
 
 public class App extends Application {
 
@@ -15,12 +15,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-           Image icon = new Image(App.class.getResourceAsStream("/capyCourses.png"), 128, 128, true, true);
-           
-           scene = new Scene(loadFXML("/com/professor/paginaCadastroCurso"));
+        Image icon = new Image("/capyCourses 012.png");
+
+        scene = new Scene(loadFXML("/com/login_cadastro/paginaLogin"));
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.getIcons().add(icon);
+        stage.setTitle("CapyCourse");
         stage.show();
     }
 

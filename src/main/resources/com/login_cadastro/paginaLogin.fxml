@@ -11,14 +11,15 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/style.css"
-    fx:controller="com.view.login_cadastro.Login">
-    <GridPane fx:id="mainPane" alignment="CENTER"
-        StackPane.alignment="CENTER">
+<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.Login">
+    <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
             <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
@@ -28,15 +29,34 @@
         </rowConstraints>
         <children>
             <VBox fx:id="leftSection" alignment="CENTER" style="-fx-background-radius: 20 0 0 20;">
-                <ImageView fitHeight="452.0" fitWidth="513.0" pickOnBounds="true"
-                    preserveRatio="true" styleClass="hidden-image">
-                    <image>
-                        <Image url="@img/capyCourses.png" />
-                    </image>
-                </ImageView>
+                <ImageView fitHeight="250.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" styleClass="hidden-image">
+                <image>
+                    <Image url="@img/capyCourses 012.png" />
+                </image>
+            </ImageView>
+                <Label text="CAPY COURSES">
+                    <font>
+                        <Font name="Segoe UI" size="60.0" />
+                    </font>
+                    <textFill>
+                        <LinearGradient endX="1.0" endY="0.8246445497630331" startX="1.0" startY="0.5118483412322274">
+                            <stops>
+                                <Stop>
+                                    <color>
+                                        <Color red="0.8684210777282715" green="0.7957175970077515" blue="0.24524854123592377" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="1.0">
+                                    <color>
+                                        <Color red="0.25" green="0.19984567165374756" blue="0.09953703731298447" />
+                                    </color>
+                                </Stop>
+                            </stops>
+                        </LinearGradient>
+                    </textFill>
+                </Label>
             </VBox>
-            <VBox fx:id="rightSection" alignment="CENTER" spacing="25" style="-fx-padding: 40;"
-                GridPane.columnIndex="1">
+            <VBox fx:id="rightSection" alignment="CENTER" spacing="25" style="-fx-padding: 40;" GridPane.columnIndex="1">
                 <Label text="LOGIN" textFill="WHITE">
                     <font>
                         <Font name="Franklin Gothic Medium" size="32.0" />
@@ -48,8 +68,7 @@
                             <Font name="Franklin Gothic Medium" size="14.0" />
                         </font>
                     </Label>
-                    <TextField prefHeight="45.0" fx:id="user"
-                        style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white; -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);" styleClass="input">
+                    <TextField fx:id="user" prefHeight="45.0" style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white; -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);" styleClass="input">
                         <font>
                             <Font name="Franklin Gothic Medium" size="14.0" />
                         </font>
@@ -61,27 +80,23 @@
                             <Font name="Franklin Gothic Medium" size="14.0" />
                         </font>
                     </Label>
-                    <PasswordField prefHeight="45.0" fx:id="password" 
-                        style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white;" styleClass="input">
+                    <PasswordField fx:id="password" prefHeight="45.0" style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white;" styleClass="input">
                         <font>
                             <Font name="Franklin Gothic Medium" size="14.0" />
                         </font>
                     </PasswordField>
                 </VBox>
-                <Hyperlink style="-fx-text-fill: #6c63ff; -fx-border-color: transparent;"
-                    text="Esqueceu a senha?">
+                <Hyperlink style="-fx-text-fill: #6c63ff; -fx-border-color: transparent;" text="Esqueceu a senha?">
                     <font>
                         <Font name="Franklin Gothic Medium" size="14.0" />
                     </font>
                 </Hyperlink>
-                <Button maxWidth="Infinity" onAction="#logar" styleClass="modern-button"
-                    text="ENTRAR">
+                <Button maxWidth="Infinity" onAction="#logar" styleClass="modern-button" text="ENTRAR">
                     <VBox.margin>
                         <Insets top="10.0" />
                     </VBox.margin>
                 </Button>
-                <Button maxWidth="Infinity" onAction="#register" prefHeight="45.0"
-                    styleClass="simple-button" text="CADASTRAR">
+                <Button maxWidth="Infinity" onAction="#register" prefHeight="45.0" styleClass="simple-button" text="CADASTRAR">
                     <font>
                         <Font name="Franklin Gothic Medium" size="14.0" />
                     </font>

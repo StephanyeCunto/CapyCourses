@@ -9,6 +9,7 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,10 +20,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Getter;
 
+import com.view.Base;
 import com.view.elements.Calendario;
 
 @Getter
-public class BaseLoginCadastro {
+public class BaseLoginCadastro extends Base{
     @FXML
     private GridPane mainPane;
     @FXML
@@ -65,11 +67,14 @@ public class BaseLoginCadastro {
     }
 
     protected void redirectTo(String pageNext, Stage stage) {
-        try {
+                try {
             Parent root = FXMLLoader.load(getClass().getResource(pageNext));
+            Image icon = new Image("/capyCourses 012.png");
             Scene currentScene = stage.getScene();
             Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
             stage.setScene(newScene);
+            stage.getIcons().add(icon);
+            stage.setTitle("CapyCourse");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
