@@ -691,6 +691,7 @@
     -fx-background-color: linear-gradient(to right, #6c63ff, #8d86ff);
     -fx-text-fill: white;
     -fx-border-color:  transparent;
+    -fx-border-radius: 8;
     -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.4), 8, 0, 0, 4);
 }
 

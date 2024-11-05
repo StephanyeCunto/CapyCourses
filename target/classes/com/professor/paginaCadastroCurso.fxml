@@ -177,19 +177,10 @@
                                             styleClass="custom-text-field" />
                                     </VBox>
 
-                                    <VBox spacing="8">
+                                    <VBox spacing="8" fx:id="date">
                                         <Label styleClass="field-label" text="Período do Curso" />
                                         <HBox spacing="10">
-                                            <VBox spacing="5" HBox.hgrow="ALWAYS">
-                                                <Label styleClass="sub-label" text="Início" />
-                                                <DatePicker promptText="DD/MM/AAAA"
-                                                    styleClass="custom-date-picker" />
-                                            </VBox>
-                                            <VBox spacing="5" HBox.hgrow="ALWAYS">
-                                                <Label styleClass="sub-label" text="Fim" />
-                                                <DatePicker promptText="DD/MM/AAAA"
-                                                    styleClass="custom-date-picker" />
-                                            </VBox>
+
                                         </HBox>
                                     </VBox>
 

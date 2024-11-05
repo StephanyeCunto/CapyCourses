@@ -34,16 +34,45 @@ public class Calendario{
     }
 
     public HBox getDateInputField() {
-        HBox inputContainer = new HBox(0);
+        HBox inputContainer = new HBox(10);  
         inputContainer.setAlignment(Pos.CENTER_LEFT);
-        
+        inputContainer.setPadding(new Insets(5));
+        inputContainer.setStyle("""
+                -fx-background-radius: 8;
+                -fx-border-color: rgba(255, 255, 255, 0.1);
+                -fx-border-radius: 8;
+                -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 4);
+                """); 
         dateInputField = createDateInputField();
         Button calendarButton = createCalendarButton();
-        
+        dateInputField.prefWidthProperty().bind(inputContainer.widthProperty().multiply(0.8));
+        calendarButton.prefWidthProperty().bind(inputContainer.widthProperty().multiply(0.2));
+        dateInputField.setStyle(dateInputField.getStyle() + """
+                -fx-background-color: transparent;
+              
+                -fx-border-width: 1;
+                -fx-border-radius: 5;
+                -fx-padding: 8 12;
+                -fx-font-size: 14px;
+                -fx-text-fill: white;
+                """);
+        calendarButton.setStyle(calendarButton.getStyle() + """
+                -fx-background-color: #6c63ff;
+                -fx-text-fill: white;
+                -fx-background-radius: 5;
+                -fx-padding: 8 12;
+                -fx-font-size: 14px;
+                """);
+        calendarButton.setOnMouseEntered(e -> calendarButton.setStyle(calendarButton.getStyle() + """
+                -fx-background-color: #5a54cc;
+                """));
+        calendarButton.setOnMouseExited(e -> calendarButton.setStyle(calendarButton.getStyle().replace(
+                "-fx-background-color: #5a54cc;", "-fx-background-color: #6c63ff;")));
         inputContainer.getChildren().addAll(dateInputField, calendarButton);
-        
         return inputContainer;
     }
+    
+    
 
     public String getDate() {
         if (selectedDate != null) {
@@ -290,7 +319,9 @@ public class Calendario{
                 -fx-font-size: 14px;
                 -fx-focus-color: transparent;
                 -fx-faint-focus-color: transparent;
+                -fx-cursor: hand;
                 """);
+        field.setOnMouseClicked(e -> showDatePopup());
         field.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 field.setStyle(field.getStyle() + "-fx-background-color: transparent;");
@@ -300,7 +331,7 @@ public class Calendario{
         updateDateInput(field);
         return field;
     }
-
+    
     private Button createCalendarButton() {
         Button button = new Button("📅");
         button.setStyle("""
