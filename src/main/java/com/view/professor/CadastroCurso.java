@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,25 +22,15 @@ import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.scene.Node;
-import javafx.scene.layout.Region;
+import javafx.scene.control.*;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.layout.*;
 
 public class CadastroCurso implements Initializable {
     @FXML
@@ -63,6 +55,10 @@ public class CadastroCurso implements Initializable {
     private VBox modulesList;
     @FXML
     private VBox date;
+    @FXML
+    private CheckBox dateEnd;
+    @FXML
+    private ComboBox ComboBoxVisibily;
 
     private Set<String> selectedInterests = new HashSet<>();
 
@@ -76,6 +72,11 @@ public class CadastroCurso implements Initializable {
     private int currentModuleCount = 0;
     private static final String DEFAULT_MODULE_TITLE = "Novo Módulo";
     private static final String DEFAULT_LESSON_TITLE = "Nova Aula";
+
+    private VBox dateContainerStart = new VBox(5);
+    private VBox dateContainerEnd = new VBox(5);
+
+    private String valueComBox = "Visível";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -92,6 +93,39 @@ public class CadastroCurso implements Initializable {
         lessonsList.getStyleClass().add("lessons-list");
 
         modulesList.setSpacing(20);
+
+        dateEnd.setOnAction(event -> {
+            if (dateEnd.isSelected()) {
+                dateContainerEnd.setMouseTransparent(true);
+                ColorAdjust colorAdjust = new ColorAdjust();
+                colorAdjust.setSaturation(-0.5);
+                colorAdjust.setBrightness(-0.1);
+                dateContainerEnd.setEffect(colorAdjust);
+            } else {
+                dateContainerEnd.setMouseTransparent(false);
+                dateContainerEnd.setEffect(null);
+            }
+        });
+
+        
+
+        ComboBoxVisibily.setOnMouseEntered(event -> {
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedDate = today.format(formatter);
+
+            if (!dateInputPopupStart.getDate().equals(formattedDate)) {
+                valueComBox = "Visível,Somente na data de início";
+            } else {
+                valueComBox = "Visível";
+            }
+            loadComBoxVisibily(valueComBox);
+        });
+    }
+
+    private void loadComBoxVisibily(String valueCombox) {
+        ComboBoxVisibily.getItems().clear();
+        ComboBoxVisibily.getItems().addAll(valueCombox.split(","));
     }
 
     private void uploadImage() {
@@ -227,183 +261,84 @@ public class CadastroCurso implements Initializable {
     }
 
     public void createCourse() {
-       new CadastroCursoController(titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
-                levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,saveModulesAndLessonsData());  
+        new CadastroCursoController(titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
+                levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,
+                saveModulesAndLessonsData());
     }
 
     public List<Map<String, Object>> saveModulesAndLessonsData() {
         List<Map<String, Object>> modulesData = new ArrayList<>();
-        
+
         for (Node moduleNode : modulesList.getChildren()) {
             if (moduleNode instanceof VBox) {
                 VBox moduleCard = (VBox) moduleNode;
                 Map<String, Object> moduleData = new HashMap<>();
-                
-                // Processar cabeçalho do módulo
                 HBox moduleHeader = (HBox) moduleCard.getChildren().get(0);
                 StackPane numberContainer = (StackPane) moduleHeader.getChildren().get(0);
                 Label moduleNumber = (Label) numberContainer.getChildren().get(0);
                 moduleData.put("moduleNumber", Integer.parseInt(moduleNumber.getText()));
-                
-                // Processar conteúdo do módulo
                 VBox moduleContent = (VBox) moduleCard.getChildren().get(1);
-                
-                // Obter título do módulo
                 VBox titleContainer = (VBox) moduleContent.getChildren().get(0);
                 HBox titleBox = (HBox) titleContainer.getChildren().get(1);
                 TextField titleField = (TextField) titleBox.getChildren().get(0);
                 moduleData.put("moduleTitle", titleField.getText());
-                
-                // Obter duração do módulo
                 HBox detailsContainer = (HBox) moduleContent.getChildren().get(1);
                 VBox durationContainer = (VBox) detailsContainer.getChildren().get(0);
                 TextField durationField = (TextField) durationContainer.getChildren().get(1);
                 moduleData.put("moduleDuration", durationField.getText());
-                
-                // Obter descrição do módulo
                 VBox descriptionContainer = (VBox) moduleContent.getChildren().get(2);
                 TextArea descriptionArea = (TextArea) descriptionContainer.getChildren().get(1);
                 moduleData.put("moduleDescription", descriptionArea.getText());
-                
-                // Processar aulas
                 VBox lessonsList = (VBox) moduleCard.getChildren().get(2);
                 List<Map<String, Object>> lessonsData = new ArrayList<>();
-                
-                // Iterar sobre as aulas (ignorar o último filho que é o botão "Adicionar Aula")
                 for (int i = 0; i < lessonsList.getChildren().size() - 1; i++) {
                     Node lessonNode = lessonsList.getChildren().get(i);
                     if (lessonNode instanceof VBox) {
                         VBox lessonCard = (VBox) lessonNode;
                         Map<String, Object> lessonData = new HashMap<>();
-                        
-                        // Obter número da aula
                         HBox lessonHeader = (HBox) lessonCard.getChildren().get(0);
                         StackPane lessonNumberContainer = (StackPane) lessonHeader.getChildren().get(0);
                         Label lessonNumber = (Label) lessonNumberContainer.getChildren().get(0);
                         lessonData.put("lessonNumber", Integer.parseInt(lessonNumber.getText()));
-                        
-                        // Obter conteúdo da aula
                         VBox lessonContent = (VBox) lessonCard.getChildren().get(1);
-                        
-                        // Título da aula
                         VBox titleFieldAula = (VBox) lessonContent.getChildren().get(0);
                         TextField lessonTitleField = (TextField) titleFieldAula.getChildren().get(1);
                         lessonData.put("lessonTitle", lessonTitleField.getText());
-                        
-                        // Link do vídeo
                         VBox videoField = (VBox) lessonContent.getChildren().get(1);
                         TextField lessonVideoField = (TextField) videoField.getChildren().get(1);
                         lessonData.put("lessonVideoLink", lessonVideoField.getText());
-                        
-                        // Detalhes da aula
                         VBox detailsField = (VBox) lessonContent.getChildren().get(2);
                         TextArea lessonDetailsArea = (TextArea) detailsField.getChildren().get(1);
                         lessonData.put("lessonDetails", lessonDetailsArea.getText());
-                        
-                        // Materiais complementares
                         VBox materialsField = (VBox) lessonContent.getChildren().get(3);
                         TextArea lessonMaterialsArea = (TextArea) materialsField.getChildren().get(1);
                         lessonData.put("lessonMaterials", lessonMaterialsArea.getText());
-                        
-                        // Duração da aula
                         VBox durationFieldAula = (VBox) lessonContent.getChildren().get(4);
                         TextField lessonDurationField = (TextField) durationFieldAula.getChildren().get(1);
                         lessonData.put("lessonDuration", lessonDurationField.getText());
-                        
+
                         lessonsData.add(lessonData);
                     }
                 }
-                
+
                 moduleData.put("lessons", lessonsData);
                 modulesData.add(moduleData);
             }
         }
-        
+
         return modulesData;
     }
-
-    public boolean validateModuleData() {
-    if (modulesList.getChildren().isEmpty()) {
-        showAlert("Erro", "Adicione pelo menos um módulo ao curso.");
-        return false;
-    }
-    
-    for (Node moduleNode : modulesList.getChildren()) {
-        if (moduleNode instanceof VBox) {
-            VBox moduleCard = (VBox) moduleNode;
-            
-            // Validar título do módulo
-            VBox moduleContent = (VBox) moduleCard.getChildren().get(1);
-            VBox titleContainer = (VBox) moduleContent.getChildren().get(0);
-            HBox titleBox = (HBox) titleContainer.getChildren().get(1);
-            TextField titleField = (TextField) titleBox.getChildren().get(0);
-            
-            if (titleField.getText().trim().isEmpty()) {
-                showAlert("Erro", "Preencha o título do módulo.");
-                return false;
-            }
-            
-            // Validar duração do módulo
-            HBox detailsContainer = (HBox) moduleContent.getChildren().get(1);
-            VBox durationContainer = (VBox) detailsContainer.getChildren().get(0);
-            TextField durationField = (TextField) durationContainer.getChildren().get(1);
-            
-            if (durationField.getText().trim().isEmpty()) {
-                showAlert("Erro", "Preencha a duração do módulo.");
-                return false;
-            }
-            
-            // Validar descrição do módulo
-            VBox descriptionContainer = (VBox) moduleContent.getChildren().get(2);
-            TextArea descriptionArea = (TextArea) descriptionContainer.getChildren().get(1);
-            
-            if (descriptionArea.getText().trim().isEmpty()) {
-                showAlert("Erro", "Preencha a descrição do módulo.");
-                return false;
-            }
-            
-            // Validar aulas
-            VBox lessonsList = (VBox) moduleCard.getChildren().get(2);
-            if (lessonsList.getChildren().size() <= 1) { // Apenas o botão "Adicionar Aula"
-                showAlert("Erro", "Adicione pelo menos uma aula ao módulo.");
-                return false;
-            }
-        }
-    }
-    
-    return true;
-}
-
-private void showAlert(String title, String content) {
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setTitle(title);
-    alert.setHeaderText(null);
-    alert.setContentText(content);
-    alert.showAndWait();
-}
-
-    
 
     @FXML
     private void addNewModule() {
         currentModuleCount++;
-
         VBox moduleCard = new VBox();
         moduleCard.getStyleClass().addAll("module-card", "fade-in");
         moduleCard.setSpacing(15);
-
-        // Header do módulo
         HBox moduleHeader = createModuleHeader(currentModuleCount);
-
-        // Conteúdo do módulo
         VBox moduleContent = createModuleContent(currentModuleCount);
-
-        // Lista de aulas
         VBox lessonsList = createLessonsList();
-
         moduleCard.getChildren().addAll(moduleHeader, moduleContent, lessonsList);
-
-        // Animação de entrada
         moduleCard.setOpacity(0);
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), moduleCard);
         fadeIn.setFromValue(0);
@@ -418,21 +353,15 @@ private void showAlert(String title, String content) {
         header.setAlignment(Pos.CENTER_LEFT);
         header.setSpacing(15);
         header.getStyleClass().add("module-header");
-
-        // Número do módulo com ícone
         StackPane numberContainer = new StackPane();
         numberContainer.getStyleClass().add("module-number-container");
         Label number = new Label(String.valueOf(moduleNumber));
         number.getStyleClass().add("module-number");
         numberContainer.getChildren().add(number);
-
-        // Botão de remover com tooltip
         Button removeButton = new Button("X");
         removeButton.getStyleClass().add("outline-button");
-
         Tooltip.install(removeButton, new Tooltip("Remover módulo"));
         removeButton.setOnAction(e -> removeModuleWithAnimation(header.getParent()));
-
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         header.getChildren().addAll(numberContainer, spacer, removeButton);
@@ -443,8 +372,6 @@ private void showAlert(String title, String content) {
         VBox content = new VBox();
         content.setSpacing(15);
         content.getStyleClass().add("module-content");
-
-        // Campo de título com contador de caracteres
         VBox titleContainer = new VBox(5);
         Label titleLabel = new Label("Título do Módulo *");
         titleLabel.getStyleClass().add("field-label");
@@ -467,13 +394,9 @@ private void showAlert(String title, String content) {
 
         titleBox.getChildren().addAll(titleField, charCount);
         titleContainer.getChildren().addAll(titleLabel, titleBox);
-
-        // Container para duração e ordem
         HBox detailsContainer = new HBox(15);
         detailsContainer.getChildren().addAll(
                 createNumberField("Duração (horas) *", "Ex: 2.5", true));
-
-        // Área de descrição
         VBox descriptionContainer = new VBox(5);
         Label descLabel = new Label("Descrição do Módulo *");
         descLabel.getStyleClass().add("field-label");
@@ -497,8 +420,6 @@ private void showAlert(String title, String content) {
         TextField field = new TextField();
         field.setPromptText(prompt);
         field.getStyleClass().add("custom-text-field");
-
-        // Validação de números
         field.textProperty().addListener((obs, old, newText) -> {
             if (!newText.isEmpty()) {
                 if (allowDecimals) {
@@ -557,21 +478,14 @@ private void showAlert(String title, String content) {
         removeLessonButton.getStyleClass().add("outline-button");
         Tooltip.install(removeLessonButton, new Tooltip("Remover aula"));
         removeLessonButton.setOnAction(e -> removeLessonWithAnimation(lessonCard));
-
         lessonHeader.getChildren().addAll(numberContainer, spacer, removeLessonButton);
-
-        // Conteúdo da aula
         VBox lessonContent = createLessonContent(lessonNumber);
-
         lessonCard.getChildren().addAll(lessonHeader, lessonContent);
-
-        // Animação de entrada
         lessonCard.setOpacity(0);
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), lessonCard);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.play();
-
         lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, lessonCard);
         updateLessonNumbers(lessonsList);
     }
@@ -593,35 +507,23 @@ private void showAlert(String title, String content) {
         VBox content = new VBox();
         content.setSpacing(15);
         content.getStyleClass().add("lesson-content");
-
-        // Título da aula
         TextField titleField = new TextField();
         titleField.setPromptText(DEFAULT_LESSON_TITLE + " " + lessonNumber);
         titleField.getStyleClass().add("custom-text-field");
-
-        // Link do vídeo
         TextField videoField = new TextField();
         videoField.setPromptText("Link do vídeo da aula");
         videoField.getStyleClass().add("custom-text-field");
-
-        // Detalhes da aula
         TextArea detailsArea = new TextArea();
         detailsArea.setPromptText("Detalhes e objetivos da aula...");
         detailsArea.setPrefRowCount(3);
         detailsArea.getStyleClass().add("custom-text-area");
-
-        // Materiais complementares
         TextArea materialsArea = new TextArea();
         materialsArea.setPromptText("Links para materiais complementares...");
         materialsArea.setPrefRowCount(2);
         materialsArea.getStyleClass().add("custom-text-area");
-
-        // Duração da aula
         TextField durationField = new TextField();
         durationField.setPromptText("Duração (minutos)");
         durationField.getStyleClass().add("custom-text-field");
-
-        // Validação para aceitar apenas números
         durationField.textProperty().addListener((obs, old, newText) -> {
             if (!newText.isEmpty() && !newText.matches("\\d*")) {
                 durationField.setText(old);
@@ -681,8 +583,6 @@ private void showAlert(String title, String content) {
     }
 
     protected void addDateInputField() {
-        VBox dateContainerStart = new VBox(5);
-        VBox dateContainerEnd = new VBox(5);
         Label dateStart = new Label();
         Label dateEnd = new Label();
         dateStart.setText("Data de início");

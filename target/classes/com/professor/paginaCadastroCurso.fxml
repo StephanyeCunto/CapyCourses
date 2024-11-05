@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
@@ -101,36 +100,37 @@
                                             <TextField fx:id="titleCourse"
                                                 promptText="Ex: Desenvolvimento Web Completo"
                                                 styleClass="custom-text-field" HBox.hgrow="ALWAYS" />
-                                            <Label styleClass="char-counter" text="0/100"
-                                                fx:id="coutTitleCourse" />
+                                            <Label fx:id="coutTitleCourse" styleClass="char-counter"
+                                                text="0/100" />
                                         </HBox>
                                     </VBox>
 
                                     <VBox spacing="8">
                                         <Label styleClass="field-label" text="Descrição do Curso*" />
-                                        <TextArea prefRowCount="4"
+                                        <TextArea fx:id="descritionCourse" prefRowCount="4"
                                             promptText="Descreva o conteúdo e objetivos do curso..."
-                                            styleClass="custom-text-area" fx:id="descritionCourse" />
+                                            styleClass="custom-text-area" />
                                     </VBox>
 
                                     <HBox spacing="16">
                                         <VBox spacing="8" HBox.hgrow="ALWAYS">
                                             <Label styleClass="field-label" text="Categoria*" />
-                                            <ComboBox minWidth="300"
+                                            <ComboBox fx:id="categoryCourse" minWidth="300"
                                                 promptText="Selecione uma categoria"
-                                                styleClass="combo-box" fx:id="categoryCourse" />
+                                                styleClass="combo-box" />
                                         </VBox>
                                         <VBox spacing="8" HBox.hgrow="ALWAYS">
                                             <Label styleClass="field-label" text="Nível*" />
-                                            <ComboBox minWidth="300" promptText="Selecione o nível"
-                                                styleClass="combo-box" fx:id="levelCourse" />
+                                            <ComboBox fx:id="levelCourse" minWidth="300"
+                                                promptText="Selecione o nível"
+                                                styleClass="combo-box" />
                                         </VBox>
                                     </HBox>
 
                                     <VBox spacing="8">
                                         <Label styleClass="field-label" text="Tags" />
-                                        <FlowPane hgap="10" styleClass="tags-container" vgap="10"
-                                            fx:id="interestContainer">
+                                        <FlowPane fx:id="interestContainer" hgap="10"
+                                            styleClass="tags-container" vgap="10">
                                             <Button styleClass="interest-button" text="JavaScript" />
                                             <Button styleClass="interest-button" text="Frontend" />
                                             <Button styleClass="interest-button" text="+ Adicionar" />
@@ -151,8 +151,8 @@
                                         text="+ Adicionar Módulo" />
                                 </HBox>
 
-                                <VBox spacing="15" styleClass="modules-list" fx:id="modulesList">
-                                  
+                                <VBox fx:id="modulesList" spacing="15" styleClass="modules-list">
+
                                 </VBox>
                             </VBox>
                         </VBox>
@@ -177,12 +177,14 @@
                                             styleClass="custom-text-field" />
                                     </VBox>
 
-                                    <VBox spacing="8" fx:id="date">
+                                    <VBox fx:id="date" spacing="8">
                                         <Label styleClass="field-label" text="Período do Curso" />
                                         <HBox spacing="10">
 
                                         </HBox>
                                     </VBox>
+                                    <CheckBox styleClass="custom-checkbox" text="Sem data final"
+                                        fx:id="dateEnd" />
 
                                     <VBox spacing="15">
                                         <Label styleClass="field-label" text="Certificação" />
@@ -195,13 +197,13 @@
                                     <VBox spacing="8">
                                         <Label styleClass="field-label" text="Visibilidade" />
                                         <ComboBox maxWidth="Infinity" promptText="Selecione"
-                                            styleClass="custom-combo-box" />
+                                            styleClass="custom-combo-box" fx:id="ComboBoxVisibily"/>
                                     </VBox>
                                 </VBox>
                             </VBox>
 
                             <VBox spacing="15">
-                                <Button onAction="#createCourse" maxWidth="Infinity"
+                                <Button maxWidth="Infinity" onAction="#createCourse"
                                     styleClass="modern-button" text="Publicar Curso" />
                                 <Button maxWidth="Infinity" styleClass="outline-button"
                                     text="Salvar como Rascunho" />
