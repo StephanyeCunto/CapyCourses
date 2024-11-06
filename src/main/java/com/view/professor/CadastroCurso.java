@@ -61,6 +61,12 @@ public class CadastroCurso implements Initializable {
     private CheckBox dateEnd;
     @FXML
     private ComboBox ComboBoxVisibily;
+    @FXML
+    private TextField durationTotal;
+    @FXML
+    private CheckBox isCertificate;
+    @FXML
+    private CheckBox isGradeMiniun;
 
     private Set<String> selectedInterests = new HashSet<>();
 
@@ -114,14 +120,14 @@ public class CadastroCurso implements Initializable {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
             dateChange();
         }));
-        
-        timeline.setCycleCount(Timeline.INDEFINITE); 
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
     }
 
     private void dateChange() {
-        if (dateCurrent != dateInputPopupStart.getLocalDate()) {            
+        if (dateCurrent != dateInputPopupStart.getLocalDate()) {
             LocalDate selectedDate = dateInputPopupStart.getLocalDate();
             LocalDate today = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -282,7 +288,9 @@ public class CadastroCurso implements Initializable {
     public void createCourse() {
         new CadastroCursoController(titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
                 levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,
-                saveModulesAndLessonsData());
+                saveModulesAndLessonsData(), dateInputPopupStart.getLocalDate(), dateInputPopupEnd.getLocalDate(),
+                durationTotal.getText(), dateEnd.isSelected(), isCertificate.isSelected(), isGradeMiniun.isSelected(),
+                ComboBoxVisibily.getValue());
     }
 
     public List<Map<String, Object>> saveModulesAndLessonsData() {

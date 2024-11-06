@@ -3,6 +3,7 @@ package com.model.professor;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,9 @@ import com.UserSession;
 public class CadastroCurso {
 
     public CadastroCurso(String title, String description, String category, String level, String tags,
-                         List<Map<String, Object>> modulesData) {
+            List<Map<String, Object>> modulesData, LocalDate dateStart, LocalDate dateEnd, String durationTotal,
+            boolean isDateEnd, boolean isCertificate,
+            boolean isGradeMiniun, Object ComboBoxVisibily) {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_curso.csv", true))) {
             writer.write(UserSession.getInstance().getUserEmail() + "," + title + "," + description + "," + category
@@ -19,7 +22,8 @@ public class CadastroCurso {
             writer.newLine();
 
             registerModules(modulesData, title);
-
+            registerSettings(title, dateStart, dateEnd, durationTotal, isDateEnd, isCertificate,
+                    isGradeMiniun, ComboBoxVisibily);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,8 +39,6 @@ public class CadastroCurso {
 
                 writer.write(title + "," + moduleTitle + "," + moduleDuration + "," + moduleDescription);
                 writer.newLine();
-
-                // Verifique se "lessons" está no tipo correto antes de passá-lo
                 Object lessons = moduleData.get("lessons");
                 if (lessons instanceof List) {
                     List<Map<String, String>> lessonsData = (List<Map<String, String>>) lessons;
@@ -58,10 +60,25 @@ public class CadastroCurso {
                 String lessonMaterials = lessonData.get("lessonMaterials");
                 String lessonDuration = lessonData.get("lessonDuration");
 
-                writer.write(title + "," + moduleTitle + "," + lessonTitle + "," + lessonVideoLink + "," + lessonDetails + ","
+                writer.write(title + "," + moduleTitle + "," + lessonTitle + "," + lessonVideoLink + "," + lessonDetails
+                        + ","
                         + lessonMaterials + "," + lessonDuration);
                 writer.newLine();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void registerSettings(String title,LocalDate dateStart, LocalDate dateEnd, String durationTotal, boolean isDateEnd,
+            boolean isCertificate,
+            boolean isGradeMiniun, Object ComboBoxVisibily) {
+        try (BufferedWriter writer = new BufferedWriter(
+                new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_settingsCurso.csv", true))) {
+            writer.write(title + "," + dateStart + "," + dateEnd + "," + durationTotal + "," + isDateEnd + "," + isCertificate
+                    + ","
+                    + isGradeMiniun + "," + ComboBoxVisibily);
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
