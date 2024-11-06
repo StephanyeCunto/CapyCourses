@@ -585,12 +585,14 @@ public class CadastroCurso implements Initializable {
     protected void addDateInputField() {
         Label dateStart = new Label();
         Label dateEnd = new Label();
+
         dateStart.setText("Data de início");
         dateContainerStart.getChildren().add(dateInputPopupStart.getDateInputField());
         dateEnd.setText("Data do fim");
         dateContainerEnd.getChildren().add(dateInputPopupEnd.getDateInputField());
         dateContainerStart.setStyle("-fx-background-color:rgba(108,99,255,0.2);");
         dateContainerEnd.setStyle("-fx-background-color:rgba(108,99,255,0.2);");
+
 
         dateContainerStart.setOnMouseEntered(e -> dateContainerStart.setStyle(
                 "-fx-background-color: rgba(108,99,255,0.5); -fx-background-radius: 8; -fx-border-radius: 8;"));

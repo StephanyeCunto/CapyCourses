@@ -316,10 +316,3 @@
         -fx-scale-y: 1;
     }
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=REM:ital,wght@0,528;1,528&family=Sriracha&display=swap');
-
-.titulo{
-    -fx-font-family:REM;
-    -fx-font-size: 30px;
-}

@@ -16,12 +16,12 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Image icon = new Image("/capyCourses 012.png");
-
-        scene = new Scene(loadFXML("/com/login_cadastro/paginaLogin"));
-        stage.setMaximized(true);
-        stage.setScene(scene);
         stage.getIcons().add(icon);
         stage.setTitle("CapyCourse");
+
+        scene = new Scene(loadFXML("/com/professor/paginaCadastroCurso"));
+        stage.setMaximized(true);
+        stage.setScene(scene);
         stage.show();
     }
 
