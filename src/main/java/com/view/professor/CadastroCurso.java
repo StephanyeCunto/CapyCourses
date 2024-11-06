@@ -587,8 +587,10 @@ public class CadastroCurso implements Initializable {
         Label dateEnd = new Label();
 
         dateStart.setText("Data de início");
+        dateInputPopupStart.setMinDate(LocalDate.now());
         dateContainerStart.getChildren().add(dateInputPopupStart.getDateInputField());
         dateEnd.setText("Data do fim");
+        dateInputPopupEnd.setMinDate(LocalDate.now().plusDays(1));
         dateContainerEnd.getChildren().add(dateInputPopupEnd.getDateInputField());
         dateContainerStart.setStyle("-fx-background-color:rgba(108,99,255,0.2);");
         dateContainerEnd.setStyle("-fx-background-color:rgba(108,99,255,0.2);");

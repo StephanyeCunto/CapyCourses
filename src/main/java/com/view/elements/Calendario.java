@@ -17,6 +17,8 @@ import java.util.Locale;
 
 public class Calendario {
     private LocalDate selectedDate = LocalDate.now();
+    private LocalDate minDate = null;
+    private LocalDate maxDate = null;
     private TextField dateInputField;
     private Label monthLabel;
     private Label yearLabel;
@@ -30,7 +32,126 @@ public class Calendario {
     private int yearGridStartYear;
     private GridPane calendarGrid;
 
+    // Adicione os métodos para definir as datas mínima e máxima
+    public void setMinDate(LocalDate minDate) {
+        this.minDate = minDate;
+        validateSelectedDate();
+        updateCalendar();
+    }
+
+    public void setMaxDate(LocalDate maxDate) {
+        this.maxDate = maxDate;
+        validateSelectedDate();
+        updateCalendar();
+    }
+
+    // Método para validar a data selecionada
+    private void validateSelectedDate() {
+        if (selectedDate != null) {
+            if (minDate != null && selectedDate.isBefore(minDate)) {
+                selectedDate = minDate;
+            }
+            if (maxDate != null && selectedDate.isAfter(maxDate)) {
+                selectedDate = maxDate;
+            }
+        }
+        updateDateInput(dateInputField);
+    }
+
+    // Modifique o método createDayButton para considerar as datas mínima e máxima
+    private Button createDayButton(int day) {
+        Button button = new Button(String.valueOf(day));
+        LocalDate date = selectedDate.withDayOfMonth(day);
+        boolean isToday = date.equals(LocalDate.now());
+        boolean isSelected = date.equals(selectedDate);
+        boolean isDisabled = (minDate != null && date.isBefore(minDate)) || 
+                           (maxDate != null && date.isAfter(maxDate));
+
+        String buttonStyle = """
+                -fx-background-color: %s;
+                -fx-text-fill: %s;
+                -fx-background-radius: 6;
+                -fx-min-width: 32px;
+                -fx-min-height: 32px;
+                -fx-cursor: %s;
+                -fx-font-size: 13px;
+                %s
+                """.formatted(
+                isSelected ? ACCENT_COLOR : "transparent",
+                isDisabled ? DISABLED_TEXT : TEXT_COLOR,
+                isDisabled ? "default" : "hand",
+                isToday ? "-fx-border-color: " + ACCENT_COLOR + "; -fx-border-radius: 6; -fx-border-width: 2;" : "");
+
+        button.setStyle(buttonStyle);
+        button.setDisable(isDisabled);
+
+        if (!isDisabled) {
+            button.setOnMouseEntered(e -> {
+                if (!isSelected) {
+                    button.setStyle(button.getStyle() + "-fx-background-color: " + HOVER_COLOR + ";");
+                }
+            });
+            button.setOnMouseExited(e -> {
+                if (!isSelected) {
+                    button.setStyle(buttonStyle);
+                }
+            });
+            button.setOnAction(e -> {
+                selectedDate = date;
+                updateDateInput(dateInputField);
+                ((Popup) button.getScene().getWindow()).hide();
+            });
+        }
+
+        return button;
+    }
+
+    // Modifique o método createNavigationButton para considerar as datas mínima e máxima
+    private Button createNavigationButton(String text) {
+        Button button = new Button(text);
+        button.setStyle("""
+                -fx-background-color: transparent;
+                -fx-text-fill: %s;
+                -fx-font-size: 16px;
+                -fx-cursor: hand;
+                -fx-padding: 6;
+                -fx-background-radius: 6;
+                """.formatted(ACCENT_COLOR));
+                
+        button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
+                "-fx-background-color: " + HOVER_COLOR + ";"));
+        button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
+                "-fx-background-color: " + HOVER_COLOR + ";", "")));
+
+        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
+        if (text.equals("❮")) {
+            // Desabilita o botão se o mês anterior estiver completamente antes da data mínima
+            if (minDate != null) {
+                LocalDate firstOfPreviousMonth = firstOfMonth.minusMonths(1);
+                button.setDisable(firstOfPreviousMonth.isBefore(minDate.withDayOfMonth(1)));
+            }
+            button.setOnAction(e -> {
+                selectedDate = selectedDate.minusMonths(1);
+                updateCalendar();
+            });
+        } else {
+            // Desabilita o botão se o próximo mês estiver completamente depois da data máxima
+            if (maxDate != null) {
+                LocalDate firstOfNextMonth = firstOfMonth.plusMonths(1);
+                button.setDisable(firstOfNextMonth.isAfter(maxDate.withDayOfMonth(1)));
+            }
+            button.setOnAction(e -> {
+                selectedDate = selectedDate.plusMonths(1);
+                updateCalendar();
+            });
+        }
+        return button;
+    }
+
     public Calendario() {
+        monthLabel = new Label();
+        yearLabel = new Label();
+        calendarGrid = new GridPane();
         dateInputField = createDateInputField();
     }
 
@@ -361,34 +482,6 @@ public class Calendario {
         showSelectionPopup(false);
     }
 
-    private Button createNavigationButton(String text) {
-        Button button = new Button(text);
-        button.setStyle("""
-                -fx-background-color: transparent;
-                -fx-text-fill: %s;
-                -fx-font-size: 16px;
-                -fx-cursor: hand;
-                -fx-padding: 6;
-                -fx-background-radius: 6;
-                """.formatted(ACCENT_COLOR));
-        button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
-                "-fx-background-color: " + HOVER_COLOR + ";"));
-        button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
-                "-fx-background-color: " + HOVER_COLOR + ";", "")));
-        if (text.equals("❮")) {
-            button.setOnAction(e -> {
-                selectedDate = selectedDate.minusMonths(1);
-                updateCalendar();
-            });
-        } else {
-            button.setOnAction(e -> {
-                selectedDate = selectedDate.plusMonths(1);
-                updateCalendar();
-            });
-        }
-        return button;
-    }
-
     private void updateCalendar() {
         monthLabel.setText(selectedDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()));
         yearLabel.setText(String.valueOf(selectedDate.getYear()));
@@ -420,43 +513,6 @@ public class Calendario {
             }
         }
         return grid;
-    }
-
-    private Button createDayButton(int day) {
-        Button button = new Button(String.valueOf(day));
-        LocalDate date = selectedDate.withDayOfMonth(day);
-        boolean isToday = date.equals(LocalDate.now());
-        boolean isSelected = date.equals(selectedDate);
-        String buttonStyle = """
-                -fx-background-color: %s;
-                -fx-text-fill: %s;
-                -fx-background-radius: 6;
-                -fx-min-width: 32px;
-                -fx-min-height: 32px;
-                -fx-cursor: hand;
-                -fx-font-size: 13px;
-                %s
-                """.formatted(
-                isSelected ? ACCENT_COLOR : "transparent",
-                isSelected ? TEXT_COLOR : TEXT_COLOR,
-                isToday ? "-fx-border-color: " + ACCENT_COLOR + "; -fx-border-radius: 6; -fx-border-width: 2;" : "");
-        button.setStyle(buttonStyle);
-        button.setOnMouseEntered(e -> {
-            if (!isSelected) {
-                button.setStyle(button.getStyle() + "-fx-background-color: " + HOVER_COLOR + ";");
-            }
-        });
-        button.setOnMouseExited(e -> {
-            if (!isSelected) {
-                button.setStyle(buttonStyle);
-            }
-        });
-        button.setOnAction(e -> {
-            selectedDate = date;
-            updateDateInput(dateInputField);
-            ((Popup) button.getScene().getWindow()).hide();
-        });
-        return button;
     }
 
     private Button createDisabledDayButton(int day) {
