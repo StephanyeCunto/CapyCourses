@@ -19,6 +19,8 @@ import com.controller.professor.CadastroCursoController;
 import com.view.elements.Calendario;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -77,12 +79,14 @@ public class CadastroCurso implements Initializable {
     private VBox dateContainerEnd = new VBox(5);
 
     private String valueComBox = "Visível";
+    private LocalDate dateCurrent = dateInputPopupStart.getLocalDate();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         checkTitle();
         loadComboBoxCategory();
         loadComboBoxLevel();
+        loadComBoxVisibily(valueComBox);
         setupInterestButtons();
         addDateInputField();
 
@@ -107,20 +111,35 @@ public class CadastroCurso implements Initializable {
             }
         });
 
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
+            dateChange();
+        }));
         
+        timeline.setCycleCount(Timeline.INDEFINITE); 
+        timeline.play();
 
-        ComboBoxVisibily.setOnMouseEntered(event -> {
+    }
+
+    private void dateChange() {
+        if (dateCurrent != dateInputPopupStart.getLocalDate()) {            
+            LocalDate selectedDate = dateInputPopupStart.getLocalDate();
             LocalDate today = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String formattedDate = today.format(formatter);
+            String formattedToday = today.format(formatter);
 
-            if (!dateInputPopupStart.getDate().equals(formattedDate)) {
-                valueComBox = "Visível,Somente na data de início";
-            } else {
-                valueComBox = "Visível";
+            if (selectedDate != null) {
+                String formattedDate = selectedDate.format(formatter);
+                if (!formattedDate.equals(formattedToday)) {
+                    valueComBox = "Visível, Somente na data de início";
+                } else {
+                    valueComBox = "Visível";
+                }
+                loadComBoxVisibily(valueComBox);
             }
-            loadComBoxVisibily(valueComBox);
-        });
+            dateCurrent = dateInputPopupStart.getLocalDate();
+            dateInputPopupEnd.setMinDate(dateCurrent.plusDays(1));
+            dateInputPopupEnd.setselectedDate(dateCurrent.plusDays(1));
+        }
     }
 
     private void loadComBoxVisibily(String valueCombox) {
@@ -594,7 +613,6 @@ public class CadastroCurso implements Initializable {
         dateContainerEnd.getChildren().add(dateInputPopupEnd.getDateInputField());
         dateContainerStart.setStyle("-fx-background-color:rgba(108,99,255,0.2);");
         dateContainerEnd.setStyle("-fx-background-color:rgba(108,99,255,0.2);");
-
 
         dateContainerStart.setOnMouseEntered(e -> dateContainerStart.setStyle(
                 "-fx-background-color: rgba(108,99,255,0.5); -fx-background-radius: 8; -fx-border-radius: 8;"));

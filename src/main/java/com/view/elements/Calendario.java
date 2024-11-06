@@ -7,15 +7,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
 
-import java.time.LocalDate;
-import java.time.Month;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
-public class Calendario {
+public class Calendario extends Region{
     private LocalDate selectedDate = LocalDate.now();
     private LocalDate minDate = null;
     private LocalDate maxDate = null;
@@ -32,7 +29,6 @@ public class Calendario {
     private int yearGridStartYear;
     private GridPane calendarGrid;
 
-    // Adicione os métodos para definir as datas mínima e máxima
     public void setMinDate(LocalDate minDate) {
         this.minDate = minDate;
         validateSelectedDate();
@@ -45,7 +41,6 @@ public class Calendario {
         updateCalendar();
     }
 
-    // Método para validar a data selecionada
     private void validateSelectedDate() {
         if (selectedDate != null) {
             if (minDate != null && selectedDate.isBefore(minDate)) {
@@ -58,7 +53,6 @@ public class Calendario {
         updateDateInput(dateInputField);
     }
 
-    // Modifique o método createDayButton para considerar as datas mínima e máxima
     private Button createDayButton(int day) {
         Button button = new Button(String.valueOf(day));
         LocalDate date = selectedDate.withDayOfMonth(day);
@@ -106,7 +100,6 @@ public class Calendario {
         return button;
     }
 
-    // Modifique o método createNavigationButton para considerar as datas mínima e máxima
     private Button createNavigationButton(String text) {
         Button button = new Button(text);
         button.setStyle("""
@@ -125,7 +118,6 @@ public class Calendario {
 
         LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
         if (text.equals("❮")) {
-            // Desabilita o botão se o mês anterior estiver completamente antes da data mínima
             if (minDate != null) {
                 LocalDate firstOfPreviousMonth = firstOfMonth.minusMonths(1);
                 button.setDisable(firstOfPreviousMonth.isBefore(minDate.withDayOfMonth(1)));
@@ -135,7 +127,6 @@ public class Calendario {
                 updateCalendar();
             });
         } else {
-            // Desabilita o botão se o próximo mês estiver completamente depois da data máxima
             if (maxDate != null) {
                 LocalDate firstOfNextMonth = firstOfMonth.plusMonths(1);
                 button.setDisable(firstOfNextMonth.isAfter(maxDate.withDayOfMonth(1)));
@@ -199,6 +190,15 @@ public class Calendario {
             return selectedDate.format(formatter);
         }
         return "";
+    }
+
+    public LocalDate getLocalDate(){
+        return selectedDate;
+    }
+
+    public void setselectedDate(LocalDate date){
+        this.selectedDate=date;
+        updateCalendar();
     }
 
     private TextField createDateInputField() {
