@@ -67,6 +67,16 @@ public class CadastroCurso implements Initializable {
     private CheckBox isCertificate;
     @FXML
     private CheckBox isGradeMiniun;
+    @FXML
+    private Label progressLabel;
+    @FXML
+    private ProgressBar progressBar;
+    @FXML
+    private Label basicInformation;
+    @FXML
+    private Label settings;
+    @FXML
+    private Label modules;
 
     private Set<String> selectedInterests = new HashSet<>();
 
@@ -86,6 +96,8 @@ public class CadastroCurso implements Initializable {
 
     private String valueComBox = "Visível";
     private LocalDate dateCurrent = dateInputPopupStart.getLocalDate();
+    private boolean isImage = false;
+    private int isTag = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -124,6 +136,280 @@ public class CadastroCurso implements Initializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
+        Timeline timeline0 = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
+            registrationProgress();
+        }));
+
+        timeline0.setCycleCount(Timeline.INDEFINITE);
+        timeline0.play();
+    }
+
+    private void registrationProgress() {
+        double percentage = 0;
+        double coutFieldFilled = 0;
+        double amount = 0;
+        String[] fields = { titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
+                levelCourse.getValue(), durationTotal.getText(), String.valueOf(ComboBoxVisibily.getValue()) };
+        for (String field : fields) {
+            if (field != null && field != "") {
+                if (field != "null") {
+                    coutFieldFilled = coutFieldFilled + 1;
+                }
+            }
+            amount = amount + 1;
+        }
+        if (isImage == true) {
+            coutFieldFilled = coutFieldFilled + 1;
+        }
+        if (isTag > 0) {
+            coutFieldFilled = coutFieldFilled + 1;
+        }
+        amount = amount + 2;
+
+        List<Map<String, Object>> modulesData = saveModulesAndLessonsData();
+        int contModule = 0;
+        int contModuleTitleComplet = 0;
+        int contModuleDurationComplet = 0;
+        int contModuleDesriptionComplet = 0;
+        int contLessons = 0;
+        int contlessonTitle = 0;
+        int contlessonVideoLink = 0;
+        int contlessonDetails = 0;
+        int contlessonMaterials = 0;
+        int contlessonDuration = 0;
+        int moduleWithoutClass = 0;
+
+        for (Map<String, Object> moduleData : modulesData) {
+            String moduleTitle = (String) moduleData.get("moduleTitle");
+            String moduleDuration = (String) moduleData.get("moduleDuration");
+            String moduleDescription = (String) moduleData.get("moduleDescription");
+
+            if (moduleTitle != "" && moduleTitle != "null") {
+                contModuleTitleComplet = contModuleTitleComplet + 1;
+            }
+            if (moduleDuration != "" && moduleDuration != "null") {
+                contModuleDurationComplet = contModuleDurationComplet + 1;
+            }
+            if (moduleDescription != "" && moduleDescription != "null") {
+                contModuleDesriptionComplet = contModuleDesriptionComplet + 1;
+            }
+            contModule = contModule + 1;
+
+            Object lessons = moduleData.get("lessons");
+
+            if (lessons == null || !(lessons instanceof List) || ((List<?>) lessons).isEmpty()) {
+                moduleWithoutClass = moduleWithoutClass + 1;
+            }
+
+            if (lessons instanceof List) {
+                List<Map<String, String>> lessonsData = (List<Map<String, String>>) lessons;
+                for (Map<String, String> lessonData : lessonsData) {
+                    String lessonTitle = lessonData.get("lessonTitle");
+                    String lessonVideoLink = lessonData.get("lessonVideoLink");
+                    String lessonDetails = lessonData.get("lessonDetails");
+                    String lessonMaterials = lessonData.get("lessonMaterials");
+                    String lessonDuration = lessonData.get("lessonDuration");
+
+                    if (lessonTitle != "" && lessonTitle != "null") {
+                        contlessonTitle = contlessonTitle + 1;
+                    }
+                    if (lessonVideoLink != "" && lessonVideoLink != "null") {
+                        contlessonVideoLink = contlessonVideoLink + 1;
+                    }
+                    if (lessonDetails != "" && lessonDetails != "null") {
+                        contlessonDetails = contlessonDetails + 1;
+                    }
+                    if (lessonMaterials != "" && lessonMaterials != "null") {
+                        contlessonMaterials = contlessonMaterials + 1;
+                    }
+                    if (lessonDuration != "" && lessonDuration != "null") {
+                        contlessonDuration = contlessonDuration + 1;
+                    }
+                    contLessons = contLessons + 1;
+                }
+            }
+        }
+
+        coutFieldFilled = coutFieldFilled + contModuleDesriptionComplet + contModuleDurationComplet
+                + contModuleTitleComplet + contlessonDetails + contlessonDuration + contlessonMaterials
+                + contlessonTitle + contlessonVideoLink;
+        if (contModule == 0) {
+            amount = amount + 8;
+        }
+        amount = amount + (3 * contModule) + (5 * contLessons) + (5 * moduleWithoutClass);
+
+        percentage = (coutFieldFilled / amount) * 100;
+        String percentageFormatted = String.format("%.0f", percentage);
+        double percentageDouble = percentage / 100;
+        progressLabel.setText(percentageFormatted + " % Completo");
+        progressBar.setProgress(percentageDouble);
+
+        loadLabelBasicInformation();
+        loadLabelSettings();
+        loadLabelModule(modulesData);
+    }
+
+    private void loadLabelModule(List<Map<String, Object>> modulesDate) {
+        int contModule = 0;
+        int contTotalModule = 0;
+        int contModuleTitleComplet = 0;
+        int contModuleDurationComplet = 0;
+        int contModuleDesriptionComplet = 0;
+        int contLessons = 0;
+        int moduleWithoutClass = 0;
+        int amount = 0;
+        int fields = 0;
+
+        for (Map<String, Object> moduleData : modulesDate) {
+            String moduleTitle = (String) moduleData.get("moduleTitle");
+            String moduleDuration = (String) moduleData.get("moduleDuration");
+            String moduleDescription = (String) moduleData.get("moduleDescription");
+
+            if (moduleTitle != "" && moduleTitle != "null") {
+                contModuleTitleComplet = contModuleTitleComplet + 1;
+            }
+            if (moduleDuration != "" && moduleDuration != "null") {
+                contModuleDurationComplet = contModuleDurationComplet + 1;
+            }
+            if (moduleDescription != "" && moduleDescription != "null") {
+                contModuleDesriptionComplet = contModuleDesriptionComplet + 1;
+            }
+            contModule = contModule + 1;
+
+            Object lessons = moduleData.get("lessons");
+
+            if (lessons == null || !(lessons instanceof List) || ((List<?>) lessons).isEmpty()) {
+                moduleWithoutClass = moduleWithoutClass + 1;
+            }
+
+            if (lessons instanceof List) {
+                List<Map<String, String>> lessonsData = (List<Map<String, String>>) lessons;
+                for (Map<String, String> lessonData : lessonsData) {
+                    String lessonTitle = lessonData.get("lessonTitle");
+                    String lessonVideoLink = lessonData.get("lessonVideoLink");
+                    String lessonDetails = lessonData.get("lessonDetails");
+                    String lessonMaterials = lessonData.get("lessonMaterials");
+                    String lessonDuration = lessonData.get("lessonDuration");
+
+                    if (lessonTitle != "" && lessonTitle != "null") {
+                        fields++;
+                    }
+                    if (lessonVideoLink != "" && lessonVideoLink != "null") {
+                        fields++;
+                    }
+                    if (lessonDetails != "" && lessonDetails != "null") {
+                        fields++;
+                    }
+                    if (lessonMaterials != "" && lessonMaterials != "null") {
+                        fields++;
+                    }
+                    if (lessonDuration != "" && lessonDuration != "null") {
+                        fields++;
+                    }
+                    contLessons = contLessons + 1;
+                    amount = amount + 5;
+                }
+            }
+        }
+        contTotalModule = contModuleDesriptionComplet + contModuleDurationComplet + contModuleTitleComplet;
+
+        System.out.println(contTotalModule);
+        if (contTotalModule!=0) {
+            modules.getStyleClass().remove("step-pending");
+            modules.getStyleClass().add("step-current");
+            modules.setStyle("-fx-text-fill: rgb(89, 92, 150);");
+            modules.setText("→ Módulos");
+            if (fields == amount && fields > 0) {
+                if((contTotalModule)/3 == contModule ){
+                modules.getStyleClass().remove("step-pending");
+                modules.getStyleClass().remove("step-current");
+                modules.getStyleClass().add("step-completed");
+                modules.setStyle("-fx-text-fill: rgb(89, 150, 90);");
+                modules.setText("✓ Módulos");
+                }
+
+            }
+        } else {
+            modules.getStyleClass().remove("step-current");
+            modules.getStyleClass().add("step-pending");
+            modules.setText(" Módulos");
+            modules.setStyle("-fx-text-fill: #797E8C;");
+        }
+
+    }
+
+    private void loadLabelBasicInformation() {
+        double coutFieldFilled = 0;
+        double amount = 0;
+        String[] fieldsBasicInformation = { titleCourse.getText(), descritionCourse.getText(),
+                categoryCourse.getValue(),
+                levelCourse.getValue() };
+
+        for (String field : fieldsBasicInformation) {
+            if (field != null && field != "") {
+                if (field != "null") {
+                    coutFieldFilled = coutFieldFilled + 1;
+                }
+            }
+            amount = amount + 1;
+        }
+        if (isTag > 0) {
+            coutFieldFilled = coutFieldFilled + 1;
+        }
+        amount = amount + 1;
+
+        if (coutFieldFilled > 0) {
+            if (amount == coutFieldFilled) {
+                basicInformation.getStyleClass().remove("step-current");
+                basicInformation.getStyleClass().add("step-completed");
+                basicInformation.setStyle("-fx-text-fill: rgb(89, 150, 90);");
+                basicInformation.setText("✓ Informações Básicas");
+            } else {
+                basicInformation.getStyleClass().remove("step-pending");
+                basicInformation.getStyleClass().add("step-current");
+                basicInformation.setStyle("-fx-text-fill: rgb(89, 92, 150);");
+                basicInformation.setText("→ Informações Básicas");
+            }
+        } else {
+            basicInformation.getStyleClass().remove("step-current");
+            basicInformation.getStyleClass().add("step-pending");
+            basicInformation.setText(" Informações Básicas");
+            basicInformation.setStyle("-fx-text-fill: #797E8C;");
+        }
+
+    }
+
+    private void loadLabelSettings() {
+        double coutFieldFilled = 0;
+        double amount = 0;
+        String[] fieldsBasicInformation = { durationTotal.getText(), String.valueOf(ComboBoxVisibily.getValue()) };
+
+        for (String field : fieldsBasicInformation) {
+            if (field != null && field != "") {
+                if (field != "null") {
+                    coutFieldFilled = coutFieldFilled + 1;
+                }
+            }
+            amount = amount + 1;
+        }
+        if (coutFieldFilled > 0) {
+            if (amount == coutFieldFilled) {
+                settings.getStyleClass().remove("step-pending");
+                settings.getStyleClass().add("step-completed");
+                settings.setStyle("-fx-text-fill: rgb(89, 150, 90)");
+                settings.setText("✓ Configurações");
+            } else {
+                settings.getStyleClass().remove("step-pending");
+                settings.getStyleClass().add("step-current");
+                settings.setStyle("-fx-text-fill: rgb(89, 92, 150);");
+                settings.setText("→ Configurações");
+            }
+        } else {
+            settings.getStyleClass().remove("step-current");
+            settings.getStyleClass().add("step-pending");
+            settings.setText(" Configurações");
+            settings.setStyle("-fx-text-fill:#797E8C;");
+        }
     }
 
     private void dateChange() {
@@ -164,6 +450,7 @@ public class CadastroCurso implements Initializable {
             try {
                 Image image = new Image(new FileInputStream(selectedFile));
                 coursePreviewImage.setImage(image);
+                isImage = true;
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -219,11 +506,12 @@ public class CadastroCurso implements Initializable {
         if (selectedInterests.contains(interest)) {
             selectedInterests.remove(interest);
             button.getStyleClass().remove("selected");
+            isTag = isTag - 1;
         } else {
             selectedInterests.add(interest);
             button.getStyleClass().add("selected");
+            isTag = isTag + 1;
         }
-
         updateSelectedCount();
     }
 
@@ -347,7 +635,6 @@ public class CadastroCurso implements Initializable {
                         lessonsData.add(lessonData);
                     }
                 }
-
                 moduleData.put("lessons", lessonsData);
                 modulesData.add(moduleData);
             }

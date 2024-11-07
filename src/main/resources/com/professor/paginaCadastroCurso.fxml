@@ -39,13 +39,13 @@
 
                 <VBox spacing="15" styleClass="progress-tracker">
                     <Label styleClass="section-title" text="Progresso do Cadastro" />
-                    <ProgressBar progress="0.33" styleClass="custom-progress-bar" />
-                    <Label styleClass="progress-text" text="33% Completo" />
+                    <ProgressBar fx:id="progressBar" progress="0.33" styleClass="custom-progress-bar" />
+                    <Label fx:id="progressLabel" styleClass="progress-text" text="33% Completo" />
 
                     <VBox spacing="10" styleClass="steps-container">
-                        <Label styleClass="step-completed" text="✓ Informações Básicas" />
-                        <Label styleClass="step-current" text="→ Módulos" />
-                        <Label styleClass="step-pending" text="Configurações" />
+                        <Label fx:id="basicInformation" text=" Informações Básicas" />
+                        <Label fx:id="modules" text=" Módulos" />
+                        <Label fx:id="settings" text="Configurações" />
                     </VBox>
                 </VBox>
 
