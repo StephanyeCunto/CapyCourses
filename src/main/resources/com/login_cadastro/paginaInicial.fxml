@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import com.view.PaginaInicialView?>
+
+<GridPane fx:controller="com.view.PaginaInicialView" stylesheets="@style/style.css"
+  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+  prefHeight="768.0" prefWidth="1366.0"
+  style="-fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);"
+  xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="220.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1060.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="800.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+  <children>
+    <VBox fx:id="sideMenu" spacing="15"
+      style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-padding: 25; -fx-background-radius: 0 20 20 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);">
+    </VBox>
+    <ScrollPane fx:id="courseScrollPane" fitToWidth="true"
+      style="-fx-background: transparent; -fx-background-color: transparent;"
+      GridPane.columnIndex="1">
+      <content>
+        <VBox spacing="20" style="-fx-padding: 25;">
+          <HBox fx:id="searchBar" maxWidth="300"
+            style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-padding: 8 15;">
+            <Label text="🔍" textFill="WHITE">
+              <font>
+                <Font size="14.0" />
+              </font>
+            </Label>
+            <Label text="Pesquisar cursos..." textFill="#ffffff80">
+              <font>
+                <Font name="Franklin Gothic Medium" size="14.0" />
+              </font>
+              <HBox.margin>
+                <Insets left="8.0" />
+              </HBox.margin>
+            </Label>
+          </HBox>
+          <VBox fx:id="carouselCourse">
+            <HBox fx:id="featuredCourseCarousel" alignment="CENTER" spacing="20">
+            </HBox>
+          </VBox>
+          <VBox fx:id="courseContainer" spacing="20">
+            <Label text="Todos os Cursos" textFill="WHITE">
+              <font>
+                <Font name="Franklin Gothic Medium" size="22.0" />
+              </font>
+            </Label>
+          </VBox>
+        </VBox>
+      </content>
+    </ScrollPane>
+  </children>
+</GridPane>

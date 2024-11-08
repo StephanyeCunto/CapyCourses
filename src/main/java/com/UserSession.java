@@ -23,7 +23,7 @@ public class UserSession {
     }
 
     public String getUserName(){
-         try (BufferedReader br = new BufferedReader(new FileReader("CapyCourses\\src\\main\\resources\\com\\bd_user.csv"))){
+         try (BufferedReader br = new BufferedReader(new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_user.csv"))){
             String line;
             while ((line = br.readLine()) != null) {
                 String[] elements = line.split(",");

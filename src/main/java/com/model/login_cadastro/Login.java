@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.UserSession;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -20,8 +18,8 @@ public class Login {
             while ((line = br.readLine()) != null) {
                 String[] elements = line.split(",");
                 if (user.equals(elements[1])) {
-                    if (password.equals(elements[2])) {
-                        if (completeRegistration(elements[4])) {
+                    if (password.equals(elements[2])) {    
+                        if (completeRegistration(elements[4],elements[1])) {
                             return "true";
                         }
                         return "incomplete " + elements[4];
@@ -35,20 +33,23 @@ public class Login {
         return "false";
     }
 
-    private boolean completeRegistration(String type) {
-        if (type == "student") {
-            return isCheckStudent();
+    private boolean completeRegistration(String type,String email) {
+        if (type.trim().equals("student")) {
+            return isCheckStudent(email);
+        }else if(type.trim().equals("teacher")){
+            return isCheckTeacher(email);
         }
-        return isCheckTeacher();
+
+        return false;
     }
 
-    private boolean isCheckStudent() {
+    private boolean isCheckStudent(String email) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_student.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                if (UserSession.getInstance().getUserName() == values[0]) {
+                if (email.equals(values[0])) {
                     return true;
                 }
             }
@@ -58,13 +59,13 @@ public class Login {
         return false;
     }
 
-    private boolean isCheckTeacher() {
+    private boolean isCheckTeacher(String email) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_teacher.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                if (UserSession.getInstance().getUserEmail() == values[0]) {
+                if (email.equals(values[0])) {
                     return true;
                 }
             }

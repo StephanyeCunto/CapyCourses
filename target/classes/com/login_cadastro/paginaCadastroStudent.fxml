@@ -45,12 +45,12 @@
         </rowConstraints>
         <children>
             <VBox fx:id="leftSection" alignment="CENTER" style="-fx-background-radius: 20 0 0 20;">
-                <ImageView fitHeight="250.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" styleClass="hidden-image">
+                <ImageView fitHeight="500.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true" styleClass="hidden-image">
                     <image>
-                        <Image url="@img/capyCourses 012.png" />
+                        <Image url="@img/capyCourses.png" />
                     </image>
                 </ImageView>
-                    <Label text="CAPY COURSES">
+                  <!--  <Label text="CAPY COURSES">
                         <font>
                             <Font name="Segoe UI" size="60.0" />
                         </font>
@@ -70,7 +70,7 @@
                                 </stops>
                             </LinearGradient>
                         </textFill>
-                    </Label>
+                    </Label>-->
             </VBox>
             <VBox fx:id="rightSection" alignment="CENTER" spacing="20" style="-fx-padding: 40;"
                 GridPane.columnIndex="1">

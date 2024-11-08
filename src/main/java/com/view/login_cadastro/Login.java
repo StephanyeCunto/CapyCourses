@@ -40,12 +40,12 @@ public class Login extends BaseLoginCadastro implements Initializable {
         String isCheck = plc.isCheck(user.getText(), password.getText());
         Stage stage = (Stage) leftSection.getScene().getWindow();
 
-        if (isCheck =="true") {
-            super.redirectTo("/com/paginaInical.fxml", stage);
-        }else if(isCheck == "incomplete student") {
+        if (isCheck.equals("true")) {
+            super.redirectTo("/com/paginaInicial.fxml", stage);
+        }else if(isCheck.equals("incomplete student")) {
             super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);
         }
-        else if(isCheck == "incomplete teacher") {
+        else if(isCheck.equals("incomplete teacher")) {
             super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);
         }else{
             UserSession.getInstance().clearSession();

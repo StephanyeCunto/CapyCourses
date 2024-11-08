@@ -69,7 +69,7 @@ public class BaseLoginCadastro extends Base{
     protected void redirectTo(String pageNext, Stage stage) {
                 try {
             Parent root = FXMLLoader.load(getClass().getResource(pageNext));
-            Image icon = new Image("/capyCourses 012.png");
+            Image icon = new Image("/capyCourses.png");
             Scene currentScene = stage.getScene();
             Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
             stage.setScene(newScene);
