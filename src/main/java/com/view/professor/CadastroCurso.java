@@ -144,271 +144,254 @@ public class CadastroCurso implements Initializable {
         timeline0.play();
     }
 
+    private static final String STEP_PENDING = "step-pending";
+    private static final String STEP_CURRENT = "step-current";
+    private static final String STEP_COMPLETED = "step-completed";
+    private static final int MIN_MODULES = 1;
+    private static final int MIN_LESSONS_PER_MODULE = 1;
+    
     private void registrationProgress() {
-        double percentage = 0;
-        double coutFieldFilled = 0;
-        double amount = 0;
-        String[] fields = { titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
-                levelCourse.getValue(), durationTotal.getText(), String.valueOf(ComboBoxVisibily.getValue()) };
-        for (String field : fields) {
-            if (field != null && field != "") {
-                if (field != "null") {
-                    coutFieldFilled = coutFieldFilled + 1;
-                }
-            }
-            amount = amount + 1;
-        }
-        if (isImage == true) {
-            coutFieldFilled = coutFieldFilled + 1;
-        }
-        if (isTag > 0) {
-            coutFieldFilled = coutFieldFilled + 1;
-        }
-        amount = amount + 2;
-
         List<Map<String, Object>> modulesData = saveModulesAndLessonsData();
-        int contModule = 0;
-        int contModuleTitleComplet = 0;
-        int contModuleDurationComplet = 0;
-        int contModuleDesriptionComplet = 0;
-        int contLessons = 0;
-        int contlessonTitle = 0;
-        int contlessonVideoLink = 0;
-        int contlessonDetails = 0;
-        int contlessonMaterials = 0;
-        int contlessonDuration = 0;
-        int moduleWithoutClass = 0;
-
+        double percentage = calculateTotalProgress(modulesData);
+        
+        updateProgressDisplay(percentage);
+        updateAllLabels(modulesData);
+    }
+    
+    private double calculateTotalProgress(List<Map<String, Object>> modulesData) {
+        int completedFields = countCompletedBaseFields();
+        int totalFields = countTotalBaseFields();
+        
+        if (modulesData.isEmpty()) {
+            totalFields += (3 * MIN_MODULES); 
+            totalFields += (5 * MIN_LESSONS_PER_MODULE); 
+        }
+        
+        ModuleProgressData moduleProgress = countModuleProgress(modulesData);
+        
+        int modulesWithoutLessons = countModulesWithoutLessons(modulesData);
+        totalFields += (5 * MIN_LESSONS_PER_MODULE * modulesWithoutLessons);
+        
+        completedFields += moduleProgress.completedFields;
+        totalFields += moduleProgress.totalFields;
+        
+        return totalFields > 0 ? (completedFields * 100.0) / totalFields : 0;
+    }
+    
+    private int countModulesWithoutLessons(List<Map<String, Object>> modulesData) {
+        int count = 0;
         for (Map<String, Object> moduleData : modulesData) {
-            String moduleTitle = (String) moduleData.get("moduleTitle");
-            String moduleDuration = (String) moduleData.get("moduleDuration");
-            String moduleDescription = (String) moduleData.get("moduleDescription");
-
-            if (moduleTitle != "" && moduleTitle != "null") {
-                contModuleTitleComplet = contModuleTitleComplet + 1;
-            }
-            if (moduleDuration != "" && moduleDuration != "null") {
-                contModuleDurationComplet = contModuleDurationComplet + 1;
-            }
-            if (moduleDescription != "" && moduleDescription != "null") {
-                contModuleDesriptionComplet = contModuleDesriptionComplet + 1;
-            }
-            contModule = contModule + 1;
-
             Object lessons = moduleData.get("lessons");
-
             if (lessons == null || !(lessons instanceof List) || ((List<?>) lessons).isEmpty()) {
-                moduleWithoutClass = moduleWithoutClass + 1;
+                count++;
             }
-
-            if (lessons instanceof List) {
-                List<Map<String, String>> lessonsData = (List<Map<String, String>>) lessons;
-                for (Map<String, String> lessonData : lessonsData) {
-                    String lessonTitle = lessonData.get("lessonTitle");
-                    String lessonVideoLink = lessonData.get("lessonVideoLink");
-                    String lessonDetails = lessonData.get("lessonDetails");
-                    String lessonMaterials = lessonData.get("lessonMaterials");
-                    String lessonDuration = lessonData.get("lessonDuration");
-
-                    if (lessonTitle != "" && lessonTitle != "null") {
-                        contlessonTitle = contlessonTitle + 1;
-                    }
-                    if (lessonVideoLink != "" && lessonVideoLink != "null") {
-                        contlessonVideoLink = contlessonVideoLink + 1;
-                    }
-                    if (lessonDetails != "" && lessonDetails != "null") {
-                        contlessonDetails = contlessonDetails + 1;
-                    }
-                    if (lessonMaterials != "" && lessonMaterials != "null") {
-                        contlessonMaterials = contlessonMaterials + 1;
-                    }
-                    if (lessonDuration != "" && lessonDuration != "null") {
-                        contlessonDuration = contlessonDuration + 1;
-                    }
-                    contLessons = contLessons + 1;
+        }
+        return count;
+    }
+    
+    private int countCompletedBaseFields() {
+        int completed = 0;
+        String[] fields = {
+            titleCourse.getText(),
+            descritionCourse.getText(),
+            categoryCourse.getValue(),
+            levelCourse.getValue(),
+            durationTotal.getText(),
+            String.valueOf(ComboBoxVisibily.getValue())
+        };
+        
+        for (String field : fields) {
+            if (isFieldComplete(field)) {
+                completed++;
+            }
+        } 
+        if (isImage) completed++;
+        if (isTag > 0) completed++;
+        
+        return completed;
+    }
+    
+    private int countTotalBaseFields() {
+        return 8; 
+    }
+    
+    private ModuleProgressData countModuleProgress(List<Map<String, Object>> modulesData) {
+        int completedFields = 0;
+        int totalFields = 0;
+        
+        for (Map<String, Object> moduleData : modulesData) {
+            completedFields += countCompletedModuleFields(moduleData);
+            totalFields += 3; 
+            LessonProgressData lessonProgress = countLessonProgress(moduleData.get("lessons"));
+            completedFields += lessonProgress.completedFields;
+            totalFields += lessonProgress.totalFields;
+        }
+        return new ModuleProgressData(completedFields, totalFields);
+    }
+    
+    private int countCompletedModuleFields(Map<String, Object> moduleData) {
+        int completed = 0;
+        String[] fields = {
+            (String) moduleData.get("moduleTitle"),
+            (String) moduleData.get("moduleDuration"),
+            (String) moduleData.get("moduleDescription")
+        };
+        for (String field : fields) {
+            if (isFieldComplete(field)) {
+                completed++;
+            }
+        }
+        return completed;
+    }
+    
+    private LessonProgressData countLessonProgress(Object lessonsObj) {
+        if (!(lessonsObj instanceof List)) {
+            return new LessonProgressData(0, 0);
+        }
+        List<Map<String, String>> lessons = (List<Map<String, String>>) lessonsObj;
+        int completedFields = 0;
+        int totalFields = 0;
+        for (Map<String, String> lesson : lessons) {
+            String[] fields = {
+                lesson.get("lessonTitle"),
+                lesson.get("lessonVideoLink"),
+                lesson.get("lessonDetails"),
+                lesson.get("lessonMaterials"),
+                lesson.get("lessonDuration")
+            }; 
+            for (String field : fields) {
+                if (isFieldComplete(field)) {
+                    completedFields++;
                 }
             }
+            totalFields += 5;
         }
-
-        coutFieldFilled = coutFieldFilled + contModuleDesriptionComplet + contModuleDurationComplet
-                + contModuleTitleComplet + contlessonDetails + contlessonDuration + contlessonMaterials
-                + contlessonTitle + contlessonVideoLink;
-        if (contModule == 0) {
-            amount = amount + 8;
-        }
-        amount = amount + (3 * contModule) + (5 * contLessons) + (5 * moduleWithoutClass);
-
-        percentage = (coutFieldFilled / amount) * 100;
+        
+        return new LessonProgressData(completedFields, totalFields);
+    }
+    
+    private boolean isFieldComplete(String field) {
+        return field != null && !field.isEmpty() && !"null".equals(field);
+    }
+    
+    private void updateProgressDisplay(double percentage) {
         String percentageFormatted = String.format("%.0f", percentage);
         double percentageDouble = percentage / 100;
         progressLabel.setText(percentageFormatted + " % Completo");
         progressBar.setProgress(percentageDouble);
-
-        loadLabelBasicInformation();
-        loadLabelSettings();
-        loadLabelModule(modulesData);
     }
-
-    private void loadLabelModule(List<Map<String, Object>> modulesDate) {
-        int contModule = 0;
-        int contTotalModule = 0;
-        int contModuleTitleComplet = 0;
-        int contModuleDurationComplet = 0;
-        int contModuleDesriptionComplet = 0;
-        int contLessons = 0;
-        int moduleWithoutClass = 0;
-        int amount = 0;
-        int fields = 0;
-
-        for (Map<String, Object> moduleData : modulesDate) {
-            String moduleTitle = (String) moduleData.get("moduleTitle");
-            String moduleDuration = (String) moduleData.get("moduleDuration");
-            String moduleDescription = (String) moduleData.get("moduleDescription");
-
-            if (moduleTitle != "" && moduleTitle != "null") {
-                contModuleTitleComplet = contModuleTitleComplet + 1;
-            }
-            if (moduleDuration != "" && moduleDuration != "null") {
-                contModuleDurationComplet = contModuleDurationComplet + 1;
-            }
-            if (moduleDescription != "" && moduleDescription != "null") {
-                contModuleDesriptionComplet = contModuleDesriptionComplet + 1;
-            }
-            contModule = contModule + 1;
-
+    
+    private void updateAllLabels(List<Map<String, Object>> modulesData) {
+        updateBasicInformationLabel();
+        updateSettingsLabel();
+        updateModulesLabel(modulesData);
+    }
+    
+    private void updateBasicInformationLabel() {
+        String[] fields = {
+            titleCourse.getText(),
+            descritionCourse.getText(),
+            categoryCourse.getValue(),
+            levelCourse.getValue()
+        };
+        int completed = 0;
+        for (String field : fields) {
+            if (isFieldComplete(field)) completed++;
+        }
+        if (isTag > 0) completed++;
+        updateStepLabel(basicInformation, "Informações Básicas", 
+            completed, fields.length + 1);
+    }
+    
+    private void updateSettingsLabel() {
+        String[] fields = {
+            durationTotal.getText(),
+            String.valueOf(ComboBoxVisibily.getValue())
+        };
+        int completed = 0;
+        for (String field : fields) {
+            if (isFieldComplete(field)) completed++;
+        }
+        
+        updateStepLabel(settings, "Configurações", completed, fields.length);
+    }
+    
+    private void updateModulesLabel(List<Map<String, Object>> modulesData) {
+        if (modulesData.isEmpty()) {
+            setLabelPending(modules, "Módulos");
+            return;
+        }
+        ModuleProgressData progress = countModuleProgress(modulesData);
+        int modulesWithoutLessons = countModulesWithoutLessons(modulesData);
+        int totalRequiredFields = progress.totalFields + (5 * MIN_LESSONS_PER_MODULE * modulesWithoutLessons);
+        if (progress.completedFields == 0) {
+            setLabelPending(modules, "Módulos");
+        } else if (progress.completedFields == totalRequiredFields && allModulesHaveLessons(modulesData)) {
+            setLabelCompleted(modules, "Módulos");
+        } else {
+            setLabelInProgress(modules, "Módulos");
+        }
+    }
+    
+    private boolean allModulesHaveLessons(List<Map<String, Object>> modulesData) {
+        for (Map<String, Object> moduleData : modulesData) {
             Object lessons = moduleData.get("lessons");
-
             if (lessons == null || !(lessons instanceof List) || ((List<?>) lessons).isEmpty()) {
-                moduleWithoutClass = moduleWithoutClass + 1;
-            }
-
-            if (lessons instanceof List) {
-                List<Map<String, String>> lessonsData = (List<Map<String, String>>) lessons;
-                for (Map<String, String> lessonData : lessonsData) {
-                    String lessonTitle = lessonData.get("lessonTitle");
-                    String lessonVideoLink = lessonData.get("lessonVideoLink");
-                    String lessonDetails = lessonData.get("lessonDetails");
-                    String lessonMaterials = lessonData.get("lessonMaterials");
-                    String lessonDuration = lessonData.get("lessonDuration");
-
-                    if (lessonTitle != "" && lessonTitle != "null") {
-                        fields++;
-                    }
-                    if (lessonVideoLink != "" && lessonVideoLink != "null") {
-                        fields++;
-                    }
-                    if (lessonDetails != "" && lessonDetails != "null") {
-                        fields++;
-                    }
-                    if (lessonMaterials != "" && lessonMaterials != "null") {
-                        fields++;
-                    }
-                    if (lessonDuration != "" && lessonDuration != "null") {
-                        fields++;
-                    }
-                    contLessons = contLessons + 1;
-                    amount = amount + 5;
-                }
+                return false;
             }
         }
-        contTotalModule = contModuleDesriptionComplet + contModuleDurationComplet + contModuleTitleComplet;
-
-        System.out.println(contTotalModule);
-        if (contTotalModule!=0) {
-            modules.getStyleClass().remove("step-pending");
-            modules.getStyleClass().add("step-current");
-            modules.setStyle("-fx-text-fill: rgb(89, 92, 150);");
-            modules.setText("→ Módulos");
-            if (fields == amount && fields > 0) {
-                if((contTotalModule)/3 == contModule ){
-                modules.getStyleClass().remove("step-pending");
-                modules.getStyleClass().remove("step-current");
-                modules.getStyleClass().add("step-completed");
-                modules.setStyle("-fx-text-fill: rgb(89, 150, 90);");
-                modules.setText("✓ Módulos");
-                }
-
-            }
-        } else {
-            modules.getStyleClass().remove("step-current");
-            modules.getStyleClass().add("step-pending");
-            modules.setText(" Módulos");
-            modules.setStyle("-fx-text-fill: #797E8C;");
-        }
-
+        return true;
     }
-
-    private void loadLabelBasicInformation() {
-        double coutFieldFilled = 0;
-        double amount = 0;
-        String[] fieldsBasicInformation = { titleCourse.getText(), descritionCourse.getText(),
-                categoryCourse.getValue(),
-                levelCourse.getValue() };
-
-        for (String field : fieldsBasicInformation) {
-            if (field != null && field != "") {
-                if (field != "null") {
-                    coutFieldFilled = coutFieldFilled + 1;
-                }
-            }
-            amount = amount + 1;
-        }
-        if (isTag > 0) {
-            coutFieldFilled = coutFieldFilled + 1;
-        }
-        amount = amount + 1;
-
-        if (coutFieldFilled > 0) {
-            if (amount == coutFieldFilled) {
-                basicInformation.getStyleClass().remove("step-current");
-                basicInformation.getStyleClass().add("step-completed");
-                basicInformation.setStyle("-fx-text-fill: rgb(89, 150, 90);");
-                basicInformation.setText("✓ Informações Básicas");
-            } else {
-                basicInformation.getStyleClass().remove("step-pending");
-                basicInformation.getStyleClass().add("step-current");
-                basicInformation.setStyle("-fx-text-fill: rgb(89, 92, 150);");
-                basicInformation.setText("→ Informações Básicas");
-            }
+    
+    private void updateStepLabel(Label label, String text, int completed, int total) {
+        if (completed == 0) {
+            setLabelPending(label, text);
+        } else if (completed == total) {
+            setLabelCompleted(label, text);
         } else {
-            basicInformation.getStyleClass().remove("step-current");
-            basicInformation.getStyleClass().add("step-pending");
-            basicInformation.setText(" Informações Básicas");
-            basicInformation.setStyle("-fx-text-fill: #797E8C;");
+            setLabelInProgress(label, text);
         }
-
     }
-
-    private void loadLabelSettings() {
-        double coutFieldFilled = 0;
-        double amount = 0;
-        String[] fieldsBasicInformation = { durationTotal.getText(), String.valueOf(ComboBoxVisibily.getValue()) };
-
-        for (String field : fieldsBasicInformation) {
-            if (field != null && field != "") {
-                if (field != "null") {
-                    coutFieldFilled = coutFieldFilled + 1;
-                }
-            }
-            amount = amount + 1;
+    
+    private void setLabelPending(Label label, String text) {
+        label.getStyleClass().remove(STEP_CURRENT);
+        label.getStyleClass().add(STEP_PENDING);
+        label.setText(" " + text);
+        label.setStyle("-fx-text-fill: #797E8C;");
+    }
+    
+    private void setLabelInProgress(Label label, String text) {
+        label.getStyleClass().remove(STEP_PENDING);
+        label.getStyleClass().add(STEP_CURRENT);
+        label.setStyle("-fx-text-fill: rgb(89, 92, 150);");
+        label.setText("→ " + text);
+    }
+    
+    private void setLabelCompleted(Label label, String text) {
+        label.getStyleClass().remove(STEP_PENDING);
+        label.getStyleClass().remove(STEP_CURRENT);
+        label.getStyleClass().add(STEP_COMPLETED);
+        label.setStyle("-fx-text-fill: rgb(89, 150, 90);");
+        label.setText("✓ " + text);
+    }
+    
+    private static class ModuleProgressData {
+        final int completedFields;
+        final int totalFields;
+        
+        ModuleProgressData(int completedFields, int totalFields) {
+            this.completedFields = completedFields;
+            this.totalFields = totalFields;
         }
-        if (coutFieldFilled > 0) {
-            if (amount == coutFieldFilled) {
-                settings.getStyleClass().remove("step-pending");
-                settings.getStyleClass().add("step-completed");
-                settings.setStyle("-fx-text-fill: rgb(89, 150, 90)");
-                settings.setText("✓ Configurações");
-            } else {
-                settings.getStyleClass().remove("step-pending");
-                settings.getStyleClass().add("step-current");
-                settings.setStyle("-fx-text-fill: rgb(89, 92, 150);");
-                settings.setText("→ Configurações");
-            }
-        } else {
-            settings.getStyleClass().remove("step-current");
-            settings.getStyleClass().add("step-pending");
-            settings.setText(" Configurações");
-            settings.setStyle("-fx-text-fill:#797E8C;");
+    }
+    
+    private static class LessonProgressData {
+        final int completedFields;
+        final int totalFields;
+        
+        LessonProgressData(int completedFields, int totalFields) {
+            this.completedFields = completedFields;
+            this.totalFields = totalFields;
         }
     }
 
