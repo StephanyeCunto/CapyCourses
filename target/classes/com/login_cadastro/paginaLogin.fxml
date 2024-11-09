@@ -63,7 +63,7 @@
                             <Font name="Franklin Gothic Medium" size="14.0" />
                         </font>
                     </TextField>
-                    <Label fx:id="userErrorLabel" textFill="red" visible="false" />
+                    <Label fx:id="userErrorLabel" visible="false" styleClass="error-label"/>
                 </VBox>
                 <VBox spacing="10">
                     <Label text="SENHA" textFill="#ffffff80">
@@ -78,7 +78,7 @@
                             <Font name="Franklin Gothic Medium" size="14.0" />
                         </font>
                     </PasswordField>
-                    <Label fx:id="passwordErrorLabel" textFill="red" visible="false" />
+                    <Label fx:id="passwordErrorLabel"  visible="false" styleClass="error-label"/>
                 </VBox>
                 
                 <Hyperlink style="-fx-text-fill: #6c63ff; -fx-border-color: transparent;"
