@@ -1,4 +1,4 @@
-package com.view.valid.login_cadastro;
+package com.view.login_cadastro.valid;
 
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -15,6 +15,7 @@ public class LoginValid {
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
     private static final int MIN_PASSWORD_LENGTH = 1;
+    
     @FXML private TextField user;
     @FXML private PasswordField password;
     @FXML private Label userErrorLabel;
@@ -24,6 +25,7 @@ public class LoginValid {
         userErrorLabel.setVisible(false);
         passwordErrorLabel.setVisible(false);
 
+        loadValues(user, password, userErrorLabel, passwordErrorLabel);
         user.textProperty().addListener((observable, oldValue, newValue)->{
             if(user.getText().matches(EMAIL_REGEX)){
                 updateErrorDisplay(user, userErrorLabel, true, null);

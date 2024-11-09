@@ -33,7 +33,7 @@
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/style.css"
-    fx:controller="com.view.login_cadastro.CadastroStudent">
+    fx:controller="com.view.login_cadastro.cadastro.CadastroStudent">
     <GridPane fx:id="mainPane" alignment="CENTER"
         StackPane.alignment="CENTER">
         <columnConstraints>
@@ -45,32 +45,14 @@
         </rowConstraints>
         <children>
             <VBox fx:id="leftSection" alignment="CENTER" style="-fx-background-radius: 20 0 0 20;">
-                <ImageView fitHeight="500.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true" styleClass="hidden-image">
-                    <image>
-                        <Image url="@img/capyCourses.png" />
-                    </image>
-                </ImageView>
-                  <!--  <Label text="CAPY COURSES">
-                        <font>
-                            <Font name="Segoe UI" size="60.0" />
-                        </font>
-                        <textFill>
-                            <LinearGradient endX="1.0" endY="0.8246445497630331" startX="1.0" startY="0.5118483412322274">
-                                <stops>
-                                    <Stop>
-                                        <color>
-                                            <Color red="0.8684210777282715" green="0.7957175970077515" blue="0.24524854123592377" />
-                                        </color>
-                                    </Stop>
-                                    <Stop offset="1.0">
-                                        <color>
-                                            <Color red="0.25" green="0.19984567165374756" blue="0.09953703731298447" />
-                                        </color>
-                                    </Stop>
-                                </stops>
-                            </LinearGradient>
-                        </textFill>
-                    </Label>-->
+                <VBox alignment="CENTER" spacing="20">
+                    <ImageView fitHeight="300.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" styleClass="hidden-image">
+                        <image>
+                            <Image url="@img/capyCourses 012.png" />
+                        </image>
+                    </ImageView>
+                    <Label text="CapyCourse" styleClass="platform-name" />
+                </VBox>
             </VBox>
             <VBox fx:id="rightSection" alignment="CENTER" spacing="20" style="-fx-padding: 40;"
                 GridPane.columnIndex="1">

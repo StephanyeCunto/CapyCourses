@@ -2,43 +2,50 @@ package com.view.login_cadastro;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.awt.Toolkit;
 
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
 
 import com.UserSession;
-import com.controller.login_cadastro.LoginController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
 
-import com.view.valid.login_cadastro.LoginValid;
+import com.controller.login_cadastro.LoginController;
+import com.view.login_cadastro.elements.ErrorNotification;
+import com.view.login_cadastro.valid.LoginValid;
+
 
 public class Login extends BaseLoginCadastro implements Initializable {
-    @FXML private VBox leftSection;
-    @FXML private TextField user;
-    @FXML private PasswordField password;
-    @FXML private Label userErrorLabel;
-    @FXML private Label passwordErrorLabel;
+    @FXML
+    private VBox leftSection;
+    @FXML
+    private TextField user;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private Label userErrorLabel;
+    @FXML
+    private Label passwordErrorLabel;
 
     private final LoginValid validator = new LoginValid();
+    private ErrorNotification errorNotification;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
-        validator.loadValues(user, password, userErrorLabel, passwordErrorLabel);
-        validator.setupInitialState(user,password,userErrorLabel,passwordErrorLabel);
+        validator.setupInitialState(user, password, userErrorLabel, passwordErrorLabel);
+        setupErrorNotification();
     }
-
 
     @FXML
     private void logar() {
         validator.getValidationSupport().setValidationDecorator(new GraphicValidationDecoration());
         if (!validator.validateFields()) {
+            Toolkit.getDefaultToolkit().beep();
             return;
         }
 
@@ -53,18 +60,31 @@ public class Login extends BaseLoginCadastro implements Initializable {
             case "incomplete teacher" -> super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);
             default -> {
                 UserSession.getInstance().clearSession();
-                showErrorAlert("Erro de Login", "Credenciais inválidas", 
-                               "Por favor, verifique seu email e senha.");
+                showError();
+                password.clear();
+                user.requestFocus();
             }
         }
     }
 
-    private void showErrorAlert(String title, String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
+    private void setupErrorNotification() {
+        StackPane root = new StackPane();
+        leftSection.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                errorNotification = new ErrorNotification(root);
+                if (newScene.getRoot() instanceof StackPane) {
+                    ((StackPane) newScene.getRoot()).getChildren().add(errorNotification.getContainer());
+                } else {
+                    root.getChildren().addAll(newScene.getRoot(), errorNotification.getContainer());
+                    newScene.setRoot(root);
+                }
+            }
+        });
+    }
+
+    private void showError() {
+        Toolkit.getDefaultToolkit().beep();
+        errorNotification.show();
     }
 
     @FXML

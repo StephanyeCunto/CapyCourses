@@ -1,4 +1,4 @@
-package com.view.login_cadastro;
+package com.view.login_cadastro.cadastro;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.controller.login_cadastro.CadastroStudentController;
+import com.view.login_cadastro.BaseLoginCadastro;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -36,11 +36,7 @@
                             <Image url="@img/capyCourses 012.png" />
                         </image>
                     </ImageView>
-                    <Label text="CapyCourse" styleClass="platform-name">
-                        <font>
-                            <Font name="Poppins SemiBold" size="24.0" />
-                        </font>
-                    </Label>
+                    <Label text="CapyCourse" styleClass="platform-name" />
                 </VBox>
             </VBox>
             <VBox fx:id="rightSection" alignment="CENTER" spacing="25" style="-fx-padding: 40;"
@@ -51,7 +47,7 @@
                     </font>
                 </Label>
                 <VBox spacing="10">
-                    <Label text="USUÁRIO" textFill="#ffffff80">
+                    <Label text="EMAIL" textFill="#ffffff80">
                         <font>
                             <Font name="Franklin Gothic Medium" size="14.0" />
                         </font>
