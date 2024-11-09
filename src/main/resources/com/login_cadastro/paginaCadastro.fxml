@@ -64,6 +64,7 @@
               <Font name="Franklin Gothic Medium" size="14.0" />
             </font>
           </TextField>
+          <Label fx:id="userNameErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
         </VBox>
         <VBox spacing="10">
           <Label text="EMAIL" textFill="#ffffff80">
@@ -77,6 +78,7 @@
               <Font name="Franklin Gothic Medium" size="14.0" />
             </font>
           </TextField>
+          <Label fx:id="userEmailErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
         </VBox>
         <VBox spacing="10">
           <Label text="SENHA" textFill="#ffffff80">
@@ -84,12 +86,14 @@
               <Font name="Franklin Gothic Medium" size="14.0" />
             </font>
           </Label>
-          <PasswordField prefHeight="45.0" fx:id="passworFieldPassword"
+          <PasswordField prefHeight="45.0" fx:id="passwordFieldPassword"
             style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white;">
             <font>
               <Font name="Franklin Gothic Medium" size="14.0" />
             </font>
           </PasswordField>
+          <Label fx:id="passwordErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
+
         </VBox>
         <VBox spacing="10">
           <Label text="CONFIRMAR SENHA" textFill="#ffffff80">
@@ -97,12 +101,13 @@
               <Font name="Franklin Gothic Medium" size="14.0" />
             </font>
           </Label>
-          <PasswordField prefHeight="45.0" fx:id="passworFieldPasswordConfirm"
+          <PasswordField prefHeight="45.0" fx:id="passwordFieldPasswordConfirm"
             style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white;">
             <font>
               <Font name="Franklin Gothic Medium" size="14.0" />
             </font>
           </PasswordField>
+          <Label fx:id="passwordConfirmErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
         </VBox>
         <HBox spacing="20" alignment="CENTER_LEFT">
           <fx:define>

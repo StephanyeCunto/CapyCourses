@@ -4,19 +4,18 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
+import org.controlsfx.validation.decoration.GraphicValidationDecoration;
+
 import com.controller.login_cadastro.CadastroController;
 import com.view.login_cadastro.BaseLoginCadastro;
+import com.view.login_cadastro.cadastro.valid.CadastroValid;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.control.*;
+import java.awt.Toolkit;
 
 public class Cadastro extends BaseLoginCadastro implements Initializable {
     @FXML
@@ -24,9 +23,9 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     @FXML
     private TextField textFieldEmail;
     @FXML
-    private PasswordField passworFieldPassword;
+    private PasswordField passwordFieldPassword;
     @FXML
-    private PasswordField passworFieldPasswordConfirm;
+    private PasswordField passwordFieldPasswordConfirm;
     @FXML
     private CheckBox termsCheckBox;
     @FXML
@@ -39,12 +38,25 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     private Hyperlink logar;
     @FXML
     private VBox leftSection;
+    @FXML
+    private Label userNameErrorLabel;
+    @FXML
+    private Label userEmailErrorLabel;
+    @FXML
+    private Label passwordErrorLabel;
+    @FXML
+    private Label passwordConfirmErrorLabel;
 
     private String typeUser;
+
+    private final CadastroValid validator = new CadastroValid();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
+
+        validator.setupInitialState(textFieldName, textFieldEmail, passwordFieldPassword, passwordFieldPasswordConfirm,
+                termsCheckBox, userNameErrorLabel, userEmailErrorLabel, passwordErrorLabel, passwordConfirmErrorLabel);
 
         logar.setOnAction(event -> {
             redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
@@ -52,6 +64,13 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     }
 
     public void register() {
+
+        validator.getValidationSupport().setValidationDecorator(new GraphicValidationDecoration());
+        if (!validator.validateFields()) {
+            Toolkit.getDefaultToolkit().beep();
+            return;
+        }
+
         Stage stage = (Stage) leftSection.getScene().getWindow();
 
         if (radioButtonStudent.isSelected()) {
@@ -64,6 +83,6 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
 
         LocalDateTime date = LocalDateTime.now();
         new CadastroController(textFieldName.getText(), textFieldEmail.getText(),
-                passworFieldPasswordConfirm.getText(), date, typeUser);
+                passwordFieldPasswordConfirm.getText(), date, typeUser);
     }
 }

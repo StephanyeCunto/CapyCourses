@@ -336,8 +336,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 1, 0, 0, 1);
 }
 
-/* Adiionado para teste do validorFX*/
-
 .text-field:error, .password-field:error {
     -fx-border-color: #FF6F61;  
     -fx-border-width: 1.5px;
