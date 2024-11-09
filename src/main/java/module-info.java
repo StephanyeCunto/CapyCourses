@@ -4,6 +4,7 @@ module com {
     requires lombok;
 
     requires java.desktop;
+    requires org.controlsfx.controls;
 
     opens com to javafx.fxml;
     opens com.view to javafx.fxml; 

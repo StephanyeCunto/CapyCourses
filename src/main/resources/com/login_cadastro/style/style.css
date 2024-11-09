@@ -7,7 +7,7 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-padding: 15 40 15 40;
-    -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.4), 8, 0, 0, 4);
+    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.4), 8, 0, 0, 4);
     -fx-border-radius: 30;
     -fx-border-width: 0;
     -fx-min-width: 200;
@@ -17,7 +17,7 @@
 
 .modern-button:hover {
     -fx-background-color: linear-gradient(to right, rgb(98, 89, 255), rgb(125, 116, 255));
-    -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.7), 10, 0, 0, 7);
+    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.7), 10, 0, 0, 7);
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
 }
@@ -25,11 +25,11 @@
 .modern-button:pressed {
     -fx-scale-x: 0.95;
     -fx-scale-y: 0.95;
-    -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.4), 4, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.4), 4, 0, 0, 2);
 }
 
 .modern-button:hover {
-    -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.7), 10, 0, 0, 7), innershadow(gaussian, rgba(255,255,255,0.3), 1, 1, 1, 1);
+    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.7), 10, 0, 0, 7), innershadow(gaussian, rgba(255, 255, 255, 0.3), 1, 1, 1, 1);
 }
 
 .modern-button {
@@ -43,18 +43,21 @@
         -fx-scale-x: 0.8;
         -fx-scale-y: 0.8;
     }
+
     50% {
         -fx-opacity: 0.5;
         -fx-translate-y: -10;
         -fx-scale-x: 1.1;
         -fx-scale-y: 1.1;
     }
+
     75% {
         -fx-opacity: 0.7;
         -fx-translate-y: 5;
         -fx-scale-x: 0.95;
         -fx-scale-y: 0.95;
     }
+
     100% {
         -fx-opacity: 1;
         -fx-translate-y: 0;
@@ -63,49 +66,52 @@
     }
 }
 
-.modern-button:pressed{
+.modern-button:pressed {
     -fx-animation: ripple 0.5s ease-out;
 }
 
 @keyframes ripple {
     0% {
         -fx-border-width: 0;
-        -fx-border-color: rgba(255,255,255,0.5);
+        -fx-border-color: rgba(255, 255, 255, 0.5);
     }
+
     50% {
         -fx-border-width: 3;
-        -fx-border-color: rgba(255,255,255,0.3);
+        -fx-border-color: rgba(255, 255, 255, 0.3);
     }
+
     100% {
         -fx-border-width: 0;
         -fx-border-color: transparent;
     }
 }
 
-.modern-button:released , .exit-button:released{
+.modern-button:released,
+.exit-button:released {
     -fx-scale-x: 1;
     -fx-scale-y: 1;
 }
 
 .simple-button {
-    -fx-background-color: rgba(255,255,255,0.08);
+    -fx-background-color: rgba(255, 255, 255, 0.08);
     -fx-text-fill: white;
     -fx-background-radius: 12;
     -fx-cursor: hand;
     -fx-font-family: "Franklin Gothic Medium";
     -fx-font-size: 14px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
     -fx-transition: -fx-background-color 0.2s, -fx-effect 0.2s;
 }
 
 .simple-button:hover {
-    -fx-background-color: rgba(255,255,255,0.15);
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 2);
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
 }
 
 .simple-button:pressed {
-    -fx-background-color: rgba(255,255,255,0.05);
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0, 0, 1);
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 3, 0, 0, 1);
 }
 
 .card {
@@ -113,7 +119,7 @@
     -fx-background-radius: 20;
     -fx-border-color: rgba(255, 255, 255, 0.1);
     -fx-border-radius: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
     -fx-padding: 15;
 }
 
@@ -142,13 +148,13 @@
 .combo-box:hover {
     -fx-background-color: rgba(255, 255, 255, 0.12);
     -fx-border-color: rgba(255, 255, 255, 0.2);
-    -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.2), 8, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.2), 8, 0, 0, 2);
 }
 
 .combo-box:focused {
     -fx-background-color: rgba(255, 255, 255, 0.15);
     -fx-border-color: #6c63ff;
-    -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.4), 10, 0, 0, 4);
+    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.4), 10, 0, 0, 4);
 }
 
 .combo-box .arrow-button {
@@ -173,7 +179,7 @@
     -fx-background-color: rgb(41, 47, 76);
     -fx-background-radius: 12;
     -fx-border-radius: 12;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0, 0, 8);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 8);
     -fx-padding: 4;
 }
 
@@ -188,7 +194,7 @@
 }
 
 .combo-box-popup .list-view .list-cell:hover {
-    -fx-background-color: rgba(108,99,255,0.3);
+    -fx-background-color: rgba(108, 99, 255, 0.3);
 }
 
 .combo-box-popup .list-view .list-cell:selected {
@@ -202,12 +208,12 @@
 }
 
 .combo-box-popup .list-view .scroll-bar:vertical .thumb {
-    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-color: rgba(255, 255, 255, 0.2);
     -fx-background-radius: 8;
 }
 
 .combo-box-popup .list-view .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: rgba(255,255,255,0.3);
+    -fx-background-color: rgba(255, 255, 255, 0.3);
 }
 
 .combo-box .text-input {
@@ -223,6 +229,7 @@
         -fx-opacity: 0;
         -fx-translate-y: -10;
     }
+
     100% {
         -fx-opacity: 1;
         -fx-translate-y: 0;
@@ -234,20 +241,20 @@
     -fx-border-color: #6c63ff;
 }
 
-.combo-box > .cell {
+.combo-box>.cell {
     -fx-text-fill: white;
 }
 
-.combo-box:focused > .cell {
+.combo-box:focused>.cell {
     -fx-text-fill: white;
 }
 
-.combo-box-base:editable > .text-field {
+.combo-box-base:editable>.text-field {
     -fx-text-fill: white;
 }
 
 
-#container{
+#container {
     -fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);
 }
 
@@ -266,14 +273,14 @@
 
 .interest-button:hover {
     -fx-background-color: rgba(255, 255, 255, 0.12);
-    -fx-border-color: rgba(108,99,255,0.5);
-    -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.2), 8, 0, 0, 2);
+    -fx-border-color: rgba(108, 99, 255, 0.5);
+    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.2), 8, 0, 0, 2);
 }
 
 .interest-button.selected {
     -fx-background-color: #6c63ff;
     -fx-border-color: #6c63ff;
-    -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.4), 10, 0, 0, 4);
+    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.4), 10, 0, 0, 4);
 }
 
 .interest-button.selected:hover {
@@ -291,6 +298,7 @@
         -fx-scale-x: 0.8;
         -fx-scale-y: 0.8;
     }
+
     100% {
         -fx-opacity: 1;
         -fx-scale-x: 1;
@@ -307,12 +315,36 @@
         -fx-scale-x: 1;
         -fx-scale-y: 1;
     }
+
     50% {
         -fx-scale-x: 1.05;
         -fx-scale-y: 1.05;
     }
+
     100% {
         -fx-scale-x: 1;
         -fx-scale-y: 1;
     }
+}
+
+.platform-name {
+    -fx-font-family: 'Montserrat';
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+    -fx-text-fill: linear-gradient(to right, #5BC4FF, #A5A1FF);
+    -fx-padding: 10 0 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 1, 0, 0, 1);
+}
+
+/* Adiionado para teste do validorFX*/
+
+.text-field:error, .password-field:error {
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+}
+
+.error-label {
+    -fx-text-fill: red;
+    -fx-font-size: 12px;
+    -fx-padding: 4 0 0 0;
 }
