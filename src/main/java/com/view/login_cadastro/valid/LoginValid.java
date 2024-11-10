@@ -13,7 +13,8 @@ import javafx.fxml.FXML;
 public class LoginValid {
     private static final ValidationSupport validationSupport = new ValidationSupport();
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
-    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}$";
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+
     private static final int MIN_PASSWORD_LENGTH = 1;
 
     @FXML
@@ -25,14 +26,17 @@ public class LoginValid {
     @FXML
     private Label passwordErrorLabel;
 
-    public void setupInitialState(TextField user, PasswordField password, Label userErrorLabel,
-            Label passwordErrorLabel) {
+    public void setupInitialState(TextField user, PasswordField password, Label userErrorLabel, Label passwordErrorLabel) {
         userErrorLabel.setVisible(false);
         passwordErrorLabel.setVisible(false);
+
 
         loadValues(user, password, userErrorLabel, passwordErrorLabel);
 
         user.textProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("user: "+ user.getText());
+            System.out.println("password: "+ password.getText());
+            System.out.println("email.matches(EMAIL_REGEX): "+ newValue.matches(EMAIL_REGEX));
             if (user.getText().matches(EMAIL_REGEX)) {
                 updateErrorDisplay(user, userErrorLabel, true, null);
             } 
@@ -88,10 +92,14 @@ public class LoginValid {
 
     private void updateErrorDisplay(Control field, Label errorLabel, boolean isValid, String message) {
         field.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, !isValid);
-        String currentStyle = field.getStyle();
-        field.setStyle(currentStyle + "-fx-border-color: #FF6F61;  -fx-border-width: 1.5px;");
+        String currentStyle =  "-fx-background-color: rgba(255, 255, 255, 0.07);-fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12;-fx-text-fill: white;-fx-prompt-text-fill: rgba(255, 255, 255, 0.5);-fx-font-size: 14px; -fx-padding: 12 16;";
         errorLabel.setText(isValid ? "" : message);
         errorLabel.setVisible(!isValid);
+        if(isValid){
+            field.setStyle(currentStyle);
+        }else{
+            field.setStyle(currentStyle + "-fx-border-color: #FF6F61;  -fx-border-width: 1.5px;");
+        }
     }
 
     public boolean validateFields() {

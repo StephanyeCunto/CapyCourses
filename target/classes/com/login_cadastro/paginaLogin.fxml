@@ -18,6 +18,17 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?> 
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.canvas.GraphicsContext?>
+
 <StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
     xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.Login">
     <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
@@ -29,72 +40,93 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
-            <VBox fx:id="leftSection" alignment="CENTER" style="-fx-background-radius: 20 0 0 20;">
-                <VBox alignment="CENTER" spacing="20">
-                    <ImageView fitHeight="300.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" styleClass="hidden-image">
+            <VBox fx:id="leftSection" alignment="CENTER" style="-fx-background-radius: 20 0 0 20;"
+                styleClass="brand-section">
+                <padding>
+                    <Insets top="40" right="40" bottom="40" left="40" />
+                </padding>
+                <StackPane styleClass="logo-container">
+                    <ImageView fitHeight="300.0" fitWidth="250.0" pickOnBounds="true"
+                        preserveRatio="true" styleClass="hidden-image">
                         <image>
                             <Image url="@img/capyCourses 012.png" />
                         </image>
                     </ImageView>
-                    <Label text="CapyCourse" styleClass="platform-name" />
-                </VBox>
-            </VBox>
-            <VBox fx:id="rightSection" alignment="CENTER" spacing="25" style="-fx-padding: 40;"
-                GridPane.columnIndex="1">
-                <Label text="LOGIN" textFill="WHITE">
+                </StackPane>
+                <Label text="CapyCourse" styleClass="platform-name">
                     <font>
-                        <Font name="Franklin Gothic Medium" size="32.0" />
+                        <Font name="Plus Jakarta Sans Bold" size="32" />
                     </font>
                 </Label>
-                <VBox spacing="10">
-                    <Label text="EMAIL" textFill="#ffffff80">
+
+                <Label text="Aprenda. Evolua. Conquiste." styleClass="tagline">
+                    <font>
+                        <Font name="Plus Jakarta Sans Medium" size="16" />
+                    </font>
+                </Label>
+            </VBox>
+
+            <VBox fx:id="rightSection" alignment="CENTER" spacing="24" styleClass="form-section"
+                GridPane.columnIndex="1">
+                <padding>
+                    <Insets top="40" right="40" bottom="40" left="40" />
+                </padding>
+
+                <VBox spacing="8">
+                    <Label text="Bem-vindo de volta!" styleClass="welcome-text">
                         <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
+                            <Font name="Plus Jakarta Sans Bold" size="28" />
                         </font>
                     </Label>
-                    <TextField fx:id="user" prefHeight="45.0"
-                        style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white; -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);"
-                        styleClass="input">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
-                        </font>
-                    </TextField>
-                    <Label fx:id="userErrorLabel" visible="false" styleClass="error-label"/>
+                    <Label text="Entre com suas credenciais para continuar"
+                        styleClass="subtitle-text" />
                 </VBox>
-                <VBox spacing="10">
-                    <Label text="SENHA" textFill="#ffffff80">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
-                        </font>
-                    </Label>
-                    <PasswordField fx:id="password" prefHeight="45.0"
-                        style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white;"
-                        styleClass="input">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
-                        </font>
+
+                <VBox spacing="20">
+                    <VBox spacing="8">
+                        <Label text="EMAIL" styleClass="field-label" />
+                        <TextField fx:id="user" styleClass="custom-text-field"
+                            prefHeight="48"
+                            promptText="Seu endereço de email">
+                            <!--  <graphic>
+                                <FontIcon iconLiteral="fas-envelope" iconSize="16" />
+                            </graphic>-->
+                        </TextField>
+                        <Label fx:id="userErrorLabel" styleClass="error-label" visible="false" />
+                    </VBox>
+                    <Label text="SENHA" styleClass="field-label" />
+                    <PasswordField fx:id="password" styleClass="custom-text-field"
+                        prefHeight="48"
+                        promptText="Sua senha">
+                        <!-- <graphic>
+                            <FontIcon iconLiteral="fas-lock" iconSize="16" />
+                        </graphic>-->
                     </PasswordField>
-                    <Label fx:id="passwordErrorLabel"  visible="false" styleClass="error-label"/>
+                    <Label fx:id="passwordErrorLabel" styleClass="error-label" visible="false" />
                 </VBox>
-                
-                <Hyperlink style="-fx-text-fill: #6c63ff; -fx-border-color: transparent;"
-                    text="Esqueceu a senha?">
-                    <font>
-                        <Font name="Franklin Gothic Medium" size="14.0" />
-                    </font>
-                </Hyperlink>
-                <Button maxWidth="Infinity" onAction="#logar" styleClass="modern-button"
-                    text="ENTRAR">
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <CheckBox text="Lembrar-me" styleClass="custom-checkbox" selected="true" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Hyperlink text="Esqueceu a senha?" styleClass="forgot-password-link" />
+                </HBox>
+
+
+                <Button maxWidth="Infinity" onAction="#logar" styleClass="modern-button" text="ENTRAR">
                 </Button>
-                <Button maxWidth="Infinity" onAction="#register" prefHeight="45.0"
-                    styleClass="simple-button" text="CADASTRAR">
-                    <font>
-                        <Font name="Franklin Gothic Medium" size="14.0" />
-                    </font>
-                </Button>
+
+                <VBox alignment="CENTER" spacing="16">
+                    <Label text="Não tem uma conta?" styleClass="register-prompt" />
+                    <Button styleClass="register-button" onAction="#register" >
+                        <graphic>
+                            <HBox spacing="8" alignment="CENTER">
+                                <!--<FontIcon
+                                    iconLiteral="fas-user-plus" iconSize="16" />-->
+                                <Label text="CRIAR CONTA" styleClass="register-label" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                </VBox>
             </VBox>
         </children>
     </GridPane>

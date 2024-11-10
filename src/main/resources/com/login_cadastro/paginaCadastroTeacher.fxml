@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.text.Font?> 
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<StackPane fx:id="container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/style.css"
-    fx:controller="com.view.login_cadastro.cadastro.CadastroTeacher">
-    <GridPane fx:id="mainPane" alignment="CENTER"
-        StackPane.alignment="CENTER">
+<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
+    xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
             <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
@@ -34,103 +27,99 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
-            <VBox fx:id="leftSection" alignment="CENTER" style="-fx-background-radius: 20 0 0 20;">
-                <VBox alignment="CENTER" spacing="20">
-                    <ImageView fitHeight="300.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" styleClass="hidden-image">
+            <VBox fx:id="leftSection" alignment="CENTER" style="-fx-background-radius: 20 0 0 20;"
+                styleClass="brand-section">
+                <padding>
+                    <Insets top="40" right="40" bottom="40" left="40" />
+                </padding>
+                <StackPane styleClass="logo-container">
+                    <ImageView fitHeight="300.0" fitWidth="250.0" pickOnBounds="true"
+                        preserveRatio="true" styleClass="hidden-image">
                         <image>
                             <Image url="@img/capyCourses 012.png" />
                         </image>
                     </ImageView>
-                    <Label text="CapyCourse" styleClass="platform-name" />
-                </VBox>
-            </VBox>
-            <VBox fx:id="rightSection" alignment="CENTER" spacing="20" style="-fx-padding: 40;"
-                GridPane.columnIndex="1">
-                <Label text="DADOS COMPLEMENTARES" textFill="WHITE">
+                </StackPane>
+                <Label text="CapyCourse" styleClass="platform-name">
                     <font>
-                        <Font name="Franklin Gothic Medium" size="27.0" />
+                        <Font name="Plus Jakarta Sans Bold" size="32" />
                     </font>
                 </Label>
-                <VBox spacing="8" fx:id="date">
-                    <Label text="DATA DE NASCIMENTO" textFill="#ffffff80">
+
+                <Label text="Aprenda. Evolua. Conquiste." styleClass="tagline">
+                    <font>
+                        <Font name="Plus Jakarta Sans Medium" size="16" />
+                    </font>
+                </Label>
+            </VBox>
+            <VBox fx:id="rightSection" alignment="CENTER" spacing="16" styleClass="form-section"
+                GridPane.columnIndex="1">
+                <padding>
+                    <Insets bottom="20" left="40" right="40" top="20" />
+                </padding>
+
+                <VBox spacing="4">
+                    <Label text="Cadastro de Professor" styleClass="welcome-text">
                         <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
+                            <Font name="Plus Jakarta Sans Bold" size="28" />
                         </font>
                     </Label>
+                    <Label text="Preencha seus dados para começar"
+                        styleClass="subtitle-text" />
                 </VBox>
-                <VBox spacing="8">
-                    <Label text="CPF" textFill="#ffffff80">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
-                        </font>
-                    </Label>
-                    <TextField fx:id="textFieldCPF" prefHeight="45.0"
-                        style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white; -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
-                        </font>
-                    </TextField>
+
+                <VBox spacing="12">
+
+                    <VBox spacing="4">
+                        <Label text="DATA DE NASCIMENTO" styleClass="field-label" />
+                        <TextField fx:id="birthDate" styleClass="custom-text-field"
+                            prefHeight="40"
+                            promptText="DD/MM/AAAA" />
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="CPF" styleClass="field-label" />
+                        <TextField fx:id="cpf" styleClass="custom-text-field"
+                            prefHeight="40"
+                            promptText="000.000.000-00" />
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="TELEFONE" styleClass="field-label" />
+                        <TextField fx:id="phone" styleClass="custom-text-field"
+                            prefHeight="40"
+                            promptText="(00) 00000-0000" />
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="NÍVEL DE ESCOLARIDADE" styleClass="field-label" />
+                        <ComboBox fx:id="educationLevel" styleClass="custom-text-field"
+                            prefHeight="40"
+                            maxWidth="Infinity" />
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="ÁREA DE ATUAÇÃO" styleClass="field-label" />
+                        <Label text="Selecione as áreas que você dejesa atuar"
+                            styleClass="subtitle-text" />
+                        <FlowPane fx:id="interestContainer" hgap="5" vgap="5" alignment="CENTER"
+                            maxHeight="60.0">
+                            <Button text="Programação" styleClass="interest-button"
+                                fx:id="btnProgramming" />
+                            <Button text="Dados" styleClass="interest-button" fx:id="btnData" />
+                            <Button text="Desenvolvimento Web" styleClass="interest-button"
+                                fx:id="btnWebDev" />
+                            <Button text="Mobile" styleClass="interest-button" fx:id="btnMobile" />
+                            <Button text="Inteligência Artificial" styleClass="interest-button"
+                                fx:id="btnAI" />
+                            <Button text="Cybersegurança" styleClass="interest-button"
+                                fx:id="btnCyber" />
+                        </FlowPane>
+                    </VBox>
                 </VBox>
-                <VBox spacing="8">
-                    <Label text="TELEFONE" textFill="#ffffff80">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
-                        </font>
-                    </Label>
-                    <TextField fx:id="textFieldPhone" prefHeight="45.0"
-                        style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white; -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
-                        </font>
-                    </TextField>
-                </VBox>
-                <VBox spacing="8">
-                    <Label text="NÍVEL DE ESCOLARIDADE" textFill="#ffffff80">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
-                        </font>
-                    </Label>
-                    <ComboBox fx:id="comboBoxEducation" prefHeight="45.0" prefWidth="Infinity"
-                        style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12;" />
-                </VBox>
-                <VBox spacing="8">
-                    <Label text="ÁREA DE ATUAÇÃO" textFill="#ffffff80">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
-                        </font>
-                    </Label>
-                    <Label text="Selecione a área de atuação" textFill="#ffffff80">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="16.0" />
-                        </font>
-                    </Label>           
-                    <FlowPane fx:id="interestContainer" hgap="5" vgap="5" alignment="CENTER" maxHeight="60.0">
-                        <Button text="Programação" styleClass="interest-button" fx:id="btnProgramming" />
-                        <Button text="Dados" styleClass="interest-button" fx:id="btnData" />
-                        <Button text="Desenvolvimento Web" styleClass="interest-button" fx:id="btnWebDev" />
-                        <Button text="Mobile" styleClass="interest-button" fx:id="btnMobile" />
-                        <Button text="Inteligência Artificial" styleClass="interest-button" fx:id="btnAI" />
-                        <Button text="Cybersegurança" styleClass="interest-button" fx:id="btnCyber" />
-                    </FlowPane>
-                </VBox>
-                <Button onAction="#createTeacher" maxWidth="Infinity" styleClass="modern-button" text="FINALIZAR CADASTRO">
-                    <VBox.margin>
-                        <Insets top="20.0" />
-                    </VBox.margin>
-                </Button>
-                <HBox alignment="CENTER">
-                    <Label text="Já possui uma conta? " textFill="WHITE">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="14.0" />
-                        </font>
-                    </Label>
-                    <Hyperlink style="-fx-text-fill: #6c63ff; -fx-border-color: transparent;"
-                        text="Fazer login" fx:id="logar">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="12.0" />
-                        </font>
-                    </Hyperlink>
-                </HBox>
+
+                <Button maxWidth="Infinity" styleClass="modern-button"
+                    text="CRIAR CONTA" />
             </VBox>
         </children>
     </GridPane>

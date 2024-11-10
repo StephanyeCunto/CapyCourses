@@ -45,7 +45,6 @@ public class Login extends BaseLoginCadastro implements Initializable {
     private void logar() {
         validator.getValidationSupport().setValidationDecorator(new GraphicValidationDecoration());
         if (!validator.validateFields()) {
-            Toolkit.getDefaultToolkit().beep();
             return;
         }
 

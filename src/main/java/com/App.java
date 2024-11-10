@@ -4,13 +4,15 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
 public class App extends Application {
-
     private static Scene scene;
 
     @Override
@@ -19,7 +21,8 @@ public class App extends Application {
         stage.getIcons().add(icon);
         stage.setTitle("CapyCourse");
 
-        scene = new Scene(loadFXML("/com/login_cadastro/paginaLogin"));
+
+        scene = new Scene(loadFXML("/com/professor/paginaCadastroCurso"));
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();

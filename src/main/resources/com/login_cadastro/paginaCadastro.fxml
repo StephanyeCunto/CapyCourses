@@ -1,32 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.text.Font?>
 
-<StackPane fx:id="container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1"
-  stylesheets="@style/style.css"
-  fx:controller="com.view.login_cadastro.cadastro.Cadastro">
-  <GridPane fx:id="mainPane" alignment="CENTER"
-    StackPane.alignment="CENTER">
+<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
+  xmlns:fx="http://javafx.com/fxml/1">
+  <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
       <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
@@ -35,122 +29,98 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-      <VBox fx:id="leftSection" alignment="CENTER" style="-fx-background-radius: 20 0 0 20;">
-        <VBox alignment="CENTER" spacing="20">
-          <ImageView fitHeight="300.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" styleClass="hidden-image">
-              <image>
-                  <Image url="@img/capyCourses 012.png" />
-              </image>
+      <VBox fx:id="leftSection" alignment="CENTER" style="-fx-background-radius: 20 0 0 20;"
+        styleClass="brand-section">
+        <padding>
+          <Insets top="40" right="40" bottom="40" left="40" />
+        </padding>
+        <StackPane styleClass="logo-container">
+          <ImageView fitHeight="300.0" fitWidth="250.0" pickOnBounds="true"
+            preserveRatio="true" styleClass="hidden-image">
+            <image>
+              <Image url="@img/capyCourses 012.png" />
+            </image>
           </ImageView>
-          <Label text="CapyCourse" styleClass="platform-name" />
-      </VBox>
-      </VBox>
-      <VBox fx:id="rightSection" alignment="CENTER" spacing="20" style="-fx-padding: 40;"
-        GridPane.columnIndex="1">
-        <Label text="CADASTRO" textFill="WHITE">
+        </StackPane>
+        <Label text="CapyCourse" styleClass="platform-name">
           <font>
-            <Font name="Franklin Gothic Medium" size="32.0" />
+            <Font name="Plus Jakarta Sans Bold" size="32" />
           </font>
         </Label>
-        <VBox spacing="10">
-          <Label text="NOME COMPLETO" textFill="#ffffff80">
-            <font>
-              <Font name="Franklin Gothic Medium" size="14.0" />
-            </font>
-          </Label>
-          <TextField prefHeight="45.0" fx:id="textFieldName"
-            style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white; -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);">
-            <font>
-              <Font name="Franklin Gothic Medium" size="14.0" />
-            </font>
-          </TextField>
-          <Label fx:id="userNameErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
-        </VBox>
-        <VBox spacing="10">
-          <Label text="EMAIL" textFill="#ffffff80">
-            <font>
-              <Font name="Franklin Gothic Medium" size="14.0" />
-            </font>
-          </Label>
-          <TextField prefHeight="45.0" fx:id="textFieldEmail"
-            style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white; -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);">
-            <font>
-              <Font name="Franklin Gothic Medium" size="14.0" />
-            </font>
-          </TextField>
-          <Label fx:id="userEmailErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
-        </VBox>
-        <VBox spacing="10">
-          <Label text="SENHA" textFill="#ffffff80">
-            <font>
-              <Font name="Franklin Gothic Medium" size="14.0" />
-            </font>
-          </Label>
-          <PasswordField prefHeight="45.0" fx:id="passwordFieldPassword"
-            style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white;">
-            <font>
-              <Font name="Franklin Gothic Medium" size="14.0" />
-            </font>
-          </PasswordField>
-          <Label fx:id="passwordErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
 
-        </VBox>
-        <VBox spacing="10">
-          <Label text="CONFIRMAR SENHA" textFill="#ffffff80">
+        <Label text="Aprenda. Evolua. Conquiste." styleClass="tagline">
+          <font>
+            <Font name="Plus Jakarta Sans Medium" size="16" />
+          </font>
+        </Label>
+      </VBox>
+
+      <VBox fx:id="rightSection" alignment="CENTER" spacing="16" styleClass="form-section"
+        GridPane.columnIndex="1">
+        <padding>
+          <Insets bottom="20" left="40" right="40" top="20" />
+        </padding>
+
+        <VBox spacing="4">
+          <Label text="Crie sua conta" styleClass="welcome-text">
             <font>
-              <Font name="Franklin Gothic Medium" size="14.0" />
+              <Font name="Plus Jakarta Sans Bold" size="28" />
             </font>
           </Label>
-          <PasswordField prefHeight="45.0" fx:id="passwordFieldPasswordConfirm"
-            style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white;">
-            <font>
-              <Font name="Franklin Gothic Medium" size="14.0" />
-            </font>
-          </PasswordField>
-          <Label fx:id="passwordConfirmErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
+          <Label text="Preencha seus dados para começar"
+            styleClass="subtitle-text" />
         </VBox>
-        <HBox spacing="20" alignment="CENTER_LEFT">
-          <fx:define>
-            <ToggleGroup fx:id="userType" />
-          </fx:define>
-          <RadioButton text="Aluno" fx:id="radioButtonStudent" textFill="WHITE"
-            toggleGroup="$userType" selected="true">
-            <font>
-              <Font name="Franklin Gothic Medium" size="12.0" />
-            </font>
-          </RadioButton>
-          <RadioButton text="Professor" fx:id="radioButtonTeacher" textFill="WHITE"
-            toggleGroup="$userType">
-            <font>
-              <Font name="Franklin Gothic Medium" size="12.0" />
-            </font>
-          </RadioButton>
-        </HBox>
-        <HBox alignment="CENTER_LEFT">
-          <CheckBox fx:id="termsCheckBox" text="Concordo com os termos de uso" textFill="WHITE">
-            <font>
-              <Font name="Franklin Gothic Medium" size="12.0" />
-            </font>
-          </CheckBox>
-        </HBox>
-        <Button maxWidth="Infinity" onAction="#register" styleClass="modern-button"
-          text="CADASTRAR">
-          <VBox.margin>
-            <Insets top="10.0" />
-          </VBox.margin>
-        </Button>
-        <HBox alignment="CENTER">
-          <Label text="Já possui uma conta? " textFill="WHITE">
-            <font>
-              <Font name="Franklin Gothic Medium" size="14.0" />
-            </font>
-          </Label>
-          <Hyperlink style="-fx-text-fill: #6c63ff; -fx-border-color: transparent;"
-            text="Fazer login" fx:id="logar">
-            <font>
-              <Font name="Franklin Gothic Medium" size="12.0" />
-            </font>
-          </Hyperlink>
+
+        <VBox spacing="12">
+          <VBox spacing="4">
+            <Label text="NOME COMPLETO" styleClass="field-label" />
+            <TextField fx:id="fullName" styleClass="custom-text-field"
+              prefHeight="40"
+              promptText="Seu nome completo" />
+          </VBox>
+
+          <VBox spacing="4">
+            <Label text="EMAIL" styleClass="field-label" />
+            <TextField fx:id="email" styleClass="custom-text-field"
+              prefHeight="40"
+              promptText="Seu endereço de email" />
+          </VBox>
+
+          <VBox spacing="4">
+            <Label text="SENHA" styleClass="field-label" />
+            <PasswordField fx:id="password" styleClass="custom-text-field"
+              prefHeight="40"
+              promptText="Sua senha" />
+          </VBox>
+
+          <VBox spacing="4">
+            <Label text="CONFIRMAR SENHA" styleClass="field-label" />
+            <PasswordField fx:id="confirmPassword" styleClass="custom-text-field"
+              prefHeight="40"
+              promptText="Confirme sua senha" />
+          </VBox>
+        </VBox>
+
+        
+        <VBox spacing="4">
+          <Label text="TIPO DE USUÁRIO" styleClass="field-label" />
+          <HBox spacing="20">
+            <fx:define>
+              <ToggleGroup fx:id="userType" />
+            </fx:define>
+            <RadioButton fx:id="studentRadio" text="Estudante" 
+              toggleGroup="$userType" selected="true" />
+            <RadioButton fx:id="teacherRadio" text="Professor" 
+              toggleGroup="$userType" />
+          </HBox>
+        </VBox>
+
+        <Button maxWidth="Infinity" styleClass="modern-button"
+          text="CRIAR CONTA" />
+
+        <HBox alignment="CENTER" spacing="4">
+          <Label text="Já tem uma conta?" styleClass="register-prompt" />
+          <Hyperlink text="Fazer login" styleClass="login-link" />
         </HBox>
       </VBox>
     </children>
