@@ -1,5 +1,6 @@
 package com.view.login_cadastro;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -173,6 +174,7 @@ public class BaseLoginCadastro extends Base{
 
     protected void addDateInputField() {
         VBox dateContainer = new VBox(5);
+        dateInputPopup.setMaxDate(LocalDate.now().minusYears(14));
         dateContainer.getChildren().add(dateInputPopup.getDateInputField());
         dateContainer.setStyle("-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 8; -fx-border-radius: 8;");
         date.getChildren().add(dateContainer);

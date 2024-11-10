@@ -1,361 +1,9 @@
-/*.modern-button {
-    -fx-background-color: linear-gradient(to right, #6c63ff, #8d86ff);
-    -fx-text-fill: white;
-    -fx-background-radius: 30;
-    -fx-cursor: hand;
-    -fx-font-family: "Franklin Gothic Medium";
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-padding: 15 40 15 40;
-    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.4), 8, 0, 0, 4);
-    -fx-border-radius: 30;
-    -fx-border-width: 0;
-    -fx-min-width: 200;
-    -fx-min-height: 45;
-    -fx-transition: -fx-background-color 0.3s, -fx-effect 0.3s, -fx-scale-x 0.2s, -fx-scale-y 0.2s;
-}
-
-.modern-button:hover {
-    -fx-background-color: linear-gradient(to right, rgb(98, 89, 255), rgb(125, 116, 255));
-    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.7), 10, 0, 0, 7);
-    -fx-scale-x: 1.02;
-    -fx-scale-y: 1.02;
-}
-
-.modern-button:pressed {
-    -fx-scale-x: 0.95;
-    -fx-scale-y: 0.95;
-    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.4), 4, 0, 0, 2);
-}
-
-.modern-button:hover {
-    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.7), 10, 0, 0, 7), innershadow(gaussian, rgba(255, 255, 255, 0.3), 1, 1, 1, 1);
-}
-
-.modern-button {
-    -fx-animation: buttonAppear 0.8s ease-out;
-}
-
-@keyframes buttonAppear {
-    0% {
-        -fx-opacity: 0;
-        -fx-translate-y: 50;
-        -fx-scale-x: 0.8;
-        -fx-scale-y: 0.8;
-    }
-
-    50% {
-        -fx-opacity: 0.5;
-        -fx-translate-y: -10;
-        -fx-scale-x: 1.1;
-        -fx-scale-y: 1.1;
-    }
-
-    75% {
-        -fx-opacity: 0.7;
-        -fx-translate-y: 5;
-        -fx-scale-x: 0.95;
-        -fx-scale-y: 0.95;
-    }
-
-    100% {
-        -fx-opacity: 1;
-        -fx-translate-y: 0;
-        -fx-scale-x: 1;
-        -fx-scale-y: 1;
-    }
-}
-
-.modern-button:pressed {
-    -fx-animation: ripple 0.5s ease-out;
-}
-
-@keyframes ripple {
-    0% {
-        -fx-border-width: 0;
-        -fx-border-color: rgba(255, 255, 255, 0.5);
-    }
-
-    50% {
-        -fx-border-width: 3;
-        -fx-border-color: rgba(255, 255, 255, 0.3);
-    }
-
-    100% {
-        -fx-border-width: 0;
-        -fx-border-color: transparent;
-    }
-}
-
-.modern-button:released,
-.exit-button:released {
-    -fx-scale-x: 1;
-    -fx-scale-y: 1;
-}
-
-.simple-button {
-    -fx-background-color: rgba(255, 255, 255, 0.08);
-    -fx-text-fill: white;
-    -fx-background-radius: 12;
-    -fx-cursor: hand;
-    -fx-font-family: "Franklin Gothic Medium";
-    -fx-font-size: 14px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
-    -fx-transition: -fx-background-color 0.2s, -fx-effect 0.2s;
-}
-
-.simple-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.15);
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
-}
-
-.simple-button:pressed {
-    -fx-background-color: rgba(255, 255, 255, 0.05);
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 3, 0, 0, 1);
-}
-
-.card {
-    -fx-background-color: rgba(41, 47, 76, 0.7);
-    -fx-background-radius: 20;
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-    -fx-border-radius: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
-    -fx-padding: 15;
-}
-
-.card-label {
-    -fx-font-family: "Franklin Gothic Medium";
-    -fx-text-fill: white;
-}
-
-.card-info {
-    -fx-text-fill: rgba(255, 255, 255, 0.5);
-}
-
-.combo-box {
-    -fx-background-color: rgba(255, 255, 255, 0.08);
-    -fx-background-radius: 12;
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-    -fx-border-radius: 12;
-    -fx-text-fill: white;
-    -fx-font-family: "Franklin Gothic Medium";
-    -fx-font-size: 12px;
-    -fx-padding: 1 2;
-    -fx-cursor: hand;
-    -fx-transition: -fx-background-color 0.2s, -fx-border-color 0.2s, -fx-effect 0.2s;
-}
-
-.combo-box:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.12);
-    -fx-border-color: rgba(255, 255, 255, 0.2);
-    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.2), 8, 0, 0, 2);
-}
-
-.combo-box:focused {
-    -fx-background-color: rgba(255, 255, 255, 0.15);
-    -fx-border-color: #6c63ff;
-    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.4), 10, 0, 0, 4);
-}
-
-.combo-box .arrow-button {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0 12 12 0;
-}
-
-.combo-box .arrow {
-    -fx-background-color: white;
-    -fx-scale-x: 0.9;
-    -fx-scale-y: 0.9;
-    -fx-transition: -fx-scale-x 0.2s, -fx-scale-y 0.2s;
-}
-
-.combo-box:hover .arrow {
-    -fx-scale-x: 1;
-    -fx-scale-y: 1;
-    -fx-background-color: #6c63ff;
-}
-
-.combo-box-popup .list-view {
-    -fx-background-color: rgb(41, 47, 76);
-    -fx-background-radius: 12;
-    -fx-border-radius: 12;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 8);
-    -fx-padding: 4;
-}
-
-.combo-box-popup .list-view .list-cell {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-font-family: "Franklin Gothic Medium";
-    -fx-font-size: 14px;
-    -fx-padding: 12 16;
-    -fx-background-radius: 8;
-    -fx-cursor: hand;
-}
-
-.combo-box-popup .list-view .list-cell:hover {
-    -fx-background-color: rgba(108, 99, 255, 0.3);
-}
-
-.combo-box-popup .list-view .list-cell:selected {
-    -fx-background-color: #6c63ff;
-    -fx-text-fill: white;
-}
-
-.combo-box-popup .list-view .scroll-bar:vertical {
-    -fx-background-color: transparent;
-    -fx-padding: 0 4;
-}
-
-.combo-box-popup .list-view .scroll-bar:vertical .thumb {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
-    -fx-background-radius: 8;
-}
-
-.combo-box-popup .list-view .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.3);
-}
-
-.combo-box .text-input {
-    -fx-text-fill: white;
-}
-
-.combo-box-popup {
-    -fx-animation: popupFade 0.15s ease-out;
-}
-
-@keyframes popupFade {
-    0% {
-        -fx-opacity: 0;
-        -fx-translate-y: -10;
-    }
-
-    100% {
-        -fx-opacity: 1;
-        -fx-translate-y: 0;
-    }
-}
-
-.combo-box:showing {
-    -fx-background-color: rgba(255, 255, 255, 0.15);
-    -fx-border-color: #6c63ff;
-}
-
-.combo-box>.cell {
-    -fx-text-fill: white;
-}
-
-.combo-box:focused>.cell {
-    -fx-text-fill: white;
-}
-
-.combo-box-base:editable>.text-field {
-    -fx-text-fill: white;
-}
-
-
-#container {
-    -fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);
-}
-
-.interest-button {
-    -fx-background-color: rgba(255, 255, 255, 0.08);
-    -fx-text-fill: white;
-    -fx-background-radius: 30;
-    -fx-border-radius: 30;
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-    -fx-cursor: hand;
-    -fx-font-family: "Franklin Gothic Medium";
-    -fx-font-size: 14px;
-    -fx-padding: 3 10;
-    -fx-transition: -fx-background-color 0.2s, -fx-border-color 0.2s, -fx-effect 0.2s;
-}
-
-.interest-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.12);
-    -fx-border-color: rgba(108, 99, 255, 0.5);
-    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.2), 8, 0, 0, 2);
-}
-
-.interest-button.selected {
-    -fx-background-color: #6c63ff;
-    -fx-border-color: #6c63ff;
-    -fx-effect: dropshadow(gaussian, rgba(108, 99, 255, 0.4), 10, 0, 0, 4);
-}
-
-.interest-button.selected:hover {
-    -fx-background-color: #5b52ff;
-    -fx-border-color: #5b52ff;
-}
-
-.interest-button {
-    -fx-animation: buttonAppear 0.5s ease-out;
-}
-
-@keyframes buttonAppear {
-    0% {
-        -fx-opacity: 0;
-        -fx-scale-x: 0.8;
-        -fx-scale-y: 0.8;
-    }
-
-    100% {
-        -fx-opacity: 1;
-        -fx-scale-x: 1;
-        -fx-scale-y: 1;
-    }
-}
-
-.interest-button.selected {
-    -fx-animation: selectPulse 0.3s ease-out;
-}
-
-@keyframes selectPulse {
-    0% {
-        -fx-scale-x: 1;
-        -fx-scale-y: 1;
-    }
-
-    50% {
-        -fx-scale-x: 1.05;
-        -fx-scale-y: 1.05;
-    }
-
-    100% {
-        -fx-scale-x: 1;
-        -fx-scale-y: 1;
-    }
-}
-
-.platform-name {
-    -fx-font-family: 'Montserrat';
-    -fx-font-weight: bold;
-    -fx-font-size: 32px;
-    -fx-text-fill: linear-gradient(to right, #5BC4FF, #A5A1FF);
-    -fx-padding: 10 0 0 0;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 1, 0, 0, 1);
-}
-
-.text-field:error, .password-field:error {
-    -fx-border-color: #FF6F61;  
-    -fx-border-width: 1.5px;
-}
-
-.error-label {
-    -fx-text-fill: #ca3528;
-    -fx-font-family: "Franklin Gothic Medium";
-    -fx-font-size: 14px;
-   /* -fx-padding: 4 0 0 0;
-   -fx-border-color: transparent;
-}*/
-
 .root {
     -primary-color: #6C8DFF;
     -secondary-color: #B37FFF;
     -background-dark: #151928;
     -surface-dark: #242942;
 }
-
 
 #container {
     -fx-background-color: linear-gradient(to right bottom, -background-dark, -surface-dark);
@@ -417,7 +65,8 @@
     -fx-font-weight: bold;
 }
 
-.custom-text-field, .password-field {
+.custom-text-field,
+.password-field {
     -fx-background-color: rgba(255, 255, 255, 0.07);
     -fx-background-radius: 12;
     -fx-border-color: rgba(255, 255, 255, 0.1);
@@ -428,13 +77,15 @@
     -fx-padding: 12 16;
 }
 
-.custom-text-field:focused, .password-field:focused {
+.custom-text-field:focused,
+.password-field:focused {
     -fx-background-color: rgba(255, 255, 255, 0.1);
     -fx-border-color: -primary-color;
     -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.2), 10, 0, 0, 0);
 }
 
-.custom-text-field:error, .password-field:error {
+.custom-text-field:error,
+.password-field:error {
     -fx-border-color: #FF5D73;
     -fx-border-width: 1.5px;
 }
@@ -475,7 +126,7 @@
     -fx-max-width: infinity;
 }
 
-.modern-button .mordenLabel{
+.modern-button .mordenLabel {
     -fx-text-fill: white;
 }
 
@@ -502,7 +153,7 @@
     -fx-max-width: infinity;
 }
 
-.register-button .register-label{
+.register-button .register-label {
     -fx-text-fill: rgba(255, 255, 255, 0.8);
 
 }
@@ -533,7 +184,8 @@
     -fx-fill: rgba(255, 255, 255, 0.7);
 }
 
-.modern-button, .register-button {
+.modern-button,
+.register-button {
     -fx-animation: buttonAppear 0.6s ease-out;
 }
 
@@ -542,6 +194,7 @@
         -fx-opacity: 0;
         -fx-translate-y: 20;
     }
+
     100% {
         -fx-opacity: 1;
         -fx-translate-y: 0;
@@ -554,8 +207,6 @@
     }
 }
 
-
-/* Add these styles to your existing CSS file */
 
 .interest-button {
     -fx-background-color: rgba(255, 255, 255, 0.08);
@@ -571,39 +222,22 @@
     -fx-text-fill: white;
 }
 
-.interest-button:selected {
-    -fx-background-color: -primary-color;
-    -fx-text-fill: white;
+
+.interest-button.selected {
+    -fx-background-color: linear-gradient(to right, -primary-color, -secondary-color);
+    -fx-text-fill: rgb(226, 226, 226);
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.4), 10, 0, 0, 4);
 }
 
-/* Style for ComboBox */
-.combo-box {
-    -fx-background-color: rgba(255, 255, 255, 0.07);
-    -fx-background-radius: 12;
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-    -fx-border-radius: 12;
+.interest-button.selected:hover {
+    -fx-background-color: #5b52ff;
+    -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.4), 10, 0, 0, 4);
 }
 
-.combo-box .cell {
-    -fx-text-fill: white;
-    -fx-background-color: -background-dark;
+.interest-button {
+    -fx-animation: buttonAppear 0.5s ease-out;
 }
-
-.combo-box-popup .list-view {
-    -fx-background-color: -background-dark;
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-}
-
-.combo-box-popup .list-cell {
-    -fx-text-fill: white;
-    -fx-background-color: -background-dark;
-}
-
-.combo-box-popup .list-cell:hover {
-    -fx-background-color: rgba(108, 141, 255, 0.2);
-}
-
-/* Radio Button Styles */
 .radio-button {
     -fx-text-fill: rgba(255, 255, 255, 0.8);
     -fx-font-size: 14px;
@@ -669,4 +303,112 @@
 
 .login-link:pressed {
     -fx-opacity: 0.8;
+}
+
+.error-field {
+    fx-border-color: #FF6F61;
+    -fx-border-width: 1.5px;
+}
+
+/* Base ComboBox styling */
+.combo-box {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-radius: 12;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 0;
+}
+
+/* Hover state */
+.combo-box:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: rgba(108, 141, 255, 0.3);
+}
+
+/* Focused state */
+.combo-box:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: -primary-color;
+    -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.2), 10, 0, 0, 0);
+}
+
+/* Arrow button styling */
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 12;
+}
+
+.combo-box .arrow {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-insets: 0;
+    -fx-padding: 3;
+}
+
+/* Popup/ListView styling */
+.combo-box-popup .list-view {
+    -fx-background-color: -surface-dark;
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-radius: 12;
+    -fx-padding: 4;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 5);
+}
+
+/* List cells */
+.combo-box-popup .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-padding: 8 16;
+    -fx-cell-size: 40px;
+}
+
+.combo-box-popup .list-cell:filled:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+    -fx-background-radius: 8;
+}
+
+.combo-box-popup .list-cell:filled:selected {
+    -fx-background-color: rgba(108, 141, 255, 0.3);
+    -fx-background-radius: 8;
+    -fx-text-fill: white;
+}
+
+/* ScrollBar styling for popup */
+.combo-box-popup .list-view .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 0 4;
+}
+
+.combo-box-popup .list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 6;
+}
+
+.combo-box-popup .list-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Value display */
+.combo-box .cell {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 0 0 0 16;
+}
+
+/* Placeholder/Prompt text */
+.combo-box .combo-box-placeholder {
+    -fx-text-fill: rgba(255, 255, 255, 0.5);
+}
+
+/* Error state */
+.combo-box:error {
+    -fx-border-color: #FF5D73;
+    -fx-border-width: 1.5px;
+}
+
+/* Fix for text alignment */
+.combo-box-base > .text {
+    -fx-translate-x: 8;
 }

@@ -21,7 +21,7 @@ public class ErrorNotification {
         errorContainer = new StackPane();
         errorContainer.setPickOnBounds(false);
         errorContainer.setMouseTransparent(true);
-        errorContainer.setTranslateY(180);
+        errorContainer.setTranslateY(50);
         errorContainer.setStyle("""
             -fx-border-radius: 8px;
             """);
@@ -30,7 +30,7 @@ public class ErrorNotification {
         
         errorContainer.getChildren().add(errorBox);
         StackPane.setAlignment(errorBox, Pos.TOP_CENTER);
-        errorBox.setTranslateY(20);
+        errorBox.setTranslateY(0);
 
         if (parent != null) {
             parent.getChildren().add(errorContainer);

@@ -27,14 +27,13 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     @FXML
     private PasswordField passwordFieldPasswordConfirm;
     @FXML
-    private CheckBox termsCheckBox;
-    @FXML
     private ToggleGroup userType;
     @FXML
     private RadioButton radioButtonStudent;
     @FXML
     private RadioButton radioButtonTeacher;
-    @FXML
+
+  @FXML
     private Hyperlink logar;
     @FXML
     private VBox leftSection;
@@ -55,21 +54,21 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
 
-        validator.setupInitialState(textFieldName, textFieldEmail, passwordFieldPassword, passwordFieldPasswordConfirm,
-                termsCheckBox, userNameErrorLabel, userEmailErrorLabel, passwordErrorLabel, passwordConfirmErrorLabel);
+        validator.setupInitialState(textFieldName, textFieldEmail, passwordFieldPassword, passwordFieldPasswordConfirm, userNameErrorLabel, userEmailErrorLabel, passwordErrorLabel, passwordConfirmErrorLabel);
 
         logar.setOnAction(event -> {
             redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
         });
     }
 
+    @FXML
     public void register() {
-
         validator.getValidationSupport().setValidationDecorator(new GraphicValidationDecoration());
         if (!validator.validateFields()) {
             Toolkit.getDefaultToolkit().beep();
             return;
         }
+        System.out.print("radioButtonStudent.isSelected() "+ radioButtonStudent.isSelected()+ " , adioButtonTeacher.isSelected() "+ radioButtonTeacher.isSelected());
 
         Stage stage = (Stage) leftSection.getScene().getWindow();
 

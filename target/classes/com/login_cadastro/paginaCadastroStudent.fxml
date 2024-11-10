@@ -17,7 +17,8 @@
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1">
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.view.login_cadastro.cadastro.CadastroStudent">
     <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
@@ -70,11 +71,9 @@
 
                 <VBox spacing="12">
 
-                    <VBox spacing="4">
+                    <VBox spacing="4" fx:id="date">
                         <Label text="DATA DE NASCIMENTO" styleClass="field-label" />
-                        <TextField fx:id="birthDate" styleClass="custom-text-field"
-                            prefHeight="40"
-                            promptText="DD/MM/AAAA" />
+
                     </VBox>
 
                     <VBox spacing="4">
@@ -93,7 +92,7 @@
 
                     <VBox spacing="4">
                         <Label text="NÍVEL DE ESCOLARIDADE" styleClass="field-label" />
-                        <ComboBox fx:id="educationLevel" styleClass="custom-text-field"
+                        <ComboBox fx:id="comboBoxEducation" styleClass="custom-text-field"
                             prefHeight="40"
                             maxWidth="Infinity" />
                     </VBox>

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.controller.login_cadastro.CadastroStudentController;
@@ -17,8 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class CadastroStudent extends BaseLoginCadastro implements Initializable {
-    @FXML
-    private Hyperlink logar;
     @FXML
     private VBox leftSection;
     @FXML
@@ -38,15 +37,12 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         super.addDateInputField();
         super.setupInterestButtons();
 
-        logar.setOnAction(event -> super.redirectTo("/com/login_cadastro/paginaLogin.fxml",
-                (Stage) leftSection.getScene().getWindow()));
     }
 
     public void createStudent() throws ParseException{
         String interests = String.join(". ", super.getSelectedInterests());
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Date date = format.parse(super.getDateInputPopup().getDate());
-
         new CadastroStudentController(date,textFieldCPF.getText(), Long.parseLong(textFieldPhone.getText()), comboBoxEducation.getValue(),interests);
 
         super.redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());

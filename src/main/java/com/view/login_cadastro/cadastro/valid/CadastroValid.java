@@ -22,8 +22,6 @@ public class CadastroValid {
     @FXML
     private PasswordField passwordFieldPasswordConfirm;
     @FXML
-    private CheckBox termsCheckBox;
-    @FXML
     private Label userNameErrorLabel;
     @FXML
     private Label userEmailErrorLabel;
@@ -34,12 +32,11 @@ public class CadastroValid {
 
     public void setupInitialState(TextField textFieldName, TextField textFieldEmail,
             PasswordField passwordFieldPassword,
-            PasswordField passwordFieldPasswordConfirm, CheckBox termsCheckBox,
+            PasswordField passwordFieldPasswordConfirm,
             Label userNameErrorLabel, Label userEmailErrorLabel, Label passwordErrorLabel,
             Label passwordConfirmErrorLabel) {
 
-        loadValues(textFieldName, textFieldEmail, passwordFieldPassword, passwordFieldPasswordConfirm,
-                termsCheckBox, userNameErrorLabel, userEmailErrorLabel, passwordErrorLabel, passwordConfirmErrorLabel);
+        loadValues(textFieldName, textFieldEmail, passwordFieldPassword, passwordFieldPasswordConfirm,userNameErrorLabel, userEmailErrorLabel, passwordErrorLabel, passwordConfirmErrorLabel);
 
         userNameErrorLabel.setVisible(false);
         userEmailErrorLabel.setVisible(false);
@@ -48,7 +45,7 @@ public class CadastroValid {
 
         textFieldName.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.matches(NAME_REGEX)) {
-                updateErrorDisplay(textFieldName, userNameErrorLabel, false, null);
+                updateErrorDisplay(textFieldName, userNameErrorLabel, true, null);
             }
         });
 
@@ -57,7 +54,7 @@ public class CadastroValid {
                     Validator.createPredicateValidator(value -> {
                         if (value instanceof String) {
                             String strValue = (String) value;
-                            return !strValue.trim().isEmpty();
+                            return !strValue.trim().isEmpty()  && strValue.matches(NAME_REGEX);
                         }
                         return false;
                     }, "Por favor, insira um nome válido"));
@@ -94,16 +91,13 @@ public class CadastroValid {
                             return !strValue.trim().isEmpty() && strValue.length() >= MIN_PASSWORD_LENGTH;
                         }
                         return false;
-                    }, "Por favor, insira uma senha válida"));
+                    }, "Por favor, insira uma senha válida, ela deve ter "+MIN_PASSWORD_LENGTH+ " caracteres míninos." ));
         });
 
         passwordFieldPasswordConfirm.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals(passwordFieldPassword.getText())) {
                 updateErrorDisplay(passwordFieldPasswordConfirm, passwordConfirmErrorLabel, true, null);
-            } else {
-                updateErrorDisplay(passwordFieldPasswordConfirm, passwordConfirmErrorLabel, false,
-                        "As senhas não coincidem");
-            }
+            } 
         });
 
         passwordFieldPasswordConfirm.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
@@ -116,20 +110,16 @@ public class CadastroValid {
                         return false;
                     }, "As senhas não coincidem"));
         });
-
-        validationSupport.registerValidator(termsCheckBox, Validator.createPredicateValidator(
-                CheckBox::isSelected, "É necessário aceitar os termos para continuar"));
     }
 
     private void loadValues(TextField textFieldName, TextField textFieldEmail, PasswordField passwordFieldPassword,
-            PasswordField passwordFieldPasswordConfirm, CheckBox termsCheckBox,
+            PasswordField passwordFieldPasswordConfirm,
             Label userNameErrorLabel, Label userEmailErrorLabel, Label passwordErrorLabel,
             Label passwordConfirmErrorLabel) {
         this.textFieldName = textFieldName;
         this.textFieldEmail = textFieldEmail;
         this.passwordFieldPassword = passwordFieldPassword;
         this.passwordFieldPasswordConfirm = passwordFieldPasswordConfirm;
-        this.termsCheckBox = termsCheckBox;
         this.userNameErrorLabel = userNameErrorLabel;
         this.userEmailErrorLabel = userEmailErrorLabel;
         this.passwordErrorLabel = passwordErrorLabel;
@@ -157,18 +147,15 @@ public class CadastroValid {
     }
 
     private void updateErrorDisplay(Control field, Label errorLabel, boolean isValid, String message) {
-
         field.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, !isValid);
-        if (!isValid) {
-            field.setStyle(field.getStyle() + "-fx-border-color: #FF6F61;  -fx-border-width: 1.5px;");
-        } else {
-            field.setStyle(
-                    "-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12; -fx-text-fill: white; -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);");
-        }
         errorLabel.setText(isValid ? "" : message);
         errorLabel.setVisible(!isValid);
         errorLabel.setManaged(!isValid);
-
+        if(isValid){
+            field.getStyleClass().add("error-field");
+        }else{
+            field.getStyleClass().remove("error-field");
+        }
     }
 
     public boolean validateFields() {
@@ -182,19 +169,13 @@ public class CadastroValid {
             isValid = false;
         }
         if (!isValidPassword(passwordFieldPassword.getText())) {
-            updateErrorDisplay(passwordFieldPassword, passwordErrorLabel, false, "Por favor, insira uma senha válida");
+            updateErrorDisplay(passwordFieldPassword, passwordErrorLabel, false, "Por favor, insira uma senha válida, ela deve ter "+MIN_PASSWORD_LENGTH+ " caracteres míninos.");
             isValid = false;
         }
         if (!isValidPassWordConfirm(passwordFieldPasswordConfirm.getText(), passwordFieldPassword.getText())) {
             updateErrorDisplay(passwordFieldPasswordConfirm, passwordConfirmErrorLabel, false,
                     "As senhas devem ser iguais");
             isValid = false;
-        }
-        if (!termsCheckBox.isSelected()) {
-            termsCheckBox.setStyle("-fx-border-color: #FF6F61; -fx-border-width: 1.5px;");
-            isValid = false;
-        } else {
-            termsCheckBox.setStyle(""); 
         }
 
         return isValid;

@@ -27,9 +27,7 @@
     <rowConstraints>
         <RowConstraints minHeight="600.0" vgrow="ALWAYS" />
     </rowConstraints>
-
     <children>
-
         <VBox fx:id="sideMenu" maxWidth="275.0" minWidth="200.0" prefWidth="230.0" spacing="20" styleClass="side-menu">
             <children>
 
@@ -37,9 +35,9 @@
                     <Button styleClass="outline-button" text="← VOLTAR" />
                 </HBox>
 
-                <VBox spacing="15" styleClass="progress-tracker">
+                <VBox spacing="15" styleClass="quick-tips">
                     <Label styleClass="section-title" text="Progresso do Cadastro" />
-                    <ProgressBar fx:id="progressBar" progress="0.33" styleClass="custom-progress-bar" />
+                    <ProgressBar fx:id="progressBar" styleClass="custom-progress-bar" />
                     <Label fx:id="progressLabel" styleClass="progress-text" text="33% Completo" />
 
                     <VBox spacing="10" styleClass="steps-container">
@@ -102,11 +100,11 @@
                                     <HBox spacing="16">
                                         <VBox spacing="8" HBox.hgrow="ALWAYS">
                                             <Label styleClass="field-label" text="Categoria*" />
-                                            <ComboBox fx:id="categoryCourse" minWidth="300" promptText="Selecione uma categoria" styleClass="combo-box" />
+                                            <ComboBox fx:id="categoryCourse" maxWidth="300" promptText="Selecione uma categoria" styleClass="combo-box" />
                                         </VBox>
                                         <VBox spacing="8" HBox.hgrow="ALWAYS">
                                             <Label styleClass="field-label" text="Nível*" />
-                                            <ComboBox fx:id="levelCourse" minWidth="300" promptText="Selecione o nível" styleClass="combo-box" />
+                                            <ComboBox fx:id="levelCourse" maxWidth="300" promptText="Selecione o nível" styleClass="combo-box" />
                                         </VBox>
                                     </HBox>
 

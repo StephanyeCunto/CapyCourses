@@ -34,9 +34,6 @@ public class LoginValid {
         loadValues(user, password, userErrorLabel, passwordErrorLabel);
 
         user.textProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("user: "+ user.getText());
-            System.out.println("password: "+ password.getText());
-            System.out.println("email.matches(EMAIL_REGEX): "+ newValue.matches(EMAIL_REGEX));
             if (user.getText().matches(EMAIL_REGEX)) {
                 updateErrorDisplay(user, userErrorLabel, true, null);
             } 
@@ -92,13 +89,12 @@ public class LoginValid {
 
     private void updateErrorDisplay(Control field, Label errorLabel, boolean isValid, String message) {
         field.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, !isValid);
-        String currentStyle =  "-fx-background-color: rgba(255, 255, 255, 0.07);-fx-background-radius: 12; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 12;-fx-text-fill: white;-fx-prompt-text-fill: rgba(255, 255, 255, 0.5);-fx-font-size: 14px; -fx-padding: 12 16;";
         errorLabel.setText(isValid ? "" : message);
         errorLabel.setVisible(!isValid);
         if(isValid){
-            field.setStyle(currentStyle);
+            field.getStyleClass().add("error-field");
         }else{
-            field.setStyle(currentStyle + "-fx-border-color: #FF6F61;  -fx-border-width: 1.5px;");
+            field.getStyleClass().remove("error-field");
         }
     }
 

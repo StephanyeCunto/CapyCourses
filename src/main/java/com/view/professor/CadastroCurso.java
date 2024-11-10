@@ -675,9 +675,9 @@ public class CadastroCurso implements Initializable {
 
         HBox titleBox = new HBox(10);
         TextField titleField = new TextField();
-        titleField.setPromptText(DEFAULT_MODULE_TITLE + " " + moduleNumber);
+        titleField.setPromptText(DEFAULT_MODULE_TITLE);
         titleField.getStyleClass().add("custom-text-field");
-        titleField.setPrefWidth(600);
+        titleField.setPrefWidth(550);
 
         Label charCount = new Label("0/100");
         charCount.getStyleClass().add("char-counter");
@@ -805,7 +805,7 @@ public class CadastroCurso implements Initializable {
         content.setSpacing(15);
         content.getStyleClass().add("lesson-content");
         TextField titleField = new TextField();
-        titleField.setPromptText(DEFAULT_LESSON_TITLE + " " + lessonNumber);
+        titleField.setPromptText(DEFAULT_LESSON_TITLE);
         titleField.getStyleClass().add("custom-text-field");
         TextField videoField = new TextField();
         videoField.setPromptText("Link do vídeo da aula");
@@ -889,19 +889,7 @@ public class CadastroCurso implements Initializable {
         dateEnd.setText("Data do fim");
         dateInputPopupEnd.setMinDate(LocalDate.now().plusDays(1));
         dateContainerEnd.getChildren().add(dateInputPopupEnd.getDateInputField());
-        dateContainerStart.setStyle("-fx-background-color:rgba(108,99,255,0.2);");
-        dateContainerEnd.setStyle("-fx-background-color:rgba(108,99,255,0.2);");
-
-        dateContainerStart.setOnMouseEntered(e -> dateContainerStart.setStyle(
-                "-fx-background-color: rgba(108,99,255,0.5); -fx-background-radius: 8; -fx-border-radius: 8;"));
-        dateContainerEnd.setOnMouseEntered(e -> dateContainerEnd.setStyle(
-                "-fx-background-color: rgba(108,99,255,0.5); -fx-background-radius: 8; -fx-border-radius: 8;"));
-
-        dateContainerStart.setOnMouseExited(e -> dateContainerStart.setStyle(
-                "-fx-background-color:rgba(108,99,255,0.2); -fx-background-radius: 8; -fx-border-radius: 8;"));
-        dateContainerEnd.setOnMouseExited(e -> dateContainerEnd.setStyle(
-                "-fx-background-color:rgba(108,99,255,0.2); -fx-background-radius: 8; -fx-border-radius: 8;"));
-
+    
         date.getChildren().addAll(dateStart, dateContainerStart, dateEnd, dateContainerEnd);
     }
 }
