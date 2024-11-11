@@ -119,14 +119,14 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
     private void toggleInitialize(){
         if(!Modo.getInstance().getModo()){ 
             background.getStyleClass().add("dark");
-            sunIcon.setVisible(!Modo.getInstance().getModo());
-            moonIcon.setVisible(Modo.getInstance().getModo());
+            sunIcon.setVisible(Modo.getInstance().getModo());
+            moonIcon.setVisible(!Modo.getInstance().getModo());
             TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer); 
-            thumbTransition.setToX(isLightMode ? 12.0 : -12.0);
+            thumbTransition.setToX(!Modo.getInstance().getModo() ? 12.0 : -12.0);
             thumbTransition.play();
         }else{
             TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer); 
-            thumbTransition.setToX(isLightMode ? -12.0 : 12.0);
+            thumbTransition.setToX(Modo.getInstance().getModo() ? -12.0 : 12.0);
             thumbTransition.play();
             background.getStyleClass().remove("dark");
             sunIcon.setVisible(Modo.getInstance().getModo());
