@@ -70,6 +70,8 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     private StackPane thumbContainer;
     @FXML
     private HBox toggleButtonHBox;
+    @FXML
+    private StackPane toggleButtonStackPane;
 
     private boolean isLightMode = true;
     private String typeUser;
@@ -86,7 +88,7 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
             redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
         });
 
-        toggleButtonHBox.setOnMouseClicked(e -> toggle());
+        toggleButtonStackPane.setOnMouseClicked(e -> toggle());
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();

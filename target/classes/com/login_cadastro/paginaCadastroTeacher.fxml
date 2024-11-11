@@ -24,7 +24,7 @@
     xmlns:fx="http://javafx.com/fxml/1">
     <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
         fx:id="toggleButtonHBox">
-        <StackPane alignment="CENTER" styleClass="theme-toggle-switch" prefWidth="50"
+        <StackPane alignment="CENTER" fx:id="toggleButtonStackPane" styleClass="theme-toggle-switch" prefWidth="50"
             prefHeight="25">
             <Rectangle fx:id="background" width="50" height="25" styleClass="toggle-background"
                 arcWidth="25" arcHeight="25" />

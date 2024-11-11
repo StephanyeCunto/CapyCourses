@@ -46,6 +46,8 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
     private StackPane thumbContainer;
     @FXML
     private Rectangle background;
+    @FXML
+    private StackPane toggleButtonStackPane;
 
     private boolean isLightMode = true;
 
@@ -57,7 +59,7 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         super.loadCalendar();
         super.setupInterestButtons();
 
-        toggleButtonHBox.setOnMouseClicked(e -> toggle());
+        toggleButtonStackPane.setOnMouseClicked(e -> toggle());
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
