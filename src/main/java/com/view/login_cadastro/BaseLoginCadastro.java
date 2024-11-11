@@ -252,17 +252,18 @@ public class BaseLoginCadastro extends Base {
         return new HashSet<>(selectedInterests);
     }
 
-    protected void changeMode() {
+    protected void changeMode(boolean calendar) {
         container.getStylesheets().clear();
         if (Modo.getInstance().getModo()) {
             container.getStylesheets()
                     .add(getClass().getResource("/com/login_cadastro/style/ligth/style.css").toExternalForm());
             Modo.getInstance().setModo();
-            loadCalendar();
         } else {
             container.getStylesheets()
                     .add(getClass().getResource("/com/login_cadastro/style/dark/style.css").toExternalForm());
             Modo.getInstance().setModo();
+        }
+        if(calendar){
             loadCalendar();
         }
     }

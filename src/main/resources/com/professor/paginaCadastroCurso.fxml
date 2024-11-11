@@ -17,6 +17,10 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.StackPane?>
 
 <GridPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="800.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.professor.CadastroCurso">
     <columnConstraints>
@@ -60,23 +64,19 @@
                 <VBox spacing="30" styleClass="main-content">
                   
                     <VBox spacing="15" styleClass="page-header">
-                        <HBox alignment="CENTER_LEFT" spacing="20">
-                            <VBox spacing="8">
-                                <Label styleClass="page-title" text="Cadastrar Novo Curso" />
-                                <Label styleClass="page-subtitle" text="Preencha as informações do curso" />
-                            </VBox>
-                            <Region HBox.hgrow="ALWAYS" />
-                            <Button styleClass="outline-button" text="Salvar Rascunho" />
-                            <Button fx:id="themeToggleBtn" styleClass="modern-button" onAction="#changeModeStyle">
-                                <graphic>
-                                     <ImageView  preserveRatio="true" >
-                                         <image>
-                                             <Image url="@img/lua (1).png"/> 
-                                         </image>
-                                     </ImageView>
-                                 </graphic>
-                             </Button>
-                        </HBox>
+                        <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
+                        fx:id="toggleButtonHBox">
+                        <StackPane alignment="CENTER" styleClass="theme-toggle-switch" prefWidth="50" prefHeight="25">
+                          <Rectangle fx:id="background" width="50" height="25" styleClass="toggle-background"
+                            arcWidth="25" arcHeight="25" />
+                          <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+                            <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+                            <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15" visible="true" />
+                            <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15" visible="false" />
+                          </StackPane>
+                          <ToggleButton fx:id="toggleButton" mnemonicParsing="false" styleClass="toggle-button" />
+                        </StackPane>
+                      </HBox>
                     </VBox>
 
                     <GridPane hgap="30" vgap="25">

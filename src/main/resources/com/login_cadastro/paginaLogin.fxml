@@ -28,19 +28,24 @@
 <?import javafx.scene.shape.Rectangle?> 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.canvas.GraphicsContext?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.ToggleButton?>
 
 <StackPane fx:id="container" stylesheets="@style/dark/style.css" xmlns="http://javafx.com/javafx/23"
     xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.Login">
-    <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS">
-        <Button fx:id="themeToggleBtn" styleClass="modern-button" onAction="#changeModeStyle" >
-           <graphic>
-                <ImageView  preserveRatio="true" >
-                    <image>
-                        <Image url="@img/lua (1).png"/> 
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
+    <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
+        fx:id="toggleButtonHBox">
+        <StackPane alignment="CENTER" styleClass="theme-toggle-switch" prefWidth="50"
+            prefHeight="25">
+            <Rectangle fx:id="background" width="50" height="25" styleClass="toggle-background"
+                arcWidth="25" arcHeight="25" />
+            <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+                <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+                <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15" visible="true" />
+                <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15" visible="false" />
+            </StackPane>
+            <ToggleButton fx:id="toggleButton" mnemonicParsing="false" styleClass="toggle-button" />
+        </StackPane>
     </HBox>
     <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
         <columnConstraints>
@@ -123,12 +128,13 @@
                 </HBox>
 
 
-                <Button maxWidth="Infinity" onAction="#logar" styleClass="modern-button" text="ENTRAR">
+                <Button maxWidth="Infinity" onAction="#logar" styleClass="modern-button"
+                    text="ENTRAR">
                 </Button>
 
                 <VBox alignment="CENTER" spacing="16">
                     <Label text="Não tem uma conta?" styleClass="register-prompt" />
-                    <Button styleClass="register-button" onAction="#register" >
+                    <Button styleClass="register-button" onAction="#register">
                         <graphic>
                             <HBox spacing="8" alignment="CENTER">
                                 <!--<FontIcon

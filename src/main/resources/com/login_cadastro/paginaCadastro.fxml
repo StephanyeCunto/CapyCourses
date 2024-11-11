@@ -17,20 +17,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.ToggleButton?>
 
-<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.cadastro.Cadastro">
+<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.cadastro.Cadastro">
 
-  <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS">
-    <Button fx:id="themeToggleBtn" styleClass="modern-button" onAction="#changeModeStyle" >
-       <graphic>
-            <ImageView  preserveRatio="true" >
-                <image>
-                    <Image url="@img/lua (1).png"/> 
-                </image>
-            </ImageView>
-        </graphic>
-    </Button>
+  <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
+    fx:id="toggleButtonHBox">
+    <StackPane alignment="CENTER" styleClass="theme-toggle-switch" prefWidth="50" prefHeight="25">
+      <Rectangle fx:id="background" width="50" height="25" styleClass="toggle-background"
+        arcWidth="25" arcHeight="25" />
+      <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+        <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+        <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15" visible="true" />
+        <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15" visible="false" />
+      </StackPane>
+      <ToggleButton fx:id="toggleButton" mnemonicParsing="false" styleClass="toggle-button" />
+    </StackPane>
   </HBox>
+
   <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
@@ -88,7 +95,8 @@
             <TextField fx:id="textFieldName" styleClass="custom-text-field"
               prefHeight="40"
               promptText="Seu nome completo" />
-              <Label fx:id="userNameErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
+            <Label fx:id="userNameErrorLabel" visible="false" styleClass="error-label"
+              managed="false" />
           </VBox>
 
           <VBox spacing="4">
@@ -96,7 +104,8 @@
             <TextField fx:id="textFieldEmail" styleClass="custom-text-field"
               prefHeight="40"
               promptText="Seu endereço de email" />
-              <Label fx:id="userEmailErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
+            <Label fx:id="userEmailErrorLabel" visible="false" styleClass="error-label"
+              managed="false" />
           </VBox>
 
           <VBox spacing="4">
@@ -104,7 +113,8 @@
             <PasswordField fx:id="passwordFieldPassword" styleClass="custom-text-field"
               prefHeight="40"
               promptText="Sua senha" />
-              <Label fx:id="passwordErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
+            <Label fx:id="passwordErrorLabel" visible="false" styleClass="error-label"
+              managed="false" />
           </VBox>
 
           <VBox spacing="4">
@@ -112,26 +122,27 @@
             <PasswordField fx:id="passwordFieldPasswordConfirm" styleClass="custom-text-field"
               prefHeight="40"
               promptText="Confirme sua senha" />
-              <Label fx:id="passwordConfirmErrorLabel" visible="false" styleClass="error-label"  managed="false"/>
+            <Label fx:id="passwordConfirmErrorLabel" visible="false" styleClass="error-label"
+              managed="false" />
           </VBox>
         </VBox>
 
-        
+
         <VBox spacing="4">
           <Label text="TIPO DE USUÁRIO" styleClass="field-label" />
           <HBox spacing="20">
             <fx:define>
               <ToggleGroup fx:id="userType" />
             </fx:define>
-            <RadioButton fx:id="radioButtonStudent" text="Estudante" 
+            <RadioButton fx:id="radioButtonStudent" text="Estudante"
               toggleGroup="$userType" selected="true" />
-            <RadioButton fx:id="radioButtonTeacher" text="Professor" 
+            <RadioButton fx:id="radioButtonTeacher" text="Professor"
               toggleGroup="$userType" />
           </HBox>
         </VBox>
 
         <Button maxWidth="Infinity" styleClass="modern-button"
-          text="CRIAR CONTA" onAction="#register"/>
+          text="CRIAR CONTA" onAction="#register" />
 
         <HBox alignment="CENTER" spacing="4">
           <Label text="Já tem uma conta?" styleClass="register-prompt" />

@@ -20,8 +20,10 @@ import com.view.Modo;
 import com.view.elements.Calendario;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.FillTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,6 +38,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class CadastroCurso implements Initializable {
     @FXML
@@ -82,6 +85,18 @@ public class CadastroCurso implements Initializable {
     private Label modules;
     @FXML
     private GridPane container;
+    @FXML
+    private ImageView sunIcon;
+    @FXML
+    private ImageView moonIcon;
+    @FXML
+    private HBox toggleButtonHBox;
+    @FXML
+    private StackPane thumbContainer;
+    @FXML
+    private Rectangle background;
+
+    private boolean isLightMode = true;
 
     private Set<String> selectedInterests = new HashSet<>();
 
@@ -111,7 +126,7 @@ public class CadastroCurso implements Initializable {
         loadComboBoxLevel();
         loadComBoxVisibily(valueComBox);
         setupInterestButtons();
-        changeModeStyle();
+        // changeModeStyle();
 
         uploadButton.setOnAction(event -> uploadImage());
 
@@ -147,6 +162,11 @@ public class CadastroCurso implements Initializable {
 
         timeline0.setCycleCount(Timeline.INDEFINITE);
         timeline0.play();
+
+        toggleButtonHBox.setOnMouseClicked(e -> toggle());
+        sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
+        moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
+        toggleInitialize();
     }
 
     private static final String STEP_PENDING = "step-pending";
@@ -892,7 +912,7 @@ public class CadastroCurso implements Initializable {
     protected void addDateInputField() {
         Label dateStart = new Label();
         Label dateEnd = new Label();
-        if(!Modo.getInstance().getModo()){
+        if (!Modo.getInstance().getModo()) {
             dateStart.setStyle("-fx-text-fill: black;");
             dateEnd.setStyle("-fx-text-fill: black;");
         }
@@ -931,38 +951,88 @@ public class CadastroCurso implements Initializable {
     private void loadCalendar() {
         if (!Modo.getInstance().getModo()) {
             dateInputPopupStart.setBackgroundColor("#FFFFFF");
-            dateInputPopupStart.setAccentColor("#3498db");   
-            dateInputPopupStart.setHoverColor("#6896c4");     
-            dateInputPopupStart.setTextColor("#000000");       
-            dateInputPopupStart.setBorderColor("#808080");     
-            dateInputPopupStart.setDisabledTextColor("#A9A9A9"); 
+            dateInputPopupStart.setAccentColor("#3498db");
+            dateInputPopupStart.setHoverColor("#6896c4");
+            dateInputPopupStart.setTextColor("#000000");
+            dateInputPopupStart.setBorderColor("#808080");
+            dateInputPopupStart.setDisabledTextColor("#A9A9A9");
             dateInputPopupStart.setIconColor("#3498db");
 
             dateInputPopupEnd.setBackgroundColor("#FFFFFF");
-            dateInputPopupEnd.setAccentColor("#3498db");   
-            dateInputPopupEnd.setHoverColor("#6896c4");     
-            dateInputPopupEnd.setTextColor("#000000");       
-            dateInputPopupEnd.setBorderColor("#808080");     
-            dateInputPopupEnd.setDisabledTextColor("#A9A9A9"); 
+            dateInputPopupEnd.setAccentColor("#3498db");
+            dateInputPopupEnd.setHoverColor("#6896c4");
+            dateInputPopupEnd.setTextColor("#000000");
+            dateInputPopupEnd.setBorderColor("#808080");
+            dateInputPopupEnd.setDisabledTextColor("#A9A9A9");
             dateInputPopupEnd.setIconColor("#3498db");
             addDateInputField();
-        }else{
+        } else {
             dateInputPopupStart.setBackgroundColor("#1A1F2F");
-            dateInputPopupStart.setAccentColor("#748BFF");   
-            dateInputPopupStart.setHoverColor("#8C87FF");     
-            dateInputPopupStart.setTextColor("#FFFFFF");       
-            dateInputPopupStart.setBorderColor("#808080");     
-            dateInputPopupStart.setDisabledTextColor("#A9A9A9"); 
+            dateInputPopupStart.setAccentColor("#748BFF");
+            dateInputPopupStart.setHoverColor("#8C87FF");
+            dateInputPopupStart.setTextColor("#FFFFFF");
+            dateInputPopupStart.setBorderColor("#808080");
+            dateInputPopupStart.setDisabledTextColor("#A9A9A9");
             dateInputPopupStart.setIconColor("#728CFF");
 
             dateInputPopupEnd.setBackgroundColor("#1A1F2F");
-            dateInputPopupEnd.setAccentColor("#748BFF");   
-            dateInputPopupEnd.setHoverColor("#8C87FF");     
-            dateInputPopupEnd.setTextColor("#FFFFFF");       
-            dateInputPopupEnd.setBorderColor("#808080");     
-            dateInputPopupEnd.setDisabledTextColor("#A9A9A9"); 
+            dateInputPopupEnd.setAccentColor("#748BFF");
+            dateInputPopupEnd.setHoverColor("#8C87FF");
+            dateInputPopupEnd.setTextColor("#FFFFFF");
+            dateInputPopupEnd.setBorderColor("#808080");
+            dateInputPopupEnd.setDisabledTextColor("#A9A9A9");
             dateInputPopupEnd.setIconColor("#728CFF");
             addDateInputField();
+        }
+    }
+
+    private void toggle() {
+        TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
+        thumbTransition.setToX(isLightMode ? 12.0 : -12.0);
+        thumbTransition.play();
+
+        FillTransition fillTransition = new FillTransition(Duration.millis(200), background);
+        fillTransition.setFromValue(isLightMode ? Color.web("#FFA500") : Color.web("#4169E1"));
+        fillTransition.setToValue(isLightMode ? Color.web("#4169E1") : Color.web("#FFA500"));
+        fillTransition.play();
+
+        isLightMode = !isLightMode;
+
+        if (isLightMode) {
+            changeModeStyle();
+            background.getStyleClass().remove("dark");
+        } else {
+            changeModeStyle();
+            background.getStyleClass().add("dark");
+        }
+
+        updateIconsVisibility();
+    }
+
+    public boolean isLightMode() {
+        return isLightMode;
+    }
+
+    private void updateIconsVisibility() {
+        sunIcon.setVisible(isLightMode);
+        moonIcon.setVisible(!isLightMode);
+    }
+
+    private void toggleInitialize() {
+        if (!Modo.getInstance().getModo()) {
+            background.getStyleClass().add("dark");
+            sunIcon.setVisible(!Modo.getInstance().getModo());
+            moonIcon.setVisible(Modo.getInstance().getModo());
+            TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
+            thumbTransition.setToX(isLightMode ? 12.0 : -12.0);
+            thumbTransition.play();
+        } else {
+            TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
+            thumbTransition.setToX(isLightMode ? -12.0 : 12.0);
+            thumbTransition.play();
+            background.getStyleClass().remove("dark");
+            sunIcon.setVisible(Modo.getInstance().getModo());
+            moonIcon.setVisible(!Modo.getInstance().getModo());
         }
     }
 }

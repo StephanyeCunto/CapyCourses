@@ -16,18 +16,26 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.shape.Rectangle?>
 
-<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.cadastro.CadastroStudent">
-    <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS">
-        <Button fx:id="themeToggleBtn" styleClass="modern-button" onAction="#changeModeStyle" >
-           <graphic>
-                <ImageView  preserveRatio="true" >
-                    <image>
-                        <Image url="@img/lua (1).png"/> 
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
+<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.view.login_cadastro.cadastro.CadastroStudent">
+    <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
+        fx:id="toggleButtonHBox">
+        <StackPane alignment="CENTER" styleClass="theme-toggle-switch" prefWidth="50"
+            prefHeight="25">
+            <Rectangle fx:id="background" width="50" height="25" styleClass="toggle-background"
+                arcWidth="25" arcHeight="25" />
+            <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+                <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+                <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15" visible="true" />
+                <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15" visible="false" />
+            </StackPane>
+            <ToggleButton fx:id="toggleButton" mnemonicParsing="false" styleClass="toggle-button" />
+        </StackPane>
     </HBox>
     <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
         <columnConstraints>
