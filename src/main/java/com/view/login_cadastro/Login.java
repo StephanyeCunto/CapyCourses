@@ -30,6 +30,8 @@ public class Login extends BaseLoginCadastro implements Initializable {
     private Label userErrorLabel;
     @FXML
     private Label passwordErrorLabel;
+    @FXML
+    private Button themeToggleBtn;
 
     private final LoginValid validator = new LoginValid();
     private ErrorNotification errorNotification;
@@ -39,6 +41,11 @@ public class Login extends BaseLoginCadastro implements Initializable {
         super.initializeCommon();
         validator.setupInitialState(user, password, userErrorLabel, passwordErrorLabel);
         setupErrorNotification();
+
+        themeToggleBtn.setStyle("-fx-background-radius: 20; " + 
+        "-fx-min-width: 40px; " + 
+        "-fx-min-height: 40px; " +
+        "-fx-border-radius: 20;");
     }
 
     @FXML
@@ -64,6 +71,11 @@ public class Login extends BaseLoginCadastro implements Initializable {
                 user.requestFocus();
             }
         }
+    }
+
+    @FXML
+    private void changeModeStyle(){
+        super.changeMode();
     }
 
     private void setupErrorNotification() {

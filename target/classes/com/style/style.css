@@ -263,7 +263,7 @@
 .card-info {
     -fx-text-fill: rgba(255, 255, 255, 0.5);
 }
-/* Estilo base do DatePicker */
+
 .date-picker {
     -fx-background-color: rgba(255, 255, 255, 0.08);
     -fx-background-radius: 12;
@@ -282,7 +282,6 @@
     -fx-border-width: 2;
 }
 
-/* Botão de seta */
 .date-picker .arrow-button {
     -fx-background-color: transparent;
     -fx-background-radius: 0 12 12 0;
@@ -301,7 +300,6 @@
     -fx-scale-y: 0.8;
 }
 
-/* Campo de texto */
 .date-picker .text-field {
     -fx-background-color: transparent;
     -fx-text-fill: white;
@@ -310,7 +308,6 @@
     -fx-font-size: 14px;
 }
 
-/* Popup do calendário */
 .date-picker-popup {
     -fx-background-color: #292f4c;
     -fx-background-radius: 12;
@@ -320,7 +317,6 @@
     -fx-padding: 8;
 }
 
-/* Cabeçalho mês/ano */
 .date-picker-popup .month-year-pane {
     -fx-background-color: #292f4c;
     -fx-background-radius: 12 12 0 0;
@@ -333,7 +329,6 @@
     -fx-font-weight: bold;
 }
 
-/* Botões de navegação */
 .date-picker-popup .spinner .button {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
@@ -352,13 +347,11 @@
     -fx-scale-y: 0.7;
 }
 
-/* Grid do calendário */
 .date-picker-popup .calendar-grid {
     -fx-background-color: transparent;
     -fx-padding: 8;
 }
 
-/* Células dos dias */
 .date-picker-popup .calendar-grid .day-cell {
     -fx-background-color: transparent;
     -fx-text-fill: white;
@@ -393,7 +386,6 @@
     -fx-text-fill: rgba(255, 255, 255, 0.3);
 }
 
-/* Dias da semana */
 .date-picker-popup .calendar-grid .weekday-cell {
     -fx-text-fill: white;
     -fx-font-family: "Franklin Gothic Medium";
@@ -402,7 +394,6 @@
     -fx-padding: 4;
 }
 
-/* Números das semanas */
 .date-picker-popup .calendar-grid .week-number-cell {
     -fx-text-fill: rgba(255, 255, 255, 0.7);
     -fx-font-family: "Franklin Gothic Medium";

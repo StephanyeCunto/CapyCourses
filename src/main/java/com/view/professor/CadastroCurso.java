@@ -16,11 +16,13 @@ import java.util.Set;
 import javafx.util.Duration;
 
 import com.controller.professor.CadastroCursoController;
+import com.view.Modo;
 import com.view.elements.Calendario;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -33,6 +35,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 public class CadastroCurso implements Initializable {
     @FXML
@@ -77,6 +80,8 @@ public class CadastroCurso implements Initializable {
     private Label settings;
     @FXML
     private Label modules;
+    @FXML
+    private GridPane container;
 
     private Set<String> selectedInterests = new HashSet<>();
 
@@ -106,7 +111,7 @@ public class CadastroCurso implements Initializable {
         loadComboBoxLevel();
         loadComBoxVisibily(valueComBox);
         setupInterestButtons();
-        addDateInputField();
+        changeModeStyle();
 
         uploadButton.setOnAction(event -> uploadImage());
 
@@ -149,35 +154,35 @@ public class CadastroCurso implements Initializable {
     private static final String STEP_COMPLETED = "step-completed";
     private static final int MIN_MODULES = 1;
     private static final int MIN_LESSONS_PER_MODULE = 1;
-    
+
     private void registrationProgress() {
         List<Map<String, Object>> modulesData = saveModulesAndLessonsData();
         double percentage = calculateTotalProgress(modulesData);
-        
+
         updateProgressDisplay(percentage);
         updateAllLabels(modulesData);
     }
-    
+
     private double calculateTotalProgress(List<Map<String, Object>> modulesData) {
         int completedFields = countCompletedBaseFields();
         int totalFields = countTotalBaseFields();
-        
+
         if (modulesData.isEmpty()) {
-            totalFields += (3 * MIN_MODULES); 
-            totalFields += (5 * MIN_LESSONS_PER_MODULE); 
+            totalFields += (3 * MIN_MODULES);
+            totalFields += (5 * MIN_LESSONS_PER_MODULE);
         }
-        
+
         ModuleProgressData moduleProgress = countModuleProgress(modulesData);
-        
+
         int modulesWithoutLessons = countModulesWithoutLessons(modulesData);
         totalFields += (5 * MIN_LESSONS_PER_MODULE * modulesWithoutLessons);
-        
+
         completedFields += moduleProgress.completedFields;
         totalFields += moduleProgress.totalFields;
-        
+
         return totalFields > 0 ? (completedFields * 100.0) / totalFields : 0;
     }
-    
+
     private int countModulesWithoutLessons(List<Map<String, Object>> modulesData) {
         int count = 0;
         for (Map<String, Object> moduleData : modulesData) {
@@ -188,53 +193,55 @@ public class CadastroCurso implements Initializable {
         }
         return count;
     }
-    
+
     private int countCompletedBaseFields() {
         int completed = 0;
         String[] fields = {
-            titleCourse.getText(),
-            descritionCourse.getText(),
-            categoryCourse.getValue(),
-            levelCourse.getValue(),
-            durationTotal.getText(),
-            String.valueOf(ComboBoxVisibily.getValue())
+                titleCourse.getText(),
+                descritionCourse.getText(),
+                categoryCourse.getValue(),
+                levelCourse.getValue(),
+                durationTotal.getText(),
+                String.valueOf(ComboBoxVisibily.getValue())
         };
-        
+
         for (String field : fields) {
             if (isFieldComplete(field)) {
                 completed++;
             }
-        } 
-        if (isImage) completed++;
-        if (isTag > 0) completed++;
-        
+        }
+        if (isImage)
+            completed++;
+        if (isTag > 0)
+            completed++;
+
         return completed;
     }
-    
+
     private int countTotalBaseFields() {
-        return 8; 
+        return 8;
     }
-    
+
     private ModuleProgressData countModuleProgress(List<Map<String, Object>> modulesData) {
         int completedFields = 0;
         int totalFields = 0;
-        
+
         for (Map<String, Object> moduleData : modulesData) {
             completedFields += countCompletedModuleFields(moduleData);
-            totalFields += 3; 
+            totalFields += 3;
             LessonProgressData lessonProgress = countLessonProgress(moduleData.get("lessons"));
             completedFields += lessonProgress.completedFields;
             totalFields += lessonProgress.totalFields;
         }
         return new ModuleProgressData(completedFields, totalFields);
     }
-    
+
     private int countCompletedModuleFields(Map<String, Object> moduleData) {
         int completed = 0;
         String[] fields = {
-            (String) moduleData.get("moduleTitle"),
-            (String) moduleData.get("moduleDuration"),
-            (String) moduleData.get("moduleDescription")
+                (String) moduleData.get("moduleTitle"),
+                (String) moduleData.get("moduleDuration"),
+                (String) moduleData.get("moduleDescription")
         };
         for (String field : fields) {
             if (isFieldComplete(field)) {
@@ -243,7 +250,7 @@ public class CadastroCurso implements Initializable {
         }
         return completed;
     }
-    
+
     private LessonProgressData countLessonProgress(Object lessonsObj) {
         if (!(lessonsObj instanceof List)) {
             return new LessonProgressData(0, 0);
@@ -253,12 +260,12 @@ public class CadastroCurso implements Initializable {
         int totalFields = 0;
         for (Map<String, String> lesson : lessons) {
             String[] fields = {
-                lesson.get("lessonTitle"),
-                lesson.get("lessonVideoLink"),
-                lesson.get("lessonDetails"),
-                lesson.get("lessonMaterials"),
-                lesson.get("lessonDuration")
-            }; 
+                    lesson.get("lessonTitle"),
+                    lesson.get("lessonVideoLink"),
+                    lesson.get("lessonDetails"),
+                    lesson.get("lessonMaterials"),
+                    lesson.get("lessonDuration")
+            };
             for (String field : fields) {
                 if (isFieldComplete(field)) {
                     completedFields++;
@@ -266,56 +273,59 @@ public class CadastroCurso implements Initializable {
             }
             totalFields += 5;
         }
-        
+
         return new LessonProgressData(completedFields, totalFields);
     }
-    
+
     private boolean isFieldComplete(String field) {
         return field != null && !field.isEmpty() && !"null".equals(field);
     }
-    
+
     private void updateProgressDisplay(double percentage) {
         String percentageFormatted = String.format("%.0f", percentage);
         double percentageDouble = percentage / 100;
         progressLabel.setText(percentageFormatted + " % Completo");
         progressBar.setProgress(percentageDouble);
     }
-    
+
     private void updateAllLabels(List<Map<String, Object>> modulesData) {
         updateBasicInformationLabel();
         updateSettingsLabel();
         updateModulesLabel(modulesData);
     }
-    
+
     private void updateBasicInformationLabel() {
         String[] fields = {
-            titleCourse.getText(),
-            descritionCourse.getText(),
-            categoryCourse.getValue(),
-            levelCourse.getValue()
+                titleCourse.getText(),
+                descritionCourse.getText(),
+                categoryCourse.getValue(),
+                levelCourse.getValue()
         };
         int completed = 0;
         for (String field : fields) {
-            if (isFieldComplete(field)) completed++;
+            if (isFieldComplete(field))
+                completed++;
         }
-        if (isTag > 0) completed++;
-        updateStepLabel(basicInformation, "Informações Básicas", 
-            completed, fields.length + 1);
+        if (isTag > 0)
+            completed++;
+        updateStepLabel(basicInformation, "Informações Básicas",
+                completed, fields.length + 1);
     }
-    
+
     private void updateSettingsLabel() {
         String[] fields = {
-            durationTotal.getText(),
-            String.valueOf(ComboBoxVisibily.getValue())
+                durationTotal.getText(),
+                String.valueOf(ComboBoxVisibily.getValue())
         };
         int completed = 0;
         for (String field : fields) {
-            if (isFieldComplete(field)) completed++;
+            if (isFieldComplete(field))
+                completed++;
         }
-        
+
         updateStepLabel(settings, "Configurações", completed, fields.length);
     }
-    
+
     private void updateModulesLabel(List<Map<String, Object>> modulesData) {
         if (modulesData.isEmpty()) {
             setLabelPending(modules, "Módulos");
@@ -332,7 +342,7 @@ public class CadastroCurso implements Initializable {
             setLabelInProgress(modules, "Módulos");
         }
     }
-    
+
     private boolean allModulesHaveLessons(List<Map<String, Object>> modulesData) {
         for (Map<String, Object> moduleData : modulesData) {
             Object lessons = moduleData.get("lessons");
@@ -342,7 +352,7 @@ public class CadastroCurso implements Initializable {
         }
         return true;
     }
-    
+
     private void updateStepLabel(Label label, String text, int completed, int total) {
         if (completed == 0) {
             setLabelPending(label, text);
@@ -352,21 +362,21 @@ public class CadastroCurso implements Initializable {
             setLabelInProgress(label, text);
         }
     }
-    
+
     private void setLabelPending(Label label, String text) {
         label.getStyleClass().remove(STEP_CURRENT);
         label.getStyleClass().add(STEP_PENDING);
         label.setText(" " + text);
         label.setStyle("-fx-text-fill: #797E8C;");
     }
-    
+
     private void setLabelInProgress(Label label, String text) {
         label.getStyleClass().remove(STEP_PENDING);
         label.getStyleClass().add(STEP_CURRENT);
         label.setStyle("-fx-text-fill: rgb(89, 92, 150);");
         label.setText("→ " + text);
     }
-    
+
     private void setLabelCompleted(Label label, String text) {
         label.getStyleClass().remove(STEP_PENDING);
         label.getStyleClass().remove(STEP_CURRENT);
@@ -374,21 +384,21 @@ public class CadastroCurso implements Initializable {
         label.setStyle("-fx-text-fill: rgb(89, 150, 90);");
         label.setText("✓ " + text);
     }
-    
+
     private static class ModuleProgressData {
         final int completedFields;
         final int totalFields;
-        
+
         ModuleProgressData(int completedFields, int totalFields) {
             this.completedFields = completedFields;
             this.totalFields = totalFields;
         }
     }
-    
+
     private static class LessonProgressData {
         final int completedFields;
         final int totalFields;
-        
+
         LessonProgressData(int completedFields, int totalFields) {
             this.completedFields = completedFields;
             this.totalFields = totalFields;
@@ -882,14 +892,77 @@ public class CadastroCurso implements Initializable {
     protected void addDateInputField() {
         Label dateStart = new Label();
         Label dateEnd = new Label();
+        if(!Modo.getInstance().getModo()){
+            dateStart.setStyle("-fx-text-fill: black;");
+            dateEnd.setStyle("-fx-text-fill: black;");
+        }
 
         dateStart.setText("Data de início");
         dateInputPopupStart.setMinDate(LocalDate.now());
-        dateContainerStart.getChildren().add(dateInputPopupStart.getDateInputField());
         dateEnd.setText("Data do fim");
         dateInputPopupEnd.setMinDate(LocalDate.now().plusDays(1));
+
+        dateContainerStart.getChildren().clear();
+        dateContainerEnd.getChildren().clear();
+        date.getChildren().clear();
+
+        dateContainerStart.getChildren().add(dateInputPopupStart.getDateInputField());
         dateContainerEnd.getChildren().add(dateInputPopupEnd.getDateInputField());
-    
+
         date.getChildren().addAll(dateStart, dateContainerStart, dateEnd, dateContainerEnd);
+    }
+
+    @FXML
+    private void changeModeStyle() {
+        container.getStylesheets().clear();
+        if (Modo.getInstance().getModo()) {
+            container.getStylesheets()
+                    .add(getClass().getResource("/com/professor/style/ligth/style.css").toExternalForm());
+            Modo.getInstance().setModo();
+            loadCalendar();
+        } else {
+            container.getStylesheets()
+                    .add(getClass().getResource("/com/professor/style/dark/style.css").toExternalForm());
+            Modo.getInstance().setModo();
+            loadCalendar();
+        }
+    }
+
+    private void loadCalendar() {
+        if (!Modo.getInstance().getModo()) {
+            dateInputPopupStart.setBackgroundColor("#FFFFFF");
+            dateInputPopupStart.setAccentColor("#3498db");   
+            dateInputPopupStart.setHoverColor("#6896c4");     
+            dateInputPopupStart.setTextColor("#000000");       
+            dateInputPopupStart.setBorderColor("#808080");     
+            dateInputPopupStart.setDisabledTextColor("#A9A9A9"); 
+            dateInputPopupStart.setIconColor("#3498db");
+
+            dateInputPopupEnd.setBackgroundColor("#FFFFFF");
+            dateInputPopupEnd.setAccentColor("#3498db");   
+            dateInputPopupEnd.setHoverColor("#6896c4");     
+            dateInputPopupEnd.setTextColor("#000000");       
+            dateInputPopupEnd.setBorderColor("#808080");     
+            dateInputPopupEnd.setDisabledTextColor("#A9A9A9"); 
+            dateInputPopupEnd.setIconColor("#3498db");
+            addDateInputField();
+        }else{
+            dateInputPopupStart.setBackgroundColor("#1A1F2F");
+            dateInputPopupStart.setAccentColor("#748BFF");   
+            dateInputPopupStart.setHoverColor("#8C87FF");     
+            dateInputPopupStart.setTextColor("#FFFFFF");       
+            dateInputPopupStart.setBorderColor("#808080");     
+            dateInputPopupStart.setDisabledTextColor("#A9A9A9"); 
+            dateInputPopupStart.setIconColor("#728CFF");
+
+            dateInputPopupEnd.setBackgroundColor("#1A1F2F");
+            dateInputPopupEnd.setAccentColor("#748BFF");   
+            dateInputPopupEnd.setHoverColor("#8C87FF");     
+            dateInputPopupEnd.setTextColor("#FFFFFF");       
+            dateInputPopupEnd.setBorderColor("#808080");     
+            dateInputPopupEnd.setDisabledTextColor("#A9A9A9"); 
+            dateInputPopupEnd.setIconColor("#728CFF");
+            addDateInputField();
+        }
     }
 }

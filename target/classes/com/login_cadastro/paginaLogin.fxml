@@ -29,8 +29,19 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.canvas.GraphicsContext?>
 
-<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
+<StackPane fx:id="container" stylesheets="@style/dark/style.css" xmlns="http://javafx.com/javafx/23"
     xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.Login">
+    <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS">
+        <Button fx:id="themeToggleBtn" styleClass="modern-button" onAction="#changeModeStyle" >
+           <graphic>
+                <ImageView  preserveRatio="true" >
+                    <image>
+                        <Image url="@img/lua (1).png"/> 
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </HBox>
     <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />

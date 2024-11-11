@@ -12,19 +12,21 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
 
-public class Calendario extends Region{
+public class Calendario extends Region {
     private LocalDate selectedDate = LocalDate.now();
     private LocalDate minDate = null;
     private LocalDate maxDate = null;
     private TextField dateInputField;
     private Label monthLabel;
     private Label yearLabel;
-    private final String BACKGROUND_COLOR = "#292f4c";
-    private final String ACCENT_COLOR = "#6c63ff";
-    private final String HOVER_COLOR = "rgba(255, 255, 255, 0.15)";
-    private final String TEXT_COLOR = "white";
-    private final String BORDER_COLOR = "rgba(255, 255, 255, 0.1)";
-    private final String DISABLED_TEXT = "rgba(255, 255, 255, 0.3)";
+    private String backgroundColor = "#292f4c";
+    private String accentColor = "#6c63ff";
+    private String hoverColor = "rgba(255, 255, 255, 0.15)";
+    private String textColor = "white";
+    private String borderColor = "rgba(255, 255, 255, 0.1)";
+    private String disabledTextColor = "rgba(255, 255, 255, 0.3)";
+    private String iconColor = "#6c63ff";
+    private String inputBorderColor = "rgba(255, 255, 255, 0.1)";
     private List<Popup> activePopups = new ArrayList<>();
     private int yearGridStartYear;
     private GridPane calendarGrid;
@@ -35,10 +37,58 @@ public class Calendario extends Region{
         updateCalendar();
     }
 
+    public void setIconColor(String iconColor) {
+        if (iconColor != null && !iconColor.isEmpty()) {
+            this.iconColor = iconColor;
+        }
+    }
+
+    public void setInputBorderColor(String inputBorderColor) {
+        if (inputBorderColor != null && !inputBorderColor.isEmpty()) {
+            this.inputBorderColor = inputBorderColor;
+        }
+    }
+
     public void setMaxDate(LocalDate maxDate) {
         this.maxDate = maxDate;
         validateSelectedDate();
         updateCalendar();
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        if (backgroundColor != null && !backgroundColor.isEmpty()) {
+            this.backgroundColor = backgroundColor;
+        }
+    }
+
+    public void setAccentColor(String accentColor) {
+        if (accentColor != null && !accentColor.isEmpty()) {
+            this.accentColor = accentColor;
+        }
+    }
+
+    public void setHoverColor(String hoverColor) {
+        if (hoverColor != null && !hoverColor.isEmpty()) {
+            this.hoverColor = hoverColor;
+        }
+    }
+
+    public void setTextColor(String textColor) {
+        if (textColor != null && !textColor.isEmpty()) {
+            this.textColor = textColor;
+        }
+    }
+
+    public void setBorderColor(String borderColor) {
+        if (borderColor != null && !borderColor.isEmpty()) {
+            this.borderColor = borderColor;
+        }
+    }
+
+    public void setDisabledTextColor(String disabledTextColor) {
+        if (disabledTextColor != null && !disabledTextColor.isEmpty()) {
+            this.disabledTextColor = disabledTextColor;
+        }
     }
 
     private void validateSelectedDate() {
@@ -58,8 +108,8 @@ public class Calendario extends Region{
         LocalDate date = selectedDate.withDayOfMonth(day);
         boolean isToday = date.equals(LocalDate.now());
         boolean isSelected = date.equals(selectedDate);
-        boolean isDisabled = (minDate != null && date.isBefore(minDate)) || 
-                           (maxDate != null && date.isAfter(maxDate));
+        boolean isDisabled = (minDate != null && date.isBefore(minDate)) ||
+                (maxDate != null && date.isAfter(maxDate));
 
         String buttonStyle = """
                 -fx-background-color: %s;
@@ -71,10 +121,10 @@ public class Calendario extends Region{
                 -fx-font-size: 13px;
                 %s
                 """.formatted(
-                isSelected ? ACCENT_COLOR : "transparent",
-                isDisabled ? DISABLED_TEXT : TEXT_COLOR,
+                isSelected ? accentColor : "transparent",
+                isDisabled ? disabledTextColor : textColor,
                 isDisabled ? "default" : "hand",
-                isToday ? "-fx-border-color: " + ACCENT_COLOR + "; -fx-border-radius: 6; -fx-border-width: 2;" : "");
+                isToday ? "-fx-border-color: " + accentColor + "; -fx-border-radius: 6; -fx-border-width: 2;" : "");
 
         button.setStyle(buttonStyle);
         button.setDisable(isDisabled);
@@ -82,7 +132,7 @@ public class Calendario extends Region{
         if (!isDisabled) {
             button.setOnMouseEntered(e -> {
                 if (!isSelected) {
-                    button.setStyle(button.getStyle() + "-fx-background-color: " + HOVER_COLOR + ";");
+                    button.setStyle(button.getStyle() + "-fx-background-color: " + hoverColor + ";");
                 }
             });
             button.setOnMouseExited(e -> {
@@ -109,12 +159,12 @@ public class Calendario extends Region{
                 -fx-cursor: hand;
                 -fx-padding: 6;
                 -fx-background-radius: 6;
-                """.formatted(ACCENT_COLOR));
-                
+                """.formatted(accentColor));
+
         button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
-                "-fx-background-color: " + HOVER_COLOR + ";"));
+                "-fx-background-color: " + hoverColor + ";"));
         button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
-                "-fx-background-color: " + HOVER_COLOR + ";", "")));
+                "-fx-background-color: " + hoverColor + ";", "")));
 
         LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
         if (text.equals("❮")) {
@@ -152,34 +202,38 @@ public class Calendario extends Region{
         inputContainer.setPadding(new Insets(5));
         inputContainer.setStyle("""
                 -fx-background-radius: 8;
-                -fx-border-color: rgba(255, 255, 255, 0.1);
+                -fx-border-color: %s;
                 -fx-border-radius: 8;
                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 4);
-                """);
+                """.formatted(inputBorderColor));
+
         dateInputField = createDateInputField();
         Button calendarButton = createCalendarButton();
         dateInputField.prefWidthProperty().bind(inputContainer.widthProperty().multiply(0.8));
         calendarButton.prefWidthProperty().bind(inputContainer.widthProperty().multiply(0.2));
+
         dateInputField.setStyle(dateInputField.getStyle() + """
                 -fx-background-color: transparent;
                 -fx-border-width: 1;
                 -fx-border-radius: 5;
                 -fx-padding: 8 12;
                 -fx-font-size: 14px;
-                -fx-text-fill: white;
-                """);
+                -fx-text-fill: %s;
+                """.formatted(textColor));
+
         calendarButton.setStyle(calendarButton.getStyle() + """
-                -fx-background-color: #6c63ff;
+                -fx-background-color: %s;
                 -fx-text-fill: white;
                 -fx-background-radius: 5;
                 -fx-padding: 8 12;
                 -fx-font-size: 14px;
-                """);
-        calendarButton.setOnMouseEntered(e -> calendarButton.setStyle(calendarButton.getStyle() + """
-                -fx-background-color: #5a54cc;
-                """));
+                """.formatted(iconColor));
+
+        calendarButton.setOnMouseEntered(e -> calendarButton.setStyle(calendarButton.getStyle() +
+                "-fx-background-color: " + hoverColor + ";"));
         calendarButton.setOnMouseExited(e -> calendarButton.setStyle(calendarButton.getStyle().replace(
-                "-fx-background-color: #5a54cc;", "-fx-background-color: #6c63ff;")));
+                "-fx-background-color: " + hoverColor + ";", "-fx-background-color: " + iconColor + ";")));
+
         inputContainer.getChildren().addAll(dateInputField, calendarButton);
         return inputContainer;
     }
@@ -192,12 +246,12 @@ public class Calendario extends Region{
         return "";
     }
 
-    public LocalDate getLocalDate(){
+    public LocalDate getLocalDate() {
         return selectedDate;
     }
 
-    public void setselectedDate(LocalDate date){
-        this.selectedDate=date;
+    public void setselectedDate(LocalDate date) {
+        this.selectedDate = date;
         updateCalendar();
     }
 
@@ -208,14 +262,14 @@ public class Calendario extends Region{
         field.setPrefWidth(200);
         field.setStyle("""
                 -fx-background-color: transparent;
-                -fx-text-fill: white;
-                -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);
+                -fx-text-fill: %s;
+                -fx-prompt-text-fill: %s;
                 -fx-padding: 8 0;
                 -fx-font-size: 14px;
                 -fx-focus-color: transparent;
                 -fx-faint-focus-color: transparent;
                 -fx-cursor: hand;
-                """);
+                """.formatted(textColor,textColor));
         field.setOnMouseClicked(e -> showDatePopup());
         field.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
@@ -237,9 +291,9 @@ public class Calendario extends Region{
                 -fx-padding: 8 12;
                 """);
         button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
-                "-fx-text-fill: " + ACCENT_COLOR + ";"));
+                "-fx-text-fill: " + accentColor + ";"));
         button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
-                "-fx-text-fill: " + ACCENT_COLOR + ";", "-fx-text-fill: white;")));
+                "-fx-text-fill: " + accentColor + ";", "-fx-text-fill: white;")));
         button.setOnAction(e -> showDatePopup());
         return button;
     }
@@ -279,7 +333,7 @@ public class Calendario extends Region{
                 -fx-border-radius: 12;
                 -fx-border-color: %s;
                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 12, 0, 0, 6);
-                """.formatted(BACKGROUND_COLOR, BORDER_COLOR));
+                """.formatted(backgroundColor, borderColor));
 
         HBox header = createHeader();
         GridPane weekDaysHeader = createWeekDaysHeader();
@@ -305,7 +359,7 @@ public class Calendario extends Region{
                 -fx-font-size: 15px;
                 -fx-text-fill: %s;
                 -fx-cursor: hand;
-                """.formatted(TEXT_COLOR);
+                """.formatted(textColor);
 
         monthLabel.setStyle(labelStyle);
         yearLabel.setStyle(labelStyle);
@@ -343,7 +397,7 @@ public class Calendario extends Region{
                 -fx-border-radius: 12;
                 -fx-border-color: %s;
                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 12, 0, 0, 6);
-                """.formatted(BACKGROUND_COLOR, BORDER_COLOR));
+                """.formatted(backgroundColor, borderColor));
 
         if (isMonthSelection) {
             content.getChildren().add(createMonthGrid());
@@ -393,12 +447,12 @@ public class Calendario extends Region{
                 -fx-cursor: hand;
                 -fx-background-radius: 6;
                 -fx-font-size: 12px;
-                """.formatted(TEXT_COLOR));
+                """.formatted(textColor));
 
         button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
-                "-fx-background-color: " + HOVER_COLOR + ";"));
+                "-fx-background-color: " + hoverColor + ";"));
         button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
-                "-fx-background-color: " + HOVER_COLOR + ";", "")));
+                "-fx-background-color: " + hoverColor + ";", "")));
 
         button.setOnAction(e -> action.run());
         return button;
@@ -424,7 +478,7 @@ public class Calendario extends Region{
                 -fx-font-weight: bold;
                 -fx-font-size: 12px;
                 -fx-text-fill: %s;
-                """.formatted(TEXT_COLOR));
+                """.formatted(textColor));
 
         prevYear.setOnAction(e -> {
             yearGridStartYear -= 12;
@@ -524,7 +578,7 @@ public class Calendario extends Region{
                 -fx-min-width: 32px;
                 -fx-min-height: 32px;
                 -fx-font-size: 13px;
-                """.formatted(DISABLED_TEXT));
+                """.formatted(disabledTextColor));
         button.setDisable(true);
         return button;
     }
@@ -543,7 +597,7 @@ public class Calendario extends Region{
                     -fx-font-weight: bold;
                     -fx-text-fill: %s;
                     -fx-padding: 5;
-                    """.formatted(TEXT_COLOR));
+                    """.formatted(textColor));
             header.add(dayLabel, i, 0);
         }
         return header;

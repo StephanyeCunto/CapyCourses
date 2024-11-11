@@ -65,7 +65,7 @@
     -fx-font-weight: bold;
 }
 
-.custom-text-field,
+.custom-text-field, .custom-text-area, TextArea,
 .password-field {
     -fx-background-color: rgba(255, 255, 255, 0.07);
     -fx-background-radius: 12;
@@ -273,7 +273,6 @@
     -fx-background-radius: 100;
 }
 
-/* Animation for radio button selection */
 .radio-button .radio {
     -fx-transition: all 0.2s ease-in-out;
 }
@@ -282,7 +281,6 @@
     -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.4), 8, 0, 0, 0);
 }
 
-/* Container for radio buttons */
 .radio-group-container {
     -fx-spacing: 20;
     -fx-padding: 8 0;
@@ -310,7 +308,6 @@
     -fx-border-width: 1.5px;
 }
 
-/* Base ComboBox styling */
 .combo-box {
     -fx-background-color: rgba(255, 255, 255, 0.07);
     -fx-background-radius: 12;
@@ -321,20 +318,17 @@
     -fx-padding: 0;
 }
 
-/* Hover state */
 .combo-box:hover {
     -fx-background-color: rgba(255, 255, 255, 0.1);
     -fx-border-color: rgba(108, 141, 255, 0.3);
 }
 
-/* Focused state */
 .combo-box:focused {
     -fx-background-color: rgba(255, 255, 255, 0.1);
     -fx-border-color: -primary-color;
     -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.2), 10, 0, 0, 0);
 }
 
-/* Arrow button styling */
 .combo-box .arrow-button {
     -fx-background-color: transparent;
     -fx-padding: 0 12;
@@ -346,7 +340,6 @@
     -fx-padding: 3;
 }
 
-/* Popup/ListView styling */
 .combo-box-popup .list-view {
     -fx-background-color: -surface-dark;
     -fx-background-radius: 12;
@@ -356,7 +349,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 5);
 }
 
-/* List cells */
 .combo-box-popup .list-cell {
     -fx-background-color: transparent;
     -fx-text-fill: rgba(255, 255, 255, 0.8);
@@ -375,7 +367,6 @@
     -fx-text-fill: white;
 }
 
-/* ScrollBar styling for popup */
 .combo-box-popup .list-view .scroll-bar:vertical {
     -fx-background-color: transparent;
     -fx-padding: 0 4;
@@ -390,25 +381,39 @@
     -fx-background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Value display */
 .combo-box .cell {
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-padding: 0 0 0 16;
 }
 
-/* Placeholder/Prompt text */
 .combo-box .combo-box-placeholder {
     -fx-text-fill: rgba(255, 255, 255, 0.5);
 }
 
-/* Error state */
 .combo-box:error {
     -fx-border-color: #FF5D73;
     -fx-border-width: 1.5px;
 }
 
-/* Fix for text alignment */
 .combo-box-base > .text {
     -fx-translate-x: 8;
+}
+
+.theme-toggle-button:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.toggleButtonHBox {
+    -fx-padding: 20;
+}
+
+#container{
+    -fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);
+    -fx-alignment: center;
+}
+
+#mainPane {
+  -fx-background-color: #292f4cb3;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
 }

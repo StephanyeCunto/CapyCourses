@@ -21,17 +21,6 @@
     -fx-padding: 16;
 }
 
-
-.main-scroll {
-    -fx-background: transparent;
-    -fx-background-color: transparent;
-    -fx-padding: 24;
-}
-
-.main-scroll > .viewport {
-    -fx-background-color: transparent;
-}
-
 .custom-text-area {
     -fx-background-color: rgba(255, 255, 255, 0.08);
     -fx-background-radius: 8;

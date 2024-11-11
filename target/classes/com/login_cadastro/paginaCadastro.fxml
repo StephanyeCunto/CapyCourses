@@ -9,17 +9,28 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.ImageView?> 
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
 
-<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.cadastro.Cadastro">
+<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.cadastro.Cadastro">
+
+  <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS">
+    <Button fx:id="themeToggleBtn" styleClass="modern-button" onAction="#changeModeStyle" >
+       <graphic>
+            <ImageView  preserveRatio="true" >
+                <image>
+                    <Image url="@img/lua (1).png"/> 
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+  </HBox>
   <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />

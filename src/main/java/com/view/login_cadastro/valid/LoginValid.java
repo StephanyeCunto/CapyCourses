@@ -91,7 +91,7 @@ public class LoginValid {
         field.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, !isValid);
         errorLabel.setText(isValid ? "" : message);
         errorLabel.setVisible(!isValid);
-        if(isValid){
+         if(isValid){
             field.getStyleClass().add("error-field");
         }else{
             field.getStyleClass().remove("error-field");
@@ -109,7 +109,6 @@ public class LoginValid {
                     "Por favor, insira uma senha");
             isValid = false;
         }
-
         return isValid;
     }
 }

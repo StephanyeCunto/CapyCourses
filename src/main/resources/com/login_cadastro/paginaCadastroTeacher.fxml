@@ -14,10 +14,23 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
     xmlns:fx="http://javafx.com/fxml/1">
+    <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS">
+        <Button fx:id="themeToggleBtn" styleClass="modern-button" onAction="#changeModeStyle" >
+           <graphic>
+                <ImageView  preserveRatio="true" >
+                    <image>
+                        <Image url="@img/lua (1).png"/> 
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </HBox>
     <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
@@ -79,14 +92,14 @@
 
                     <VBox spacing="4">
                         <Label text="CPF" styleClass="field-label" />
-                        <TextField fx:id="cpf" styleClass="custom-text-field"
+                        <TextField fx:id="textFieldCPF" styleClass="custom-text-field"
                             prefHeight="40"
                             promptText="000.000.000-00" />
                     </VBox>
 
                     <VBox spacing="4">
                         <Label text="TELEFONE" styleClass="field-label" />
-                        <TextField fx:id="phone" styleClass="custom-text-field"
+                        <TextField fx:id="textFieldPhone" styleClass="custom-text-field"
                             prefHeight="40"
                             promptText="(00) 00000-0000" />
                     </VBox>

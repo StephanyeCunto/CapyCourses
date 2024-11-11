@@ -35,11 +35,16 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
         super.initializeCommon();
 
         super.loadComboBox();
-        super.addDateInputField();
+        super.changeMode();
         super.setupInterestButtons();
 
         logar.setOnAction(event -> super.redirectTo("/com/login_cadastro/paginaLogin.fxml",
                 (Stage) leftSection.getScene().getWindow()));
+    }
+    
+    @FXML
+    private void changeModeStyle(){
+        super.changeMode();
     }
 
     public void createTeacher() throws ParseException {

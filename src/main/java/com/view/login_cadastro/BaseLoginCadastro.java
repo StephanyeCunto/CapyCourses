@@ -16,16 +16,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Getter;
 
 import com.view.Base;
+import com.view.Modo;
 import com.view.elements.Calendario;
 
 @Getter
-public class BaseLoginCadastro extends Base{
+public class BaseLoginCadastro extends Base {
     @FXML
     private GridPane mainPane;
     @FXML
@@ -58,6 +60,8 @@ public class BaseLoginCadastro extends Base{
     private VBox date;
     @FXML
     private Label selectedCount;
+    @FXML
+    private StackPane container;
 
     private Set<String> selectedInterests = new HashSet<>();
     private Calendario dateInputPopup = new Calendario();
@@ -68,7 +72,7 @@ public class BaseLoginCadastro extends Base{
     }
 
     protected void redirectTo(String pageNext, Stage stage) {
-                try {
+        try {
             Parent root = FXMLLoader.load(getClass().getResource(pageNext));
             Image icon = new Image("/capyCourses 012.png");
             Scene currentScene = stage.getScene();
@@ -131,19 +135,46 @@ public class BaseLoginCadastro extends Base{
     private void applyStylesheetBasedOnSize(double width, double height) {
         Scene scene = mainPane.getScene();
         if (scene != null) {
+            container.getStylesheets().clear();
             scene.getStylesheets().clear();
-            if (width < 925 || height < 500) {
-                adjustLayout(false);
-                scene.getStylesheets()
-                        .add(getClass().getResource("/com/login_cadastro/style/styleSmall.css").toExternalForm());
-            } else if (width < 1400 || height < 900) {
-                adjustLayout(true);
-                scene.getStylesheets()
-                        .add(getClass().getResource("/com/login_cadastro/style/styleMedium.css").toExternalForm());
+            if (!Modo.getInstance().getModo()) {
+                container.getStylesheets()
+                        .add(getClass().getResource("/com/login_cadastro/style/ligth/style.css").toExternalForm());
+                if (width < 925 || height < 500) {
+                    adjustLayout(false);
+                    scene.getStylesheets()
+                            .add(getClass().getResource("/com/login_cadastro/style/ligth/styleSmall.css")
+                                    .toExternalForm());
+                } else if (width < 1400 || height < 900) {
+                    adjustLayout(true);
+                    scene.getStylesheets()
+                            .add(getClass().getResource("/com/login_cadastro/style/ligth/styleMedium.css")
+                                    .toExternalForm());
+                } else {
+                    adjustLayout(true);
+                    scene.getStylesheets()
+                            .add(getClass().getResource("/com/login_cadastro/style/ligth/styleLarge.css")
+                                    .toExternalForm());
+                }
             } else {
-                adjustLayout(true);
-                scene.getStylesheets()
-                        .add(getClass().getResource("/com/login_cadastro/style/styleLarge.css").toExternalForm());
+                container.getStylesheets()
+                        .add(getClass().getResource("/com/login_cadastro/style/dark/style.css").toExternalForm());
+                if (width < 925 || height < 500) {
+                    adjustLayout(false);
+                    scene.getStylesheets()
+                            .add(getClass().getResource("/com/login_cadastro/style/dark/styleSmall.css")
+                                    .toExternalForm());
+                } else if (width < 1400 || height < 900) {
+                    adjustLayout(true);
+                    scene.getStylesheets()
+                            .add(getClass().getResource("/com/login_cadastro/style/dark/styleMedium.css")
+                                    .toExternalForm());
+                } else {
+                    adjustLayout(true);
+                    scene.getStylesheets()
+                            .add(getClass().getResource("/com/login_cadastro/style/dark/styleLarge.css")
+                                    .toExternalForm());
+                }
             }
         }
     }
@@ -175,8 +206,13 @@ public class BaseLoginCadastro extends Base{
     protected void addDateInputField() {
         VBox dateContainer = new VBox(5);
         dateInputPopup.setMaxDate(LocalDate.now().minusYears(14));
+        dateContainer.setStyle(
+                "-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 8; -fx-border-radius: 8;");
+
+        dateContainer.getChildren().clear();
+        date.getChildren().clear();
+
         dateContainer.getChildren().add(dateInputPopup.getDateInputField());
-        dateContainer.setStyle("-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 8; -fx-border-radius: 8;");
         date.getChildren().add(dateContainer);
     }
 
@@ -207,12 +243,49 @@ public class BaseLoginCadastro extends Base{
 
     private void updateSelectedCount() {
         int count = selectedInterests.size();
-        if(selectedCount!=null){
+        if (selectedCount != null) {
             selectedCount.setText(count + (count == 1 ? " área selecionada" : " áreas selecionadas"));
         }
     }
 
     protected Set<String> getSelectedInterests() {
         return new HashSet<>(selectedInterests);
+    }
+
+    protected void changeMode() {
+        container.getStylesheets().clear();
+        if (Modo.getInstance().getModo()) {
+            container.getStylesheets()
+                    .add(getClass().getResource("/com/login_cadastro/style/ligth/style.css").toExternalForm());
+            Modo.getInstance().setModo();
+            loadCalendar();
+        } else {
+            container.getStylesheets()
+                    .add(getClass().getResource("/com/login_cadastro/style/dark/style.css").toExternalForm());
+            Modo.getInstance().setModo();
+            loadCalendar();
+        }
+    }
+
+    protected void loadCalendar() {
+        if (!Modo.getInstance().getModo()) {
+            dateInputPopup.setBackgroundColor("#FFFFFF");
+            dateInputPopup.setAccentColor("#3498db");   
+            dateInputPopup.setHoverColor("#6896c4");     
+            dateInputPopup.setTextColor("#000000");       
+            dateInputPopup.setBorderColor("#808080");     
+            dateInputPopup.setDisabledTextColor("#A9A9A9"); 
+            dateInputPopup.setIconColor("#3498db");
+            addDateInputField();
+        }else{
+            dateInputPopup.setBackgroundColor("#1A1F2F");
+            dateInputPopup.setAccentColor("#748BFF");   
+            dateInputPopup.setHoverColor("#8C87FF");     
+            dateInputPopup.setTextColor("#FFFFFF");       
+            dateInputPopup.setBorderColor("#808080");     
+            dateInputPopup.setDisabledTextColor("#A9A9A9"); 
+            dateInputPopup.setIconColor("#728CFF");
+            addDateInputField();
+        }
     }
 }

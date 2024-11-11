@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 import com.controller.login_cadastro.CadastroStudentController;
@@ -34,9 +33,13 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         super.initializeCommon();
 
         super.loadComboBox();
-        super.addDateInputField();
+        super.loadCalendar();
         super.setupInterestButtons();
+    }
 
+    @FXML
+    private void changeModeStyle(){
+        super.changeMode();
     }
 
     public void createStudent() throws ParseException{

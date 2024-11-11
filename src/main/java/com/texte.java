@@ -11,22 +11,21 @@ public class texte {
     private VBox sideMenu;
     
     @FXML
-    private Label courseNameLabel; // Nome do curso
+    private Label courseNameLabel;
     @FXML
-    private Label courseSubtitleLabel; // Subtítulo do curso
+    private Label courseSubtitleLabel;
     @FXML
-    private Label courseRatingLabel; // Rating do curso
+    private Label courseRatingLabel; 
     @FXML
-    private Label courseDurationLabel; // Duração do curso
+    private Label courseDurationLabel; 
     @FXML
-    private Label courseDescriptionLabel; // Descrição do curso
-
+    private Label courseDescriptionLabel;
     @FXML
-    private VBox videoClassesContainer; // Container para vídeo-aulas
+    private VBox videoClassesContainer; 
     @FXML
-    private VBox materialsContainer; // Container para materiais
+    private VBox materialsContainer;
     @FXML
-    private VBox evaluationsContainer; // Container para avaliações
+    private VBox evaluationsContainer; 
     
     @FXML
     private Button videoClassesButton;
@@ -44,27 +43,22 @@ public class texte {
         evaluationsButton.setOnAction(e -> loadEvaluations());
         certificateButton.setOnAction(e -> loadCertificate());
 
-        // Carregar os detalhes do curso
         loadCourseDetails();
     }
 
     private void loadCourseDetails() {
-        // Aqui você irá definir os valores dos labels com os dados do curso
         courseNameLabel.setText("Programação em Java");
         courseSubtitleLabel.setText("Aprenda programação Java do básico ao avançado");
         courseRatingLabel.setText("⭐ 4.8");
         courseDurationLabel.setText("40 horas");
         courseDescriptionLabel.setText("Aprenda programação Java do básico ao avançado, incluindo POO, coleções e APIs.");
 
-        // Carregar vídeo-aulas
-        loadVideoClasses(); // Aqui você pode chamar a função para preencher as vídeo-aulas
+        loadVideoClasses(); 
     }
 
     private void loadVideoClasses() {
-        // Limpa o container antes de adicionar os novos elementos
         videoClassesContainer.getChildren().clear();
 
-        // Exemplo de adição de vídeo-aulas
         for (int i = 1; i <= 3; i++) {
             Button videoButton = new Button("Aula " + i + ": Título da Aula " + i);
             videoButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand; -fx-padding: 5; -fx-alignment: CENTER-LEFT;");
@@ -73,10 +67,8 @@ public class texte {
     }
 
     private void loadMaterials() {
-        // Limpa o container antes de adicionar os novos elementos
         materialsContainer.getChildren().clear();
 
-        // Exemplo de adição de materiais
         for (int i = 1; i <= 3; i++) {
             Button materialButton = new Button("Material " + i + ": Título do Material " + i);
             materialButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand; -fx-padding: 5; -fx-alignment: CENTER-LEFT;");
@@ -85,10 +77,8 @@ public class texte {
     }
 
     private void loadEvaluations() {
-        // Limpa o container antes de adicionar os novos elementos
         evaluationsContainer.getChildren().clear();
 
-        // Exemplo de adição de avaliações
         for (int i = 1; i <= 2; i++) {
             Button evaluationButton = new Button("Avaliação " + i + ": Título da Avaliação " + i);
             evaluationButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand; -fx-padding: 5; -fx-alignment: CENTER-LEFT;");
@@ -97,7 +87,6 @@ public class texte {
     }
 
     private void loadCertificate() {
-        // Lógica para carregar ou mostrar o certificado do curso
         System.out.println("Exibindo certificado do curso...");
     }
 }
