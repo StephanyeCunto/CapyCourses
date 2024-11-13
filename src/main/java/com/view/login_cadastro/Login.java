@@ -54,7 +54,7 @@ public class Login extends BaseLoginCadastro implements Initializable {
     @FXML
     private StackPane toggleButtonStackPane;
 
-    private boolean isLightMode = true;
+    private boolean isLightMode = Modo.getInstance().getModo();
 
     private final LoginValid validator = new LoginValid();
     private ErrorNotification errorNotification;

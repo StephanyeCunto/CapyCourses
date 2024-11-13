@@ -72,8 +72,7 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     private HBox toggleButtonHBox;
     @FXML
     private StackPane toggleButtonStackPane;
-
-    private boolean isLightMode = true;
+    private boolean isLightMode = Modo.getInstance().getModo();
     private String typeUser;
     private final CadastroValid validator = new CadastroValid();
 
