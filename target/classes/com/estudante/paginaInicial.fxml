@@ -15,16 +15,15 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
-<?import com.view.PaginaInicialView?>
 
-<GridPane fx:controller="com.view.PaginaInicialView" stylesheets="@style/style.css"
+<GridPane fx:controller="com.view.estudante.PaginaInicialView" stylesheets="@style/style.css"
   maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
   prefHeight="768.0" prefWidth="1366.0"
   style="-fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);"
   xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="220.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1060.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0"  />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="80.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="800.0" vgrow="SOMETIMES" />

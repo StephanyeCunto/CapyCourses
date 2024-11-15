@@ -84,7 +84,7 @@ public class Login extends BaseLoginCadastro implements Initializable {
         Stage stage = (Stage) leftSection.getScene().getWindow();
 
         switch (isCheck) {
-            case "true" -> super.redirectTo("/com/professor/paginaCadastroCurso.fxml", stage);
+            case "true" -> super.redirectTo("/com/estudante/paginaInicial.fxml", stage);
             case "incomplete student" -> super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);
             case "incomplete teacher" -> super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);
             default -> {

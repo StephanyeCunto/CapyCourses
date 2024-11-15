@@ -1,4 +1,4 @@
-package com.view;
+package com.view.estudante;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -60,13 +61,14 @@ public class PaginaInicialView implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/menu.fxml"));
             VBox menu = loader.load();
             Menu menuController = loader.getController();
-            menuController.setCurrentPage("/com/paginaInicial");
+            menuController.setCurrentPage("/com/estudante/paginaInicial");
             menuController.configureMenu();
             sideMenu.getChildren().add(menu);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
 
     private void loadCarousel() {
         try {

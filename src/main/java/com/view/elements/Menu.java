@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.application.Platform;
 
 import com.UserSession;
 
@@ -36,8 +37,11 @@ public class Menu {
     @FXML
     private VBox sideMenu;
 
+    private double sizeUser = 0.0;
+
     public void configureMenu() {
         VBox user = perfilMenu();
+        sizeUser = user.getHeight();
         sideMenu.getChildren().addAll(user);
     }
 
@@ -49,9 +53,16 @@ public class Menu {
         Button certificadosBtn = createButton("Certificados");
         Button configuracoesBtn = createButton("Configurações");
         Button sairBtn = createButton("Sair");
-        VBox.setMargin(sairBtn, new Insets(150, 0, 0, 0));
-        vbox.getChildren().addAll(cursosDisponiveisBtn, meusCursosBtn, progressoBtn, certificadosBtn, configuracoesBtn,
-                sairBtn);
+
+        vbox.getChildren().addAll(cursosDisponiveisBtn, meusCursosBtn, progressoBtn, certificadosBtn, configuracoesBtn);
+
+        Platform.runLater(() -> {
+            Scene currentScene = sairBtn.getScene();
+            double sceneHeight = currentScene.getHeight();
+            VBox.setMargin(sairBtn, new Insets(sceneHeight - sizeUser -100 , 0, 0, 0));
+        });
+
+        vbox.getChildren().add(sairBtn);
         return vbox;
     }
 
@@ -65,7 +76,7 @@ public class Menu {
             button.getStyleClass().add("modern-button");
             button.setStyle("-fx-background-color:  rgba(255,255,255,0.08);");
         } else {
-            button.getStyleClass().add("exit-button");
+            button.getStyleClass().add("register-button");
         }
         button.setOnAction(event -> {
             redirectTo(text);
@@ -74,7 +85,7 @@ public class Menu {
     }
 
     private void fillMap() {
-        buttonMenu.put("/com/paginaInicial", "Cursos Disponíveis");
+        buttonMenu.put("/com/estudante/paginaInicial", "Cursos Disponíveis");
         buttonMenu.put("/com/paginaMeusCursosAndamento", "Meus Cursos");
         buttonMenu.put("/com/paginaProgresso", "Progresso");
         buttonMenu.put("/com/paginaMeusCursosFinalizados", "Certificados");
@@ -94,9 +105,15 @@ public class Menu {
         Label nameLabel = new Label(UserSession.getInstance().getUserName());
         nameLabel.setTextFill(Color.WHITE);
         nameLabel.setFont(Font.font("Franklin Gothic Medium", 22));
-
         VBox button = createVBox();
         user.getChildren().addAll(stackPane, welcomeLabel, nameLabel, button);
+        Platform.runLater(() -> {
+            sizeUser = user.getHeight();
+            VBox button2 = createVBox();
+            user.getChildren().clear();
+            user.getChildren().addAll(stackPane, welcomeLabel, nameLabel, button2);
+        });
+
         return user;
     }
 
@@ -116,26 +133,26 @@ public class Menu {
         return stackPane;
     }
 
-    private String initialName(){
-        String name= UserSession.getInstance().getUserName();
+    private String initialName() {
+        String name = UserSession.getInstance().getUserName();
         String[] parts = name.split(" ");
 
         char initialName = Character.toUpperCase(parts[0].charAt(0));
-   
-        char initialSurname =  Character.toUpperCase(parts[parts.length - 1].charAt(0));
-        return  initialName+""+initialSurname;
+
+        char initialSurname = Character.toUpperCase(parts[parts.length - 1].charAt(0));
+        return initialName + "" + initialSurname;
     }
 
     private void redirectTo(String button) {
         try {
             String pageNext = getNextPage(button);
             if (pageNext != null) {
-                Stage stage = (Stage) sideMenu.getScene().getWindow(); 
-                Parent root = FXMLLoader.load(getClass().getResource(pageNext)); 
+                Stage stage = (Stage) sideMenu.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource(pageNext));
                 Scene currentScene = stage.getScene();
                 Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
                 stage.setScene(newScene);
-                stage.show(); 
+                stage.show();
             }
         } catch (Exception e) {
             e.printStackTrace();

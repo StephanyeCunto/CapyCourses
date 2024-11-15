@@ -157,12 +157,7 @@ public class Carousel {
         box.setAlignment(Pos.TOP_LEFT);
         box.setPrefHeight(150);
         box.setSpacing(10);
-        box.setStyle("-fx-background-color: rgba(41, 47, 76, 0.7); " +
-                "-fx-background-radius: 20; " +
-                "-fx-border-color: rgba(255, 255, 255, 0.1); " +
-                "-fx-border-radius: 20; " +
-                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5); " +
-                "-fx-padding: 20;");
+        box.getStyleClass().add("card");
 
         Label nameLabel = createStyledLabel(course.getName(), "Franklin Gothic Medium", 22, Color.WHITE);
         HBox courseInfo = new HBox(8);
