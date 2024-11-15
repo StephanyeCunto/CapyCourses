@@ -85,8 +85,8 @@ public class Login extends BaseLoginCadastro implements Initializable {
 
         switch (isCheck) {
             case "true" -> super.redirectTo("/com/estudante/paginaInicial.fxml", stage);
-            case "incomplete student" -> super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);
-            case "incomplete teacher" -> super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);
+            case "incomplete student" ->{ UserSession.getInstance().setRegisterIncomplet("Student"); super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);}
+            case "incomplete teacher" ->{ UserSession.getInstance().setRegisterIncomplet("Teacher"); super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);}
             default -> {
                 UserSession.getInstance().clearSession();
                 showError();
@@ -105,7 +105,7 @@ public class Login extends BaseLoginCadastro implements Initializable {
         StackPane root = new StackPane();
         leftSection.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
-                errorNotification = new ErrorNotification(root);
+                errorNotification = new ErrorNotification(root, "Usuário ou senhas incorretos");
                 if (newScene.getRoot() instanceof StackPane) {
                     ((StackPane) newScene.getRoot()).getChildren().add(errorNotification.getContainer());
                 } else {

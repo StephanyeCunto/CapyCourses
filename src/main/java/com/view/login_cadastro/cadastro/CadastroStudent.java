@@ -6,9 +6,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.UserSession;
 import com.controller.login_cadastro.CadastroStudentController;
 import com.view.Modo;
 import com.view.login_cadastro.BaseLoginCadastro;
+import com.view.login_cadastro.elements.ErrorNotification;
 
 import javafx.animation.FillTransition;
 import javafx.animation.TranslateTransition;
@@ -51,6 +53,8 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
 
     private boolean isLightMode = Modo.getInstance().getModo();
 
+    private ErrorNotification errorNotification;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
@@ -63,6 +67,9 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
+        if (UserSession.getInstance().getRegisterIncomplet() == "Student") {
+            setupErrorNotification();
+        }
     }
 
     @FXML
@@ -76,7 +83,7 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         Date date = format.parse(super.getDateInputPopup().getDate());
         new CadastroStudentController(date, textFieldCPF.getText(), Long.parseLong(textFieldPhone.getText()),
                 comboBoxEducation.getValue(), interests);
-
+                UserSession.getInstance().setRegisterIncomplet("false");
         super.redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
     }
 
@@ -112,21 +119,40 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         moonIcon.setVisible(!isLightMode);
     }
 
-    private void toggleInitialize(){
-        if(!Modo.getInstance().getModo()){ 
+    private void toggleInitialize() {
+        if (!Modo.getInstance().getModo()) {
             background.getStyleClass().add("dark");
             sunIcon.setVisible(Modo.getInstance().getModo());
             moonIcon.setVisible(!Modo.getInstance().getModo());
-            TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer); 
+            TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
             thumbTransition.setToX(!Modo.getInstance().getModo() ? 12.0 : -12.0);
             thumbTransition.play();
-        }else{
-            TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer); 
+        } else {
+            TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
             thumbTransition.setToX(Modo.getInstance().getModo() ? -12.0 : 12.0);
             thumbTransition.play();
             background.getStyleClass().remove("dark");
             sunIcon.setVisible(Modo.getInstance().getModo());
             moonIcon.setVisible(!Modo.getInstance().getModo());
         }
+    }
+
+    private void setupErrorNotification() {
+        StackPane root = new StackPane();
+        leftSection.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                errorNotification = new ErrorNotification(root, "Cadastro incompleto");
+                if (newScene.getRoot() instanceof StackPane) {
+                    ((StackPane) newScene.getRoot()).getChildren().add(errorNotification.getContainer());
+                } else {
+                    root.getChildren().addAll(newScene.getRoot(), errorNotification.getContainer());
+                }
+                showError();
+            }
+        });
+    }
+
+    private void showError() {
+        errorNotification.show();
     }
 }

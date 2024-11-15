@@ -17,7 +17,7 @@ public class ErrorNotification {
     private PauseTransition pauseTransition;
     private FadeTransition fadeOut;
 
-    public ErrorNotification(StackPane parent) {
+    public ErrorNotification(StackPane parent,String error) {
         errorContainer = new StackPane();
         errorContainer.setPickOnBounds(false);
         errorContainer.setMouseTransparent(true);
@@ -26,7 +26,7 @@ public class ErrorNotification {
             -fx-border-radius: 8px;
             """);
 
-        errorBox = createErrorBox();
+        errorBox = createErrorBox(error);
         
         errorContainer.getChildren().add(errorBox);
         StackPane.setAlignment(errorBox, Pos.TOP_CENTER);
@@ -39,7 +39,7 @@ public class ErrorNotification {
         setupAnimations();
     }
 
-    private HBox createErrorBox() {
+    private HBox createErrorBox(String error) {
         HBox box = new HBox();
         box.setAlignment(Pos.CENTER);
         box.setSpacing(10);
@@ -63,7 +63,7 @@ public class ErrorNotification {
             -fx-font-weight: bold;
             """);
 
-        Label errorMessage = new Label("Usuário ou senha incorretos");
+        Label errorMessage = new Label(error);
         errorMessage.setStyle("""
             -fx-text-fill: #FF4444;
             -fx-font-size: 14px;

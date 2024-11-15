@@ -10,6 +10,7 @@ import lombok.Getter;
 public class UserSession {
     private static UserSession instance;
     private String userEmail;
+    private String registerIncomplet;
 
     public static UserSession getInstance() {
         if (instance == null) {
@@ -20,6 +21,14 @@ public class UserSession {
 
     public void setUserEmail(String email) {
         this.userEmail = email.trim();
+    }
+
+    public void setRegisterIncomplet(String registerIncomplet){
+        this.registerIncomplet=registerIncomplet;
+    }
+
+    public String getRegisterIncomplet(){
+        return registerIncomplet;
     }
 
     public String getUserName(){

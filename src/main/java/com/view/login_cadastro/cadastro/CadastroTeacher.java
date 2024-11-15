@@ -6,9 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import com.UserSession;
 import com.controller.login_cadastro.CadastroTeacherController;
 import com.view.Modo;
 import com.view.login_cadastro.BaseLoginCadastro;
+import com.view.login_cadastro.elements.ErrorNotification;
 
 import javafx.animation.FillTransition;
 import javafx.animation.TranslateTransition;
@@ -53,6 +55,8 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
 
     private boolean isLightMode = Modo.getInstance().getModo();
 
+    private ErrorNotification errorNotification;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
@@ -68,6 +72,9 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
+        if (UserSession.getInstance().getRegisterIncomplet() == "Student") {
+            setupErrorNotification();
+        }
     }
 
     @FXML
@@ -82,7 +89,7 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
 
         new CadastroTeacherController(date, textFieldCPF.getText(), Long.parseLong(textFieldPhone.getText()),
                 comboBoxEducation.getValue(), interests);
-
+        UserSession.getInstance().setRegisterIncomplet("false");
         super.redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
     }
 
@@ -134,5 +141,24 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
             sunIcon.setVisible(Modo.getInstance().getModo());
             moonIcon.setVisible(!Modo.getInstance().getModo());
         }
+    }
+
+    private void setupErrorNotification() {
+        StackPane root = new StackPane();
+        leftSection.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                errorNotification = new ErrorNotification(root, "Cadastro incompleto");
+                if (newScene.getRoot() instanceof StackPane) {
+                    ((StackPane) newScene.getRoot()).getChildren().add(errorNotification.getContainer());
+                } else {
+                    root.getChildren().addAll(newScene.getRoot(), errorNotification.getContainer());
+                }
+                showError();
+            }
+        });
+    }
+
+    private void showError() {
+        errorNotification.show();
     }
 }
