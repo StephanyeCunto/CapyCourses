@@ -6,7 +6,7 @@
 }
 
 #container {
-    -fx-background-color: linear-gradient(to right top, -background-dark, -surface-dark);
+    -fx-background-color: linear-gradient(to right top, #6896c4, #acacac);
 }
 
 .background-overlay {
@@ -35,7 +35,7 @@
     -fx-font-family: 'Plus Jakarta Sans';
     -fx-font-weight: bold;
     -fx-font-size: 36px;
-    -fx-text-fill: linear-gradient(to right, -primary-color, -secondary-color);
+    -fx-text-fill: linear-gradient(to right, #3498db, #2ecc71);
     -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.3), 10, 0, 0, 2);
 }
 
@@ -80,7 +80,7 @@
 .custom-text-field:focused,
 .password-field:focused {
     -fx-background-color: rgba(0, 0, 0, 0.1);
-    -fx-border-color: -primary-color;
+    -fx-border-color: #3498db;
     -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 10, 0, 0, 0);
 }
 
@@ -109,12 +109,12 @@
 }
 
 .custom-checkbox:selected .box {
-    -fx-background-color: -primary-color;
-    -fx-border-color: -primary-color;
+    -fx-background-color: #3498db;
+    -fx-border-color: #3498db;
 }
 
 .modern-button {
-    -fx-background-color: linear-gradient(to right, -primary-color, -secondary-color);
+    -fx-background-color: linear-gradient(to right, #3498db, #2ecc71);
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
@@ -131,7 +131,7 @@
 }
 
 .modern-button:hover {
-    -fx-background-color: linear-gradient(to right, derive(-primary-color, 10%), derive(-secondary-color, 10%));
+    -fx-background-color: linear-gradient(to right, derive(#3498db, 10%), derive(#2ecc71, 10%));
     -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.6), 14, 0, 0, 6);
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
@@ -163,14 +163,14 @@
 }
 
 .forgot-password-link {
-    -fx-text-fill: -primary-color;
+    -fx-text-fill: #3498db;
     -fx-font-size: 13px;
     -fx-border-color: transparent;
     -fx-padding: 4 0;
 }
 
 .forgot-password-link:hover {
-    -fx-text-fill: -secondary-color;
+    -fx-text-fill: #2ecc71;
     -fx-underline: true;
 }
 
@@ -221,7 +221,7 @@
 }
 
 .interest-button.selected {
-    -fx-background-color: linear-gradient(to right, -primary-color, -secondary-color);
+    -fx-background-color: linear-gradient(to right, #3498db, #2ecc71);
     -fx-text-fill: rgb(226, 226, 226);
     -fx-font-weight: bold;
     -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.4), 10, 0, 0, 4);
@@ -247,7 +247,7 @@
 }
 
 .radio-button.selected .radio {
-    -fx-background-color: -primary-color;
+    -fx-background-color: #3498db;
 }
 
 .centered-content {

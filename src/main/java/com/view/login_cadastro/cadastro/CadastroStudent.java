@@ -10,6 +10,7 @@ import com.UserSession;
 import com.controller.login_cadastro.CadastroStudentController;
 import com.view.Modo;
 import com.view.login_cadastro.BaseLoginCadastro;
+import com.view.login_cadastro.cadastro.valid.CadastroSecudarioValid;
 import com.view.login_cadastro.elements.ErrorNotification;
 
 import javafx.animation.FillTransition;
@@ -50,10 +51,20 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
     private Rectangle background;
     @FXML
     private StackPane toggleButtonStackPane;
+    @FXML
+    private Label cpfErrorLabel;
+    @FXML
+    private Label phoneErrorLabel;
+    @FXML
+    private Label educationErrorLabel;
+    @FXML
+    private Label interestErrorLabel;
 
     private boolean isLightMode = Modo.getInstance().getModo();
 
     private ErrorNotification errorNotification;
+
+    private final CadastroSecudarioValid validator = new CadastroSecudarioValid();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,6 +73,8 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         super.loadComboBox();
         super.loadCalendar();
         super.setupInterestButtons();
+
+        validator.setupInitialState(comboBoxEducation,textFieldCPF, textFieldPhone, interestContainer,cpfErrorLabel,educationErrorLabel,interestErrorLabel,phoneErrorLabel);
 
         toggleButtonStackPane.setOnMouseClicked(e -> toggle());
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
@@ -81,6 +94,7 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         String interests = String.join(". ", super.getSelectedInterests());
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Date date = format.parse(super.getDateInputPopup().getDate());
+        
         new CadastroStudentController(date, textFieldCPF.getText(), Long.parseLong(textFieldPhone.getText()),
                 comboBoxEducation.getValue(), interests);
                 UserSession.getInstance().setRegisterIncomplet("false");

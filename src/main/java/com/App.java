@@ -20,7 +20,7 @@ public class App extends Application {
         stage.getIcons().add(icon);
         stage.setTitle("CapyCourse");
 
-        scene = new Scene(loadFXML("/com/login_cadastro/paginaLogin"));
+        scene = new Scene(loadFXML("/com/login_cadastro/paginaCadastroStudent"));
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();

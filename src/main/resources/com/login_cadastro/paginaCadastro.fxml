@@ -21,7 +21,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.control.ToggleButton?>
 
-<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
+<StackPane fx:id="container" xmlns="http://javafx.com/javafx/23"
   xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.cadastro.Cadastro">
 
   <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"

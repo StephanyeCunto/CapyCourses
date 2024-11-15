@@ -20,8 +20,8 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="container" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="container" xmlns="http://javafx.com/javafx/23"
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.login_cadastro.cadastro.CadastroTeacher">
     <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
         fx:id="toggleButtonHBox">
         <StackPane alignment="CENTER" fx:id="toggleButtonStackPane" styleClass="theme-toggle-switch" prefWidth="50"
@@ -88,18 +88,21 @@
 
                 <VBox spacing="12">
 
-                    <VBox spacing="4">
+                    <VBox spacing="4" >
                         <Label text="DATA DE NASCIMENTO" styleClass="field-label" />
-                        <TextField fx:id="birthDate" styleClass="custom-text-field"
-                            prefHeight="40"
-                            promptText="DD/MM/AAAA" />
+                        <VBox fx:id="date">
+                            
+                        </VBox>
                     </VBox>
+
 
                     <VBox spacing="4">
                         <Label text="CPF" styleClass="field-label" />
                         <TextField fx:id="textFieldCPF" styleClass="custom-text-field"
                             prefHeight="40"
                             promptText="000.000.000-00" />
+                            <Label fx:id="cpfErrorLabel" visible="false" styleClass="error-label"
+                            managed="false" />
                     </VBox>
 
                     <VBox spacing="4">
@@ -107,13 +110,17 @@
                         <TextField fx:id="textFieldPhone" styleClass="custom-text-field"
                             prefHeight="40"
                             promptText="(00) 00000-0000" />
+                            <Label fx:id="phoneErrorLabel" visible="false" styleClass="error-label"
+                            managed="false" />
                     </VBox>
 
                     <VBox spacing="4">
                         <Label text="NÍVEL DE ESCOLARIDADE" styleClass="field-label" />
-                        <ComboBox fx:id="educationLevel" styleClass="custom-text-field"
+                        <ComboBox fx:id="comboBoxEducation" styleClass="custom-text-field"
                             prefHeight="40"
                             maxWidth="Infinity" />
+                            <Label fx:id="educationErrorLabel" visible="false" styleClass="error-label"
+                            managed="false" />
                     </VBox>
 
                     <VBox spacing="4">
@@ -132,6 +139,8 @@
                                 fx:id="btnAI" />
                             <Button text="Cybersegurança" styleClass="interest-button"
                                 fx:id="btnCyber" />
+                                <Label fx:id="interestErrorLabel" visible="false" styleClass="error-label"
+                                managed="false" />
                         </FlowPane>
                     </VBox>
                 </VBox>

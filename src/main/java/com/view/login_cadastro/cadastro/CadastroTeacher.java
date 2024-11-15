@@ -65,14 +65,11 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
         super.loadCalendar();
         super.setupInterestButtons();
 
-        logar.setOnAction(event -> super.redirectTo("/com/login_cadastro/paginaLogin.fxml",
-                (Stage) leftSection.getScene().getWindow()));
-
         toggleButtonStackPane.setOnMouseClicked(e -> toggle());
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
-        if (UserSession.getInstance().getRegisterIncomplet() == "Student") {
+        if (UserSession.getInstance().getRegisterIncomplet() == "Teacher") {
             setupErrorNotification();
         }
     }
@@ -124,6 +121,7 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
         sunIcon.setVisible(isLightMode);
         moonIcon.setVisible(!isLightMode);
     }
+
 
     private void toggleInitialize() {
         if (!Modo.getInstance().getModo()) {
