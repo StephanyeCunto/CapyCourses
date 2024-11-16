@@ -10,6 +10,7 @@ import com.UserSession;
 import com.controller.login_cadastro.CadastroTeacherController;
 import com.view.Modo;
 import com.view.login_cadastro.BaseLoginCadastro;
+import com.view.login_cadastro.cadastro.valid.CadastroSecudarioValid;
 import com.view.login_cadastro.elements.ErrorNotification;
 
 import javafx.animation.FillTransition;
@@ -52,10 +53,18 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
     private Rectangle background;
     @FXML
     private StackPane toggleButtonStackPane;
+    @FXML
+    private Label cpfErrorLabel;
+    @FXML
+    private Label phoneErrorLabel;
+    @FXML
+    private Label educationErrorLabel;
 
     private boolean isLightMode = Modo.getInstance().getModo();
 
     private ErrorNotification errorNotification;
+
+    private final CadastroSecudarioValid validator = new CadastroSecudarioValid();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -64,6 +73,9 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
         super.loadComboBox();
         super.loadCalendar();
         super.setupInterestButtons();
+
+        validator.setupInitialState(comboBoxEducation, textFieldCPF, textFieldPhone, cpfErrorLabel, educationErrorLabel,
+                phoneErrorLabel);
 
         toggleButtonStackPane.setOnMouseClicked(e -> toggle());
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
@@ -80,14 +92,16 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
     }
 
     public void createTeacher() throws ParseException {
-        String interests = String.join(". ", super.getSelectedInterests());
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = format.parse(super.getDateInputPopup().getDate());
+        if (validator.validateFields()) {
+            String interests = String.join(". ", super.getSelectedInterests());
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = format.parse(super.getDateInputPopup().getDate());
 
-        new CadastroTeacherController(date, textFieldCPF.getText(), Long.parseLong(textFieldPhone.getText()),
-                comboBoxEducation.getValue(), interests);
-        UserSession.getInstance().setRegisterIncomplet("false");
-        super.redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
+            new CadastroTeacherController(date, textFieldCPF.getText(), Long.parseLong(textFieldPhone.getText()),
+                    comboBoxEducation.getValue(), interests);
+            UserSession.getInstance().setRegisterIncomplet("false");
+            super.redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
+        }
     }
 
     private void toggle() {
@@ -121,7 +135,6 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
         sunIcon.setVisible(isLightMode);
         moonIcon.setVisible(!isLightMode);
     }
-
 
     private void toggleInitialize() {
         if (!Modo.getInstance().getModo()) {

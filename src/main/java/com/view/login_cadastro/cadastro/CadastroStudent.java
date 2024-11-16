@@ -57,8 +57,6 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
     private Label phoneErrorLabel;
     @FXML
     private Label educationErrorLabel;
-    @FXML
-    private Label interestErrorLabel;
 
     private boolean isLightMode = Modo.getInstance().getModo();
 
@@ -74,7 +72,7 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         super.loadCalendar();
         super.setupInterestButtons();
 
-        validator.setupInitialState(comboBoxEducation,textFieldCPF, textFieldPhone, interestContainer,cpfErrorLabel,educationErrorLabel,interestErrorLabel,phoneErrorLabel);
+        validator.setupInitialState(comboBoxEducation,textFieldCPF, textFieldPhone,cpfErrorLabel,educationErrorLabel,phoneErrorLabel);
 
         toggleButtonStackPane.setOnMouseClicked(e -> toggle());
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
@@ -91,14 +89,16 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
     }
 
     public void createStudent() throws ParseException {
-        String interests = String.join(". ", super.getSelectedInterests());
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = format.parse(super.getDateInputPopup().getDate());
-        
-        new CadastroStudentController(date, textFieldCPF.getText(), Long.parseLong(textFieldPhone.getText()),
-                comboBoxEducation.getValue(), interests);
-                UserSession.getInstance().setRegisterIncomplet("false");
-        super.redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
+        if(validator.validateFields()){
+            String interests = String.join(". ", super.getSelectedInterests());
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = format.parse(super.getDateInputPopup().getDate());
+            
+            new CadastroStudentController(date, textFieldCPF.getText(), Long.parseLong(textFieldPhone.getText()),
+                    comboBoxEducation.getValue(), interests);
+                    UserSession.getInstance().setRegisterIncomplet("false");
+            super.redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
+        }
     }
 
     private void toggle() {

@@ -25,25 +25,22 @@ public class CadastroSecudarioValid {
     private Label phoneErrorLabel;
     @FXML
     private Label educationErrorLabel;
-    @FXML
-    private Label interestErrorLabel;
 
     private String cpf;
     private String phone;
     private static final ValidationSupport validationSupport = new ValidationSupport();
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
-    public void setupInitialState(ComboBox<String> comboBoxEducation, TextField textFieldCPF, TextField textFieldPhone,
-            FlowPane interestContainer, Label cpfErrorLabel, Label educationErrorLabel, Label interestErrorLabel,
+    public void setupInitialState(ComboBox<String> comboBoxEducation, TextField textFieldCPF, TextField textFieldPhone, Label cpfErrorLabel, Label educationErrorLabel,
             Label phoneErrorLabel) {
-        loadField(comboBoxEducation, textFieldCPF, textFieldPhone, interestContainer, cpfErrorLabel,
-                educationErrorLabel, interestErrorLabel, phoneErrorLabel);
+        loadField(comboBoxEducation, textFieldCPF, textFieldPhone, cpfErrorLabel,
+                educationErrorLabel, phoneErrorLabel);
 
         textFieldCPF.textProperty().addListener((obs, old, newText) -> {
             String formatted = formatCPF(newText);
             textFieldCPF.setText(formatted);
-            if (!isValidCPF(newText)) {
-                updateErrorDisplay(textFieldCPF, cpfErrorLabel, true, null);
+            if (isValidCPF(newText)) {
+                updateErrorDisplay(textFieldCPF, cpfErrorLabel, false, null);
             }
         });
 
@@ -52,7 +49,7 @@ public class CadastroSecudarioValid {
             cpf = textFieldCPF.getText();
         });
 
-               textFieldCPF.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+        textFieldCPF.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
             validationSupport.registerValidator(textFieldCPF, false,
                     Validator.createPredicateValidator(value -> {
                         if (value instanceof String) {
@@ -77,14 +74,31 @@ public class CadastroSecudarioValid {
         textFieldPhone.textProperty().addListener((obs, old, newText) -> {
             String formatted = formatPhone(newText);
             textFieldPhone.setText(formatted);
-            if(sizePhone() < 14){
-                updateErrorDisplay(textFieldPhone, phoneErrorLabel, true, null);
+            if (sizePhone() < 14) {
+                updateErrorDisplay(textFieldPhone, phoneErrorLabel, false, null);
             }
         });
 
         textFieldPhone.setOnKeyReleased(event -> {
             checkSizePhone(event);
             phone = textFieldPhone.getText();
+        });
+
+        comboBoxEducation.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+            validationSupport.registerValidator(comboBoxEducation, false,
+                    Validator.createPredicateValidator(value -> {
+                        if (value instanceof String) {
+                            String strValue = (String) value;
+                            return strValue != "null";
+                        }
+                        return false;
+                    }, null));
+        });
+
+        comboBoxEducation.valueProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue != null) {
+                updateErrorDisplay(comboBoxEducation, educationErrorLabel, false, null);
+            }
         });
 
     }
@@ -125,8 +139,8 @@ public class CadastroSecudarioValid {
     private void checkSizePhone(KeyEvent event) {
         if (sizePhone() > 14) {
             if (event.getCode() != KeyCode.BACK_SPACE && event.getCode() != KeyCode.DELETE) {
-            textFieldPhone.setText(phone);
-            textFieldPhone.positionCaret(textFieldPhone.getText().length());
+                textFieldPhone.setText(phone);
+                textFieldPhone.positionCaret(textFieldPhone.getText().length());
             }
         }
     }
@@ -154,15 +168,14 @@ public class CadastroSecudarioValid {
     }
 
     private String formatPhone(String value) {
-        int sizePhone = sizePhone();
         value = value.replaceAll("\\D", "");
-        if (sizePhone > 9) {
-            value = value.replaceAll("(\\d{2})(\\d{5})(\\d{1})", "($1)$2-$3");
-        } else if (sizePhone > 7) {
-            value = value.replaceAll("(\\d{2})(\\d{3})", "($1)$2");
-        } else if (sizePhone > 4) {
-            value = value.replaceAll("(\\d{2})(\\d{1})", "($1)$2");
+        int sizePhone = value.length();
+
+        if (sizePhone > 7) {
+            value = value.replaceAll("(\\d{2})(\\d{5})(\\d+)", "($1)$2-$3");
         } else if (sizePhone > 2) {
+            value = value.replaceAll("(\\d{2})(\\d+)", "($1)$2");
+        } else if (sizePhone > 1) {
             value = value.replaceAll("(\\d{2})", "($1)");
         } else if (sizePhone > 0) {
             value = value.replaceAll("(\\d{1})", "($1");
@@ -170,28 +183,45 @@ public class CadastroSecudarioValid {
         return value;
     }
 
-    private void loadField(ComboBox<String> comboBoxEducation, TextField textFieldCPF, TextField textFieldPhone,
-            FlowPane interestContainer, Label cpfErrorLabel, Label educationErrorLabel, Label interestErrorLabel,
+    private void loadField(ComboBox<String> comboBoxEducation, TextField textFieldCPF, TextField textFieldPhone, Label cpfErrorLabel, Label educationErrorLabel,
             Label phoneErrorLabel) {
         this.comboBoxEducation = comboBoxEducation;
         this.textFieldCPF = textFieldCPF;
         this.textFieldPhone = textFieldPhone;
-        this.interestContainer = interestContainer;
         this.cpfErrorLabel = cpfErrorLabel;
         this.educationErrorLabel = educationErrorLabel;
-        this.interestErrorLabel = interestErrorLabel;
         this.phoneErrorLabel = phoneErrorLabel;
     }
 
     private void updateErrorDisplay(Control field, Label errorLabel, boolean isValid, String message) {
-        field.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, !isValid);
-        errorLabel.setText(isValid ? "" : message);
-        errorLabel.setVisible(!isValid);
-        errorLabel.setManaged(!isValid);
+        field.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, isValid);
+        errorLabel.setText(!isValid ? "" : message);
+        errorLabel.setVisible(isValid);
+        errorLabel.setManaged(isValid);
         if (isValid) {
             field.getStyleClass().add("error-field");
         } else {
             field.getStyleClass().remove("error-field");
         }
+    }
+
+    public boolean validateFields(){
+        boolean isValid = true;
+
+        if(textFieldCPF.getText().isEmpty() || sizeCPF()==0){
+            System.out.println("ok ok");
+            updateErrorDisplay(textFieldCPF, cpfErrorLabel, true, "Por favor, insira um cpf válido");
+            isValid = false;
+        }
+        if (sizePhone() < 14 || textFieldPhone.getText().isEmpty()) {
+            updateErrorDisplay(textFieldPhone, phoneErrorLabel, true, "Por favor, insira um telefone válido");
+            isValid = false;
+        }
+        if (comboBoxEducation.getValue() == null || comboBoxEducation.getValue().trim().isEmpty()) {
+            updateErrorDisplay(comboBoxEducation, educationErrorLabel, true, "Por favor, selecione uma opção válida");
+            isValid = false;
+        }
+        
+        return isValid;
     }
 }
