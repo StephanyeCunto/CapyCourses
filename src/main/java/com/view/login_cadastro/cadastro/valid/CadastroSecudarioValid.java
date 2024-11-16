@@ -74,7 +74,9 @@ public class CadastroSecudarioValid {
         textFieldPhone.textProperty().addListener((obs, old, newText) -> {
             String formatted = formatPhone(newText);
             textFieldPhone.setText(formatted);
-            if (sizePhone() < 14) {
+            if (textFieldPhone.getText().length() < 14) {
+                updateErrorDisplay(textFieldPhone, phoneErrorLabel, true, null);
+            }else{
                 updateErrorDisplay(textFieldPhone, phoneErrorLabel, false, null);
             }
         });
@@ -208,12 +210,11 @@ public class CadastroSecudarioValid {
     public boolean validateFields(){
         boolean isValid = true;
 
-        if(textFieldCPF.getText().isEmpty() || sizeCPF()==0){
-            System.out.println("ok ok");
+        if(textFieldCPF.getText().isEmpty() || isValidCPF(textFieldCPF.getText())){
             updateErrorDisplay(textFieldCPF, cpfErrorLabel, true, "Por favor, insira um cpf válido");
             isValid = false;
         }
-        if (sizePhone() < 14 || textFieldPhone.getText().isEmpty()) {
+        if (textFieldPhone.getText().length() < 14) {
             updateErrorDisplay(textFieldPhone, phoneErrorLabel, true, "Por favor, insira um telefone válido");
             isValid = false;
         }

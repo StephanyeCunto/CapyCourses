@@ -7,8 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
 import javafx.stage.Stage;
-
-
 import java.io.IOException;
 
 public class App extends Application {
@@ -20,7 +18,7 @@ public class App extends Application {
         stage.getIcons().add(icon);
         stage.setTitle("CapyCourse");
 
-        scene = new Scene(loadFXML("/com/login_cadastro/paginaCadastroStudent"));
+        scene = new Scene(loadFXML("/com/professor/paginaCadastroCurso"));
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
