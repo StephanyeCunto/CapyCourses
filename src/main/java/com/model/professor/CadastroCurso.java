@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
+
 import com.UserSession;
 
 public class CadastroCurso {
@@ -38,30 +40,39 @@ public class CadastroCurso {
                 String moduleDuration = (String) moduleData.get("moduleDuration");
                 String moduleDescription = (String) moduleData.get("moduleDescription");
 
-                writer.write(title + "," + moduleNumber+ ","+ moduleTitle + "," + moduleDuration + "," + moduleDescription);
+                writer.write(title + "," + moduleNumber + "," + moduleTitle + "," + moduleDuration + ","
+                        + moduleDescription);
                 writer.newLine();
-
-                    registerClasses(modulesData,title);
+                registerClasses((List<Map<String, Object>>) moduleData.get("content"), title,moduleTitle,moduleNumber);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void registerClasses(List<Map<String, Object>> modulesData, String title) {
+    private void registerClasses(List<Map<String, Object>> lessons, String title, String moduleTitle, Integer moduleNumber) {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_aulas.csv", true))) {
-            for (Map<String, Object> moduleData : modulesData) {
-                String moduleTitle = (String) moduleData.get("moduleTitle");
-                String lessonTitle = (String) moduleData.get("lessonTitle");
-                String lessonVideoLink = (String) moduleData.get("lessonVideoLink");
-                String lessonDetails = (String) moduleData.get("lessonDetails");
-                String lessonMaterials = (String) moduleData.get("lessonMaterials");
-                String lessonDuration = (String) moduleData.get("lessonDuration");
-
-                writer.write(title + "," + moduleTitle + "," + lessonTitle + "," + lessonVideoLink + "," + lessonDetails
-                        + ","
-                        + lessonMaterials + "," + lessonDuration);
+                
+            Map<String, Object> lessonData = lessons.get(0); 
+            
+            int numberOfLessons = 0;
+            while (lessonData.containsKey("lessonTitle" + numberOfLessons)) {
+                numberOfLessons++;
+            }
+            
+            for(int j = 0; j < numberOfLessons; j++) {
+                Integer lessonNumber = (Integer) lessonData.get("lessonNumber" + j);
+                String lessonTitle = (String) lessonData.get("lessonTitle" + j);
+                String lessonVideoLink = (String) lessonData.get("lessonVideoLink" + j);
+                String lessonDetails = (String) lessonData.get("lessonDetails" + j);
+                String lessonMaterials = (String) lessonData.get("lessonMaterials" + j);
+                String lessonDuration = (String) lessonData.get("lessonDuration" + j);
+                
+                writer.write(title + "," + moduleTitle + "," + moduleNumber + "," + 
+                            lessonNumber + "," + lessonTitle + "," +
+                            lessonVideoLink + "," + lessonDetails + "," + 
+                            lessonMaterials + "," + lessonDuration);
                 writer.newLine();
             }
         } catch (IOException e) {

@@ -625,41 +625,17 @@ public class CadastroCurso implements Initializable {
                 moduleData.put("moduleDuration", durationField.getText());
 
                 VBox box2 = (VBox) moduleContent.getChildren().get(2);
+                //if(lessonsList)
                 TextArea detailsField = (TextArea) box2.getChildren().get(1);
                 moduleData.put("moduleDescription", detailsField.getText());
 
                 List<Map<String, Object>> contentData = new ArrayList<>();
-                VBox contentList = (VBox) moduleContent.getChildren().get(2);
 
-                VBox moduleOk =(VBox) moduleCard.getChildren().get(2);
-                for(int f=0; f<moduleOk.getChildren().size()-1; f++){
-                    VBox moduleCheck = (VBox) moduleOk.getChildren().get(f);
-                    contentData.add(saveLessonData(moduleCheck));
+                VBox moduleOk = (VBox) moduleCard.getChildren().get(2); 
+                if(moduleOk.getStyle().equals("lessons-list")){
+                    contentData.add(saveLessonData(moduleOk));
                 }
 
-
-                for (int j = 0; j < contentList.getChildren().size() - 1; j++) {
-                    for(int k=0; k< moduleOk.getChildren().size(); k++){
-                       // System.out.println("filhos module content :"+ moduleOk.getChildren().get(k));
-                        if(k==0){
-                            VBox teste0 = (VBox)moduleOk.getChildren().get(k);
-                            for(int y=0; y<teste0.getChildren().size(); y++){
-                          //  System.out.println(teste0.getChildren().get(y));
-                            }
-                        }
-                    }
-                  /*   VBox contentCard = (VBox) contentList.getChildren().get(0);
-                    HBox contentHeader = (HBox) contentCard.getChildren().get(0);
-                    StackPane contentNumberContainer = (StackPane) contentHeader.getChildren().get(0);
-
-                    if (contentNumberContainer.getStyleClass().contains("lesson-number-container")) {
-                        System.out.println("caiu no if");
-                        contentData.add(saveLessonData(contentCard));
-                    } else if (contentNumberContainer.getStyleClass().contains("questionaire-number-container")) {
-                        System.out.println("Caiu no else");
-                        contentData.add(saveQuestionnaireData(contentCard));
-                    }*/
-                }
                 moduleData.put("content", contentData);
                 modulesData.add(moduleData);
             }
@@ -671,34 +647,36 @@ public class CadastroCurso implements Initializable {
     private Map<String, Object> saveLessonData(VBox lessonCard) {
         Map<String, Object> lessonData = new HashMap<>();
 
-        HBox lessonHeader = (HBox) lessonCard.getChildren().get(0);
-        StackPane numberContainer = (StackPane) lessonHeader.getChildren().get(0);
-        Label lessonNumber = (Label) numberContainer.getChildren().get(0);
-        lessonData.put("type", "lesson");
-        lessonData.put("lessonNumber", Integer.parseInt(lessonNumber.getText()));
+        for (int k = 0; k < lessonCard.getChildren().size() - 1; k++) {
+            VBox lessonCardOK = (VBox) lessonCard.getChildren().get(k);
+            HBox lessonHeader = (HBox) lessonCardOK.getChildren().get(0);
+            StackPane numberContainer = (StackPane) lessonHeader.getChildren().get(0);
+            Label lessonNumber = (Label) numberContainer.getChildren().get(0);
+            lessonData.put("type", "lesson" + k);
+            lessonData.put("lessonNumber" + k, Integer.parseInt(lessonNumber.getText()));
 
-        VBox lessonContent = (VBox) lessonCard.getChildren().get(1);
+            VBox lessonContent = (VBox) lessonCardOK.getChildren().get(1);
 
-        VBox titleContainer = (VBox) lessonContent.getChildren().get(0);
-        TextField titleField = (TextField) titleContainer.getChildren().get(1);
-        lessonData.put("lessonTitle", titleField.getText());
+            VBox titleContainer = (VBox) lessonContent.getChildren().get(0);
+            TextField titleField = (TextField) titleContainer.getChildren().get(1);
+            lessonData.put("lessonTitle" + k, titleField.getText());
 
-        VBox videoContainer = (VBox) lessonContent.getChildren().get(1);
-        TextField videoField = (TextField) videoContainer.getChildren().get(1);
-        lessonData.put("lessonVideoLink", videoField.getText());
+            VBox videoContainer = (VBox) lessonContent.getChildren().get(1);
+            TextField videoField = (TextField) videoContainer.getChildren().get(1);
+            lessonData.put("lessonVideoLink" + k, videoField.getText());
 
-        VBox detailsContainer = (VBox) lessonContent.getChildren().get(2);
-        TextArea detailsArea = (TextArea) detailsContainer.getChildren().get(1);
-        lessonData.put("lessonDetails", detailsArea.getText());
+            VBox detailsContainer = (VBox) lessonContent.getChildren().get(2);
+            TextArea detailsArea = (TextArea) detailsContainer.getChildren().get(1);
+            lessonData.put("lessonDetails" + k, detailsArea.getText());
 
-        VBox materialsContainer = (VBox) lessonContent.getChildren().get(3);
-        TextArea materialsArea = (TextArea) materialsContainer.getChildren().get(1);
-        lessonData.put("lessonMaterials", materialsArea.getText());
+            VBox materialsContainer = (VBox) lessonContent.getChildren().get(3);
+            TextArea materialsArea = (TextArea) materialsContainer.getChildren().get(1);
+            lessonData.put("lessonMaterials" + k, materialsArea.getText());
 
-        VBox durationContainer = (VBox) lessonContent.getChildren().get(4);
-        TextField durationField = (TextField) durationContainer.getChildren().get(1);
-        lessonData.put("lessonDuration", durationField.getText());
-
+            VBox durationContainer = (VBox) lessonContent.getChildren().get(4);
+            TextField durationField = (TextField) durationContainer.getChildren().get(1);
+            lessonData.put("lessonDuration" + k, durationField.getText());
+        }
         return lessonData;
     }
 
