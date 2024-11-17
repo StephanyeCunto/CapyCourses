@@ -502,12 +502,12 @@
 }
 
 .toggle-background {
-    -fx-fill: #FFA500; /* Modo claro */
+    -fx-fill: #FFA500; 
     -fx-stroke: transparent;
 }
 
 .toggle-background.dark {
-    -fx-fill: #4169E1; /* Modo escuro */
+    -fx-fill: #4169E1; 
 }
 
 .toggle-thumb {
@@ -526,4 +526,61 @@
 
 .theme-toggle-switch:hover .toggle-thumb {
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0, 0, 2);
+}
+
+.radio-button {
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-font-size: 14px;
+}
+
+.radio-button .radio {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+    -fx-background-radius: 100;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-radius: 100;
+    -fx-border-width: 2px;
+    -fx-padding: 3px;
+}
+
+.radio-button .radio:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: rgba(108, 141, 255, 0.5);
+}
+
+.radio-button:selected .radio {
+    -fx-background-color: #6C8DFF;
+    -fx-border-color: #6C8DFF;
+}
+
+.radio-button .dot {
+    -fx-background-color: transparent;
+    -fx-background-radius: 100;
+    -fx-padding: 4px;
+}
+
+.radio-button:selected .dot {
+    -fx-background-color: white;
+    -fx-background-radius: 100;
+}
+
+.radio-button .radio {
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.radio-button:selected .radio {
+    -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.4), 8, 0, 0, 0);
+}
+
+.questionaire-number-container,
+.questionaire-number {
+    -fx-background-color: -surface-light;
+    -fx-border-color: -primary-color;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-min-width: 36;
+    -fx-min-height: 36;
+    -fx-max-width: 36;
+    -fx-max-height: 36;
+    -fx-alignment: center;
+    -fx-text-fill: white;
 }

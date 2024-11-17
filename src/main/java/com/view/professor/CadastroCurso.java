@@ -27,7 +27,6 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -107,7 +106,6 @@ public class CadastroCurso implements Initializable {
     private Calendario dateInputPopupStart = new Calendario();
     private Calendario dateInputPopupEnd = new Calendario();
 
-    private int currentModuleCount = 0;
     private static final String DEFAULT_MODULE_TITLE = "Novo Módulo";
     private static final String DEFAULT_LESSON_TITLE = "Nova Aula";
 
@@ -118,6 +116,10 @@ public class CadastroCurso implements Initializable {
     private LocalDate dateCurrent = dateInputPopupStart.getLocalDate();
     private boolean isImage = false;
     private int isTag = 0;
+
+    private int lessonCounter = 1;
+    private int questionnaireCounter = 1;
+    private int currentModuleCount = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -134,6 +136,9 @@ public class CadastroCurso implements Initializable {
         lessonsList.setSpacing(10);
         lessonsList.getStyleClass().add("lessons-list");
 
+        VBox questionaireList = new VBox();
+        questionaireList.setSpacing(10);
+        questionaireList.getStyleClass().add("lessons-list");
         modulesList.setSpacing(20);
 
         dateEnd.setOnAction(event -> {
@@ -167,6 +172,7 @@ public class CadastroCurso implements Initializable {
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
+
     }
 
     private static final String STEP_PENDING = "step-pending";
@@ -176,11 +182,11 @@ public class CadastroCurso implements Initializable {
     private static final int MIN_LESSONS_PER_MODULE = 1;
 
     private void registrationProgress() {
-        List<Map<String, Object>> modulesData = saveModulesAndLessonsData();
-        double percentage = calculateTotalProgress(modulesData);
+        // List<Map<String, Object>> modulesData = saveModulesAndLessonsData();
+        // double percentage = calculateTotalProgress(modulesData);
 
-        updateProgressDisplay(percentage);
-        updateAllLabels(modulesData);
+        // updateProgressDisplay(percentage);
+        // updateAllLabels(modulesData);
     }
 
     private double calculateTotalProgress(List<Map<String, Object>> modulesData) {
@@ -589,72 +595,189 @@ public class CadastroCurso implements Initializable {
     public void createCourse() {
         new CadastroCursoController(titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
                 levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,
-                saveModulesAndLessonsData(), dateInputPopupStart.getLocalDate(), dateInputPopupEnd.getLocalDate(),
+                saveModulesAndContent(), dateInputPopupStart.getLocalDate(), dateInputPopupEnd.getLocalDate(),
                 durationTotal.getText(), dateEnd.isSelected(), isCertificate.isSelected(), isGradeMiniun.isSelected(),
                 ComboBoxVisibily.getValue());
     }
 
-    public List<Map<String, Object>> saveModulesAndLessonsData() {
+    public List<Map<String, Object>> saveModulesAndContent() {
         List<Map<String, Object>> modulesData = new ArrayList<>();
-
-        for (Node moduleNode : modulesList.getChildren()) {
+        for (int i = 0; i < modulesList.getChildren().size(); i++) {
+            Node moduleNode = modulesList.getChildren().get(i);
             if (moduleNode instanceof VBox) {
                 VBox moduleCard = (VBox) moduleNode;
                 Map<String, Object> moduleData = new HashMap<>();
+
                 HBox moduleHeader = (HBox) moduleCard.getChildren().get(0);
                 StackPane numberContainer = (StackPane) moduleHeader.getChildren().get(0);
                 Label moduleNumber = (Label) numberContainer.getChildren().get(0);
                 moduleData.put("moduleNumber", Integer.parseInt(moduleNumber.getText()));
+
                 VBox moduleContent = (VBox) moduleCard.getChildren().get(1);
                 VBox titleContainer = (VBox) moduleContent.getChildren().get(0);
-                HBox titleBox = (HBox) titleContainer.getChildren().get(1);
-                TextField titleField = (TextField) titleBox.getChildren().get(0);
+                HBox aux = (HBox) titleContainer.getChildren().get(1);
+                TextField titleField = (TextField) aux.getChildren().get(0);
                 moduleData.put("moduleTitle", titleField.getText());
-                HBox detailsContainer = (HBox) moduleContent.getChildren().get(1);
-                VBox durationContainer = (VBox) detailsContainer.getChildren().get(0);
-                TextField durationField = (TextField) durationContainer.getChildren().get(1);
-                moduleData.put("moduleDuration", durationField.getText());
-                VBox descriptionContainer = (VBox) moduleContent.getChildren().get(2);
-                TextArea descriptionArea = (TextArea) descriptionContainer.getChildren().get(1);
-                moduleData.put("moduleDescription", descriptionArea.getText());
-                VBox lessonsList = (VBox) moduleCard.getChildren().get(2);
-                List<Map<String, Object>> lessonsData = new ArrayList<>();
-                for (int i = 0; i < lessonsList.getChildren().size() - 1; i++) {
-                    Node lessonNode = lessonsList.getChildren().get(i);
-                    if (lessonNode instanceof VBox) {
-                        VBox lessonCard = (VBox) lessonNode;
-                        Map<String, Object> lessonData = new HashMap<>();
-                        System.out.println("lessonHeader: "+lessonCard.getChildren().get(0));
-                        HBox lessonHeader = (HBox) lessonCard.getChildren().get(0);
-                        StackPane lessonNumberContainer = (StackPane) lessonHeader.getChildren().get(0);
-                        Label lessonNumber = (Label) lessonNumberContainer.getChildren().get(0);
-                        lessonData.put("lessonNumber", Integer.parseInt(lessonNumber.getText()));
-                        VBox lessonContent = (VBox) lessonCard.getChildren().get(1);
-                        VBox titleFieldAula = (VBox) lessonContent.getChildren().get(0);
-                        TextField lessonTitleField = (TextField) titleFieldAula.getChildren().get(1);
-                        lessonData.put("lessonTitle", lessonTitleField.getText());
-                        VBox videoField = (VBox) lessonContent.getChildren().get(1);
-                        TextField lessonVideoField = (TextField) videoField.getChildren().get(1);
-                        lessonData.put("lessonVideoLink", lessonVideoField.getText());
-                        VBox detailsField = (VBox) lessonContent.getChildren().get(2);
-                        TextArea lessonDetailsArea = (TextArea) detailsField.getChildren().get(1);
-                        lessonData.put("lessonDetails", lessonDetailsArea.getText());
-                        VBox materialsField = (VBox) lessonContent.getChildren().get(3);
-                        TextArea lessonMaterialsArea = (TextArea) materialsField.getChildren().get(1);
-                        lessonData.put("lessonMaterials", lessonMaterialsArea.getText());
-                        VBox durationFieldAula = (VBox) lessonContent.getChildren().get(4);
-                        TextField lessonDurationField = (TextField) durationFieldAula.getChildren().get(1);
-                        lessonData.put("lessonDuration", lessonDurationField.getText());
 
-                        lessonsData.add(lessonData);
-                    }
+                HBox auxDuration = (HBox) moduleContent.getChildren().get(1);
+                VBox auxDuration0 = (VBox) auxDuration.getChildren().get(0);
+                TextField durationField = (TextField) auxDuration0.getChildren().get(1);
+                moduleData.put("moduleDuration", durationField.getText());
+
+                VBox box2 = (VBox) moduleContent.getChildren().get(2);
+                TextArea detailsField = (TextArea) box2.getChildren().get(1);
+                moduleData.put("moduleDescription", detailsField.getText());
+
+                List<Map<String, Object>> contentData = new ArrayList<>();
+                VBox contentList = (VBox) moduleContent.getChildren().get(2);
+
+                VBox moduleOk =(VBox) moduleCard.getChildren().get(2);
+                for(int f=0; f<moduleOk.getChildren().size()-1; f++){
+                    VBox moduleCheck = (VBox) moduleOk.getChildren().get(f);
+                    contentData.add(saveLessonData(moduleCheck));
                 }
-                moduleData.put("lessons", lessonsData);
+
+
+                for (int j = 0; j < contentList.getChildren().size() - 1; j++) {
+                    for(int k=0; k< moduleOk.getChildren().size(); k++){
+                       // System.out.println("filhos module content :"+ moduleOk.getChildren().get(k));
+                        if(k==0){
+                            VBox teste0 = (VBox)moduleOk.getChildren().get(k);
+                            for(int y=0; y<teste0.getChildren().size(); y++){
+                          //  System.out.println(teste0.getChildren().get(y));
+                            }
+                        }
+                    }
+                  /*   VBox contentCard = (VBox) contentList.getChildren().get(0);
+                    HBox contentHeader = (HBox) contentCard.getChildren().get(0);
+                    StackPane contentNumberContainer = (StackPane) contentHeader.getChildren().get(0);
+
+                    if (contentNumberContainer.getStyleClass().contains("lesson-number-container")) {
+                        System.out.println("caiu no if");
+                        contentData.add(saveLessonData(contentCard));
+                    } else if (contentNumberContainer.getStyleClass().contains("questionaire-number-container")) {
+                        System.out.println("Caiu no else");
+                        contentData.add(saveQuestionnaireData(contentCard));
+                    }*/
+                }
+                moduleData.put("content", contentData);
                 modulesData.add(moduleData);
             }
         }
 
         return modulesData;
+    }
+
+    private Map<String, Object> saveLessonData(VBox lessonCard) {
+        Map<String, Object> lessonData = new HashMap<>();
+
+        HBox lessonHeader = (HBox) lessonCard.getChildren().get(0);
+        StackPane numberContainer = (StackPane) lessonHeader.getChildren().get(0);
+        Label lessonNumber = (Label) numberContainer.getChildren().get(0);
+        lessonData.put("type", "lesson");
+        lessonData.put("lessonNumber", Integer.parseInt(lessonNumber.getText()));
+
+        VBox lessonContent = (VBox) lessonCard.getChildren().get(1);
+
+        VBox titleContainer = (VBox) lessonContent.getChildren().get(0);
+        TextField titleField = (TextField) titleContainer.getChildren().get(1);
+        lessonData.put("lessonTitle", titleField.getText());
+
+        VBox videoContainer = (VBox) lessonContent.getChildren().get(1);
+        TextField videoField = (TextField) videoContainer.getChildren().get(1);
+        lessonData.put("lessonVideoLink", videoField.getText());
+
+        VBox detailsContainer = (VBox) lessonContent.getChildren().get(2);
+        TextArea detailsArea = (TextArea) detailsContainer.getChildren().get(1);
+        lessonData.put("lessonDetails", detailsArea.getText());
+
+        VBox materialsContainer = (VBox) lessonContent.getChildren().get(3);
+        TextArea materialsArea = (TextArea) materialsContainer.getChildren().get(1);
+        lessonData.put("lessonMaterials", materialsArea.getText());
+
+        VBox durationContainer = (VBox) lessonContent.getChildren().get(4);
+        TextField durationField = (TextField) durationContainer.getChildren().get(1);
+        lessonData.put("lessonDuration", durationField.getText());
+
+        return lessonData;
+    }
+
+    private Map<String, Object> saveQuestionnaireData(VBox questionnaireCard) {
+        Map<String, Object> questionnaireData = new HashMap<>();
+
+        HBox questionnaireHeader = (HBox) questionnaireCard.getChildren().get(0);
+        StackPane numberContainer = (StackPane) questionnaireHeader.getChildren().get(0);
+        Label questionnaireNumber = (Label) numberContainer.getChildren().get(0);
+        questionnaireData.put("type", "questionnaire");
+        questionnaireData.put("questionnaireNumber", questionnaireNumber.getText());
+
+        VBox content = (VBox) questionnaireCard.getChildren().get(1);
+
+        VBox titleContainer = (VBox) content.getChildren().get(0);
+        TextField titleField = (TextField) titleContainer.getChildren().get(1);
+        questionnaireData.put("questionnaireTitle", titleField.getText());
+
+        VBox descriptionContainer = (VBox) content.getChildren().get(1);
+        TextArea descriptionArea = (TextArea) descriptionContainer.getChildren().get(1);
+        questionnaireData.put("questionnaireDescription", descriptionArea.getText());
+
+        VBox scoreContainer = (VBox) content.getChildren().get(2);
+        TextField scoreField = (TextField) scoreContainer.getChildren().get(1);
+        questionnaireData.put("questionnaireScore", scoreField.getText());
+
+        VBox questionsContainer = (VBox) content.getChildren().get(3);
+        List<Map<String, Object>> questionsData = new ArrayList<>();
+
+        for (Node questionNode : questionsContainer.getChildren()) {
+            if (questionNode instanceof VBox) {
+                VBox questionCard = (VBox) questionNode;
+                Map<String, Object> questionData = saveQuestionData(questionCard);
+                questionsData.add(questionData);
+            }
+        }
+
+        questionnaireData.put("questions", questionsData);
+        return questionnaireData;
+    }
+
+    private Map<String, Object> saveQuestionData(VBox questionCard) {
+        Map<String, Object> questionData = new HashMap<>();
+
+        HBox questionHeader = (HBox) questionCard.getChildren().get(0);
+        StackPane numberContainer = (StackPane) questionHeader.getChildren().get(0);
+        Label questionNumber = (Label) numberContainer.getChildren().get(0);
+        questionData.put("questionNumber", Integer.parseInt(questionNumber.getText()));
+
+        VBox questionContent = (VBox) questionCard.getChildren().get(1);
+
+        HBox scoreBox = (HBox) questionContent.getChildren().get(0);
+        TextField scoreField = (TextField) scoreBox.getChildren().get(1);
+        questionData.put("questionScore", scoreField.getText());
+
+        TextArea questionText = (TextArea) questionContent.getChildren().get(1);
+        questionData.put("questionText", questionText.getText());
+
+        if (questionContent.getChildren().size() > 2) {
+            Node additionalContent = questionContent.getChildren().get(2);
+            if (additionalContent instanceof VBox) {
+                VBox optionsContainer = (VBox) additionalContent;
+                List<String> options = new ArrayList<>();
+                for (Node optionNode : optionsContainer.getChildren()) {
+                    if (optionNode instanceof TextField) {
+                        TextField optionField = (TextField) optionNode;
+                        options.add(optionField.getText());
+                    }
+                }
+                questionData.put("options", options);
+                questionData.put("type",
+                        optionsContainer.getStyleClass().contains("multiple-choice") ? "MULTIPLE_CHOICE"
+                                : "SINGLE_CHOICE");
+            } else {
+                questionData.put("type", "DISCURSIVE");
+            }
+        }
+
+        return questionData;
     }
 
     @FXML
@@ -672,7 +795,6 @@ public class CadastroCurso implements Initializable {
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.play();
-
         modulesList.getChildren().add(moduleCard);
     }
 
@@ -782,8 +904,7 @@ public class CadastroCurso implements Initializable {
         addQuestionnaire.getStyleClass().add("modern-button");
         addQuestionnaire.setStyle(existingStyles + "-fx-max-width: 250;");
         HBox.setMargin(addQuestionnaire, new javafx.geometry.Insets(0, 0, 0, 20));
-
-        addQuestionnaire.setOnAction(e -> createAssessmentContent(lessonsList));
+        addQuestionnaire.setOnAction(e -> addNewQuestionnaire(lessonsList));
 
         buttonHBox.getChildren().addAll(addLessonButton, addQuestionnaire);
         lessonsList.getChildren().add(buttonHBox);
@@ -791,22 +912,181 @@ public class CadastroCurso implements Initializable {
     }
 
     @FXML
+    private void addNewQuestionnaire(VBox lessonsList) {
+        VBox moduleContent = (VBox) lessonsList.getParent();
+
+        VBox questionnaireCard = new VBox();
+        questionnaireCard.getStyleClass().addAll("lesson-card", "fade-in");
+        questionnaireCard.setSpacing(15);
+
+        HBox questionnaireHeader = new HBox();
+        questionnaireHeader.setAlignment(Pos.CENTER_LEFT);
+        questionnaireHeader.setSpacing(10);
+        questionnaireHeader.getStyleClass().add("lesson-header");
+
+        int moduleSpecificCounter = getModuleQuestionnaireCounter(moduleContent);
+
+        StackPane numberContainer = new StackPane();
+        numberContainer.getStyleClass().add("questionaire-number-container");
+        Label questionnaireLabel = new Label(String.valueOf(moduleSpecificCounter));
+        questionnaireLabel.getStyleClass().add("questionaire-number");
+        numberContainer.getChildren().add(questionnaireLabel);
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Button removeButton = new Button("X");
+        removeButton.getStyleClass().add("outline-button");
+        removeButton.setOnAction(e -> removeQuestionnaireWithAnimation(questionnaireCard));
+        questionnaireHeader.getChildren().addAll(numberContainer, spacer, removeButton);
+
+        VBox content = new VBox();
+        content.setSpacing(15);
+
+        TextField titleField = new TextField();
+        titleField.setPromptText("Título da avaliação");
+        titleField.getStyleClass().add("custom-text-field");
+
+        TextArea descriptionArea = new TextArea();
+        descriptionArea.setPromptText("Descrição da avaliação e instruções...");
+        descriptionArea.setPrefRowCount(3);
+        descriptionArea.getStyleClass().add("custom-text-area");
+
+        TextField scoreField = new TextField();
+        scoreField.setPromptText("Pontuação máxima");
+        scoreField.getStyleClass().add("custom-text-field");
+        scoreField.textProperty().addListener((obs, old, newText) -> {
+            if (!newText.isEmpty() && !newText.matches("\\d*")) {
+                scoreField.setText(old);
+            }
+        });
+
+        VBox questionsContainer = new VBox(15);
+        questionsContainer.getStyleClass().add("questions-container");
+        questionsContainer.setUserData(1);
+
+        HBox contextMenu = new HBox();
+        Button addDiscursiveButton = new Button("Questão Discursiva");
+        addDiscursiveButton.setOnAction(e -> addNewQuestion(questionsContainer, "DISCURSIVE"));
+        addDiscursiveButton.getStyleClass().add("simple-button");
+        String existingStyles = addDiscursiveButton.getStyle();
+        addDiscursiveButton.setStyle(existingStyles + "-fx-max-width: 250;");
+
+        Button addSingleChoiceButton = new Button("Questão Única");
+        addSingleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer, "SINGLE_CHOICE"));
+        addSingleChoiceButton.getStyleClass().add("simple-button");
+        addSingleChoiceButton.setStyle(existingStyles + "-fx-max-width: 250;");
+
+        Button addMultipleChoiceButton = new Button("Questão Múltipla");
+        addMultipleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer, "MULTIPLE_CHOICE"));
+        addMultipleChoiceButton.getStyleClass().add("simple-button");
+        addMultipleChoiceButton.setStyle(existingStyles + "-fx-max-width: 250;");
+
+        HBox.setMargin(addMultipleChoiceButton, new javafx.geometry.Insets(0, 0, 0, 20));
+        HBox.setMargin(addSingleChoiceButton, new javafx.geometry.Insets(0, 0, 0, 20));
+        contextMenu.getChildren().addAll(addDiscursiveButton, addSingleChoiceButton, addMultipleChoiceButton);
+
+        content.getChildren().addAll(
+                createFieldWithLabel("Título *", titleField),
+                createFieldWithLabel("Descrição *", descriptionArea),
+                createFieldWithLabel("Pontuação Total *", scoreField),
+                questionsContainer,
+                contextMenu);
+
+        questionnaireCard.getChildren().addAll(questionnaireHeader, content);
+        questionnaireCard.setOpacity(0);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), questionnaireCard);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+        fadeIn.play();
+
+        setModuleQuestionnaireCounter(moduleContent, moduleSpecificCounter + 1);
+
+        lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, questionnaireCard);
+    }
+
+    private int getModuleQuestionnaireCounter(VBox moduleContent) {
+        Object userData = moduleContent.getProperties().get("questionnaireCounter");
+        if (userData == null) {
+            moduleContent.getProperties().put("questionnaireCounter", Integer.valueOf(1));
+            return 1;
+        }
+
+        if (userData instanceof Integer) {
+            return (Integer) userData;
+        } else {
+            moduleContent.getProperties().put("questionnaireCounter", Integer.valueOf(1));
+            return 1;
+        }
+    }
+
+    private void setModuleQuestionnaireCounter(VBox moduleContent, int value) {
+        moduleContent.getProperties().put("questionnaireCounter", Integer.valueOf(value));
+    }
+
+    private int getModuleLessonCounter(VBox moduleContent) {
+        if (moduleContent.getUserData() == null) {
+            moduleContent.setUserData(1);
+            return 1;
+        } else {
+            try {
+                int currentCounter = (int) moduleContent.getUserData();
+                if (currentCounter <= 0) {
+                    moduleContent.setUserData(1);
+                    return 1;
+                }
+
+                return currentCounter;
+            } catch (ClassCastException e) {
+                System.err.println("Erro ao recuperar contador do módulo. Reiniciando contador.");
+                moduleContent.setUserData(1);
+                return 1;
+            }
+        }
+    }
+
+    public void resetModuleLessonCounter(VBox moduleContent) {
+        moduleContent.setUserData(1);
+    }
+
+    public void setModuleLessonCounter(VBox moduleContent, int value) {
+        if (value > 0) {
+            moduleContent.setUserData(value);
+        } else {
+            moduleContent.setUserData(1);
+        }
+    }
+
+    public int getCurrentLessonCount(VBox moduleContent) {
+        if (moduleContent.getUserData() == null) {
+            return 0;
+        }
+        try {
+            return (int) moduleContent.getUserData();
+        } catch (ClassCastException e) {
+            return 0;
+        }
+    }
+
+    @FXML
     private void addNewLesson(VBox lessonsList) {
-        int lessonNumber = lessonsList.getChildren().size();
+        VBox moduleContent = (VBox) lessonsList.getParent();
 
         VBox lessonCard = new VBox();
         lessonCard.getStyleClass().addAll("lesson-card", "fade-in");
         lessonCard.setSpacing(15);
-        lessonCard.getStyleClass().add("module-header");
 
         HBox lessonHeader = new HBox();
         lessonHeader.setAlignment(Pos.CENTER_LEFT);
         lessonHeader.setSpacing(10);
         lessonHeader.getStyleClass().add("lesson-header");
 
+        int moduleSpecificCounter = getModuleLessonCounter(moduleContent);
+
         StackPane numberContainer = new StackPane();
         numberContainer.getStyleClass().add("lesson-number-container");
-        Label lessonNumberLabel = new Label(String.valueOf(lessonNumber));
+        Label lessonNumberLabel = new Label(String.valueOf(moduleSpecificCounter));
         lessonNumberLabel.getStyleClass().add("lesson-number");
         numberContainer.getChildren().add(lessonNumberLabel);
 
@@ -818,48 +1098,45 @@ public class CadastroCurso implements Initializable {
         Tooltip.install(removeLessonButton, new Tooltip("Remover aula"));
         removeLessonButton.setOnAction(e -> removeLessonWithAnimation(lessonCard));
         lessonHeader.getChildren().addAll(numberContainer, spacer, removeLessonButton);
-        VBox lessonContent = createLessonContent(lessonNumber);
+
+        VBox lessonContent = createLessonContent(moduleSpecificCounter);
         lessonCard.getChildren().addAll(lessonHeader, lessonContent);
         lessonCard.setOpacity(0);
+        lessonCard.getStyleClass().add("module-header");
+
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), lessonCard);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.play();
-        lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, lessonCard);
-        updateLessonNumbers(lessonsList);
-    }
 
-    private void updateLessonNumbers(VBox lessonsList) {
-        int lessonCount = 1;
-        for (Node node : lessonsList.getChildren()) {
-            if (node instanceof VBox) {
-                VBox lessonCard = (VBox) node;
-                HBox header = (HBox) lessonCard.getChildren().get(0);
-                StackPane numberContainer = (StackPane) header.getChildren().get(0);
-                Label numberLabel = (Label) numberContainer.getChildren().get(0);
-                numberLabel.setText(String.valueOf(lessonCount++));
-            }
-        }
+        moduleContent.setUserData(moduleSpecificCounter + 1);
+
+        lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, lessonCard);
     }
 
     private VBox createLessonContent(int lessonNumber) {
         VBox content = new VBox();
         content.setSpacing(15);
         content.getStyleClass().add("lesson-content");
+
         TextField titleField = new TextField();
-        titleField.setPromptText(DEFAULT_LESSON_TITLE);
+        titleField.setPromptText("Título da Aula");
         titleField.getStyleClass().add("custom-text-field");
+
         TextField videoField = new TextField();
         videoField.setPromptText("Link do vídeo da aula");
         videoField.getStyleClass().add("custom-text-field");
+
         TextArea detailsArea = new TextArea();
         detailsArea.setPromptText("Detalhes e objetivos da aula...");
         detailsArea.setPrefRowCount(3);
         detailsArea.getStyleClass().add("custom-text-area");
+
         TextArea materialsArea = new TextArea();
         materialsArea.setPromptText("Links para materiais complementares...");
         materialsArea.setPrefRowCount(2);
         materialsArea.getStyleClass().add("custom-text-area");
+
         TextField durationField = new TextField();
         durationField.setPromptText("Duração (minutos)");
         durationField.getStyleClass().add("custom-text-field");
@@ -887,6 +1164,132 @@ public class CadastroCurso implements Initializable {
         return container;
     }
 
+    private void removeLessonWithAnimation(Node lessonCard) {
+        VBox lessonsList = (VBox) lessonCard.getParent();
+        VBox moduleContent = (VBox) lessonsList.getParent();
+
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), lessonCard);
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(e -> {
+            lessonsList.getChildren().remove(lessonCard);
+            updateLessonNumbers(lessonsList, moduleContent);
+        });
+        fadeOut.play();
+    }
+
+    private void removeQuestionnaireWithAnimation(Node questionnaireCard) {
+        VBox lessonsList = (VBox) questionnaireCard.getParent();
+        VBox moduleContent = (VBox) lessonsList.getParent();
+
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), questionnaireCard);
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(e -> {
+            lessonsList.getChildren().remove(questionnaireCard);
+            updateQuestionnaireNumbers(lessonsList, moduleContent);
+        });
+        fadeOut.play();
+    }
+
+    private void updateLessonNumbers(VBox lessonsList, VBox moduleContent) {
+        int tempLessonCounter = 1;
+        for (Node node : lessonsList.getChildren()) {
+            if (node instanceof VBox) {
+                VBox card = (VBox) node;
+                HBox header = (HBox) card.getChildren().get(0);
+                StackPane numberContainer = (StackPane) header.getChildren().get(0);
+
+                if (numberContainer.getStyleClass().contains("lesson-number-container")) {
+                    Label numberLabel = (Label) numberContainer.getChildren().get(0);
+                    numberLabel.setText(String.valueOf(tempLessonCounter));
+                    tempLessonCounter++;
+                }
+            }
+        }
+        moduleContent.setUserData(tempLessonCounter);
+    }
+
+    private void updateQuestionnaireNumbers(VBox lessonsList, VBox moduleContent) {
+        int tempQuestionnaireCounter = 1;
+        for (Node node : lessonsList.getChildren()) {
+            if (node instanceof VBox) {
+                VBox card = (VBox) node;
+                HBox header = (HBox) card.getChildren().get(0);
+                StackPane numberContainer = (StackPane) header.getChildren().get(0);
+
+                if (numberContainer.getStyleClass().contains("questionaire-number-container")) {
+                    Label numberLabel = (Label) numberContainer.getChildren().get(0);
+                    numberLabel.setText(String.valueOf(tempQuestionnaireCounter));
+                    tempQuestionnaireCounter++;
+                }
+            }
+        }
+        setModuleQuestionnaireCounter(moduleContent, tempQuestionnaireCounter);
+    }
+
+    private void addNewQuestion(VBox questionsContainer, String type) {
+        VBox questionCard = new VBox(10);
+        questionCard.getStyleClass().add("question-card");
+
+        HBox questionHeader = new HBox(10);
+        questionHeader.setAlignment(Pos.CENTER_LEFT);
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        int questionNumber = (int) questionsContainer.getUserData();
+        questionsContainer.setUserData(questionNumber + 1);
+
+        StackPane numberContainer = new StackPane();
+        numberContainer.getStyleClass().add("question-number-container");
+        Label number = new Label(String.valueOf(questionNumber));
+        number.getStyleClass().add("questionaire-number");
+        numberContainer.getChildren().add(number);
+
+        Button removeButton = new Button("X");
+        removeButton.getStyleClass().add("simple-button");
+        removeButton.setOnAction(e -> removeQuestionWithAnimation(questionCard));
+
+        questionHeader.getChildren().addAll(numberContainer, spacer, removeButton);
+
+        VBox questionContent = new VBox(10);
+        TextArea questionText = new TextArea();
+        questionText.setPromptText("Digite a pergunta da questão...");
+        questionText.setPrefRowCount(3);
+        questionText.getStyleClass().add("custom-text-area");
+
+        TextField scoreField = new TextField();
+        scoreField.setPromptText("Pontos");
+        scoreField.setPrefWidth(80);
+        scoreField.getStyleClass().add("custom-text-field");
+        scoreField.textProperty().addListener((obs, old, newText) -> {
+            if (!newText.isEmpty() && !newText.matches("\\d*\\.?\\d*")) {
+                scoreField.setText(old);
+            }
+        });
+
+        HBox scoreHbox = new HBox(10);
+        Label scoreLabel = new Label("Pontos:");
+        scoreLabel.getStyleClass().add("field-label");
+        scoreHbox.getChildren().addAll(scoreLabel, scoreField);
+        questionContent.getChildren().addAll(scoreHbox, questionText);
+
+        switch (type) {
+            case "DISCURSIVE":
+                addDiscursiveFields(questionContent);
+                break;
+            case "SINGLE_CHOICE":
+                addSingleChoiceFields(questionContent);
+                break;
+            case "MULTIPLE_CHOICE":
+                addMultipleChoiceFields(questionContent);
+                break;
+        }
+        questionCard.getChildren().addAll(questionHeader, questionContent);
+        questionsContainer.getChildren().add(questionCard);
+    }
+
     private void removeModuleWithAnimation(Node moduleCard) {
         currentModuleCount--;
         FadeTransition fadeOut = new FadeTransition(Duration.millis(300), moduleCard);
@@ -899,18 +1302,6 @@ public class CadastroCurso implements Initializable {
         fadeOut.play();
     }
 
-    private void removeLessonWithAnimation(Node lessonCard) {
-        VBox lessonsList = (VBox) lessonCard.getParent();
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), lessonCard);
-        fadeOut.setFromValue(1);
-        fadeOut.setToValue(0);
-        fadeOut.setOnFinished(e -> {
-            lessonsList.getChildren().remove(lessonCard);
-            updateLessonNumbers(lessonsList);
-        });
-        fadeOut.play();
-    }
-
     private void updateModuleNumbers() {
         for (int i = 0; i < modulesList.getChildren().size(); i++) {
             VBox moduleCard = (VBox) modulesList.getChildren().get(i);
@@ -919,6 +1310,115 @@ public class CadastroCurso implements Initializable {
             Label numberLabel = (Label) numberContainer.getChildren().get(0);
             numberLabel.setText(String.valueOf(i + 1));
         }
+    }
+
+    private void addDiscursiveFields(VBox container) {
+        TextArea expectedAnswer = new TextArea();
+        expectedAnswer.setPromptText("Resposta esperada (opcional)...");
+        expectedAnswer.setPrefRowCount(2);
+        expectedAnswer.getStyleClass().add("custom-text-area");
+        Label expectedAnswerLabel = new Label("Resposta Esperada (opcional)");
+        expectedAnswerLabel.getStyleClass().add("field-label");
+
+        TextArea evaluationCriteria = new TextArea();
+        evaluationCriteria.setPromptText("Critérios de avaliação...");
+        evaluationCriteria.setPrefRowCount(2);
+        evaluationCriteria.getStyleClass().add("custom-text-area");
+        Label evolutionCriteriaLabel = new Label("Critérios de Avaliação");
+        evolutionCriteriaLabel.getStyleClass().add("field-label");
+
+        container.getChildren().addAll(
+                expectedAnswerLabel,
+                expectedAnswer,
+                evolutionCriteriaLabel,
+                evaluationCriteria);
+    }
+
+    private void addSingleChoiceFields(VBox container) {
+        VBox optionsContainer = new VBox(5);
+        ToggleGroup toggleGroup = new ToggleGroup();
+
+        Button addOptionButton = new Button("+ Adicionar Opção");
+        addOptionButton.getStyleClass().add("outline-button");
+        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, toggleGroup, true));
+        Label optionLabel = new Label("Opções (selecione a correta)");
+        optionLabel.getStyleClass().add("field-label");
+
+        container.getChildren().addAll(
+                optionLabel,
+                optionsContainer,
+                addOptionButton);
+
+        addChoiceOption(optionsContainer, toggleGroup, true);
+        addChoiceOption(optionsContainer, toggleGroup, true);
+    }
+
+    private void addMultipleChoiceFields(VBox container) {
+        VBox optionsContainer = new VBox(5);
+
+        Button addOptionButton = new Button("+ Adicionar Opção");
+        addOptionButton.getStyleClass().add("outline-button");
+        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, null, false));
+        Label optionLabel = new Label("Opções (selecione as corretas)");
+        optionLabel.getStyleClass().add("field-label");
+
+        container.getChildren().addAll(
+                optionLabel,
+                optionsContainer,
+                addOptionButton);
+
+        addChoiceOption(optionsContainer, null, false);
+        addChoiceOption(optionsContainer, null, false);
+    }
+
+    private void addChoiceOption(VBox container, ToggleGroup toggleGroup, boolean singleChoice) {
+        HBox optionBox = new HBox(10);
+        optionBox.setAlignment(Pos.CENTER_LEFT);
+
+        Node selectionControl;
+        if (singleChoice) {
+            RadioButton radio = new RadioButton();
+            radio.setToggleGroup(toggleGroup);
+            selectionControl = radio;
+            selectionControl.getStyleClass().add("radio-button");
+
+        } else {
+            selectionControl = new CheckBox();
+            selectionControl.getStyleClass().add("custom-checkbox");
+        }
+
+        TextField optionText = new TextField();
+        optionText.setPromptText("Digite a opção...");
+        optionText.getStyleClass().add("custom-text-field");
+        HBox.setHgrow(optionText, Priority.ALWAYS);
+
+        Button removeOption = new Button("X");
+        removeOption.getStyleClass().add("simple-button");
+        removeOption.setOnAction(e -> {
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(300), optionBox);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+            fadeOut.setOnFinished(event -> container.getChildren().remove(optionBox));
+            fadeOut.play();
+        });
+
+        optionBox.getChildren().addAll(selectionControl, optionText, removeOption);
+
+        optionBox.setOpacity(0);
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), optionBox);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+        fadeIn.play();
+
+        container.getChildren().add(optionBox);
+    }
+
+    private void removeQuestionWithAnimation(Node questionCard) {
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), questionCard);
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(e -> ((VBox) questionCard.getParent()).getChildren().remove(questionCard));
+        fadeOut.play();
     }
 
     protected void addDateInputField() {
@@ -1048,241 +1548,4 @@ public class CadastroCurso implements Initializable {
         }
     }
 
-    public enum QuestionType {
-        DISCURSIVE("Discursiva"),
-        SINGLE_CHOICE("Múltipla Escolha - Única Resposta"),
-        MULTIPLE_CHOICE("Múltipla Escolha - Múltiplas Respostas");
-
-        private final String displayName;
-
-        QuestionType(String displayName) {
-            this.displayName = displayName;
-        }
-
-        @Override
-        public String toString() {
-            return displayName;
-        }
-    }
-
-    public VBox createAssessmentContent(VBox lessonsList) {
-        VBox content = new VBox();
-        content.setSpacing(15);
-        content.getStyleClass().add("assessment-content");
-    
-        TextField titleField = new TextField();
-        titleField.setPromptText("Título da avaliação");
-        titleField.getStyleClass().add("custom-text-field");
-    
-        TextArea descriptionArea = new TextArea();
-        descriptionArea.setPromptText("Descrição da avaliação e instruções...");
-        descriptionArea.setPrefRowCount(3);
-        descriptionArea.getStyleClass().add("custom-text-area");
-    
-        TextField scoreField = new TextField();
-        scoreField.setPromptText("Pontuação máxima");
-        scoreField.getStyleClass().add("custom-text-field");
-        scoreField.textProperty().addListener((obs, old, newText) -> {
-            if (!newText.isEmpty() && !newText.matches("\\d*")) {
-                scoreField.setText(old);
-            }
-        });
-    
-        VBox questionsContainer = new VBox(15);
-        questionsContainer.getStyleClass().add("questions-container");
-    
-        HBox contextMenu = new HBox();
-        Button addDiscursiveButton = new Button("Questão Discursiva");
-        addDiscursiveButton.setOnAction(e -> addNewQuestion(questionsContainer, "DISCURSIVE"));
-        addDiscursiveButton.getStyleClass().add("simple-button");
-        String existingStyles = addDiscursiveButton.getStyle();
-        addDiscursiveButton.setStyle(existingStyles + "-fx-max-width: 250;");
-    
-        Button addSingleChoiceButton = new Button("Questão Única");
-        addSingleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer, "SINGLE_CHOICE"));
-        addSingleChoiceButton.getStyleClass().add("simple-button");
-        addSingleChoiceButton.setStyle(existingStyles + "-fx-max-width: 250;");
-    
-        Button addMultipleChoiceButton = new Button("Questão Múltipla");
-        addMultipleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer, "MULTIPLE_CHOICE"));
-        addMultipleChoiceButton.getStyleClass().add("simple-button");
-        addMultipleChoiceButton.setStyle(existingStyles + "-fx-max-width: 250;");
-
-        HBox.setMargin(addMultipleChoiceButton, new javafx.geometry.Insets(0, 0, 0, 20));
-        HBox.setMargin(addSingleChoiceButton, new javafx.geometry.Insets(0, 0, 0, 20));
-    
-        contextMenu.getChildren().addAll(addDiscursiveButton, addSingleChoiceButton, addMultipleChoiceButton);
-    
-        content.getChildren().addAll(
-                createFieldWithLabel("Título *", titleField),
-                createFieldWithLabel("Descrição *", descriptionArea),
-                createFieldWithLabel("Pontuação Total *", scoreField),
-                new Separator(),
-                new Label("Questões"),
-                questionsContainer,
-                contextMenu);
-    
-        lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, content);
-        return content;
-    }
-    
-
-    private void addNewQuestion(VBox questionsContainer, String type) {
-        VBox questionCard = new VBox(10);
-        questionCard.getStyleClass().add("question-card");
-
-        HBox questionHeader = new HBox(10);
-        questionHeader.setAlignment(Pos.CENTER_LEFT);
-
-        Label typeLabel = new Label(type.toString());
-        typeLabel.getStyleClass().add("question-type-label");
-
-        TextField scoreField = new TextField();
-        scoreField.setPromptText("Pontos");
-        scoreField.setPrefWidth(80);
-        scoreField.getStyleClass().add("custom-text-field");
-        scoreField.textProperty().addListener((obs, old, newText) -> {
-            if (!newText.isEmpty() && !newText.matches("\\d*\\.?\\d*")) {
-                scoreField.setText(old);
-            }
-        });
-
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        Button removeButton = new Button("X");
-        removeButton.getStyleClass().add("outline-button");
-        removeButton.setOnAction(e -> removeQuestionWithAnimation(questionCard));
-
-        questionHeader.getChildren().addAll(typeLabel, new Label("Pontos:"), scoreField, spacer, removeButton);
-
-        VBox questionContent = new VBox(10);
-        TextArea questionText = new TextArea();
-        questionText.setPromptText("Digite o enunciado da questão...");
-        questionText.setPrefRowCount(3);
-        questionText.getStyleClass().add("custom-text-area");
-
-        questionContent.getChildren().add(questionText);
-
-        switch (type) {
-            case "DISCURSIVE":
-                addDiscursiveFields(questionContent);
-                break;
-            case "SINGLE_CHOICE":
-                addSingleChoiceFields(questionContent);
-                break;
-            case "MULTIPLE_CHOICE":
-                addMultipleChoiceFields(questionContent);
-                break;
-        }
-
-        questionCard.getChildren().addAll(questionHeader, questionContent);
-
-        questionCard.setOpacity(0);
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), questionCard);
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
-        fadeIn.play();
-
-        questionsContainer.getChildren().add(questionCard);
-    }
-
-    private void addDiscursiveFields(VBox container) {
-        // bug na linha 628
-        TextArea expectedAnswer = new TextArea();
-        expectedAnswer.setPromptText("Resposta esperada (opcional)...");
-        expectedAnswer.setPrefRowCount(2);
-        expectedAnswer.getStyleClass().add("custom-text-area");
-
-        TextArea evaluationCriteria = new TextArea();
-        evaluationCriteria.setPromptText("Critérios de avaliação...");
-        evaluationCriteria.setPrefRowCount(2);
-        evaluationCriteria.getStyleClass().add("custom-text-area");
-
-        container.getChildren().addAll(
-                new Label("Resposta Esperada (opcional)"),
-                expectedAnswer,
-                new Label("Critérios de Avaliação"),
-                evaluationCriteria);
-    }
-
-    private void addSingleChoiceFields(VBox container) {
-        VBox optionsContainer = new VBox(5);
-        ToggleGroup toggleGroup = new ToggleGroup();
-
-        Button addOptionButton = new Button("+ Adicionar Opção");
-        addOptionButton.getStyleClass().add("outline-button");
-        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, toggleGroup, true));
-
-        container.getChildren().addAll(
-                new Label("Opções (selecione a correta)"),
-                optionsContainer,
-                addOptionButton);
-
-        addChoiceOption(optionsContainer, toggleGroup, true);
-        addChoiceOption(optionsContainer, toggleGroup, true);
-    }
-
-    private void addMultipleChoiceFields(VBox container) {
-        VBox optionsContainer = new VBox(5);
-
-        Button addOptionButton = new Button("+ Adicionar Opção");
-        addOptionButton.getStyleClass().add("outline-button");
-        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, null, false));
-
-        container.getChildren().addAll(
-                new Label("Opções (selecione as corretas)"),
-                optionsContainer,
-                addOptionButton);
-
-        addChoiceOption(optionsContainer, null, false);
-        addChoiceOption(optionsContainer, null, false);
-    }
-
-    private void addChoiceOption(VBox container, ToggleGroup toggleGroup, boolean singleChoice) {
-        HBox optionBox = new HBox(10);
-        optionBox.setAlignment(Pos.CENTER_LEFT);
-
-        Node selectionControl;
-        if (singleChoice) {
-            RadioButton radio = new RadioButton();
-            radio.setToggleGroup(toggleGroup);
-            selectionControl = radio;
-        } else {
-            selectionControl = new CheckBox();
-        }
-
-        TextField optionText = new TextField();
-        optionText.setPromptText("Digite a opção...");
-        optionText.getStyleClass().add("custom-text-field");
-        HBox.setHgrow(optionText, Priority.ALWAYS);
-
-        Button removeOption = new Button("X");
-        removeOption.getStyleClass().add("small-outline-button");
-        removeOption.setOnAction(e -> {
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(300), optionBox);
-            fadeOut.setFromValue(1);
-            fadeOut.setToValue(0);
-            fadeOut.setOnFinished(event -> container.getChildren().remove(optionBox));
-            fadeOut.play();
-        });
-
-        optionBox.getChildren().addAll(selectionControl, optionText, removeOption);
-
-        optionBox.setOpacity(0);
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), optionBox);
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
-        fadeIn.play();
-
-        container.getChildren().add(optionBox);
-    }
-
-    private void removeQuestionWithAnimation(Node questionCard) {
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), questionCard);
-        fadeOut.setFromValue(1);
-        fadeOut.setToValue(0);
-        fadeOut.setOnFinished(e -> ((VBox) questionCard.getParent()).getChildren().remove(questionCard));
-        fadeOut.play();
-    }
 }

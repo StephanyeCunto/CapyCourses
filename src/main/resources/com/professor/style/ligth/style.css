@@ -1,10 +1,15 @@
 .root {
-    -primary-color: #0056B3; /* Azul mais escuro para realçar contraste */
-    -secondary-color: #1D8348; /* Verde mais escuro */
+    -primary-color: #0056B3;
+    /* Azul mais escuro para realçar contraste */
+    -secondary-color: #1D8348;
+    /* Verde mais escuro */
     -background-light: #FFFFFF;
-    -surface-light: #DDE2E6; /* Cinza mais claro para maior contraste */
-    -text-primary: #212529; /* Cinza escuro quase preto */
-    -text-secondary: #495057; /* Cinza escuro para subtítulos */
+    -surface-light: #DDE2E6;
+    /* Cinza mais claro para maior contraste */
+    -text-primary: #212529;
+    /* Cinza escuro quase preto */
+    -text-secondary: #495057;
+    /* Cinza escuro para subtítulos */
 }
 
 
@@ -40,7 +45,7 @@
 }
 
 .side-menu {
-    -fx-background-color:  linear-gradient(to right bottom, #cecece, -surface-light);
+    -fx-background-color: linear-gradient(to right bottom, #cecece, -surface-light);
 
     -fx-background-radius: 20 0 0 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
@@ -52,7 +57,7 @@
     -fx-background-color: transparent;
 }
 
-.main-scroll > .viewport {
+.main-scroll>.viewport {
     -fx-background-color: transparent;
 }
 
@@ -183,7 +188,7 @@
 }
 
 .simple-button:hover {
-    -fx-background-color: #e8ecf1;
+    -fx-background-color: #adafb1;
 }
 
 .custom-checkbox {
@@ -248,7 +253,7 @@
 }
 
 .quick-tips {
-    -fx-background-color:  linear-gradient(to right bottom, -background-light, -surface-light);
+    -fx-background-color: linear-gradient(to right bottom, -background-light, -surface-light);
     -fx-background-radius: 16;
     -fx-padding: 16;
 }
@@ -296,9 +301,26 @@
     -fx-background-color: #ffffff;
 }
 
-.module-number-container, .module-number, .lesson-number-container, .lesson-number {
+.module-number-container,
+.module-number,
+.lesson-number-container,
+.lesson-number {
     -fx-background-color: -surface-light;
     -fx-background-radius: 50%;
+    -fx-min-width: 36;
+    -fx-min-height: 36;
+    -fx-max-width: 36;
+    -fx-max-height: 36;
+    -fx-alignment: center;
+    -fx-text-fill: rgb(29, 29, 29);
+}
+
+.questionaire-number-container,
+.questionaire-number {
+    -fx-background-color: -surface-light;
+    -fx-border-color: -primary-color;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
     -fx-min-width: 36;
     -fx-min-height: 36;
     -fx-max-width: 36;
@@ -310,14 +332,14 @@
 #sideMenu {
     -fx-background-radius: 0 20 20 0;
     -fx-padding: 25;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 15, 0, 0, 0); /* Sombra mais intensa */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 15, 0, 0, 0);
 }
 
 .progress-tracker {
-    -fx-background-color: rgba(0, 0, 0, 0.07); /* Mais contraste no fundo */
+    -fx-background-color: rgba(0, 0, 0, 0.07);
     -fx-background-radius: 12;
     -fx-padding: 16;
-    -fx-border-color: #AAB2BD; /* Borda cinza escuro para mais contraste */
+    -fx-border-color: #AAB2BD;
 }
 
 .custom-text-area {
@@ -327,14 +349,14 @@
     -fx-prompt-text-fill: -text-secondary;
     -fx-padding: 12;
     -fx-font-size: 14;
-    -fx-border-color: #8A94A3; /* Cinza escuro para borda */
+    -fx-border-color: #8A94A3;
     -fx-border-radius: 8;
 }
 
 .custom-text-field {
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 12;
-    -fx-border-color: #8A94A3; /* Cinza escuro para borda */
+    -fx-border-color: #8A94A3;
     -fx-border-radius: 12;
     -fx-text-fill: -text-primary;
     -fx-prompt-text-fill: -text-secondary;
@@ -345,8 +367,8 @@
 .custom-text-field:focused,
 .custom-text-area:focused {
     -fx-background-color: #FFFFFF;
-    -fx-border-color: -primary-color; /* Destaque para bordas quando em foco */
-    -fx-effect: dropshadow(gaussian, rgba(0, 86, 179, 0.3), 10, 0, 0, 0); /* Sombra azul mais intensa */
+    -fx-border-color: -primary-color;
+    -fx-effect: dropshadow(gaussian, rgba(0, 86, 179, 0.3), 10, 0, 0, 0);
 }
 
 .modern-button {
@@ -435,7 +457,6 @@
     -fx-background-color: linear-gradient(to right bottom, #cecece, -surface-light);
 }
 
-
 .combo-box {
     -fx-background-radius: 12;
     -fx-border-radius: 12;
@@ -496,12 +517,12 @@
     -fx-border-width: 1.5px;
 }
 
-.combo-box-base > .text {
+.combo-box-base>.text {
     -fx-translate-x: 8;
 }
 
 
-.combo-box-base > .text {
+.combo-box-base>.text {
     -fx-translate-x: 8;
 }
 
@@ -514,17 +535,17 @@
 }
 
 .toggle-background {
-    -fx-fill: #FFA500; /* Modo claro */
+    -fx-fill: #FFA500;
     -fx-stroke: transparent;
 }
 
 .toggle-background.dark {
-    -fx-fill: #4169E1; /* Modo escuro */
+    -fx-fill: #4169E1;
 }
 
 .toggle-thumb {
     -fx-fill: white;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 1);
 }
 
 .toggle-button {
@@ -537,5 +558,18 @@
 }
 
 .theme-toggle-switch:hover .toggle-thumb {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0, 0, 2);
+}
+
+.radio-button {
+    -fx-text-fill: rgba(0, 0, 0, 0.8);
+    -fx-font-size: 14px;
+}
+
+.radio-button .radio {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+}
+
+.radio-button.selected .radio {
+    -fx-background-color: #3498db;
 }

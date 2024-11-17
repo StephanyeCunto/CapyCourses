@@ -238,6 +238,7 @@
 .interest-button {
     -fx-animation: buttonAppear 0.5s ease-out;
 }
+
 .radio-button {
     -fx-text-fill: rgba(255, 255, 255, 0.8);
     -fx-font-size: 14px;

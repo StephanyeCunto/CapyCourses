@@ -243,7 +243,6 @@
 
 .radio-button .radio {
     -fx-background-color: rgba(0, 0, 0, 0.1);
-    -fx-border-color: rgba(0, 0, 0, 0.2);
 }
 
 .radio-button.selected .radio {

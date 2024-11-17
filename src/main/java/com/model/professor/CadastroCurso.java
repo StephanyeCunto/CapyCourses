@@ -34,31 +34,30 @@ public class CadastroCurso {
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_modulos.csv", true))) {
             for (Map<String, Object> moduleData : modulesData) {
                 String moduleTitle = (String) moduleData.get("moduleTitle");
+                Integer moduleNumber = (Integer) moduleData.get("moduleNumber");
                 String moduleDuration = (String) moduleData.get("moduleDuration");
                 String moduleDescription = (String) moduleData.get("moduleDescription");
 
-                writer.write(title + "," + moduleTitle + "," + moduleDuration + "," + moduleDescription);
+                writer.write(title + "," + moduleNumber+ ","+ moduleTitle + "," + moduleDuration + "," + moduleDescription);
                 writer.newLine();
-                Object lessons = moduleData.get("lessons");
-                if (lessons instanceof List) {
-                    List<Map<String, String>> lessonsData = (List<Map<String, String>>) lessons;
-                    registerClasses(lessonsData, title, moduleTitle);
-                }
+
+                    registerClasses(modulesData,title);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void registerClasses(List<Map<String, String>> lessonsData, String title, String moduleTitle) {
+    private void registerClasses(List<Map<String, Object>> modulesData, String title) {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_aulas.csv", true))) {
-            for (Map<String, String> lessonData : lessonsData) {
-                String lessonTitle = lessonData.get("lessonTitle");
-                String lessonVideoLink = lessonData.get("lessonVideoLink");
-                String lessonDetails = lessonData.get("lessonDetails");
-                String lessonMaterials = lessonData.get("lessonMaterials");
-                String lessonDuration = lessonData.get("lessonDuration");
+            for (Map<String, Object> moduleData : modulesData) {
+                String moduleTitle = (String) moduleData.get("moduleTitle");
+                String lessonTitle = (String) moduleData.get("lessonTitle");
+                String lessonVideoLink = (String) moduleData.get("lessonVideoLink");
+                String lessonDetails = (String) moduleData.get("lessonDetails");
+                String lessonMaterials = (String) moduleData.get("lessonMaterials");
+                String lessonDuration = (String) moduleData.get("lessonDuration");
 
                 writer.write(title + "," + moduleTitle + "," + lessonTitle + "," + lessonVideoLink + "," + lessonDetails
                         + ","
@@ -70,12 +69,14 @@ public class CadastroCurso {
         }
     }
 
-    private void registerSettings(String title,LocalDate dateStart, LocalDate dateEnd, String durationTotal, boolean isDateEnd,
+    private void registerSettings(String title, LocalDate dateStart, LocalDate dateEnd, String durationTotal,
+            boolean isDateEnd,
             boolean isCertificate,
             boolean isGradeMiniun, Object ComboBoxVisibily) {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_settingsCurso.csv", true))) {
-            writer.write(title + "," + dateStart + "," + dateEnd + "," + durationTotal + "," + isDateEnd + "," + isCertificate
+            writer.write(title + "," + dateStart + "," + dateEnd + "," + durationTotal + "," + isDateEnd + ","
+                    + isCertificate
                     + ","
                     + isGradeMiniun + "," + ComboBoxVisibily);
             writer.newLine();
