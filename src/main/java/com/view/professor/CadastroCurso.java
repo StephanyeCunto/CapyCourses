@@ -118,7 +118,7 @@ public class CadastroCurso implements Initializable {
     private int isTag = 0;
 
     private int lessonCounter = 1;
-    private int questionnaireCounter = 1;
+    private int questionaireCounter = 1;
     private int currentModuleCount = 0;
 
     @Override
@@ -602,138 +602,180 @@ public class CadastroCurso implements Initializable {
 
     public List<Map<String, Object>> saveModulesAndContent() {
         List<Map<String, Object>> modulesData = new ArrayList<>();
+        int j=0;
+
+        int cont=0;
         for (int i = 0; i < modulesList.getChildren().size(); i++) {
             Node moduleNode = modulesList.getChildren().get(i);
-            if (moduleNode instanceof VBox) {
-                VBox moduleCard = (VBox) moduleNode;
-                Map<String, Object> moduleData = new HashMap<>();
-
-                HBox moduleHeader = (HBox) moduleCard.getChildren().get(0);
-                StackPane numberContainer = (StackPane) moduleHeader.getChildren().get(0);
-                Label moduleNumber = (Label) numberContainer.getChildren().get(0);
-                moduleData.put("moduleNumber", Integer.parseInt(moduleNumber.getText()));
-
-                VBox moduleContent = (VBox) moduleCard.getChildren().get(1);
-                VBox titleContainer = (VBox) moduleContent.getChildren().get(0);
-                HBox aux = (HBox) titleContainer.getChildren().get(1);
-                TextField titleField = (TextField) aux.getChildren().get(0);
-                moduleData.put("moduleTitle", titleField.getText());
-
-                HBox auxDuration = (HBox) moduleContent.getChildren().get(1);
-                VBox auxDuration0 = (VBox) auxDuration.getChildren().get(0);
-                TextField durationField = (TextField) auxDuration0.getChildren().get(1);
-                moduleData.put("moduleDuration", durationField.getText());
-
-                VBox box2 = (VBox) moduleContent.getChildren().get(2);
-                //if(lessonsList)
-                TextArea detailsField = (TextArea) box2.getChildren().get(1);
-                moduleData.put("moduleDescription", detailsField.getText());
-
-                List<Map<String, Object>> contentData = new ArrayList<>();
-
-                VBox moduleOk = (VBox) moduleCard.getChildren().get(2); 
-                if(moduleOk.getStyle().equals("lessons-list")){
-                    contentData.add(saveLessonData(moduleOk));
-                }
-
-                moduleData.put("content", contentData);
-                modulesData.add(moduleData);
+            if (!(moduleNode instanceof VBox)) {
+                continue;
             }
-        }
+    
+            VBox moduleCard = (VBox) moduleNode;
+            Map<String, Object> moduleData = new HashMap<>();
+            
+            // Processamento do cabeçalho do módulo
+            HBox moduleHeader = (HBox) moduleCard.getChildren().get(0);
+            Label moduleNumber = (Label) ((StackPane) moduleHeader.getChildren().get(0)).getChildren().get(0);
+            moduleData.put("moduleNumber", Integer.parseInt(moduleNumber.getText()));
+            
+            // Processamento do conteúdo principal do módulo
+            VBox moduleContent = (VBox) moduleCard.getChildren().get(1);
+            
+            // Título do módulo
+            TextField titleField = (TextField) ((HBox) ((VBox) moduleContent.getChildren().get(0))
+                .getChildren().get(1)).getChildren().get(0);
+            moduleData.put("moduleTitle", titleField.getText());
+            
+            // Duração do módulo
+            TextField durationField = (TextField) ((VBox) ((HBox) moduleContent.getChildren().get(1))
+                .getChildren().get(0)).getChildren().get(1);
+            moduleData.put("moduleDuration", durationField.getText());
+            
+            // Descrição do módulo
+            TextArea detailsField = (TextArea) ((VBox) moduleContent.getChildren().get(2))
+                .getChildren().get(1);
+            moduleData.put("moduleDescription", detailsField.getText());
+            
+            // Processamento das lições e questionários
+            List<Map<String, Object>> contentData = new ArrayList<>();
+            List<Map<String, Object>> contentQuestionaireData = new ArrayList<>();
+            List<Map<String, Object>> contentLessonData = new ArrayList<>();
 
+            VBox contentContainer = (VBox) moduleCard.getChildren().get(2);
+            
+            // Processa cada item do conteúdo separadamente
+            for (Node contentNode : contentContainer.getChildren()) {
+                if (!(contentNode instanceof VBox)) {
+                    continue;
+                }
+                
+                VBox contentBox = (VBox) contentNode;
+                
+                // Verifica se é uma lição ou questionário baseado na classe de estilo
+                if (contentBox.getStyleClass().contains("lesson")) {
+                    try {
+                        Map<String, Object> lessonData = saveLessonData(contentBox,cont);
+                        if (lessonData != null) {
+                            contentLessonData.add(lessonData);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Erro ao processar lição: " + e.getMessage());
+                    }
+                } else if (contentBox.getStyleClass().contains("questionaire")) {
+                    try {
+                        Map<String, Object> questionaireData = savequestionaireData(contentBox,cont);
+                        if (questionaireData != null) {
+                            contentQuestionaireData.add(questionaireData);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Erro ao processar questionário: " + e.getMessage());
+                    }
+                }
+            }
+            
+            moduleData.put("content", contentData);
+            moduleData.put("contentQuestionaire", contentQuestionaireData);
+            moduleData.put("contentLesson", contentLessonData);
+            modulesData.add(moduleData);
+        }
+        
         return modulesData;
     }
 
-    private Map<String, Object> saveLessonData(VBox lessonCard) {
-        Map<String, Object> lessonData = new HashMap<>();
-
-        for (int k = 0; k < lessonCard.getChildren().size() - 1; k++) {
-            VBox lessonCardOK = (VBox) lessonCard.getChildren().get(k);
-            HBox lessonHeader = (HBox) lessonCardOK.getChildren().get(0);
-            StackPane numberContainer = (StackPane) lessonHeader.getChildren().get(0);
-            Label lessonNumber = (Label) numberContainer.getChildren().get(0);
-            lessonData.put("type", "lesson" + k);
-            lessonData.put("lessonNumber" + k, Integer.parseInt(lessonNumber.getText()));
-
-            VBox lessonContent = (VBox) lessonCardOK.getChildren().get(1);
-
+    private int k=0;
+    private Map<String, Object> saveLessonData(VBox lessonCard,int cont) {
+        try {
+            Map<String, Object> lessonData = new HashMap<>();
+            cont++;
+            lessonData.put("cont"+k,cont);
+            HBox lessonHeader = (HBox) lessonCard.getChildren().get(0);
+            Label lessonNumber = (Label) ((StackPane) lessonHeader.getChildren().get(0)).getChildren().get(0);
+            
+            lessonData.put("type", "lesson");
+            lessonData.put("lessonNumber"+k, Integer.parseInt(lessonNumber.getText()));
+            
+            VBox lessonContent = (VBox) lessonCard.getChildren().get(1);
+            
             VBox titleContainer = (VBox) lessonContent.getChildren().get(0);
             TextField titleField = (TextField) titleContainer.getChildren().get(1);
-            lessonData.put("lessonTitle" + k, titleField.getText());
-
+            lessonData.put("lessonTitle"+k, titleField.getText());
+            
             VBox videoContainer = (VBox) lessonContent.getChildren().get(1);
             TextField videoField = (TextField) videoContainer.getChildren().get(1);
-            lessonData.put("lessonVideoLink" + k, videoField.getText());
-
+            lessonData.put("lessonVideoLink"+k, videoField.getText());
+            
             VBox detailsContainer = (VBox) lessonContent.getChildren().get(2);
             TextArea detailsArea = (TextArea) detailsContainer.getChildren().get(1);
-            lessonData.put("lessonDetails" + k, detailsArea.getText());
-
+            lessonData.put("lessonDetails"+k, detailsArea.getText());
+            
             VBox materialsContainer = (VBox) lessonContent.getChildren().get(3);
             TextArea materialsArea = (TextArea) materialsContainer.getChildren().get(1);
-            lessonData.put("lessonMaterials" + k, materialsArea.getText());
-
+            lessonData.put("lessonMaterials"+k, materialsArea.getText());
+            
             VBox durationContainer = (VBox) lessonContent.getChildren().get(4);
             TextField durationField = (TextField) durationContainer.getChildren().get(1);
-            lessonData.put("lessonDuration" + k, durationField.getText());
+            lessonData.put("lessonDuration"+k, durationField.getText());
+            
+            k++;
+            return lessonData;
+        } catch (Exception e) {
+            System.out.println("Erro ao processar dados da lição: " + e.getMessage());
+            return null;
         }
-        return lessonData;
+    }
+    
+    private int j=0;
+    private Map<String, Object> savequestionaireData(VBox questionaireCard,int cont) {
+        try {
+            Map<String, Object> questionaireData = new HashMap<>();
+            cont++;
+            questionaireData.put("cont"+j,cont);
+            HBox questionaireHeader = (HBox) questionaireCard.getChildren().get(0);
+            Label questionaireNumber = (Label) ((StackPane) questionaireHeader.getChildren().get(0)).getChildren().get(0);
+            
+            questionaireData.put("type", "questionaire");
+            questionaireData.put("questionaireNumber"+j, questionaireNumber.getText());
+            
+            VBox container = (VBox) questionaireCard.getChildren().get(1);
+            
+            VBox titleContainer = (VBox) container.getChildren().get(0);
+            TextField titleField = (TextField) titleContainer.getChildren().get(1);
+            questionaireData.put("questionaireTitle"+j, titleField.getText());
+            
+            VBox descriptionContainer = (VBox) container.getChildren().get(1);
+            TextArea descriptionArea = (TextArea) descriptionContainer.getChildren().get(1);
+            questionaireData.put("questionaireDescription"+j, descriptionArea.getText());
+            
+            VBox scoreContainer = (VBox) container.getChildren().get(2);
+            TextField scoreField = (TextField) scoreContainer.getChildren().get(1);
+            questionaireData.put("questionaireScore"+j, scoreField.getText());
+            
+            j++;
+            return questionaireData;
+        } catch (Exception e) {
+            System.out.println("Erro ao processar dados do questionário: " + e.getMessage());
+            return null;
+        }
     }
 
-    private Map<String, Object> saveQuestionnaireData(VBox questionnaireCard) {
-        Map<String, Object> questionnaireData = new HashMap<>();
-
-        HBox questionnaireHeader = (HBox) questionnaireCard.getChildren().get(0);
-        StackPane numberContainer = (StackPane) questionnaireHeader.getChildren().get(0);
-        Label questionnaireNumber = (Label) numberContainer.getChildren().get(0);
-        questionnaireData.put("type", "questionnaire");
-        questionnaireData.put("questionnaireNumber", questionnaireNumber.getText());
-
-        VBox content = (VBox) questionnaireCard.getChildren().get(1);
-
-        VBox titleContainer = (VBox) content.getChildren().get(0);
-        TextField titleField = (TextField) titleContainer.getChildren().get(1);
-        questionnaireData.put("questionnaireTitle", titleField.getText());
-
-        VBox descriptionContainer = (VBox) content.getChildren().get(1);
-        TextArea descriptionArea = (TextArea) descriptionContainer.getChildren().get(1);
-        questionnaireData.put("questionnaireDescription", descriptionArea.getText());
-
-        VBox scoreContainer = (VBox) content.getChildren().get(2);
-        TextField scoreField = (TextField) scoreContainer.getChildren().get(1);
-        questionnaireData.put("questionnaireScore", scoreField.getText());
-
-        VBox questionsContainer = (VBox) content.getChildren().get(3);
-        List<Map<String, Object>> questionsData = new ArrayList<>();
-
-        for (Node questionNode : questionsContainer.getChildren()) {
-            if (questionNode instanceof VBox) {
-                VBox questionCard = (VBox) questionNode;
-                Map<String, Object> questionData = saveQuestionData(questionCard);
-                questionsData.add(questionData);
-            }
-        }
-
-        questionnaireData.put("questions", questionsData);
-        return questionnaireData;
-    }
-
-    private Map<String, Object> saveQuestionData(VBox questionCard) {
+    private int z=0;
+    private Map<String, Object> saveQuestionData(VBox questionCard,int k) {
         Map<String, Object> questionData = new HashMap<>();
 
         HBox questionHeader = (HBox) questionCard.getChildren().get(0);
         StackPane numberContainer = (StackPane) questionHeader.getChildren().get(0);
         Label questionNumber = (Label) numberContainer.getChildren().get(0);
-        questionData.put("questionNumber", Integer.parseInt(questionNumber.getText()));
+        questionData.put("questionNumber"+z, Integer.parseInt(questionNumber.getText()));
 
         VBox questionContent = (VBox) questionCard.getChildren().get(1);
 
         HBox scoreBox = (HBox) questionContent.getChildren().get(0);
         TextField scoreField = (TextField) scoreBox.getChildren().get(1);
-        questionData.put("questionScore", scoreField.getText());
+        questionData.put("questionScore"+z, scoreField.getText());
 
         TextArea questionText = (TextArea) questionContent.getChildren().get(1);
-        questionData.put("questionText", questionText.getText());
+        questionData.put("questionText"+z, questionText.getText());
 
         if (questionContent.getChildren().size() > 2) {
             Node additionalContent = questionContent.getChildren().get(2);
@@ -746,8 +788,8 @@ public class CadastroCurso implements Initializable {
                         options.add(optionField.getText());
                     }
                 }
-                questionData.put("options", options);
-                questionData.put("type",
+                questionData.put("options"+z, options);
+                questionData.put("type"+z,
                         optionsContainer.getStyleClass().contains("multiple-choice") ? "MULTIPLE_CHOICE"
                                 : "SINGLE_CHOICE");
             } else {
@@ -878,45 +920,45 @@ public class CadastroCurso implements Initializable {
         addLessonButton.setStyle(existingStyles + "-fx-max-width: 250;");
         addLessonButton.setOnAction(e -> addNewLesson(lessonsList));
 
-        Button addQuestionnaire = new Button("+ Adicionar Questionário");
-        addQuestionnaire.getStyleClass().add("modern-button");
-        addQuestionnaire.setStyle(existingStyles + "-fx-max-width: 250;");
-        HBox.setMargin(addQuestionnaire, new javafx.geometry.Insets(0, 0, 0, 20));
-        addQuestionnaire.setOnAction(e -> addNewQuestionnaire(lessonsList));
+        Button addquestionaire = new Button("+ Adicionar Questionário");
+        addquestionaire.getStyleClass().add("modern-button");
+        addquestionaire.setStyle(existingStyles + "-fx-max-width: 250;");
+        HBox.setMargin(addquestionaire, new javafx.geometry.Insets(0, 0, 0, 20));
+        addquestionaire.setOnAction(e -> addNewquestionaire(lessonsList));
 
-        buttonHBox.getChildren().addAll(addLessonButton, addQuestionnaire);
+        buttonHBox.getChildren().addAll(addLessonButton, addquestionaire);
         lessonsList.getChildren().add(buttonHBox);
         return lessonsList;
     }
 
     @FXML
-    private void addNewQuestionnaire(VBox lessonsList) {
+    private void addNewquestionaire(VBox lessonsList) {
         VBox moduleContent = (VBox) lessonsList.getParent();
 
-        VBox questionnaireCard = new VBox();
-        questionnaireCard.getStyleClass().addAll("lesson-card", "fade-in");
-        questionnaireCard.setSpacing(15);
+        VBox questionaireCard = new VBox();
+        questionaireCard.getStyleClass().addAll("lesson-card", "fade-in","questionaire");
+        questionaireCard.setSpacing(15);
 
-        HBox questionnaireHeader = new HBox();
-        questionnaireHeader.setAlignment(Pos.CENTER_LEFT);
-        questionnaireHeader.setSpacing(10);
-        questionnaireHeader.getStyleClass().add("lesson-header");
+        HBox questionaireHeader = new HBox();
+        questionaireHeader.setAlignment(Pos.CENTER_LEFT);
+        questionaireHeader.setSpacing(10);
+        questionaireHeader.getStyleClass().add("lesson-header");
 
-        int moduleSpecificCounter = getModuleQuestionnaireCounter(moduleContent);
+        int moduleSpecificCounter = getModulequestionaireCounter(moduleContent);
 
         StackPane numberContainer = new StackPane();
         numberContainer.getStyleClass().add("questionaire-number-container");
-        Label questionnaireLabel = new Label(String.valueOf(moduleSpecificCounter));
-        questionnaireLabel.getStyleClass().add("questionaire-number");
-        numberContainer.getChildren().add(questionnaireLabel);
+        Label questionaireLabel = new Label(String.valueOf(moduleSpecificCounter));
+        questionaireLabel.getStyleClass().add("questionaire-number");
+        numberContainer.getChildren().add(questionaireLabel);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         Button removeButton = new Button("X");
         removeButton.getStyleClass().add("outline-button");
-        removeButton.setOnAction(e -> removeQuestionnaireWithAnimation(questionnaireCard));
-        questionnaireHeader.getChildren().addAll(numberContainer, spacer, removeButton);
+        removeButton.setOnAction(e -> removequestionaireWithAnimation(questionaireCard));
+        questionaireHeader.getChildren().addAll(numberContainer, spacer, removeButton);
 
         VBox content = new VBox();
         content.setSpacing(15);
@@ -971,36 +1013,36 @@ public class CadastroCurso implements Initializable {
                 questionsContainer,
                 contextMenu);
 
-        questionnaireCard.getChildren().addAll(questionnaireHeader, content);
-        questionnaireCard.setOpacity(0);
+        questionaireCard.getChildren().addAll(questionaireHeader, content);
+        questionaireCard.setOpacity(0);
 
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), questionnaireCard);
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), questionaireCard);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.play();
 
-        setModuleQuestionnaireCounter(moduleContent, moduleSpecificCounter + 1);
+        setModulequestionaireCounter(moduleContent, moduleSpecificCounter + 1);
 
-        lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, questionnaireCard);
+        lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, questionaireCard);
     }
 
-    private int getModuleQuestionnaireCounter(VBox moduleContent) {
-        Object userData = moduleContent.getProperties().get("questionnaireCounter");
+    private int getModulequestionaireCounter(VBox moduleContent) {
+        Object userData = moduleContent.getProperties().get("questionaireCounter");
         if (userData == null) {
-            moduleContent.getProperties().put("questionnaireCounter", Integer.valueOf(1));
+            moduleContent.getProperties().put("questionaireCounter", Integer.valueOf(1));
             return 1;
         }
 
         if (userData instanceof Integer) {
             return (Integer) userData;
         } else {
-            moduleContent.getProperties().put("questionnaireCounter", Integer.valueOf(1));
+            moduleContent.getProperties().put("questionaireCounter", Integer.valueOf(1));
             return 1;
         }
     }
 
-    private void setModuleQuestionnaireCounter(VBox moduleContent, int value) {
-        moduleContent.getProperties().put("questionnaireCounter", Integer.valueOf(value));
+    private void setModulequestionaireCounter(VBox moduleContent, int value) {
+        moduleContent.getProperties().put("questionaireCounter", Integer.valueOf(value));
     }
 
     private int getModuleLessonCounter(VBox moduleContent) {
@@ -1052,7 +1094,7 @@ public class CadastroCurso implements Initializable {
         VBox moduleContent = (VBox) lessonsList.getParent();
 
         VBox lessonCard = new VBox();
-        lessonCard.getStyleClass().addAll("lesson-card", "fade-in");
+        lessonCard.getStyleClass().addAll("lesson-card", "fade-in", "lesson");
         lessonCard.setSpacing(15);
 
         HBox lessonHeader = new HBox();
@@ -1156,16 +1198,16 @@ public class CadastroCurso implements Initializable {
         fadeOut.play();
     }
 
-    private void removeQuestionnaireWithAnimation(Node questionnaireCard) {
-        VBox lessonsList = (VBox) questionnaireCard.getParent();
+    private void removequestionaireWithAnimation(Node questionaireCard) {
+        VBox lessonsList = (VBox) questionaireCard.getParent();
         VBox moduleContent = (VBox) lessonsList.getParent();
 
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), questionnaireCard);
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), questionaireCard);
         fadeOut.setFromValue(1);
         fadeOut.setToValue(0);
         fadeOut.setOnFinished(e -> {
-            lessonsList.getChildren().remove(questionnaireCard);
-            updateQuestionnaireNumbers(lessonsList, moduleContent);
+            lessonsList.getChildren().remove(questionaireCard);
+            updatequestionaireNumbers(lessonsList, moduleContent);
         });
         fadeOut.play();
     }
@@ -1188,8 +1230,8 @@ public class CadastroCurso implements Initializable {
         moduleContent.setUserData(tempLessonCounter);
     }
 
-    private void updateQuestionnaireNumbers(VBox lessonsList, VBox moduleContent) {
-        int tempQuestionnaireCounter = 1;
+    private void updatequestionaireNumbers(VBox lessonsList, VBox moduleContent) {
+        int tempquestionaireCounter = 1;
         for (Node node : lessonsList.getChildren()) {
             if (node instanceof VBox) {
                 VBox card = (VBox) node;
@@ -1198,12 +1240,12 @@ public class CadastroCurso implements Initializable {
 
                 if (numberContainer.getStyleClass().contains("questionaire-number-container")) {
                     Label numberLabel = (Label) numberContainer.getChildren().get(0);
-                    numberLabel.setText(String.valueOf(tempQuestionnaireCounter));
-                    tempQuestionnaireCounter++;
+                    numberLabel.setText(String.valueOf(tempquestionaireCounter));
+                    tempquestionaireCounter++;
                 }
             }
         }
-        setModuleQuestionnaireCounter(moduleContent, tempQuestionnaireCounter);
+        setModulequestionaireCounter(moduleContent, tempquestionaireCounter);
     }
 
     private void addNewQuestion(VBox questionsContainer, String type) {

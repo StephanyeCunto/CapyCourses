@@ -1,4 +1,4 @@
-package com;
+package com.view.login_cadastro;
 
 import java.io.IOException;
 import java.net.URL;

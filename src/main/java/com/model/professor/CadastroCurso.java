@@ -7,8 +7,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
-
 import com.UserSession;
 
 public class CadastroCurso {
@@ -22,7 +20,6 @@ public class CadastroCurso {
             writer.write(UserSession.getInstance().getUserEmail() + "," + title + "," + description + "," + category
                     + "," + level + "," + tags);
             writer.newLine();
-
             registerModules(modulesData, title);
             registerSettings(title, dateStart, dateEnd, durationTotal, isDateEnd, isCertificate,
                     isGradeMiniun, ComboBoxVisibily);
@@ -43,36 +40,66 @@ public class CadastroCurso {
                 writer.write(title + "," + moduleNumber + "," + moduleTitle + "," + moduleDuration + ","
                         + moduleDescription);
                 writer.newLine();
-                registerClasses((List<Map<String, Object>>) moduleData.get("content"), title,moduleTitle,moduleNumber);
+
+                registerquestionaire((List<Map<String, Object>>) moduleData.get("contentQuestionaire"), title, moduleTitle,
+                        moduleNumber);
+                registerClasses((List<Map<String, Object>>) moduleData.get("contentLesson"), title, moduleTitle,
+                        moduleNumber);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void registerClasses(List<Map<String, Object>> lessons, String title, String moduleTitle, Integer moduleNumber) {
+    private void registerquestionaire(List<Map<String, Object>> questionaire, String title, String moduleTitle,
+            Integer moduleNumber) {
+        try (BufferedWriter writer = new BufferedWriter(
+                new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_questionaire.csv", true))) {
+
+            for (int j = 0; j < questionaire.size(); j++) {
+                Map<String, Object> questionaireData = questionaire.get(j);
+                System.out.println(questionaireData);
+                String questionaireNumber = (String) questionaireData.get("questionaireNumber" + j);
+                String questionaireTitle = (String) questionaireData.get("questionaireTitle" + j);
+                String questionaireScore = (String) questionaireData.get("questionaireScore" + j);
+                String questionaireArea = (String) questionaireData.get("questionaireDescription" + j);
+                Integer cont = (Integer) questionaireData.get("cont" + j);
+
+                System.out.println(title + "," + moduleTitle + "," + moduleNumber + "," +
+                questionaireNumber + "," + questionaireTitle + "," +
+                questionaireArea + "," + questionaireScore + "," +
+                cont);
+                writer.write(title + "," + moduleTitle + "," + moduleNumber + "," +
+                questionaireNumber + "," + questionaireTitle + "," +
+                questionaireArea + "," + questionaireScore + "," +
+                cont);
+        writer.newLine();            
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void registerClasses(List<Map<String, Object>> lessons, String title, String moduleTitle,
+            Integer moduleNumber) {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_aulas.csv", true))) {
-                
-            Map<String, Object> lessonData = lessons.get(0); 
-            
-            int numberOfLessons = 0;
-            while (lessonData.containsKey("lessonTitle" + numberOfLessons)) {
-                numberOfLessons++;
-            }
-            
-            for(int j = 0; j < numberOfLessons; j++) {
+
+            for (int j = 0; j < lessons.size(); j++) {
+                Map<String, Object> lessonData = lessons.get(j);
+
                 Integer lessonNumber = (Integer) lessonData.get("lessonNumber" + j);
                 String lessonTitle = (String) lessonData.get("lessonTitle" + j);
                 String lessonVideoLink = (String) lessonData.get("lessonVideoLink" + j);
                 String lessonDetails = (String) lessonData.get("lessonDetails" + j);
                 String lessonMaterials = (String) lessonData.get("lessonMaterials" + j);
                 String lessonDuration = (String) lessonData.get("lessonDuration" + j);
-                
-                writer.write(title + "," + moduleTitle + "," + moduleNumber + "," + 
-                            lessonNumber + "," + lessonTitle + "," +
-                            lessonVideoLink + "," + lessonDetails + "," + 
-                            lessonMaterials + "," + lessonDuration);
+                Integer cont = (Integer) lessonData.get("cont" + j);
+                writer.write(title + "," + moduleTitle + "," + moduleNumber + "," +
+                        lessonNumber + "," + lessonTitle + "," +
+                        lessonVideoLink + "," + lessonDetails + "," +
+                        lessonMaterials + "," + lessonDuration + "," + cont);
                 writer.newLine();
             }
         } catch (IOException e) {
