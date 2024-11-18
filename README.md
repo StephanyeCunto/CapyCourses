@@ -1,5 +1,6 @@
 # 🦫 CapyCourses - A Jornada do Saber Começa Aqui! 📚
 
+
 Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos online! 🚀 Criado com o coração pulsando **em JavaFX**, nosso sistema tem uma interface descolada, dinâmica e super responsiva, perfeita para você aprender com estilo e facilidade. Vamos nessa jornada de aprendizado, mas sem perder a vibe?
 
 ![Java](https://img.shields.io/badge/Java-17%2B-brightgreen)
@@ -24,8 +25,10 @@ Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos onl
 ## 🖼️ Screenshots do Sistema
 
 ### Tela de Login: Entre com estilo!
-![Tela de Login Modo Escuro](https://github.com/user-attachments/assets/ba69b6c8-de45-445c-8a2a-a16d03487d77)
-![Tela de Login Modo Claro](https://github.com/user-attachments/assets/5aecdef4-9773-4993-9920-88c6b49c7224)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ba69b6c8-de45-445c-8a2a-a16d03487d77" alt="Tela de Login Modo Escuro" width="48%" />
+  <img src="https://github.com/user-attachments/assets/5aecdef4-9773-4993-9920-88c6b49c7224" alt="Tela de Login Modo Claro" width="48%" />
+</p>
 
 ---
 
@@ -174,22 +177,22 @@ Estamos só no começo e já temos várias novidades a caminho!
 
 🎉 **Sua ajuda é bem-vinda!** Se você é apaixonado por tecnologia e quer fazer parte do **CapyCourses**, estamos prontos para te receber!
 
-1. Faça um fork do repositório.
+1.  🍴Faça um fork do repositório.
    
-2. Crie um branch para a funcionalidade:
+2. 🌿Crie um branch para a funcionalidade:
 
     ```bash
    git checkout -b minha-funcionalidade
-3. Commit suas alterações:  
+3. ✅Commit suas alterações:  
    ```bash
    git commit -m 'Adiciona nova funcionalidade'
    
-4. Faça o push:
+4. 🔝Faça o push:
    
    ```bash
    git push origin minha-funcionalidade
 
-5. Crie um Pull Request:  
+5. 📤Crie um Pull Request:  
    - Acesse o repositório original no GitHub.  
    - Clique em **Pull Requests**.  
    - Clique em **New Pull Request**.  
@@ -202,3 +205,10 @@ Estamos só no começo e já temos várias novidades a caminho!
 ## 📜 Licença
 
 Este projeto está sob a licença MIT, então sinta-se à vontade para usar, modificar e fazer o que quiser. Só não se esqueça de nos dar os créditos! Confira o arquivo LICENSE para mais detalhes.
+
+---
+
+<p align="center">
+  <i>Feito com 🧡 pela galera do CapyCourses!</i><br>
+  <small>Transformando o aprendizado em uma experiência visualmente extraordinária! 🦫✨</small>
+</p>
