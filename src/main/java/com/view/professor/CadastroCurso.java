@@ -462,7 +462,7 @@ public class CadastroCurso implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Escolha uma imagem de capa");
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+                new FileChooser.ExtensionFilter("Imagens", ".png", ".jpg", ".jpeg", ".gif"));
 
         File selectedFile = fileChooser.showOpenDialog(uploadButton.getScene().getWindow());
         if (selectedFile != null) {
@@ -602,49 +602,39 @@ public class CadastroCurso implements Initializable {
 
     public List<Map<String, Object>> saveModulesAndContent() {
         List<Map<String, Object>> modulesData = new ArrayList<>();
-        int j=0;
-
+        j=0;
+        k=0;
         int cont=0;
         for (int i = 0; i < modulesList.getChildren().size(); i++) {
             Node moduleNode = modulesList.getChildren().get(i);
-            if (!(moduleNode instanceof VBox)) {
-                continue;
-            }
     
             VBox moduleCard = (VBox) moduleNode;
             Map<String, Object> moduleData = new HashMap<>();
             
-            // Processamento do cabeçalho do módulo
             HBox moduleHeader = (HBox) moduleCard.getChildren().get(0);
             Label moduleNumber = (Label) ((StackPane) moduleHeader.getChildren().get(0)).getChildren().get(0);
             moduleData.put("moduleNumber", Integer.parseInt(moduleNumber.getText()));
-            
-            // Processamento do conteúdo principal do módulo
+
             VBox moduleContent = (VBox) moduleCard.getChildren().get(1);
             
-            // Título do módulo
             TextField titleField = (TextField) ((HBox) ((VBox) moduleContent.getChildren().get(0))
                 .getChildren().get(1)).getChildren().get(0);
             moduleData.put("moduleTitle", titleField.getText());
             
-            // Duração do módulo
             TextField durationField = (TextField) ((VBox) ((HBox) moduleContent.getChildren().get(1))
                 .getChildren().get(0)).getChildren().get(1);
             moduleData.put("moduleDuration", durationField.getText());
             
-            // Descrição do módulo
             TextArea detailsField = (TextArea) ((VBox) moduleContent.getChildren().get(2))
                 .getChildren().get(1);
             moduleData.put("moduleDescription", detailsField.getText());
             
-            // Processamento das lições e questionários
             List<Map<String, Object>> contentData = new ArrayList<>();
             List<Map<String, Object>> contentQuestionaireData = new ArrayList<>();
             List<Map<String, Object>> contentLessonData = new ArrayList<>();
 
             VBox contentContainer = (VBox) moduleCard.getChildren().get(2);
             
-            // Processa cada item do conteúdo separadamente
             for (Node contentNode : contentContainer.getChildren()) {
                 if (!(contentNode instanceof VBox)) {
                     continue;
@@ -652,10 +642,9 @@ public class CadastroCurso implements Initializable {
                 
                 VBox contentBox = (VBox) contentNode;
                 
-                // Verifica se é uma lição ou questionário baseado na classe de estilo
                 if (contentBox.getStyleClass().contains("lesson")) {
                     try {
-                        Map<String, Object> lessonData = saveLessonData(contentBox,cont);
+                        Map<String, Object> lessonData = saveLessonData(contentBox,cont,Integer.parseInt(moduleNumber.getText()));
                         if (lessonData != null) {
                             contentLessonData.add(lessonData);
                         }
@@ -679,12 +668,11 @@ public class CadastroCurso implements Initializable {
             moduleData.put("contentLesson", contentLessonData);
             modulesData.add(moduleData);
         }
-        
         return modulesData;
     }
 
     private int k=0;
-    private Map<String, Object> saveLessonData(VBox lessonCard,int cont) {
+    private Map<String, Object> saveLessonData(VBox lessonCard,int cont,int moduleNumber) {
         try {
             Map<String, Object> lessonData = new HashMap<>();
             cont++;
@@ -693,6 +681,7 @@ public class CadastroCurso implements Initializable {
             Label lessonNumber = (Label) ((StackPane) lessonHeader.getChildren().get(0)).getChildren().get(0);
             
             lessonData.put("type", "lesson");
+            lessonData.put("moduleNumber",moduleNumber);
             lessonData.put("lessonNumber"+k, Integer.parseInt(lessonNumber.getText()));
             
             VBox lessonContent = (VBox) lessonCard.getChildren().get(1);

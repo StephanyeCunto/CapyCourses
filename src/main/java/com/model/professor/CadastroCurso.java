@@ -16,7 +16,7 @@ public class CadastroCurso {
             boolean isDateEnd, boolean isCertificate,
             boolean isGradeMiniun, Object ComboBoxVisibily) {
         try (BufferedWriter writer = new BufferedWriter(
-                new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_curso.csv", true))) {
+                new FileWriter("CapyCourses\\src\\main\\java\\resources\\com\\bd\\bd_curso.csv", true))) {
             writer.write(UserSession.getInstance().getUserEmail() + "," + title + "," + description + "," + category
                     + "," + level + "," + tags);
             writer.newLine();
@@ -30,7 +30,7 @@ public class CadastroCurso {
 
     private void registerModules(List<Map<String, Object>> modulesData, String title) {
         try (BufferedWriter writer = new BufferedWriter(
-                new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_modulos.csv", true))) {
+                new FileWriter("CapyCourses\\src\\main\\java\\resources\\com\\bd\\bd_modulos.csv", true))) {
             for (Map<String, Object> moduleData : modulesData) {
                 String moduleTitle = (String) moduleData.get("moduleTitle");
                 Integer moduleNumber = (Integer) moduleData.get("moduleNumber");
@@ -41,7 +41,8 @@ public class CadastroCurso {
                         + moduleDescription);
                 writer.newLine();
 
-                registerquestionaire((List<Map<String, Object>>) moduleData.get("contentQuestionaire"), title, moduleTitle,
+                registerquestionaire((List<Map<String, Object>>) moduleData.get("contentQuestionaire"), title,
+                        moduleTitle,
                         moduleNumber);
                 registerClasses((List<Map<String, Object>>) moduleData.get("contentLesson"), title, moduleTitle,
                         moduleNumber);
@@ -51,43 +52,45 @@ public class CadastroCurso {
         }
     }
 
+    private int g = 0;
+
     private void registerquestionaire(List<Map<String, Object>> questionaire, String title, String moduleTitle,
             Integer moduleNumber) {
-        try (BufferedWriter writer = new BufferedWriter(
-                new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_questionaire.csv", true))) {
+        for (int h = 0;h < questionaire.size();h++) {
+            Map<String, Object> questionaireData = questionaire.get(h);
+            System.out.println("questionaireData: "+questionaireData);
 
-            for (int j = 0; j < questionaire.size(); j++) {
-                Map<String, Object> questionaireData = questionaire.get(j);
-                System.out.println(questionaireData);
-                String questionaireNumber = (String) questionaireData.get("questionaireNumber" + j);
-                String questionaireTitle = (String) questionaireData.get("questionaireTitle" + j);
-                String questionaireScore = (String) questionaireData.get("questionaireScore" + j);
-                String questionaireArea = (String) questionaireData.get("questionaireDescription" + j);
-                Integer cont = (Integer) questionaireData.get("cont" + j);
+            String questionaireNumber = (String) questionaireData.get("questionaireNumber" + g);
+            String questionaireTitle = (String) questionaireData.get("questionaireTitle" + g);
+            String questionaireScore = (String) questionaireData.get("questionaireScore" + g);
+            String questionaireArea = (String) questionaireData.get("questionaireDescription" + g);
+            Integer cont = (Integer) questionaireData.get("cont" + g);
 
-                System.out.println(title + "," + moduleTitle + "," + moduleNumber + "," +
-                questionaireNumber + "," + questionaireTitle + "," +
-                questionaireArea + "," + questionaireScore + "," +
-                cont);
-                writer.write(title + "," + moduleTitle + "," + moduleNumber + "," +
-                questionaireNumber + "," + questionaireTitle + "," +
-                questionaireArea + "," + questionaireScore + "," +
-                cont);
-        writer.newLine();            
-            }
+            Thread writerThread = new Thread(() -> {
+                try (BufferedWriter writer = new BufferedWriter(
+                        new FileWriter("CapyCourses\\src\\main\\java\\resources\\com\\bd\\bd_questionaire.csv",
+                                true))) {
+                    writer.write(title + "," + moduleTitle + "," + moduleNumber + "," +
+                            questionaireNumber + "," + questionaireTitle + "," +
+                            questionaireArea + "," + questionaireScore + "," + cont);
+                    writer.newLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            writerThread.start();
+            g++;
         }
     }
 
+    private int j = 0;
+
     private void registerClasses(List<Map<String, Object>> lessons, String title, String moduleTitle,
             Integer moduleNumber) {
-        try (BufferedWriter writer = new BufferedWriter(
-                new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_aulas.csv", true))) {
-
-            for (int j = 0; j < lessons.size(); j++) {
-                Map<String, Object> lessonData = lessons.get(j);
+        try {
+            for (int k = 0; k < lessons.size(); k++) {
+                Map<String, Object> lessonData = lessons.get(k);
 
                 Integer lessonNumber = (Integer) lessonData.get("lessonNumber" + j);
                 String lessonTitle = (String) lessonData.get("lessonTitle" + j);
@@ -96,13 +99,24 @@ public class CadastroCurso {
                 String lessonMaterials = (String) lessonData.get("lessonMaterials" + j);
                 String lessonDuration = (String) lessonData.get("lessonDuration" + j);
                 Integer cont = (Integer) lessonData.get("cont" + j);
-                writer.write(title + "," + moduleTitle + "," + moduleNumber + "," +
-                        lessonNumber + "," + lessonTitle + "," +
-                        lessonVideoLink + "," + lessonDetails + "," +
-                        lessonMaterials + "," + lessonDuration + "," + cont);
-                writer.newLine();
+
+                Thread writerThread = new Thread(() -> {
+                    try (BufferedWriter writer = new BufferedWriter(
+                            new FileWriter("CapyCourses\\src\\main\\java\\resources\\com\\bd\\bd_aulas.csv", true))) {
+                        writer.write(title + "," + moduleTitle + "," + moduleNumber + "," +
+                                lessonNumber + "," + lessonTitle + "," +
+                                lessonVideoLink + "," + lessonDetails + "," +
+                                lessonMaterials + "," + lessonDuration + "," + cont);
+                        writer.newLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                writerThread.start();
+                j++;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -112,7 +126,7 @@ public class CadastroCurso {
             boolean isCertificate,
             boolean isGradeMiniun, Object ComboBoxVisibily) {
         try (BufferedWriter writer = new BufferedWriter(
-                new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_settingsCurso.csv", true))) {
+                new FileWriter("CapyCourses\\src\\main\\java\\resources\\com\\bd\\bd_settingsCurso.csv", true))) {
             writer.write(title + "," + dateStart + "," + dateEnd + "," + durationTotal + "," + isDateEnd + ","
                     + isCertificate
                     + ","
