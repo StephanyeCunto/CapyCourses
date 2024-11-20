@@ -39,14 +39,17 @@ public class CadastroSecudarioValid {
         textFieldCPF.textProperty().addListener((obs, old, newText) -> {
             String formatted = formatCPF(newText);
             textFieldCPF.setText(formatted);
-            if (isValidCPF(newText)) {
-                updateErrorDisplay(textFieldCPF, cpfErrorLabel, false, null);
+            if(sizeCPF()>13){
+                if (isValidCPF(newText)) {
+                    updateErrorDisplay(textFieldCPF, cpfErrorLabel, false, null);
+                }
             }
         });
 
         textFieldCPF.setOnKeyReleased(event -> {
-            checkSizeCPF(event);
-            cpf = textFieldCPF.getText();
+            if(sizePhone()>13){
+                checkSizeCPF(event);
+            }
         });
 
         textFieldCPF.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
@@ -74,11 +77,6 @@ public class CadastroSecudarioValid {
         textFieldPhone.textProperty().addListener((obs, old, newText) -> {
             String formatted = formatPhone(newText);
             textFieldPhone.setText(formatted);
-            if (textFieldPhone.getText().length() < 14) {
-                updateErrorDisplay(textFieldPhone, phoneErrorLabel, true, null);
-            }else{
-                updateErrorDisplay(textFieldPhone, phoneErrorLabel, false, null);
-            }
         });
 
         textFieldPhone.setOnKeyReleased(event -> {
@@ -210,7 +208,7 @@ public class CadastroSecudarioValid {
     public boolean validateFields(){
         boolean isValid = true;
 
-        if(textFieldCPF.getText().isEmpty() || isValidCPF(textFieldCPF.getText())){
+        if(textFieldCPF.getText().isEmpty() | !isValidCPF(textFieldCPF.getText())){
             updateErrorDisplay(textFieldCPF, cpfErrorLabel, true, "Por favor, insira um cpf válido");
             isValid = false;
         }

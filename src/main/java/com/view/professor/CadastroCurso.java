@@ -904,13 +904,13 @@ public class CadastroCurso implements Initializable {
         lessonsList.getStyleClass().add("lessons-list");
 
         Button addLessonButton = new Button("+ Adicionar Aula");
-        addLessonButton.getStyleClass().add("modern-button");
+        addLessonButton.getStyleClass().add("outline-button");
         String existingStyles = addLessonButton.getStyle();
         addLessonButton.setStyle(existingStyles + "-fx-max-width: 250;");
         addLessonButton.setOnAction(e -> addNewLesson(lessonsList));
 
         Button addquestionaire = new Button("+ Adicionar Questionário");
-        addquestionaire.getStyleClass().add("modern-button");
+        addquestionaire.getStyleClass().add("outline-button");
         addquestionaire.setStyle(existingStyles + "-fx-max-width: 250;");
         HBox.setMargin(addquestionaire, new javafx.geometry.Insets(0, 0, 0, 20));
         addquestionaire.setOnAction(e -> addNewquestionaire(lessonsList));

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="container" stylesheets="@style/dark/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.CourseRegistration">
+    <ScrollPane fitToWidth="true" styleClass="custom-scroll-pane">
+        <VBox spacing="24" styleClass="form-section">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+
+            <!-- Header Section -->
+            <VBox spacing="8">
+                <Label text="Criar Novo Curso" styleClass="welcome-text">
+                    <font>
+                        <Font name="Plus Jakarta Sans Bold" size="28"/>
+                    </font>
+                </Label>
+                <Label text="Preencha as informações do curso" styleClass="subtitle-text"/>
+            </VBox>
+
+            <!-- Basic Course Information -->
+            <VBox spacing="20">
+                <Label text="INFORMAÇÕES BÁSICAS" styleClass="section-header"/>
+                
+                <VBox spacing="8">
+                    <Label text="NOME DO CURSO" styleClass="field-label"/>
+                    <TextField fx:id="courseName" styleClass="custom-text-field" promptText="Digite o nome do curso"/>
+                </VBox>
+
+                <VBox spacing="8">
+                    <Label text="DESCRIÇÃO" styleClass="field-label"/>
+                    <TextArea fx:id="courseDescription" styleClass="custom-text-area" 
+                             promptText="Descreva o conteúdo do curso" wrapText="true" prefRowCount="3"/>
+                </VBox>
+
+                <VBox spacing="8">
+                    <Label text="CATEGORIA" styleClass="field-label"/>
+                    <ComboBox fx:id="categoryComboBox" styleClass="custom-combo-box" 
+                             promptText="Selecione a categoria" maxWidth="Infinity"/>
+                </VBox>
+            </VBox>
+
+            <!-- Course Settings -->
+            <VBox spacing="20">
+                <Label text="CONFIGURAÇÕES DO CURSO" styleClass="section-header"/>
+                
+                <GridPane hgap="20" vgap="16">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50"/>
+                        <ColumnConstraints percentWidth="50"/>
+                    </columnConstraints>
+
+                    <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="DURAÇÃO (HORAS)" styleClass="field-label"/>
+                        <TextField fx:id="courseDuration" styleClass="custom-text-field"/>
+                    </VBox>
+
+                    <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="PERÍODO INICIAL" styleClass="field-label"/>
+                        <DatePicker fx:id="startDate" styleClass="custom-date-picker"/>
+                    </VBox>
+
+                    <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Label text="PERÍODO FINAL" styleClass="field-label"/>
+                        <DatePicker fx:id="endDate" styleClass="custom-date-picker"/>
+                    </VBox>
+
+                    <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label text="VISIBILIDADE" styleClass="field-label"/>
+                        <ComboBox fx:id="visibilityComboBox" styleClass="custom-combo-box" 
+                                 promptText="Selecione a visibilidade" maxWidth="Infinity"/>
+                    </VBox>
+                </GridPane>
+
+                <VBox spacing="12">
+                    <CheckBox fx:id="certificateCheckbox" text="Emitir certificado" styleClass="custom-checkbox"/>
+                    <HBox spacing="16" alignment="CENTER_LEFT">
+                        <CheckBox fx:id="minimumGradeCheckbox" text="Exigir nota mínima" styleClass="custom-checkbox"/>
+                        <TextField fx:id="minimumGrade" styleClass="custom-text-field" 
+                                 promptText="Nota" prefWidth="100" visible="false"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <!-- Modules Section -->
+            <VBox spacing="20">
+                <Label text="MÓDULOS DO CURSO" styleClass="section-header"/>
+                
+                <VBox fx:id="modulesContainer" spacing="16">
+                    <!-- Modules will be added here dynamically -->
+                </VBox>
+
+                <Button styleClass="register-button" onAction="#addModule">
+                    <graphic>
+                        <HBox spacing="8" alignment="CENTER">
+                            <Label text="ADICIONAR MÓDULO" styleClass="register-label"/>
+                        </HBox>
+                    </graphic>
+                </Button>
+            </VBox>
+
+            <!-- Action Buttons -->
+            <HBox spacing="16" alignment="CENTER_RIGHT">
+                <Button styleClass="register-button" onAction="#cancel" text="CANCELAR"/>
+                <Button styleClass="modern-button" onAction="#saveCourse" text="SALVAR CURSO"/>
+            </HBox>
+        </VBox>
+    </ScrollPane>
+</StackPane>

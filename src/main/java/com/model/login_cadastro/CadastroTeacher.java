@@ -8,7 +8,7 @@ import java.util.Date;
 import com.UserSession;
 
 public class CadastroTeacher {
-        public CadastroTeacher(Date dateOfBirth, String CPF, long telephone, String education, String areaOfInterest) {
+        public CadastroTeacher(Date dateOfBirth, String CPF, String telephone, String education, String areaOfInterest) {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_teacher.csv", true))) {
             writer.write(UserSession.getInstance().getUserEmail() + "," + dateOfBirth + "," + CPF + "," + telephone + ","+ education + "," + areaOfInterest);

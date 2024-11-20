@@ -83,6 +83,7 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
         toggleInitialize();
         if (UserSession.getInstance().getRegisterIncomplet() == "Teacher") {
             setupErrorNotification();
+            UserSession.getInstance().clearSession();
         }
     }
 
@@ -97,7 +98,7 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             Date date = format.parse(super.getDateInputPopup().getDate());
 
-            new CadastroTeacherController(date, textFieldCPF.getText(), Long.parseLong(textFieldPhone.getText()),
+            new CadastroTeacherController(date, textFieldCPF.getText(), textFieldPhone.getText(),
                     comboBoxEducation.getValue(), interests);
             UserSession.getInstance().setRegisterIncomplet("false");
             super.redirectTo("/com/login_cadastro/paginaLogin.fxml", (Stage) leftSection.getScene().getWindow());
