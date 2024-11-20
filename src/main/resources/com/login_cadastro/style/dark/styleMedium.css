@@ -1,15 +1,4 @@
-#container {
-    -fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);
-    -fx-alignment: center;
-}
-
 #mainPane {
-    -fx-background-color: rgba(41, 47, 76, 0.7);
-    -fx-background-radius: 20;
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-    -fx-border-radius: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
-    -fx-alignment: center;
     -fx-max-width: 850px;
     -fx-max-height: 600px;
 }
