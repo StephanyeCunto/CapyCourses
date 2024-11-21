@@ -56,7 +56,7 @@ public class CadastroCurso {
 
     private void registerquestionaire(List<Map<String, Object>> questionaire, String title, String moduleTitle,
             Integer moduleNumber) {
-        for (int h = 0;h < questionaire.size();h++) {
+        for (int h = 0; h < questionaire.size(); h++) {
             Map<String, Object> questionaireData = questionaire.get(h);
 
             String questionaireNumber = (String) questionaireData.get("questionaireNumber" + g);
@@ -78,30 +78,31 @@ public class CadastroCurso {
                 }
             });
 
-            System.out.println(questionaireData.get("questions"+h));
+            System.out.println(questionaireData.get("questions" + h));
 
-            Map<String, Object> questions =(Map<String,Object>) questionaireData.get("questions"+h);
-            
-            registerQuestions(questions, moduleTitle,questionaireNumber, questionaireTitle);
+            Map<String, Object> questions = (Map<String, Object>) questionaireData.get("questions" + h);
+
+            registerQuestions(questions, moduleTitle, questionaireNumber, questionaireTitle);
             writerThread.start();
             g++;
         }
     }
 
-
-   private void registerQuestions(Map<String, Object> questions, String moduleTitle, String questionaireNumber,String questionaireTitle){
-        for (int i = 0; i < questions.size(); i++) {
-            Map<String, Object> questionData = questions.get(i);
-
+    private void registerQuestions(Map<String, Object> questionData, String moduleTitle, String questionaireNumber,
+            String questionaireTitle) {
+        for (int i = 0; i < questionData.size(); i++) {
+            System.out.println("questionData "+questionData.get("type" + i));
             String questionNumber = (String) questionData.get("questionNumber" + i);
             String questionScore = (String) questionData.get("questionScore" + i);
             String questionText = (String) questionData.get("questionText" + i);
-            String questionType = (String) questionData.get("questionType" + i);
-            if(questionType.equals("SINGLE_CHOICE")){
-                List<Map<String, Object>> response =(List<Map<String, Object>>) questionData.get("responseField");
-                for(int j=0;j<response.size();j++){
-                    String typeQuestion = (String) questionData.get("type");
-                    if(typeQuestion.equals("SINGLE_CHOICE")){
+            String questionType = (String) questionData.get("type" + i);
+            if (questionType.matches("SINGLE_CHOICE")) {
+                List<Map<String, Object>> response = (List<Map<String, Object>>) questionData.get("responseField");
+                if (response != null) {
+                    for (int j = 0; j < response.size(); j++) {
+                        String typeQuestion = (String) questionData.get("type");
+                        if (typeQuestion.matches("SINGLE_CHOICE")) {
+                        }
                     }
                 }
             }
@@ -115,7 +116,8 @@ public class CadastroCurso {
                                 true))) {
                     writer.write(moduleTitle + "," + questionaireNumber + "," + questionaireTitle + "," +
                             questionNumber + "," + questionText + "," +
-                            questionType + "," + questionAnswer + "," + questionScore + "," + questionArea + "," + cont);
+                            questionType + "," + questionAnswer + "," + questionScore + "," + questionArea + ","
+                            + cont);
                     writer.newLine();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -124,7 +126,7 @@ public class CadastroCurso {
 
             writerThread.start();
         }
-   }
+    }
 
     private int j = 0;
 
