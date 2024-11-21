@@ -5,13 +5,13 @@
 }
 
 .field-label {
-    -fx-text-fill: -text-primary;
+    -fx-text-fill: #2C3E50;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
 .required-fields {
-    -fx-text-fill: -text-secondary;
+    -fx-text-fill: #7F8C8D;
     -fx-font-size: 12px;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .progress-bar .bar {
-    -fx-background-color: -secondary-color;
+    -fx-background-color: #50E3C2;
     -fx-background-radius: 10;
 }
 
@@ -35,8 +35,8 @@
 .custom-text-area {
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 8;
-    -fx-text-fill: -text-primary;
-    -fx-prompt-text-fill: -text-secondary;
+    -fx-text-fill: #2C3E50;
+    -fx-prompt-text-fill: #7F8C8D;
     -fx-padding: 12;
     -fx-font-size: 14;
     -fx-border-color: #8A94A3;
@@ -48,8 +48,8 @@
     -fx-background-radius: 12;
     -fx-border-color: #8A94A3;
     -fx-border-radius: 12;
-    -fx-text-fill: -text-primary;
-    -fx-prompt-text-fill: -text-secondary;
+    -fx-text-fill: #2C3E50;
+    -fx-prompt-text-fill: #7F8C8D;
     -fx-font-size: 14px;
     -fx-padding: 12 16;
 }
@@ -57,7 +57,7 @@
 .custom-text-field:focused,
 .custom-text-area:focused {
     -fx-background-color: #FFFFFF;
-    -fx-border-color: -primary-color;
+    -fx-border-color: #DCE1E7;
     -fx-effect: dropshadow(gaussian, rgba(0, 86, 179, 0.3), 10, 0, 0, 0);
 }
 
@@ -469,7 +469,7 @@
     -fx-background-radius: 20;
     -fx-border-color: #e1e8ef;
     -fx-border-radius: 20;
-    -fx-text-fill: -text-primary;
+    -fx-text-fill: #2C3E50;
     -fx-font-weight: bold;
     -fx-font-size: 12px;
     -fx-padding: 8 16;
@@ -478,7 +478,7 @@
 
 .interest-button:hover {
     -fx-background-color: rgba(52, 152, 219, 0.1);
-    -fx-border-color: -primary-color;
+    -fx-border-color: #4A90E2;
 }
 
 .interest-button.selected {
@@ -500,7 +500,7 @@
 .module-number,
 .lesson-number-container,
 .lesson-number {
-    -fx-background-color: -surface-light;
+    -fx-background-color: #DCE1E7;
     -fx-background-radius: 50%;
     -fx-border-radius: 50%;
     -fx-border-color: linear-gradient(to right, #4A90E2, #50E3C2);
@@ -515,7 +515,7 @@
 .questionaire-number-container,
 .questionaire-number {
     -fx-background-color: #ffffff;;
-    -fx-border-color: -primary-color;
+    -fx-border-color:#DCE1E7;
     -fx-background-radius: 50%;
     -fx-border-radius: 50%;
     -fx-min-width: 36;
