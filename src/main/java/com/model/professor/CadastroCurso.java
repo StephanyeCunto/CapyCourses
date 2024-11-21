@@ -78,14 +78,18 @@ public class CadastroCurso {
                 }
             });
 
-            registerQuestions((List<Map<String, Object>>) questionaireData.get("questions"+h), moduleTitle,questionaireNumber, questionaireTitle);
+            System.out.println(questionaireData.get("questions"+h));
+
+            Map<String, Object> questions =(Map<String,Object>) questionaireData.get("questions"+h);
+            
+            registerQuestions(questions, moduleTitle,questionaireNumber, questionaireTitle);
             writerThread.start();
             g++;
         }
     }
 
 
-   private void registerQuestions(List<Map<String, Object>> questions, String moduleTitle, String questionaireNumber,String questionaireTitle){
+   private void registerQuestions(Map<String, Object> questions, String moduleTitle, String questionaireNumber,String questionaireTitle){
         for (int i = 0; i < questions.size(); i++) {
             Map<String, Object> questionData = questions.get(i);
 
@@ -96,7 +100,9 @@ public class CadastroCurso {
             if(questionType.equals("SINGLE_CHOICE")){
                 List<Map<String, Object>> response =(List<Map<String, Object>>) questionData.get("responseField");
                 for(int j=0;j<response.size();j++){
-                    
+                    String typeQuestion = (String) questionData.get("type");
+                    if(typeQuestion.equals("SINGLE_CHOICE")){
+                    }
                 }
             }
             String questionAnswer = (String) questionData.get("questionAnswer" + i);

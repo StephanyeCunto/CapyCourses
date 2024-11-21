@@ -753,7 +753,6 @@ public class CadastroCurso implements Initializable {
                 questionaireData.put("questions" + j, saveQuestionData(questionContainer,questionData, cont));
             }
             j++;
-            System.out.println(questionaireData);
             return questionaireData;
         } catch (Exception e) {
             System.out.println("Erro ao processar dados do questionário: " + e.getMessage());

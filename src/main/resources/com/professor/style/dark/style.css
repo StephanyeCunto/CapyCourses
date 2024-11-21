@@ -516,8 +516,8 @@
 
 .questionaire-number-container,
 .questionaire-number {
-    -fx-background-color: #E1E8EF;
-    -fx-border-color: linear-gradient(to right, derive(#A3C2DB, 20%), derive(#C3A3DB, 20%));
+    -fx-background-color: #151A26;
+     -fx-border-color: linear-gradient(to right, derive(#A3C2DB, 20%), derive(#C3A3DB, 20%));
     -fx-background-radius: 50%;
     -fx-border-radius: 50%;
     -fx-min-width: 36;
