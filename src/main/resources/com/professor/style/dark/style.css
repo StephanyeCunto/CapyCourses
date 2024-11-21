@@ -493,20 +493,6 @@
     -fx-effect: dropshadow(gaussian, rgba(163, 194, 219, 0.4), 8, 0, 0, 0);
 }
 
-.questionaire-number-container,
-.questionaire-number {
-    -fx-background-color: #E1E8EF;
-    -fx-border-color: #A3C2DB;
-    -fx-background-radius: 50%;
-    -fx-border-radius: 50%;
-    -fx-min-width: 36;
-    -fx-min-height: 36;
-    -fx-max-width: 36;
-    -fx-max-height: 36;
-    -fx-alignment: center;
-    -fx-text-fill: white;
-}
-
 .module-number-container, .module-number, .lesson-number-container, .lesson-number {
     -fx-background-color: #151A26;
     -fx-background-radius: 50%;
@@ -530,7 +516,7 @@
 
 .questionaire-number-container,
 .questionaire-number {
-    -fx-background-color: -surface-light;
+    -fx-background-color: #E1E8EF;
     -fx-border-color: linear-gradient(to right, derive(#A3C2DB, 20%), derive(#C3A3DB, 20%));
     -fx-background-radius: 50%;
     -fx-border-radius: 50%;

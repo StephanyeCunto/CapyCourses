@@ -78,10 +78,47 @@ public class CadastroCurso {
                 }
             });
 
+            registerQuestions((List<Map<String, Object>>) questionaireData.get("questions"+h), moduleTitle,questionaireNumber, questionaireTitle);
             writerThread.start();
             g++;
         }
     }
+
+
+   private void registerQuestions(List<Map<String, Object>> questions, String moduleTitle, String questionaireNumber,String questionaireTitle){
+        for (int i = 0; i < questions.size(); i++) {
+            Map<String, Object> questionData = questions.get(i);
+
+            String questionNumber = (String) questionData.get("questionNumber" + i);
+            String questionScore = (String) questionData.get("questionScore" + i);
+            String questionText = (String) questionData.get("questionText" + i);
+            String questionType = (String) questionData.get("questionType" + i);
+            if(questionType.equals("SINGLE_CHOICE")){
+                List<Map<String, Object>> response =(List<Map<String, Object>>) questionData.get("responseField");
+                for(int j=0;j<response.size();j++){
+                    
+                }
+            }
+            String questionAnswer = (String) questionData.get("questionAnswer" + i);
+            String questionArea = (String) questionData.get("questionArea" + i);
+            Integer cont = (Integer) questionData.get("cont" + i);
+
+            Thread writerThread = new Thread(() -> {
+                try (BufferedWriter writer = new BufferedWriter(
+                        new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_questions.csv",
+                                true))) {
+                    writer.write(moduleTitle + "," + questionaireNumber + "," + questionaireTitle + "," +
+                            questionNumber + "," + questionText + "," +
+                            questionType + "," + questionAnswer + "," + questionScore + "," + questionArea + "," + cont);
+                    writer.newLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            writerThread.start();
+        }
+   }
 
     private int j = 0;
 
