@@ -1,23 +1,12 @@
-/* ===== Design Tokens ===== */
-.primary-color {
-    -fx-background-color: #A3C2DB; /* Azul suave */
-}
-
-.secondary-color {
-    -fx-background-color: #C3A3DB; /* Roxo suave */
-}
-
-.background-dark {
-    -fx-background-color: #1E1E2E; /* Cinza escuro */
-}
-
-.surface-dark {
-    -fx-background-color: #2E2E3E; /* Cinza médio */
-}
-
-/* ===== Layout Base ===== */
 .main-container {
-    -fx-background-color: linear-gradient(to right bottom, #1E1E2E, #2E2E3E);
+    -fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);
+}
+
+.main-content {
+   
+    -fx-background-radius: 24;
+    -fx-padding: 32;
+    -fx-spacing: 24;
 }
 
 #sideMenu {
@@ -61,17 +50,12 @@
     -fx-background-color: transparent;
 }
 
-.main-content {
-    -fx-background-color: rgba(255, 255, 255, 0.07);
-    -fx-background-radius: 24;
-    -fx-padding: 32;
-    -fx-spacing: 24;
-}
 
 .content-card {
-    -fx-background-color: rgba(30, 30, 46, 0.8);
-    -fx-background-radius: 20;
+    -fx-background-color: rgba(21, 25, 40, 0.7);
+    -fx-background-radius:24;
     -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0, 0, 10);
 }
 
 /* ===== Tipografia ===== */
@@ -556,3 +540,5 @@
     -fx-background-color: linear-gradient(to right, #8BACC0, #9A8BC0);
     -fx-text-fill: white;
 }
+
+

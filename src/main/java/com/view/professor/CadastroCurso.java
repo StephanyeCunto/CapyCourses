@@ -783,6 +783,7 @@ public class CadastroCurso implements Initializable {
         int h=0;
         Map<String, Object> responseData = new HashMap<>();
         if (labeled.getText().equals("Opções (selecione a correta)")) {
+            questionData.put("type"+z,"SINGLE_CHOICE");
             VBox optionsContainer = (VBox) questionContent.getChildren().get(3);
             for (int e = 0; e < optionsContainer.getChildren().size(); e++) {
                 HBox response = (HBox) optionsContainer.getChildren().get(e);
@@ -794,11 +795,11 @@ public class CadastroCurso implements Initializable {
                 } else {
                     responseData.put("responseIsTrue"+h,false );
                 }
-                questionData.put("type"+h,"SINGLE_CHOICE");
                 h++;
             }
         } else if (labeled.getText().equals("Opções (selecione as corretas)")) {
             VBox optionsContainer = (VBox) questionContent.getChildren().get(3);
+            questionData.put("type"+z,"MULTIPLE_CHOICE");
             for (int e = 0; e < optionsContainer.getChildren().size(); e++) {
                 HBox response = (HBox) optionsContainer.getChildren().get(e);
                 CheckBox checkBox = (CheckBox) response.getChildren().get(0);
@@ -806,23 +807,24 @@ public class CadastroCurso implements Initializable {
                     responseData.put("responseField"+h, responseField.getText());
                 if (checkBox.isSelected()) {
                         responseData.put("responseIsTrue"+h,true );
-                } else {
+                } else { 
                         responseData.put("responseIsTrue"+h,false );
                 }
-                questionData.put("type"+h,"MULTIPLE_CHOICE");
                 h++;
             }
 
         } else if (labeled.getText().equals("Resposta Esperada (opcional)")) {
+            questionData.put("type"+z,"DISCURSIVE");
             TextArea responseField = (TextArea) questionContent.getChildren().get(3);
             TextArea responseField2 = (TextArea) questionContent.getChildren().get(5);
             responseData.put("responseField"+h, responseField.getText());
             responseData.put("responseField2"+h, responseField2.getText());
-            questionData.put("type"+h,"DISCURSIVE");
             h++;
         }
         questionData.put("response"+z, responseData);
         z++;
+
+        System.out.println("questionData view: "+questionData);
         return questionData;
     }
 
@@ -830,7 +832,7 @@ public class CadastroCurso implements Initializable {
     private void addNewModule() {
         currentModuleCount++;
         VBox moduleCard = new VBox();
-        moduleCard.getStyleClass().addAll("module-card", "fade-in");
+        moduleCard.getStyleClass().addAll("module-card", "fade-in","content-card");
         moduleCard.setSpacing(15);
         HBox moduleHeader = createModuleHeader(currentModuleCount);
         VBox moduleContent = createModuleContent(currentModuleCount);

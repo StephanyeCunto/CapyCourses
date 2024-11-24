@@ -162,6 +162,8 @@
                                     <Button onAction="#addNewModule" styleClass="modern-button"
                                         text="+ Adicionar Módulo" />
                                 </HBox>
+                            </VBox>
+                            <VBox spacing="20">
 
                                 <VBox fx:id="modulesList" spacing="15" styleClass="modules-list">
     
