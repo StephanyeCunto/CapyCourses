@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -89,9 +88,8 @@ public class CadastroCurso {
 
     private void registerQuestions(Map<String, Object> questionData, String moduleTitle, String questionaireNumber,
             String questionaireTitle) {
-                System.out.println("dentro do registerQuestions: "+questionData);
         for (int i = 0; i < questionData.size(); i++) {
-            StringBuilder  questionArea= new StringBuilder();
+            StringBuilder questionArea = new StringBuilder();
 
             if (questionData.get("questionNumber" + i) != null) {
 
@@ -100,14 +98,11 @@ public class CadastroCurso {
                 String questionText = (String) questionData.get("questionText" + i);
                 String questionType = (String) questionData.get("type" + i);
 
-                System.out.println("fora do if: "+questionType);
-
                 Object response = questionData.get("response" + i);
                 StringBuilder responseAnswers = new StringBuilder();
                 StringBuilder responseIsTrues = new StringBuilder();
 
                 if ((questionType.equals("SIMGLE_CHOICE")) || (questionType.equals("MULTIPLE_CHOICE"))) {
-                    System.out.println("dentro do if: "+questionType);
                     if (response instanceof Map) {
                         Map<String, Object> responseMap = (Map<String, Object>) response;
 
@@ -121,13 +116,12 @@ public class CadastroCurso {
                             }
                         }
                     }
-                }else{
+                } else {
                     Map<String, Object> responseMap = (Map<String, Object>) response;
-                    System.out.println(responseMap);
-                    String responseField = (String)responseMap.get("responseField" + 0);
-                    String responseField2 = (String)responseMap.get("responseField" + 20);
+                    String responseField = (String) responseMap.get("responseField" + 0);
+                    String responseField2 = (String) responseMap.get("responseField" + 20);
                     responseAnswers.append(responseField);
-                   questionArea.append(responseField2); 
+                    questionArea.append(responseField2);
                 }
 
                 Thread writerThread = new Thread(() -> {
@@ -137,7 +131,7 @@ public class CadastroCurso {
                         writer.write(moduleTitle + "," + questionaireNumber + "," + questionaireTitle + "," +
                                 questionNumber + "," + questionText + "," +
                                 questionType + "," + responseAnswers + "," + responseIsTrues + "," + questionScore + ","
-                                + questionArea );
+                                + questionArea);
                         writer.newLine();
                     } catch (IOException e) {
                         e.printStackTrace();

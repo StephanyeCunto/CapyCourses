@@ -750,7 +750,7 @@ public class CadastroCurso implements Initializable {
             for (int i = 0; i < questionsContainer.getChildren().size(); i++) {
 
                 VBox questionContainer = (VBox) questionsContainer.getChildren().get(i);
-                questionaireData.put("questions" + j, saveQuestionData(questionContainer,questionData, cont));
+                questionaireData.put("questions" + j, saveQuestionData(questionContainer, questionData, cont));
             }
             j++;
             return questionaireData;
@@ -762,69 +762,69 @@ public class CadastroCurso implements Initializable {
 
     private int z = 0;
 
-    private Map<String, Object> saveQuestionData(VBox questionCard,Map<String, Object> questionData, int k) {
+    private Map<String, Object> saveQuestionData(VBox questionCard, Map<String, Object> questionData, int k) {
         HBox questionHeader = (HBox) questionCard.getChildren().get(0);
         StackPane numberContainer = (StackPane) questionHeader.getChildren().get(0);
         Label questionNumber = (Label) numberContainer.getChildren().get(0);
-        questionData.put("questionNumber"+z, questionNumber.getText());
+        questionData.put("questionNumber" + z, questionNumber.getText());
 
         VBox questionContent = (VBox) questionCard.getChildren().get(1);
         HBox scoreBox = (HBox) questionContent.getChildren().get(0);
         TextField scoreField = (TextField) scoreBox.getChildren().get(1);
-        questionData.put("questionScore"+z, scoreField.getText());
+        questionData.put("questionScore" + z, scoreField.getText());
 
         TextArea questionText = (TextArea) questionContent.getChildren().get(1);
-        questionData.put("questionText"+z, questionText.getText());
+        questionData.put("questionText" + z, questionText.getText());
 
         Node node = questionContent.getChildren().get(2);
 
         Labeled labeled = (Labeled) node;
 
-        int h=0;
+        int h = 0;
         Map<String, Object> responseData = new HashMap<>();
         if (labeled.getText().equals("Opções (selecione a correta)")) {
-            questionData.put("type"+z,"SINGLE_CHOICE");
+            questionData.put("type" + z, "SINGLE_CHOICE");
             VBox optionsContainer = (VBox) questionContent.getChildren().get(3);
             for (int e = 0; e < optionsContainer.getChildren().size(); e++) {
                 HBox response = (HBox) optionsContainer.getChildren().get(e);
                 RadioButton radioField = (RadioButton) response.getChildren().get(0);
                 TextField responseField = (TextField) response.getChildren().get(1);
-                    responseData.put("responseField"+h, responseField.getText());
+                responseData.put("responseField" + h, responseField.getText());
                 if (radioField.isSelected()) {
-                    responseData.put("responseIsTrue"+h,true );
+                    responseData.put("responseIsTrue" + h, true);
                 } else {
-                    responseData.put("responseIsTrue"+h,false );
+                    responseData.put("responseIsTrue" + h, false);
                 }
                 h++;
             }
         } else if (labeled.getText().equals("Opções (selecione as corretas)")) {
             VBox optionsContainer = (VBox) questionContent.getChildren().get(3);
-            questionData.put("type"+z,"MULTIPLE_CHOICE");
+            questionData.put("type" + z, "MULTIPLE_CHOICE");
             for (int e = 0; e < optionsContainer.getChildren().size(); e++) {
                 HBox response = (HBox) optionsContainer.getChildren().get(e);
                 CheckBox checkBox = (CheckBox) response.getChildren().get(0);
                 TextField responseField = (TextField) response.getChildren().get(1);
-                    responseData.put("responseField"+h, responseField.getText());
+                responseData.put("responseField" + h, responseField.getText());
                 if (checkBox.isSelected()) {
-                        responseData.put("responseIsTrue"+h,true );
-                } else { 
-                        responseData.put("responseIsTrue"+h,false );
+                    responseData.put("responseIsTrue" + h, true);
+                } else {
+                    responseData.put("responseIsTrue" + h, false);
                 }
                 h++;
             }
 
         } else if (labeled.getText().equals("Resposta Esperada (opcional)")) {
-            questionData.put("type"+z,"DISCURSIVE");
+            questionData.put("type" + z, "DISCURSIVE");
             TextArea responseField = (TextArea) questionContent.getChildren().get(3);
             TextArea responseField2 = (TextArea) questionContent.getChildren().get(5);
-            responseData.put("responseField"+h, responseField.getText());
-            responseData.put("responseField2"+h, responseField2.getText());
+            responseData.put("responseField" + h, responseField.getText());
+            responseData.put("responseField2" + h, responseField2.getText());
             h++;
         }
-        questionData.put("response"+z, responseData);
+        questionData.put("response" + z, responseData);
         z++;
 
-        System.out.println("questionData view: "+questionData);
+        System.out.println("questionData view: " + questionData);
         return questionData;
     }
 
@@ -832,7 +832,7 @@ public class CadastroCurso implements Initializable {
     private void addNewModule() {
         currentModuleCount++;
         VBox moduleCard = new VBox();
-        moduleCard.getStyleClass().addAll("module-card", "fade-in","content-card");
+        moduleCard.getStyleClass().addAll("module-card", "fade-in", "content-card");
         moduleCard.setSpacing(15);
         HBox moduleHeader = createModuleHeader(currentModuleCount);
         VBox moduleContent = createModuleContent(currentModuleCount);
@@ -1279,34 +1279,35 @@ public class CadastroCurso implements Initializable {
     private void addNewQuestion(VBox questionsContainer, String type) {
         VBox questionCard = new VBox(10);
         questionCard.getStyleClass().add("question-card");
-
+    
         HBox questionHeader = new HBox(10);
         questionHeader.setAlignment(Pos.CENTER_LEFT);
-
+    
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        int questionNumber = (int) questionsContainer.getUserData();
-        questionsContainer.setUserData(questionNumber + 1);
-
+    
+        int questionNumber = questionsContainer.getChildren().size() + 1; // Número baseado no tamanho atual
+    
         StackPane numberContainer = new StackPane();
         numberContainer.getStyleClass().add("question-number-container");
         Label number = new Label(String.valueOf(questionNumber));
         number.getStyleClass().add("questionaire-number");
         numberContainer.getChildren().add(number);
-
+    
         Button removeButton = new Button("X");
         removeButton.getStyleClass().add("simple-button");
-        removeButton.setOnAction(e -> removeQuestionWithAnimation(questionCard));
-
+        removeButton.setOnAction(e -> {
+            removeQuestionWithAnimation(questionCard);
+        });
+    
         questionHeader.getChildren().addAll(numberContainer, spacer, removeButton);
-
+    
         VBox questionContent = new VBox(10);
         TextArea questionText = new TextArea();
         questionText.setPromptText("Digite a pergunta da questão...");
         questionText.setPrefRowCount(3);
         questionText.getStyleClass().add("custom-text-area");
-
+    
         TextField scoreField = new TextField();
         scoreField.setPromptText("Pontos");
         scoreField.setPrefWidth(80);
@@ -1316,13 +1317,13 @@ public class CadastroCurso implements Initializable {
                 scoreField.setText(old);
             }
         });
-
+    
         HBox scoreHbox = new HBox(10);
         Label scoreLabel = new Label("Pontos:");
         scoreLabel.getStyleClass().add("field-label");
         scoreHbox.getChildren().addAll(scoreLabel, scoreField);
         questionContent.getChildren().addAll(scoreHbox, questionText);
-
+    
         switch (type) {
             case "DISCURSIVE":
                 addDiscursiveFields(questionContent);
@@ -1336,7 +1337,33 @@ public class CadastroCurso implements Initializable {
         }
         questionCard.getChildren().addAll(questionHeader, questionContent);
         questionsContainer.getChildren().add(questionCard);
+    
+        updateQuestionNumbers(questionsContainer); // Atualiza os números após adicionar
     }
+    
+    private void removeQuestionWithAnimation(Node questionCard) {
+        VBox questionsContainer = (VBox) questionCard.getParent(); // Obtém o container das questões
+    
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), questionCard);
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(e -> {
+            questionsContainer.getChildren().remove(questionCard); // Remove a questão
+            updateQuestionNumbers(questionsContainer); // Atualiza os números após remover
+        });
+        fadeOut.play();
+    }
+    
+    private void updateQuestionNumbers(VBox questionsContainer) {
+        for (int i = 0; i < questionsContainer.getChildren().size(); i++) {
+            VBox questionCard = (VBox) questionsContainer.getChildren().get(i);
+            HBox questionHeader = (HBox) questionCard.getChildren().get(0);
+            StackPane numberContainer = (StackPane) questionHeader.getChildren().get(0);
+            Label numberLabel = (Label) numberContainer.getChildren().get(0);
+            numberLabel.setText(String.valueOf(i + 1)); // Define o número da questão
+        }
+    }
+    
 
     private void removeModuleWithAnimation(Node moduleCard) {
         currentModuleCount--;
@@ -1349,6 +1376,7 @@ public class CadastroCurso implements Initializable {
         });
         fadeOut.play();
     }
+
 
     private void updateModuleNumbers() {
         for (int i = 0; i < modulesList.getChildren().size(); i++) {
@@ -1459,14 +1487,6 @@ public class CadastroCurso implements Initializable {
         fadeIn.play();
 
         container.getChildren().add(optionBox);
-    }
-
-    private void removeQuestionWithAnimation(Node questionCard) {
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), questionCard);
-        fadeOut.setFromValue(1);
-        fadeOut.setToValue(0);
-        fadeOut.setOnFinished(e -> ((VBox) questionCard.getParent()).getChildren().remove(questionCard));
-        fadeOut.play();
     }
 
     protected void addDateInputField() {
