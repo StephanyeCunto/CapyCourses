@@ -78,8 +78,6 @@ public class CadastroCurso {
                 }
             });
 
-            System.out.println(questionaireData.get("questions" + h));
-
             Map<String, Object> questions = (Map<String, Object>) questionaireData.get("questions" + h);
 
             registerQuestions(questions, moduleTitle, questionaireNumber, questionaireTitle);
@@ -91,40 +89,57 @@ public class CadastroCurso {
     private void registerQuestions(Map<String, Object> questionData, String moduleTitle, String questionaireNumber,
             String questionaireTitle) {
         for (int i = 0; i < questionData.size(); i++) {
-            System.out.println("questionData "+questionData.get("type" + i));
-            String questionNumber = (String) questionData.get("questionNumber" + i);
-            String questionScore = (String) questionData.get("questionScore" + i);
-            String questionText = (String) questionData.get("questionText" + i);
-            String questionType = (String) questionData.get("type" + i);
-            if (questionType.matches("SINGLE_CHOICE")) {
-                List<Map<String, Object>> response = (List<Map<String, Object>>) questionData.get("responseField");
-                if (response != null) {
-                    for (int j = 0; j < response.size(); j++) {
-                        String typeQuestion = (String) questionData.get("type");
-                        if (typeQuestion.matches("SINGLE_CHOICE")) {
+            StringBuilder questionArea = new StringBuilder();
+
+            if (questionData.get("questionNumber" + i) != null) {
+
+                String questionNumber = (String) questionData.get("questionNumber" + i);
+                String questionScore = (String) questionData.get("questionScore" + i);
+                String questionText = (String) questionData.get("questionText" + i);
+                String questionType = (String) questionData.get("type" + i);
+
+                Object response = questionData.get("response" + i);
+                StringBuilder responseAnswers = new StringBuilder();
+                StringBuilder responseIsTrues = new StringBuilder();
+
+                if ((questionType.equals("SIMGLE_CHOICE")) || (questionType.equals("MULTIPLE_CHOICE"))) {
+                    if (response instanceof Map) {
+                        Map<String, Object> responseMap = (Map<String, Object>) response;
+
+                        for (int j = 0; j < responseMap.size(); j++) {
+                            if (responseMap.get("responseField" + j) != null) {
+                                String responseField = (String) responseMap.get("responseField" + j);
+                                Boolean responseIsTrue = (Boolean) responseMap.get("responseIsTrue" + j);
+
+                                responseAnswers.append(responseField).append(";");
+                                responseIsTrues.append(responseIsTrue).append(";");
+                            }
                         }
                     }
+                } else {
+                    Map<String, Object> responseMap = (Map<String, Object>) response;
+                    String responseField = (String) responseMap.get("responseField" + 0);
+                    String responseField2 = (String) responseMap.get("responseField" + 20);
+                    responseAnswers.append(responseField);
+                    questionArea.append(responseField2);
                 }
+
+                Thread writerThread = new Thread(() -> {
+                    try (BufferedWriter writer = new BufferedWriter(
+                            new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_questions.csv",
+                                    true))) {
+                        writer.write(moduleTitle + "," + questionaireNumber + "," + questionaireTitle + "," +
+                                questionNumber + "," + questionText + "," +
+                                questionType + "," + responseAnswers + "," + responseIsTrues + "," + questionScore + ","
+                                + questionArea);
+                        writer.newLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                writerThread.start();
             }
-            String questionAnswer = (String) questionData.get("questionAnswer" + i);
-            String questionArea = (String) questionData.get("questionArea" + i);
-            Integer cont = (Integer) questionData.get("cont" + i);
-
-            Thread writerThread = new Thread(() -> {
-                try (BufferedWriter writer = new BufferedWriter(
-                        new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_questions.csv",
-                                true))) {
-                    writer.write(moduleTitle + "," + questionaireNumber + "," + questionaireTitle + "," +
-                            questionNumber + "," + questionText + "," +
-                            questionType + "," + questionAnswer + "," + questionScore + "," + questionArea + ","
-                            + cont);
-                    writer.newLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-
-            writerThread.start();
         }
     }
 

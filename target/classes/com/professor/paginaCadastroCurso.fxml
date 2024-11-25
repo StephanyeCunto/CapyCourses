@@ -167,7 +167,13 @@
                                     <Region HBox.hgrow="ALWAYS" />
                                     <Button onAction="#addNewModule" styleClass="modern-button" text="+ Adicionar Módulo" />
                                 </HBox>
+<<<<<<< HEAD
                             
+=======
+                            </VBox>
+                            <VBox spacing="20">
+
+>>>>>>> 6383d8e7721d520dbfcdb6a4f22a0ed18c84d2d5
                                 <VBox fx:id="modulesList" spacing="15" styleClass="modules-list">
                                     <!-- Template do módulo -->
                                     <fx:define>

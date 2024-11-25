@@ -26,8 +26,14 @@ Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos onl
 
 ### Tela de Login: Entre com estilo!
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ba69b6c8-de45-445c-8a2a-a16d03487d77" alt="Tela de Login Modo Escuro" width="48%" />
-  <img src="https://github.com/user-attachments/assets/5aecdef4-9773-4993-9920-88c6b49c7224" alt="Tela de Login Modo Claro" width="48%" />
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaLoginDark.png" alt="Tela de Login - Modo Escuro" width="48%" />
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaLoginLigth.png" alt="Tela de Login - Modo Claro" width="48%" />
+</p>
+
+### Tela de Cadastro de Curso
+<p align="center">
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCadastroCursoDark.png" alt="Tela de Cadastro Curso - Modo Escuro" width="48%" />
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCadastroCursoLigth.png" alt="Tela de Cadastro Curso - Modo Claro" width="48%" />
 </p>
 
 ---
@@ -81,6 +87,27 @@ Nada de complicação, aqui é tudo simplificado:
    ```bash
    java -cp out Main
    ```
+   
+---
+## 🎉 Próximos Passos?
+
+Estamos só no começo e já temos várias novidades a caminho!
+
+- [x] **Interface Responsiva**  
+- [ ] **Banco de Dados Relacional** (MySQL, PostgreSQL ou SQLite)
+- [ ] **Sistema de Permissões**  
+  - Perfis: Administrador, Aluno e Professor  
+  - Controle de acesso mágico
+- [ ] **Fórum de Discussão**  
+  - O lugar perfeito para perguntas e respostas!
+- [ ] **Relatórios de Progresso**  
+  - Gráficos para monitorar seu sucesso!
+- [ ] **Geração de Certificados**  
+  - Certificados com seu nome brilhando no PDF!
+- [ ] **Biblioteca de Materiais Didáticos**  
+  - Onde os materiais de apoio estarão prontos para você!
+    
+---
 
 ## 🗂️ Estrutura do Projeto
 
@@ -127,6 +154,7 @@ documents/
 ├── caso de uso Curso Online.mdj   # Descrição dos casos de uso do sistema, com foco nos fluxos do curso online
 └── diagrama de classe.mdj         # Diagrama de classe detalhando a arquitetura do sistema 
 ```
+
 ---
 
 ## 📖 O Scrum como Método de Processo
@@ -152,25 +180,36 @@ Garantimos que certas classes, como a conexão com o banco de dados, tenham apen
 Abstraímos o acesso aos dados, centralizando a lógica de persistência e facilitando a troca de bancos de dados.
 
 ---
+## 🎯 Boas Práticas
 
-## 🎉 Próximos Passos?
+Para manter a qualidade do código e tornar nossa capivara feliz, seguimos algumas boas práticas divertidas e eficientes:
 
-Estamos só no começo e já temos várias novidades a caminho!
+### 🎨 Convenções de Código
+- Utilizamos o padrão de nomenclatura camelCase (como uma capivara pulando!)
+- Classes começam com letra maiúscula 
+ - Exemplo: `LoginController`, `PaginaInicial`, `CapyCourse`
+- Métodos e variáveis começam com letra minúscula
+ - Exemplo: `validarLogin()`, `nomeUsuario`, `cursosDisponiveis`
+- Usamos nomes significativos e em português
+ - Prefira `cadastrarAluno()` em vez de `cadAluno()`
 
-- [x] **Interface Responsiva**  
-- [ ] **Banco de Dados Relacional** (MySQL, PostgreSQL ou SQLite)
-- [ ] **Sistema de Permissões**  
-  - Perfis: Administrador, Aluno e Professor  
-  - Controle de acesso mágico
-- [ ] **Fórum de Discussão**  
-  - O lugar perfeito para perguntas e respostas!
-- [ ] **Relatórios de Progresso**  
-  - Gráficos para monitorar seu sucesso!
-- [ ] **Geração de Certificados**  
-  - Certificados com seu nome brilhando no PDF!
-- [ ] **Biblioteca de Materiais Didáticos**  
-  - Onde os materiais de apoio estarão prontos para você!
-    
+### 📝 Commits
+- Commits devem ser concisos e descritivos (como uma capivara organizada!)
+- Use o prefixo: `Sprint 00 - `
+- O texto deve descrever claramente o que foi feito
+- Exemplos:
+ - `Sprint 00 - adiciona sistema de notificações`
+ - `Sprint 00 - corrige bug no login dark mode`
+ - `Sprint 00 - atualiza documentação do CapyCourses`
+
+### 📋 Padrões de Código
+- Seguimos o padrão MVC para organização das classes
+- Utilizamos o JavaFX Scene Builder para as interfaces
+- Mantemos um código limpo e bem documentado
+- Aplicamos os princípios SOLID
+
+> 💡 **Dica da Capivara**: Mantenha seus commits pequenos e focados em uma única alteração. Isso facilita o review e o controle de versão! 🦫
+
 ---
 
 ## 👩‍💻 Contribuindo
