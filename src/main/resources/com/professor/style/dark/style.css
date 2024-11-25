@@ -556,3 +556,24 @@
     -fx-background-color: linear-gradient(to right, #8BACC0, #9A8BC0);
     -fx-text-fill: white;
 }
+
+.error-label {
+    -fx-text-fill: #FF5D73;
+    -fx-font-size: 12px;
+    -fx-padding: 4 0 0 8;
+    -fx-font-weight: bold;
+}
+
+.custom-text-field:error,
+.custom-text-area:error,
+.combo-box:error {
+    -fx-border-color: #FF5D73;
+    -fx-border-width: 1.5px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 93, 115, 0.3), 4, 0, 0, 0);
+}
+
+.required-field {
+    -fx-border-color: #FF5D73;
+    -fx-background-color: rgba(255, 93, 115, 0.1);
+}
+

@@ -531,3 +531,58 @@
     -fx-background-radius: 16;
     -fx-padding: 16;
 }
+
+.error-label {
+    -fx-text-fill: #FF5D73;
+    -fx-font-size: 12px;
+    -fx-padding: 4 0 0 8;
+    -fx-font-weight: bold;
+}
+
+.error-field {
+    -fx-border-color: #FF5D73;
+    -fx-border-width: 1.5px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 93, 115, 0.2), 4, 0, 0, 0);
+}
+
+/* Estilo para os ToggleButtons das tags */
+.toggle-button.interest-button {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20;
+    -fx-border-color: #e1e8ef;
+    -fx-border-radius: 20;
+    -fx-text-fill: #2C3E50;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+    -fx-min-height: 32px;
+    -fx-alignment: center;
+}
+
+.toggle-button.interest-button:selected {
+    -fx-background-color: linear-gradient(to right, #4A90E2, #50E3C2);
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+.tags-container {
+    -fx-background-color: transparent;
+    -fx-padding: 8;
+    -fx-hgap: 8;
+    -fx-vgap: 8;
+}
+
+/* Botão de adicionar tag */
+.interest-button:not(.toggle-button) {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20;
+    -fx-border-color: #e1e8ef;
+    -fx-border-radius: 20;
+    -fx-text-fill: #2C3E50;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+    -fx-min-height: 32px;
+}

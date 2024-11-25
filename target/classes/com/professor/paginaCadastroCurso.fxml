@@ -108,45 +108,52 @@
                                 <VBox spacing="20">
                                     <VBox spacing="8">
                                         <Label styleClass="field-label" text="Título do Curso*" />
-                                        <HBox alignment="CENTER" spacing="10">
-                                            <TextField fx:id="titleCourse"
-                                                promptText="Ex: Desenvolvimento Web Completo"
-                                                styleClass="custom-text-field" HBox.hgrow="ALWAYS" />
-                                            <Label fx:id="coutTitleCourse" styleClass="char-counter"
-                                                text="0/100" />
-                                        </HBox>
+                                        <TextField fx:id="titleCourse" styleClass="custom-text-field" 
+                                                   promptText="Digite o título do curso" />
+                                        <Label fx:id="coutTitleCourse" styleClass="count-label" />
+                                        <Label fx:id="titleErrorLabel" styleClass="error-label" 
+                                               visible="false" managed="false" />
                                     </VBox>
-
+                                    
                                     <VBox spacing="8">
                                         <Label styleClass="field-label" text="Descrição do Curso*" />
-                                        <TextArea fx:id="descritionCourse" prefRowCount="4"
-                                            promptText="Descreva o conteúdo e objetivos do curso..."
-                                            styleClass="custom-text-area" />
+                                        <TextArea fx:id="descritionCourse" styleClass="custom-text-area" 
+                                                  promptText="Descreva o conteúdo do curso..." wrapText="true" />
+                                        <Label fx:id="descriptionErrorLabel" styleClass="error-label" 
+                                               visible="false" managed="false" />
                                     </VBox>
-
+                                    
                                     <HBox spacing="16">
                                         <VBox spacing="8" HBox.hgrow="ALWAYS">
                                             <Label styleClass="field-label" text="Categoria*" />
-                                            <ComboBox fx:id="categoryCourse" maxWidth="300"
-                                                promptText="Selecione uma categoria"
-                                                styleClass="combo-box" />
+                                            <ComboBox fx:id="categoryCourse" styleClass="custom-combo-box" 
+                                                      promptText="Selecione uma categoria" maxWidth="Infinity" />
+                                            <Label fx:id="categoryErrorLabel" styleClass="error-label" 
+                                                   visible="false" managed="false" />
                                         </VBox>
                                         <VBox spacing="8" HBox.hgrow="ALWAYS">
                                             <Label styleClass="field-label" text="Nível*" />
-                                            <ComboBox fx:id="levelCourse" maxWidth="300"
-                                                promptText="Selecione o nível"
-                                                styleClass="combo-box" />
+                                            <ComboBox fx:id="levelCourse" styleClass="custom-combo-box" 
+                                                      promptText="Selecione o nível" maxWidth="Infinity" />
+                                            <Label fx:id="levelErrorLabel" styleClass="error-label" 
+                                                   visible="false" managed="false" />
                                         </VBox>
                                     </HBox>
-
+                                    
                                     <VBox spacing="8">
                                         <Label styleClass="field-label" text="Tags" />
-                                        <FlowPane fx:id="interestContainer" hgap="10"
-                                            styleClass="tags-container" vgap="10">
-                                            <Button styleClass="interest-button" text="JavaScript" />
-                                            <Button styleClass="interest-button" text="Frontend" />
-                                            <Button styleClass="interest-button" text="+ Adicionar" />
+                                        <FlowPane fx:id="interestContainer" styleClass="tags-container">
+                                            <!-- Remova todos os botões estáticos -->
                                         </FlowPane>
+                                        <Label fx:id="selectedCount" styleClass="tag-count-label" />
+                                        <Label fx:id="tagsErrorLabel" styleClass="error-label" 
+                                               visible="false" managed="false" />
+                                    </VBox>
+                                    
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Duração Total (horas)*" />
+                                        <TextField fx:id="durationTotal" styleClass="custom-text-field" />
+                                        <Label fx:id="durationErrorLabel" styleClass="error-label" managed="false" visible="false" />
                                     </VBox>
                                 </VBox>
                             </VBox>
@@ -155,19 +162,59 @@
                                 <HBox alignment="CENTER_LEFT" spacing="20">
                                     <VBox spacing="5">
                                         <Label styleClass="card-title" text="Módulos do Curso" />
-                                        <Label styleClass="card-subtitle"
-                                            text="Arraste para reordenar" />
+                                        <Label styleClass="card-subtitle" text="Arraste para reordenar" />
                                     </VBox>
                                     <Region HBox.hgrow="ALWAYS" />
-                                    <Button onAction="#addNewModule" styleClass="modern-button"
-                                        text="+ Adicionar Módulo" />
+                                    <Button onAction="#addNewModule" styleClass="modern-button" text="+ Adicionar Módulo" />
                                 </HBox>
-
+                            
                                 <VBox fx:id="modulesList" spacing="15" styleClass="modules-list">
-    
+                                    <!-- Template do módulo -->
+                                    <fx:define>
+                                        <VBox fx:id="moduleTemplate" styleClass="content-card" spacing="15" visible="false" managed="false">
+                                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                                <Label styleClass="module-number" text="Módulo 1" />
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <Button styleClass="delete-button" text="Excluir" />
+                                            </HBox>
+                            
+                                            <!-- Título do Módulo -->
+                                            <VBox spacing="8">
+                                                <Label styleClass="field-label" text="Título do Módulo*" />
+                                                <TextField styleClass="custom-text-field" promptText="Digite o título do módulo" />
+                                                <Label styleClass="error-label" visible="false" managed="false" />
+                                            </VBox>
+                            
+                                            <!-- Duração do Módulo -->
+                                            <VBox spacing="8">
+                                                <Label styleClass="field-label" text="Duração (horas)*" />
+                                                <TextField styleClass="custom-text-field" promptText="Ex: 10" />
+                                                <Label styleClass="error-label" visible="false" managed="false" />
+                                            </VBox>
+                            
+                                            <!-- Detalhes do Módulo -->
+                                            <VBox spacing="8">
+                                                <Label styleClass="field-label" text="Detalhes do Módulo*" />
+                                                <TextArea styleClass="custom-text-area" promptText="Descreva o conteúdo do módulo..." 
+                                                        prefRowCount="3" wrapText="true" />
+                                                <Label styleClass="error-label" visible="false" managed="false" />
+                                            </VBox>
+                            
+                                            <!-- Container de Aulas -->
+                                            <VBox spacing="10">
+                                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                                    <Label styleClass="field-label" text="Aulas" />
+                                                    <Region HBox.hgrow="ALWAYS" />
+                                                    <Button styleClass="outline-button" text="+ Adicionar Aula" />
+                                                </HBox>
+                                                <VBox styleClass="lessons-list" spacing="10" />
+                                            </VBox>
+                                        </VBox>
+                                    </fx:define>
                                 </VBox>
-
                             </VBox>
+
+                            
                         </VBox>
 
                         <VBox spacing="20" GridPane.columnIndex="1">
