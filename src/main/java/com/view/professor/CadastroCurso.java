@@ -14,24 +14,19 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javafx.util.Duration;
+import lombok.val;
 
 import com.controller.professor.CadastroCursoController;
 import com.view.Modo;
 import com.view.elements.Calendario;
-import com.view.professor.valid.CursoValid;
+import com.view.professor.valid.*;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.FillTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.image.*;
+import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -96,17 +91,13 @@ public class CadastroCurso implements Initializable {
     @FXML
     private Rectangle background;
     @FXML
-    private Label titleErrorLabel;
+    private Label basicsTitleErrorLabel;
     @FXML
-    private Label descriptionErrorLabel;
+    private Label descritionBasicsErrorLabel;
     @FXML
-    private Label categoryErrorLabel;
+    private Label categoryCourseErrorLabel;
     @FXML
-    private Label levelErrorLabel;
-    @FXML
-    private Label tagsErrorLabel;
-    @FXML
-    private Label durationErrorLabel;
+    private Label levelCourseErrorLabel;
 
     private boolean isLightMode = true;
 
@@ -134,7 +125,11 @@ public class CadastroCurso implements Initializable {
     private int questionaireCounter = 1;
     private int currentModuleCount = 0;
 
-    private final CursoValid validator = new CursoValid();
+    private final CursoBasicsValid validatorBasic = new CursoBasicsValid();
+    private final CursoModulesValid validatorModules = new CursoModulesValid();
+    private final CursoAulasValid validatorAulas = new CursoAulasValid();
+    private final CursoQuestionarioValid validatorQuestionario = new CursoQuestionarioValid();
+    private final CursoQuestoesValid validatorQuestoes = new CursoQuestoesValid();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -188,21 +183,9 @@ public class CadastroCurso implements Initializable {
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
 
-        validator.setupInitialState(
-            titleCourse,
-            descritionCourse,
-            categoryCourse,
-            levelCourse,
-            interestContainer,
-            durationTotal,
-            titleErrorLabel,
-            descriptionErrorLabel,
-            categoryErrorLabel,
-            levelErrorLabel,
-            tagsErrorLabel,
-            durationErrorLabel,
-            selectedCount
-        );
+        validatorBasic.setupInitialStateBasics(titleCourse, descritionCourse, categoryCourse, levelCourse,
+                basicsTitleErrorLabel, descritionBasicsErrorLabel, categoryCourseErrorLabel, levelCourseErrorLabel);
+        
     }
 
     private static final String STEP_PENDING = "step-pending";
@@ -507,90 +490,68 @@ public class CadastroCurso implements Initializable {
     }
 
     private void setupInterestButtons() {
-        interestContainer.getChildren().clear();
-        selectedInterests = new HashSet<>();
-        
-        String[] defaultTags = {
-            "JavaScript", "Frontend", "Backend", "Python", "Java", 
-            "Mobile", "Web", "Database", "Cloud", "DevOps"
-        };
-        
-        for (String tag : defaultTags) {
-            Button tagButton = new Button(tag);
-            tagButton.getStyleClass().add("interest-button");
-            
-            tagButton.setOnAction(e -> {
-                if (tagButton.getStyleClass().contains("selected")) {
-                    tagButton.getStyleClass().remove("selected");
-                    selectedInterests.remove(tag);
-                    isTag--;
+        interestContainer.getChildren().forEach(node -> {
+            if (node instanceof Button) {
+                Button button = (Button) node;
+                if (button.getText().equals("+ Adicionar")) {
+                    button.setOnAction(e -> addNewInterest());
                 } else {
-                    tagButton.getStyleClass().add("selected");
-                    selectedInterests.add(tag);
-                    isTag++;
+                    button.setOnAction(e -> toggleInterest(button));
                 }
-                updateSelectedCount();
-                updateBasicInformationLabel();
-                if (validator.isValidationStarted()) {
-                    validator.validateTags();
-                }
-            });
-            
-            interestContainer.getChildren().add(tagButton);
-        }
-        
-        TextField newTagField = new TextField();
-        newTagField.setPromptText("+ Nova tag");
-        newTagField.getStyleClass().addAll("interest-button", "tag-input");
-        
-        newTagField.setOnAction(e -> {
-            String newTag = newTagField.getText().trim();
-            if (!newTag.isEmpty() && !selectedInterests.contains(newTag)) {
-                Button tagButton = new Button(newTag);
-                tagButton.getStyleClass().addAll("interest-button", "selected");
-                
-                tagButton.setOnAction(event -> {
-                    if (tagButton.getStyleClass().contains("selected")) {
-                        tagButton.getStyleClass().remove("selected");
-                        selectedInterests.remove(newTag);
-                        isTag--;
-                    } else {
-                        tagButton.getStyleClass().add("selected");
-                        selectedInterests.add(newTag);
-                        isTag++;
-                    }
-                    updateSelectedCount();
-                    updateBasicInformationLabel();
-                    if (validator.isValidationStarted()) {
-                        validator.validateTags();
-                    }
-                });
-                
-                interestContainer.getChildren().add(
-                    interestContainer.getChildren().size() - 1,
-                    tagButton
-                );
-                selectedInterests.add(newTag);
-                isTag++;
-                newTagField.clear();
-                updateSelectedCount();
-                updateBasicInformationLabel();
             }
         });
-        
-        interestContainer.getChildren().add(newTagField);
+
+        updateSelectedCount();
+    }
+
+    private void addNewInterest() {
+        TextField interestInput = new TextField();
+        interestInput.setPromptText("Digite a nova tag...");
+        interestInput.getStyleClass().add("interest-button");
+        int addButtonIndex = interestContainer.getChildren().size() - 1;
+        interestContainer.getChildren().add(addButtonIndex, interestInput);
+        interestInput.requestFocus();
+        int inputIndex = interestContainer.getChildren().indexOf(interestInput);
+        interestInput.setOnAction(e -> confirmInterestInput(interestInput, inputIndex));
+        interestInput.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) {
+                confirmInterestInput(interestInput, inputIndex);
+            }
+        });
+    }
+
+    private void confirmInterestInput(TextField interestInput, int inputIndex) {
+        String interest = interestInput.getText().trim();
+        if (!interest.isEmpty()) {
+            Button newInterestButton = new Button(interest);
+            newInterestButton.getStyleClass().add("interest-button");
+            newInterestButton.setOnAction(e -> toggleInterest(newInterestButton));
+            interestContainer.getChildren().set(inputIndex, newInterestButton);
+        } else {
+            interestContainer.getChildren().remove(interestInput);
+        }
+    }
+
+    private void toggleInterest(Button button) {
+        String interest = button.getText();
+
+        if (selectedInterests.contains(interest)) {
+            selectedInterests.remove(interest);
+            button.getStyleClass().remove("selected");
+            isTag = isTag - 1;
+        } else {
+            selectedInterests.add(interest);
+            button.getStyleClass().add("selected");
+            isTag = isTag + 1;
+        }
         updateSelectedCount();
     }
 
     private void updateSelectedCount() {
-        int count = (int) interestContainer.getChildren().stream()
-                .filter(node -> node instanceof Button)
-                .map(node -> (Button) node)
-                .filter(button -> !button.getText().equals("+ Nova tag"))
-                .filter(button -> button.getStyleClass().contains("selected"))
-                .count();
-        
-        selectedCount.setText(count + " tag" + (count != 1 ? "s" : "") + " selecionada" + (count != 1 ? "s" : ""));
+        int count = selectedInterests.size();
+        if (selectedCount != null) {
+            selectedCount.setText(count + (count == 1 ? " área selecionada" : " áreas selecionadas"));
+        }
     }
 
     private Set<String> getSelectedInterests() {
@@ -645,15 +606,18 @@ public class CadastroCurso implements Initializable {
     }
 
     public void createCourse() {
-        if (!validator.validateFields()) {
-            return;
+        boolean isBasics =validatorBasic.validateFields();
+        boolean isModule =validatorModules.validateFields();
+        boolean isAulas =validatorAulas.validateFields();
+        boolean isQuestionario =validatorQuestionario.validateFields();
+        boolean isQuestion = validatorQuestoes.validateFields();
+        if(isBasics && isModule && isAulas && isQuestionario && isQuestion){
+            new CadastroCursoController(titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
+            levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,
+            saveModulesAndContent(), dateInputPopupStart.getLocalDate(), dateInputPopupEnd.getLocalDate(),
+            durationTotal.getText(), dateEnd.isSelected(), isCertificate.isSelected(), isGradeMiniun.isSelected(),
+            ComboBoxVisibily.getValue());
         }
-        
-        new CadastroCursoController(titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
-                levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,
-                saveModulesAndContent(), dateInputPopupStart.getLocalDate(), dateInputPopupEnd.getLocalDate(),
-                durationTotal.getText(), dateEnd.isSelected(), isCertificate.isSelected(), isGradeMiniun.isSelected(),
-                ComboBoxVisibily.getValue());
     }
 
     public List<Map<String, Object>> saveModulesAndContent() {
@@ -681,7 +645,7 @@ public class CadastroCurso implements Initializable {
                     .getChildren().get(0)).getChildren().get(1);
             moduleData.put("moduleDuration", durationField.getText());
 
-            TextArea detailsField = (TextArea) ((VBox) moduleContent.getChildren().get(2))
+            TextArea detailsField = (TextArea) ((VBox) moduleContent.getChildren().get(3))
                     .getChildren().get(1);
             moduleData.put("moduleDescription", detailsField.getText());
 
@@ -724,7 +688,8 @@ public class CadastroCurso implements Initializable {
             moduleData.put("contentQuestionaire", contentQuestionaireData);
             moduleData.put("contentLesson", contentLessonData);
             modulesData.add(moduleData);
-        }
+        }    
+
         return modulesData;
     }
 
@@ -748,19 +713,19 @@ public class CadastroCurso implements Initializable {
             TextField titleField = (TextField) titleContainer.getChildren().get(1);
             lessonData.put("lessonTitle" + k, titleField.getText());
 
-            VBox videoContainer = (VBox) lessonContent.getChildren().get(1);
+            VBox videoContainer = (VBox) lessonContent.getChildren().get(2);
             TextField videoField = (TextField) videoContainer.getChildren().get(1);
             lessonData.put("lessonVideoLink" + k, videoField.getText());
 
-            VBox detailsContainer = (VBox) lessonContent.getChildren().get(2);
+            VBox detailsContainer = (VBox) lessonContent.getChildren().get(4);
             TextArea detailsArea = (TextArea) detailsContainer.getChildren().get(1);
             lessonData.put("lessonDetails" + k, detailsArea.getText());
 
-            VBox materialsContainer = (VBox) lessonContent.getChildren().get(3);
+            VBox materialsContainer = (VBox) lessonContent.getChildren().get(6);
             TextArea materialsArea = (TextArea) materialsContainer.getChildren().get(1);
             lessonData.put("lessonMaterials" + k, materialsArea.getText());
 
-            VBox durationContainer = (VBox) lessonContent.getChildren().get(4);
+            VBox durationContainer = (VBox) lessonContent.getChildren().get(8);
             TextField durationField = (TextField) durationContainer.getChildren().get(1);
             lessonData.put("lessonDuration" + k, durationField.getText());
 
@@ -890,24 +855,17 @@ public class CadastroCurso implements Initializable {
         VBox moduleCard = new VBox();
         moduleCard.getStyleClass().addAll("module-card", "fade-in", "content-card");
         moduleCard.setSpacing(15);
-        
         HBox moduleHeader = createModuleHeader(currentModuleCount);
         VBox moduleContent = createModuleContent(currentModuleCount);
         VBox lessonsList = createLessonsList();
-        
         moduleCard.getChildren().addAll(moduleHeader, moduleContent, lessonsList);
-        
-        // Configura os listeners de validação após o módulo estar construído
-        validator.setupModuleValidationListeners(moduleContent);
-        
         moduleCard.setOpacity(0);
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), moduleCard);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.play();
-        
         modulesList.getChildren().add(moduleCard);
-        validator.setValidationStarted(true);
+        validatorModules.setupInitialStateModules(modulesList);
     }
 
     private HBox createModuleHeader(int moduleNumber) {
@@ -934,72 +892,55 @@ public class CadastroCurso implements Initializable {
         VBox content = new VBox();
         content.setSpacing(15);
         content.getStyleClass().add("module-content");
-        
-        // Título do módulo
-        VBox titleContainer = new VBox(8);
-        Label titleLabel = new Label("Título do Módulo*");
+        VBox titleContainer = new VBox(5);
+        Label titleLabel = new Label("Título do Módulo *");
         titleLabel.getStyleClass().add("field-label");
+
+        HBox titleBox = new HBox(10);
         TextField titleField = new TextField();
-        titleField.setPromptText("Digite o título do módulo");
+        titleField.setPromptText(DEFAULT_MODULE_TITLE);
         titleField.getStyleClass().add("custom-text-field");
-        Label titleErrorLabel = new Label();
-        titleErrorLabel.getStyleClass().add("error-label");
-        titleErrorLabel.setVisible(false);
-        titleErrorLabel.setManaged(false);
-        titleContainer.getChildren().addAll(titleLabel, titleField, titleErrorLabel);
-        
-        // Duração
-        VBox durationContainer = new VBox(8);
-        Label durationLabel = new Label("Duração (horas)*");
-        durationLabel.getStyleClass().add("field-label");
-        TextField durationField = new TextField();
-        durationField.setPromptText("Ex: 10");
-        durationField.getStyleClass().add("custom-text-field");
-        Label durationErrorLabel = new Label();
-        durationErrorLabel.getStyleClass().add("error-label");
-        durationErrorLabel.setVisible(false);
-        durationErrorLabel.setManaged(false);
-        durationContainer.getChildren().addAll(durationLabel, durationField, durationErrorLabel);
-        
-        // Descrição
-        VBox detailsContainer = new VBox(8);
-        Label detailsLabel = new Label("Descrição do Módulo*");
-        detailsLabel.getStyleClass().add("field-label");
-        TextArea detailsField = new TextArea();
-        detailsField.setPromptText("Descreva o conteúdo deste módulo...");
-        detailsField.getStyleClass().add("custom-text-area");
-        detailsField.setPrefRowCount(3);
-        Label detailsErrorLabel = new Label();
-        detailsErrorLabel.getStyleClass().add("error-label");
-        detailsErrorLabel.setVisible(false);
-        detailsErrorLabel.setManaged(false);
-        detailsContainer.getChildren().addAll(detailsLabel, detailsField, detailsErrorLabel);
-        
-        // Container de Aulas
-        VBox lessonsContainer = new VBox(10);
-        HBox lessonsHeader = new HBox(10);
-        lessonsHeader.setAlignment(Pos.CENTER_LEFT);
-        Label lessonsLabel = new Label("Aulas");
-        lessonsLabel.getStyleClass().add("field-label");
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-        Button addLessonButton = new Button("+ Adicionar Aula");
-        addLessonButton.getStyleClass().add("outline-button");
-        
-        // Adiciona a ação ao botão
-        addLessonButton.setOnAction(e -> {
-            VBox moduleCard = (VBox) content.getParent();
-            VBox lessonsList = (VBox) moduleCard.getChildren().get(2);
-            addNewLesson(lessonsList);
+        titleField.setPrefWidth(550);
+
+        Label moduleTitleLabelError = new Label("Por favor, insira um título válido, entre 5 e 100 caracteres.");
+        moduleTitleLabelError.getStyleClass().add("error-label");
+        moduleTitleLabelError.setVisible(false);
+        moduleTitleLabelError.setManaged(false);
+
+        Label charCount = new Label("0/100");
+        charCount.getStyleClass().add("char-counter");
+        titleField.textProperty().addListener((obs, old, newText) -> {
+            int count = newText.length();
+            charCount.setText(count + "/100");
+            if (count > 100) {
+                titleField.setText(old);
+            }
         });
 
-        lessonsHeader.getChildren().addAll(lessonsLabel, spacer, addLessonButton);
-        VBox lessonsList = new VBox(10);
-        lessonsList.getStyleClass().add("lessons-list");
-        lessonsContainer.getChildren().addAll(lessonsHeader, lessonsList);
+        titleBox.getChildren().addAll(titleField, charCount);
+        titleContainer.getChildren().addAll(titleLabel, titleBox, moduleTitleLabelError);
+        HBox detailsContainer = new HBox(15);
+        detailsContainer.getChildren().addAll(
+                createNumberField("Duração (horas) *", "Ex: 2.5", true));
+        Label moduleDurationLabelError = new Label("Por favor, insira uma duração válida.");
+        moduleDurationLabelError.getStyleClass().add("error-label");
+       moduleDurationLabelError.setVisible(false);
+       moduleDurationLabelError.setManaged(false);
+  
+        VBox descriptionContainer = new VBox(5);
+        Label descLabel = new Label("Descrição do Módulo *");
+        descLabel.getStyleClass().add("field-label");
+        TextArea descArea = new TextArea();
+        descArea.setPromptText("Descreva o conteúdo e objetivos deste módulo...");
+        descArea.getStyleClass().add("custom-text-area");
+        descArea.setPrefRowCount(3);
+        descriptionContainer.getChildren().addAll(descLabel, descArea);
+        Label moduleDescripitonLabelError = new Label("Por favor, insira uma descrição válida, com pelo menos 10 caracteres");
+        moduleDescripitonLabelError.getStyleClass().add("error-label");
+        moduleDescripitonLabelError.setVisible(false);
+        moduleDescripitonLabelError.setManaged(false);
 
-        content.getChildren().addAll(titleContainer, durationContainer, detailsContainer, lessonsContainer);
-        
+        content.getChildren().addAll(titleContainer, detailsContainer,moduleDurationLabelError, descriptionContainer,moduleDescripitonLabelError);
         return content;
     }
 
@@ -1089,11 +1030,19 @@ public class CadastroCurso implements Initializable {
         TextField titleField = new TextField();
         titleField.setPromptText("Título da avaliação");
         titleField.getStyleClass().add("custom-text-field");
+        Label titleErrorLabel = new Label("Por favor, insira um título válido, entre 5 e 100 caracteres.");
+        titleErrorLabel.getStyleClass().add("error-label");
+        titleErrorLabel.setVisible(false);
+        titleErrorLabel.setManaged(false);
 
         TextArea descriptionArea = new TextArea();
         descriptionArea.setPromptText("Descrição da avaliação e instruções...");
         descriptionArea.setPrefRowCount(3);
         descriptionArea.getStyleClass().add("custom-text-area");
+        Label descriptionErrorLabel = new Label("Por favor, insira uma descrição válida, com pelo menos 10 caracteres.");
+        descriptionErrorLabel.getStyleClass().add("error-label");
+        descriptionErrorLabel.setVisible(false);
+        descriptionErrorLabel.setManaged(false);
 
         TextField scoreField = new TextField();
         scoreField.setPromptText("Pontuação máxima");
@@ -1103,6 +1052,10 @@ public class CadastroCurso implements Initializable {
                 scoreField.setText(old);
             }
         });
+        Label scoreErrorLabel = new Label("Por favor, insira uma pontuação válida.");
+        scoreErrorLabel.getStyleClass().add("error-label");
+        scoreErrorLabel.setVisible(false);
+        scoreErrorLabel.setManaged(false);
 
         VBox questionsContainer = new VBox(15);
         questionsContainer.getStyleClass().add("questions-container");
@@ -1131,16 +1084,16 @@ public class CadastroCurso implements Initializable {
 
         content.getChildren().addAll(
                 createFieldWithLabel("Título *", titleField),
+                titleErrorLabel,
                 createFieldWithLabel("Descrição *", descriptionArea),
+                descriptionErrorLabel,
                 createFieldWithLabel("Pontuação Total *", scoreField),
+                scoreErrorLabel,
                 questionsContainer,
                 contextMenu);
 
         questionaireCard.getChildren().addAll(questionaireHeader, content);
-        
-        // Adiciona a validação
-        validator.setupQuestionaireValidationListeners(questionaireCard);
-        
+
         questionaireCard.setOpacity(0);
 
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), questionaireCard);
@@ -1149,8 +1102,9 @@ public class CadastroCurso implements Initializable {
         fadeIn.play();
 
         setModulequestionaireCounter(moduleContent, moduleSpecificCounter + 1);
-
         lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, questionaireCard);
+        validatorQuestionario.setupInitialStateQuestions(lessonsList);
+
     }
 
     private int getModulequestionaireCounter(VBox moduleContent) {
@@ -1218,31 +1172,48 @@ public class CadastroCurso implements Initializable {
 
     @FXML
     private void addNewLesson(VBox lessonsList) {
-        if (lessonCounter <= 0) {
-            lessonCounter = 1;
-        }
-        
+        VBox moduleContent = (VBox) lessonsList.getParent();
+
         VBox lessonCard = new VBox();
         lessonCard.getStyleClass().addAll("lesson-card", "fade-in", "lesson");
         lessonCard.setSpacing(15);
 
-        HBox lessonHeader = createLessonHeader(lessonCounter);
-        VBox lessonContent = createLessonContent(lessonCounter);
-        
+        HBox lessonHeader = new HBox();
+        lessonHeader.setAlignment(Pos.CENTER_LEFT);
+        lessonHeader.setSpacing(10);
+        lessonHeader.getStyleClass().add("lesson-header");
+
+        int moduleSpecificCounter = getModuleLessonCounter(moduleContent);
+
+        StackPane numberContainer = new StackPane();
+        numberContainer.getStyleClass().add("lesson-number-container");
+        Label lessonNumberLabel = new Label(String.valueOf(moduleSpecificCounter));
+        lessonNumberLabel.getStyleClass().add("lesson-number");
+        numberContainer.getChildren().add(lessonNumberLabel);
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Button removeLessonButton = new Button("X");
+        removeLessonButton.getStyleClass().add("outline-button");
+        Tooltip.install(removeLessonButton, new Tooltip("Remover aula"));
+        removeLessonButton.setOnAction(e -> removeLessonWithAnimation(lessonCard));
+        lessonHeader.getChildren().addAll(numberContainer, spacer, removeLessonButton);
+
+        VBox lessonContent = createLessonContent(moduleSpecificCounter);
         lessonCard.getChildren().addAll(lessonHeader, lessonContent);
-        
-        // Configura os listeners de validação
-        validator.setupLessonValidationListeners(lessonContent);
-        
         lessonCard.setOpacity(0);
+        lessonCard.getStyleClass().add("module-header");
+
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), lessonCard);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.play();
-        
-        lessonsList.getChildren().add(lessonCard);
-        lessonCounter++;
-        validator.validationStarted = true;
+
+        moduleContent.setUserData(moduleSpecificCounter + 1);
+
+        lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, lessonCard);
+        validatorAulas.setupInitialStateLessons(lessonsList);
     }
 
     private VBox createLessonContent(int lessonNumber) {
@@ -1250,62 +1221,64 @@ public class CadastroCurso implements Initializable {
         content.setSpacing(15);
         content.getStyleClass().add("lesson-content");
 
-        // Título da Aula
-        VBox titleContainer = new VBox(8);
-        Label titleLabel = new Label("Título da Aula*");
-        titleLabel.getStyleClass().add("field-label");
         TextField titleField = new TextField();
+        titleField.setPromptText("Título da Aula");
         titleField.getStyleClass().add("custom-text-field");
-        titleField.setPromptText("Digite o título da aula");
-        Label titleError = new Label();
-        titleError.getStyleClass().add("error-label");
-        titleError.setVisible(false);
-        titleError.setManaged(false);
-        titleContainer.getChildren().addAll(titleLabel, titleField, titleError);
+        Label lessonTitleLabelError = new Label("Por favor, insira um título válido, entre 5 e 100 caracteres");
+        lessonTitleLabelError.getStyleClass().add("error-label");
+        lessonTitleLabelError.setVisible(false);
+        lessonTitleLabelError.setManaged(false);
 
-        // Link do Vídeo
-        VBox videoContainer = new VBox(8);
-        Label videoLabel = new Label("Link do Vídeo*");
-        videoLabel.getStyleClass().add("field-label");
         TextField videoField = new TextField();
+        videoField.setPromptText("Link do vídeo da aula");
         videoField.getStyleClass().add("custom-text-field");
-        videoField.setPromptText("Cole o link do vídeo");
-        Label videoError = new Label();
-        videoError.getStyleClass().add("error-label");
-        videoError.setVisible(false);
-        videoError.setManaged(false);
-        videoContainer.getChildren().addAll(videoLabel, videoField, videoError);
+        Label lessonVideoLabelError = new Label("Por favor, insira um link de vídeo válido");
+        lessonVideoLabelError.getStyleClass().add("error-label");
+        lessonVideoLabelError.setVisible(false);    
+        lessonVideoLabelError.setManaged(false);
 
-        // Descrição da Aula
-        VBox descriptionContainer = new VBox(8);
-        Label descriptionLabel = new Label("Descrição da Aula*");
-        descriptionLabel.getStyleClass().add("field-label");
-        TextArea descriptionArea = new TextArea();
-        descriptionArea.getStyleClass().add("custom-text-area");
-        descriptionArea.setPromptText("Descreva o conteúdo da aula...");
-        descriptionArea.setPrefRowCount(3);
-        descriptionArea.setWrapText(true);
-        Label descriptionError = new Label();
-        descriptionError.getStyleClass().add("error-label");
-        descriptionError.setVisible(false);
-        descriptionError.setManaged(false);
-        descriptionContainer.getChildren().addAll(descriptionLabel, descriptionArea, descriptionError);
+        TextArea detailsArea = new TextArea();
+        detailsArea.setPromptText("Detalhes e objetivos da aula...");
+        detailsArea.setPrefRowCount(3);
+        detailsArea.getStyleClass().add("custom-text-area");
+        Label lessonDetailsLabelError = new Label("Por favor, insira detalhes válidos, com no mínimo 10 caracteres");
+        lessonDetailsLabelError.getStyleClass().add("error-label");
+        lessonDetailsLabelError.setVisible(false);  
+        lessonDetailsLabelError.setManaged(false);
 
-        // Duração da Aula
-        VBox durationContainer = new VBox(8);
-        Label durationLabel = new Label("Duração (minutos)*");
-        durationLabel.getStyleClass().add("field-label");
+        TextArea materialsArea = new TextArea();
+        materialsArea.setPromptText("Links para materiais complementares...");
+        materialsArea.setPrefRowCount(2);
+        materialsArea.getStyleClass().add("custom-text-area");
+        Label lessonMaterialsLabelError = new Label("Por favor, insira um link para materiais válido");
+        lessonMaterialsLabelError.getStyleClass().add("error-label");
+        lessonMaterialsLabelError.setVisible(false);
+        lessonMaterialsLabelError.setManaged(false);
+
         TextField durationField = new TextField();
+        durationField.setPromptText("Duração (minutos)");
         durationField.getStyleClass().add("custom-text-field");
-        durationField.setPromptText("Ex: 45");
-        Label durationError = new Label();
-        durationError.getStyleClass().add("error-label");
-        durationError.setVisible(false);
-        durationError.setManaged(false);
-        durationContainer.getChildren().addAll(durationLabel, durationField, durationError);
+        durationField.textProperty().addListener((obs, old, newText) -> {
+            if (!newText.isEmpty() && !newText.matches("\\d*")) {
+                durationField.setText(old);
+            }
+        });
+        Label lessonDurationLabelError = new Label("Por favor, insira uma duração válida");
+        lessonDurationLabelError.getStyleClass().add("error-label");
+        lessonDurationLabelError.setVisible(false);
+        lessonDurationLabelError.setManaged(false);
 
-        // Adiciona todos os containers ao content
-        content.getChildren().addAll(titleContainer, videoContainer, descriptionContainer, durationContainer);
+        content.getChildren().addAll(
+                createFieldWithLabel("Título da Aula *", titleField),
+                lessonTitleLabelError,
+                createFieldWithLabel("Link do Vídeo *", videoField),
+                lessonVideoLabelError,
+                createFieldWithLabel("Detalhes da Aula", detailsArea),
+                lessonDetailsLabelError,
+                createFieldWithLabel("Materiais Complementares", materialsArea),
+                lessonMaterialsLabelError,
+                createFieldWithLabel("Duração (minutos) *", durationField),
+                lessonDurationLabelError);
 
         return content;
     }
@@ -1413,7 +1386,11 @@ public class CadastroCurso implements Initializable {
         questionText.setPromptText("Digite a pergunta da questão...");
         questionText.setPrefRowCount(3);
         questionText.getStyleClass().add("custom-text-area");
-    
+        Label questionErrorLabel = new Label("Por favor, insira uma pergunta válida, com pelo menos 10 caracteres.");
+        questionErrorLabel.getStyleClass().add("error-label");
+        questionErrorLabel.setVisible(false);
+        questionErrorLabel.setManaged(false);
+
         TextField scoreField = new TextField();
         scoreField.setPromptText("Pontos");
         scoreField.setPrefWidth(80);
@@ -1423,12 +1400,17 @@ public class CadastroCurso implements Initializable {
                 scoreField.setText(old);
             }
         });
-    
+
         HBox scoreHbox = new HBox(10);
         Label scoreLabel = new Label("Pontos:");
         scoreLabel.getStyleClass().add("field-label");
+        Label scoreErrorLabel = new Label("Por favor, insira uma pontuação válida.");
+        scoreErrorLabel.getStyleClass().add("error-label");
+        scoreErrorLabel.setVisible(false);
+        scoreErrorLabel.setManaged(false);
+
         scoreHbox.getChildren().addAll(scoreLabel, scoreField);
-        questionContent.getChildren().addAll(scoreHbox, questionText);
+        questionContent.getChildren().addAll(scoreHbox,scoreErrorLabel, questionText, questionErrorLabel);
     
         switch (type) {
             case "DISCURSIVE":
@@ -1444,6 +1426,7 @@ public class CadastroCurso implements Initializable {
         questionCard.getChildren().addAll(questionHeader, questionContent);
         questionsContainer.getChildren().add(questionCard);
     
+        validatorQuestoes.setupInitialStateQuestions(questionsContainer);
         updateQuestionNumbers(questionsContainer); // Atualiza os números após adicionar
     }
     
@@ -1508,12 +1491,16 @@ public class CadastroCurso implements Initializable {
         evaluationCriteria.getStyleClass().add("custom-text-area");
         Label evolutionCriteriaLabel = new Label("Critérios de Avaliação");
         evolutionCriteriaLabel.getStyleClass().add("field-label");
+        Label evaluationCriteriaErrorLabel = new Label("Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres.");
+        evaluationCriteriaErrorLabel.getStyleClass().add("error-label");
+        evaluationCriteriaErrorLabel.setVisible(false);
+        evaluationCriteriaErrorLabel.setManaged(false);
 
         container.getChildren().addAll(
                 expectedAnswerLabel,
                 expectedAnswer,
                 evolutionCriteriaLabel,
-                evaluationCriteria);
+                evaluationCriteria, evaluationCriteriaErrorLabel);
     }
 
     private void addSingleChoiceFields(VBox container) {
@@ -1525,11 +1512,15 @@ public class CadastroCurso implements Initializable {
         addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, toggleGroup, true));
         Label optionLabel = new Label("Opções (selecione a correta)");
         optionLabel.getStyleClass().add("field-label");
+        Label optionErrorLabel = new Label("Por favor, selecione uma opção válida.");
+        optionErrorLabel.getStyleClass().add("error-label");
+        optionErrorLabel.setVisible(false);
+        optionErrorLabel.setManaged(false);
 
         container.getChildren().addAll(
                 optionLabel,
                 optionsContainer,
-                addOptionButton);
+                addOptionButton, optionErrorLabel);
 
         addChoiceOption(optionsContainer, toggleGroup, true);
         addChoiceOption(optionsContainer, toggleGroup, true);
@@ -1544,10 +1535,16 @@ public class CadastroCurso implements Initializable {
         Label optionLabel = new Label("Opções (selecione as corretas)");
         optionLabel.getStyleClass().add("field-label");
 
+        Label optionErrorLabel = new Label("Por favor, selecione uma opção válida.");
+        optionErrorLabel.getStyleClass().add("error-label");
+        optionErrorLabel.setVisible(false);
+        optionErrorLabel.setManaged(false);
+
+
         container.getChildren().addAll(
                 optionLabel,
                 optionsContainer,
-                addOptionButton);
+                addOptionButton,optionErrorLabel);
 
         addChoiceOption(optionsContainer, null, false);
         addChoiceOption(optionsContainer, null, false);
@@ -1573,6 +1570,10 @@ public class CadastroCurso implements Initializable {
         optionText.setPromptText("Digite a opção...");
         optionText.getStyleClass().add("custom-text-field");
         HBox.setHgrow(optionText, Priority.ALWAYS);
+        Label optionErrorLabel = new Label("Por favor, insira uma opção válida, com pelo menos 1 caractere.");
+        optionErrorLabel.getStyleClass().add("error-label");
+        optionErrorLabel.setVisible(false);
+        optionErrorLabel.setManaged(false);
 
         Button removeOption = new Button("X");
         removeOption.getStyleClass().add("simple-button");
@@ -1592,7 +1593,7 @@ public class CadastroCurso implements Initializable {
         fadeIn.setToValue(1);
         fadeIn.play();
 
-        container.getChildren().add(optionBox);
+        container.getChildren().addAll(optionBox,optionErrorLabel);
     }
 
     protected void addDateInputField() {
@@ -1720,48 +1721,5 @@ public class CadastroCurso implements Initializable {
             sunIcon.setVisible(Modo.getInstance().getModo());
             moonIcon.setVisible(!Modo.getInstance().getModo());
         }
-    }
-
-    private void updateErrorDisplay(Control field, Label errorLabel, boolean isValid, String errorMessage) {
-        if (!isValid) {
-            field.getStyleClass().add("error");
-            errorLabel.setText(errorMessage);
-            errorLabel.setVisible(true);
-            errorLabel.setManaged(true);
-        } else {
-            field.getStyleClass().remove("error");
-            errorLabel.setVisible(false);
-            errorLabel.setManaged(false);
-        }
-    }
-
-    private boolean isValidVideoUrl(String url) {
-        if (url == null || url.trim().isEmpty()) {
-            return false;
-        }
-        return url.matches("^(https?://)?((www\\.)?youtube\\.com/watch\\?v=|youtu\\.be/)[a-zA-Z0-9_-]{11}$");
-    }
-
-    private HBox createLessonHeader(int lessonNumber) {
-        HBox header = new HBox();
-        header.setAlignment(Pos.CENTER_LEFT);
-        header.setSpacing(15);
-        header.getStyleClass().add("lesson-header");
-
-        StackPane numberContainer = new StackPane();
-        numberContainer.getStyleClass().add("lesson-number-container");
-        Label number = new Label(String.valueOf(lessonNumber));
-        number.getStyleClass().add("lesson-number");
-        numberContainer.getChildren().add(number);
-
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        Button removeButton = new Button("X");
-        removeButton.getStyleClass().add("outline-button");
-        removeButton.setOnAction(e -> removeLessonWithAnimation(header.getParent()));
-
-        header.getChildren().addAll(numberContainer, spacer, removeButton);
-        return header;
     }
 }

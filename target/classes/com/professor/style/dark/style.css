@@ -33,6 +33,11 @@
     -fx-background-color: transparent;
 }
 
+.custom-text-area{
+    -fx-min-height: 100px; 
+    -fx-max-height: 100px; 
+}
+
 .side-menu {
     -fx-background-color: rgba(255, 255, 255, 0.05);
     -fx-background-radius: 20 0 0 20;
@@ -541,28 +546,6 @@
     -fx-text-fill: white;
 }
 
-<<<<<<< HEAD
-.error-label {
-    -fx-text-fill: #FF5D73;
-    -fx-font-size: 12px;
-    -fx-padding: 4 0 0 8;
-    -fx-font-weight: bold;
-}
-
-.custom-text-field:error,
-.custom-text-area:error,
-.combo-box:error {
-    -fx-border-color: #FF5D73;
-    -fx-border-width: 1.5px;
-    -fx-effect: dropshadow(gaussian, rgba(255, 93, 115, 0.3), 4, 0, 0, 0);
-}
-
-.required-field {
-    -fx-border-color: #FF5D73;
-    -fx-background-color: rgba(255, 93, 115, 0.1);
-}
-
-=======
 .scroll-bar {
     -fx-background-color: transparent;
     -fx-padding: 0 2;
@@ -609,4 +592,25 @@
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
->>>>>>> 6383d8e7721d520dbfcdb6a4f22a0ed18c84d2d5
+
+.combo-box:error {
+    -fx-border-color: #FF5D73;
+    -fx-border-width: 1.5px;
+}
+
+.custom-text-field:error,
+.password-field:error {
+    -fx-border-color: #FF5D73;
+    -fx-border-width: 1.5px;
+}
+
+.error-label {
+    -fx-text-fill: #FF5D73;
+    -fx-font-size: 12px;
+    -fx-padding: 4 0 0 8;
+}
+
+.error-field {
+    fx-border-color: #FF6F61;
+    -fx-border-width: 1.5px;
+}
