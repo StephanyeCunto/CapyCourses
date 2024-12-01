@@ -1,6 +1,7 @@
 package com.view.professor.valid;
 
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.css.PseudoClass;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -34,15 +35,25 @@ public class CursoSettingsValidation {
     }
 
     private void configureDurationValidation() {
+        durationTotal.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.matches("\\d*")) {
+                durationTotal.setText(oldValue); 
+                durationTotal.positionCaret(durationTotal.getText().length());
+            }
+        });
+    
         validationSupport.registerValidator(durationTotal, false,
             Validator.createPredicateValidator(value -> {
                 if (value instanceof String) {
                     String strValue = (String) value;
-                    return !strValue.trim().isEmpty() && strValue.matches("^\\d+(\\.\\d+)?$");
+                    return !strValue.trim().isEmpty() && strValue.matches("^\\d+$");
                 }
                 return false;
             }, "Por favor, insira uma duração válida"));
     }
+    
+
+    
 
     private void configureVisibilityValidation() {
         validationSupport.registerValidator(comboBoxVisibility, false,
@@ -93,5 +104,24 @@ public class CursoSettingsValidation {
         errorLabel.setText(hasError ? message : "");
         errorLabel.setVisible(hasError);
         errorLabel.setManaged(hasError);
+    }
+
+    public boolean isDurationValid() {
+        if (durationTotal == null || durationTotal.getText() == null) {
+            return false;
+        }
+        try {
+            double duration = Double.parseDouble(durationTotal.getText().trim());
+            return duration > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    public boolean isVisibilitySelected() {
+        return comboBoxVisibility != null && 
+               comboBoxVisibility.getValue() != null && 
+               !comboBoxVisibility.getValue().trim().isEmpty() && 
+               !comboBoxVisibility.getValue().equals("null");
     }
 }

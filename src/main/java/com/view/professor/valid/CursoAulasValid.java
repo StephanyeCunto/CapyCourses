@@ -1,7 +1,6 @@
 package com.view.professor.valid;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -27,15 +26,16 @@ public class CursoAulasValid {
     private List<TextField> durationFields = new ArrayList<>();
     private List<Label> durationErrorLabels = new ArrayList<>();
 
-    public void setupInitialStateLessons(VBox lessonsList) {      
+    public void setupInitialStateLessons(VBox lessonsList) {
         loadValues(lessonsList);
-        
+
         setupValidationListeners();
     }
 
     private void loadValues(VBox lessonsList) {
         for (Node lessonNode : lessonsList.getChildren()) {
-            if (!(lessonNode instanceof VBox)) continue;
+            if (!(lessonNode instanceof VBox))
+                continue;
 
             VBox lessonCard = (VBox) lessonNode;
             VBox lessonContent = (VBox) lessonCard.getChildren().get(1);
@@ -55,9 +55,6 @@ public class CursoAulasValid {
             TextArea materialsField = (TextArea) lessonContent.getChildren().get(6)
                     .lookup(".custom-text-area");
 
-            for(int i=0; i<lessonContent.getChildren().size(); i++){
-                System.out.println("lessonContent.getChildren.get(" + i + "): " + lessonContent.getChildren().get(i));
-            }
             Label materialsErrorLabel = (Label) lessonContent.getChildren().get(7);
 
             TextField durationField = (TextField) lessonContent.getChildren().get(8)
@@ -118,8 +115,8 @@ public class CursoAulasValid {
                         Validator.createPredicateValidator(value -> {
                             if (value instanceof String) {
                                 String strValue = (String) value;
-                                return !strValue.trim().isEmpty() 
-                                    && (strValue.startsWith("http://") || strValue.startsWith("https://"));
+                                return !strValue.trim().isEmpty()
+                                        && (strValue.startsWith("http://") || strValue.startsWith("https://"));
                             }
                             return false;
                         }, "Por favor, insira um link de vídeo válido"));
@@ -175,62 +172,57 @@ public class CursoAulasValid {
 
     public boolean validateFields() {
         boolean isAllValid = true;
-        
+
         for (int i = 0; i < titleFields.size(); i++) {
             boolean isLessonValid = true;
 
             if (titleFields.get(i).getText().length() < MIN_TITLE_LENGTH) {
                 updateErrorDisplay(
-                    titleFields.get(i), 
-                    titleErrorLabels.get(i), 
-                    true,
-                    "Por favor, insira um título válido, entre 5 e 100 caracteres"
-                );
+                        titleFields.get(i),
+                        titleErrorLabels.get(i),
+                        true,
+                        "Por favor, insira um título válido, entre 5 e 100 caracteres");
                 isLessonValid = false;
             }
 
-            if (videoFields.get(i).getText() == null || 
-                videoFields.get(i).getText().isEmpty() ||
-                !videoFields.get(i).getText().matches("^https?://.*")) {
+            if (videoFields.get(i).getText() == null ||
+                    videoFields.get(i).getText().isEmpty() ||
+                    !videoFields.get(i).getText().matches("^https?://.*")) {
                 updateErrorDisplay(
-                    videoFields.get(i), 
-                    videoErrorLabels.get(i), 
-                    true, 
-                    "Por favor, insira um link de vídeo válido"
-                );
+                        videoFields.get(i),
+                        videoErrorLabels.get(i),
+                        true,
+                        "Por favor, insira um link de vídeo válido");
                 isLessonValid = false;
             }
 
-            if (detailsFields.get(i).getText().length() < MIN_DETAILS_LENGTH || 
-                detailsFields.get(i).getText().isEmpty()) {
+            if (detailsFields.get(i).getText().length() < MIN_DETAILS_LENGTH ||
+                    detailsFields.get(i).getText().isEmpty()) {
                 updateErrorDisplay(
-                    detailsFields.get(i), 
-                    detailsErrorLabels.get(i), 
-                    true,
-                    "Por favor, insira detalhes válidos, com no mínimo 10 caracteres"
-                );
+                        detailsFields.get(i),
+                        detailsErrorLabels.get(i),
+                        true,
+                        "Por favor, insira detalhes válidos, com no mínimo 10 caracteres");
                 isLessonValid = false;
             }
 
-            if (!materialsFields.get(i).getText().matches("^https?://.*")|| 
-            materialsFields.get(i).getText().isEmpty()) {
-            updateErrorDisplay(
-                materialsFields.get(i), 
-                materialsErrorLabels.get(i), 
-                true,
-                "Por favor, insira um link de vídeo válido"
-            );
-            isLessonValid = false;
-        }
-
-            if (durationFields.get(i).getText() == null || 
-                !durationFields.get(i).getText().matches("\\d+")) {
+            if (!materialsFields.get(i).getText().matches("^https?://.*") ||
+                    materialsFields.get(i).getText().isEmpty()) {
                 updateErrorDisplay(
-                    durationFields.get(i), 
-                    durationErrorLabels.get(i), 
-                    true,
-                    "Por favor, insira uma duração válida em minutos"
-                );
+                        materialsFields.get(i),
+                        materialsErrorLabels.get(i),
+                        true,
+                        "Por favor, insira um link de vídeo válido");
+                isLessonValid = false;
+            }
+
+            if (durationFields.get(i).getText() == null ||
+                    !durationFields.get(i).getText().matches("\\d+")) {
+                updateErrorDisplay(
+                        durationFields.get(i),
+                        durationErrorLabels.get(i),
+                        true,
+                        "Por favor, insira uma duração válida em minutos");
                 isLessonValid = false;
             }
 
@@ -241,4 +233,72 @@ public class CursoAulasValid {
 
         return isAllValid;
     }
-}
+
+    // Retorna o número total de elementos em cada lista
+    public int getTotalTitleFields() {
+        return titleFields.size();
+    }
+
+    public int getTotalVideoFields() {
+        return videoFields.size();
+    }
+
+    public int getTotalDetailsFields() {
+        return detailsFields.size();
+    }
+
+    public int getTotalMaterialsFields() {
+        return materialsFields.size();
+    }
+
+    public int getTotalDurationFields() {
+        return durationFields.size();
+    }
+
+    public int getValidatedTitleFields() {
+        return (int) titleFields.stream()
+                .filter(field -> field.getText().length() >= MIN_TITLE_LENGTH)
+                .count();
+    }
+
+    public int getValidatedVideoFields() {
+        return (int) videoFields.stream()
+                .filter(field -> {
+                    String text = field.getText();
+                    return text != null && !text.trim().isEmpty()
+                            && (text.startsWith("http://") || text.startsWith("https://"));
+                })
+                .count();
+    }
+
+    public int getValidatedDetailsFields() {
+        return (int) detailsFields.stream()
+                .filter(field -> field.getText().length() >= MIN_DETAILS_LENGTH)
+                .count();
+    }
+
+    public int getValidatedMaterialsFields() {
+        return (int) materialsFields.stream()
+                .filter(field -> {
+                    String text = field.getText();
+                    return text != null && !text.trim().isEmpty()
+                            && (text.startsWith("http://") || text.startsWith("https://"));
+                })
+                .count();
+    }
+
+    public int getValidatedDurationFields() {
+        return (int) durationFields.stream()
+                .filter(field -> {
+                    String text = field.getText();
+                    return text != null && text.matches("\\d+");
+                })
+                .count();
+    }
+
+   public int getModulesWithLessonsCount() {
+    return 0;
+   }
+
+}   
+

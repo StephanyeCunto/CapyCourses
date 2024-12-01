@@ -115,6 +115,8 @@ public class CadastroCurso implements Initializable {
     private boolean isImage = false;
     private int isTag = 0;
 
+    private List<Map<String, Object>> modulesData = new ArrayList<>();
+
     private int lessonCounter = 1;
     private int questionaireCounter = 1;
     private int currentModuleCount = 0;
@@ -182,42 +184,123 @@ public class CadastroCurso implements Initializable {
         validatorBasic.setupInitialStateBasics(titleCourse, descritionCourse, categoryCourse, levelCourse,
                 basicsTitleErrorLabel, descritionBasicsErrorLabel, categoryCourseErrorLabel, levelCourseErrorLabel);
 
-        validatorSettings.setupInitialState(durationTotal, ComboBoxVisibily,durationTotalErrorLabel, comboBoxVisibilityErrorLabel);
-     
+        validatorSettings.setupInitialState(durationTotal, ComboBoxVisibily, durationTotalErrorLabel,
+                comboBoxVisibilityErrorLabel);
+
     }
 
     private static final String STEP_PENDING = "step-pending";
     private static final String STEP_CURRENT = "step-current";
     private static final String STEP_COMPLETED = "step-completed";
-    private static final int MIN_MODULES = 1;
     private static final int MIN_LESSONS_PER_MODULE = 1;
 
     private void registrationProgress() {
-        // List<Map<String, Object>> modulesData = saveModulesAndLessonsData();
-        // double percentage = calculateTotalProgress(modulesData);
+        double basics= calculeBasics();
+        double settingsC = calculeSettings();
+        double module = calculeModule();
+        double lesson = calculeLesson();
 
-        // updateProgressDisplay(percentage);
-        // updateAllLabels(modulesData);
+        double totalProgress = (basics + module + lesson + settingsC);   
+        double totalProgressMedia = (totalProgress)/4;
+
+
+        updateProgressDisplay(totalProgressMedia);
+
+        updateStepLabel(basicInformation, "Informações Básicas", basics, 100);
+        updateStepLabel(settings, "Configurações", settingsC, 100);
+        updateStepLabel(modules, "Módulos", lesson, 100);
     }
 
-    private double calculateTotalProgress(List<Map<String, Object>> modulesData) {
-        int completedFields = countCompletedBaseFields();
-        int totalFields = countTotalBaseFields();
+    private double calculeBasics() {
+        int completedFields = 0;
 
-        if (modulesData.isEmpty()) {
-            totalFields += (3 * MIN_MODULES);
-            totalFields += (5 * MIN_LESSONS_PER_MODULE);
+        if(validatorBasic.isTitleValid())completedFields++;
+        if(validatorBasic.isDescriptionValid())completedFields++;
+        if(validatorBasic.isCategorySelected())completedFields++;
+        if(validatorBasic.isLevelSelected())completedFields++;
+
+        return (completedFields * 100.0) / 4;
+    }
+
+    private double calculeSettings(){
+        int completedFields = 0;
+
+        if(validatorSettings.isDurationValid())completedFields++;
+        if(validatorSettings.isVisibilitySelected())completedFields++;
+
+        return (completedFields * 100.0) / 2;
+    }
+
+    private double calculeModule(){
+        int totalTitleFields = validatorModules.getTotalTitleFields();
+        int totalDurationFields = validatorModules.getTotalDurationFields();
+        int totalDetailsFields = validatorModules.getTotalDetailsFields();
+
+        int totalValidatedTitle = validatorModules.getValidatedTitleFields();
+        int totalValidatedDuration = validatorModules.getValidatedDurationFields(); 
+        int totalValidatedDetails = validatorModules.getValidatedDetailsFields();
+
+        int totalFields = totalTitleFields + totalDurationFields + totalDetailsFields;
+        int completedFields = totalValidatedTitle + totalValidatedDuration + totalValidatedDetails;
+        if(totalFields==0){
+            totalFields = 3;        
         }
+      
+        return (completedFields * 100.0) / totalFields;
+    }
 
-        ModuleProgressData moduleProgress = countModuleProgress(modulesData);
+    private double calculeLesson(){
+        int totalTitleFields = validatorAulas.getTotalTitleFields();
+        int totalVideoFields = validatorAulas.getTotalVideoFields();
+        int totalDetailsFields = validatorAulas.getTotalDetailsFields();
+        int totalMaterialsFields = validatorAulas.getTotalMaterialsFields();
+        int totalDurationFields = validatorAulas.getTotalDurationFields();
 
-        int modulesWithoutLessons = countModulesWithoutLessons(modulesData);
-        totalFields += (5 * MIN_LESSONS_PER_MODULE * modulesWithoutLessons);
+        int totalValidatedTitle = validatorAulas.getValidatedTitleFields();
+        int totalValidatedVideo = validatorAulas.getValidatedVideoFields();
+        int totalValidatedDetails = validatorAulas.getValidatedDetailsFields();
+        int totalValidatedMaterials = validatorAulas.getValidatedMaterialsFields();
+        int totalValidatedDuration = validatorAulas.getValidatedDurationFields();
 
-        completedFields += moduleProgress.completedFields;
-        totalFields += moduleProgress.totalFields;
+        int totalFields = totalTitleFields + totalVideoFields + totalDetailsFields + totalMaterialsFields + totalDurationFields;
+        int completedFields = totalValidatedTitle + totalValidatedVideo + totalValidatedDetails + totalValidatedMaterials + totalValidatedDuration;
+        if(totalFields==0){
+            totalFields = 5;        
+        }
+        return (completedFields * 100.0) / totalFields;
+    }
 
-        return totalFields > 0 ? (completedFields * 100.0) / totalFields : 0;
+    
+    private void updateStepLabel(Label label, String text, double completed, int total) {
+        if (completed == 0) {
+            setLabelPending(label, text);
+        } else if (completed == total) {
+            setLabelCompleted(label, text);
+        } else {
+            setLabelInProgress(label, text);
+        }
+    }
+
+    private void setLabelPending(Label label, String text) {
+        label.getStyleClass().remove(STEP_CURRENT);
+        label.getStyleClass().add(STEP_PENDING);
+        label.setText(" " + text);
+        label.setStyle("-fx-text-fill: #797E8C;");
+    }
+
+    private void setLabelInProgress(Label label, String text) {
+        label.getStyleClass().remove(STEP_PENDING);
+        label.getStyleClass().add(STEP_CURRENT);
+        label.setStyle("-fx-text-fill: rgb(89, 92, 150);");
+        label.setText("→ " + text);
+    }
+
+    private void setLabelCompleted(Label label, String text) {
+        label.getStyleClass().remove(STEP_PENDING);
+        label.getStyleClass().remove(STEP_CURRENT);
+        label.getStyleClass().add(STEP_COMPLETED);
+        label.setStyle("-fx-text-fill: rgb(89, 150, 90);");
+        label.setText("✓ " + text);
     }
 
     private int countModulesWithoutLessons(List<Map<String, Object>> modulesData) {
@@ -390,37 +473,6 @@ public class CadastroCurso implements Initializable {
         return true;
     }
 
-    private void updateStepLabel(Label label, String text, int completed, int total) {
-        if (completed == 0) {
-            setLabelPending(label, text);
-        } else if (completed == total) {
-            setLabelCompleted(label, text);
-        } else {
-            setLabelInProgress(label, text);
-        }
-    }
-
-    private void setLabelPending(Label label, String text) {
-        label.getStyleClass().remove(STEP_CURRENT);
-        label.getStyleClass().add(STEP_PENDING);
-        label.setText(" " + text);
-        label.setStyle("-fx-text-fill: #797E8C;");
-    }
-
-    private void setLabelInProgress(Label label, String text) {
-        label.getStyleClass().remove(STEP_PENDING);
-        label.getStyleClass().add(STEP_CURRENT);
-        label.setStyle("-fx-text-fill: rgb(89, 92, 150);");
-        label.setText("→ " + text);
-    }
-
-    private void setLabelCompleted(Label label, String text) {
-        label.getStyleClass().remove(STEP_PENDING);
-        label.getStyleClass().remove(STEP_CURRENT);
-        label.getStyleClass().add(STEP_COMPLETED);
-        label.setStyle("-fx-text-fill: rgb(89, 150, 90);");
-        label.setText("✓ " + text);
-    }
 
     private static class ModuleProgressData {
         final int completedFields;
@@ -604,25 +656,25 @@ public class CadastroCurso implements Initializable {
     }
 
     public void createCourse() {
-        boolean isBasics =validatorBasic.validateFields();
-        boolean isModule =validatorModules.validateFields();
-        boolean isAulas =validatorAulas.validateFields();
-        boolean isQuestionario =validatorQuestionario.validateFields();
+        boolean isBasics = validatorBasic.validateFields();
+        boolean isModule = validatorModules.validateFields();
+        boolean isAulas = validatorAulas.validateFields();
+        boolean isQuestionario = validatorQuestionario.validateFields();
         boolean isQuestion = validatorQuestoes.validateFields();
         boolean isOptions = validatorOptions.validateFields();
         boolean isSettings = validatorSettings.validateFields();
 
-        if(isBasics && isModule && isAulas && isQuestionario && isQuestion && isOptions && isSettings){
+        if (isBasics && isModule && isAulas && isQuestionario && isQuestion && isOptions && isSettings) {
             new CadastroCursoController(titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
-            levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,
-            saveModulesAndContent(), dateInputPopupStart.getLocalDate(), dateInputPopupEnd.getLocalDate(),
-            durationTotal.getText(), dateEnd.isSelected(), isCertificate.isSelected(), isGradeMiniun.isSelected(),
-            ComboBoxVisibily.getValue());
+                    levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,
+                    saveModulesAndContent(), dateInputPopupStart.getLocalDate(), dateInputPopupEnd.getLocalDate(),
+                    durationTotal.getText(), dateEnd.isSelected(), isCertificate.isSelected(),
+                    isGradeMiniun.isSelected(),
+                    ComboBoxVisibily.getValue());
         }
     }
 
     public List<Map<String, Object>> saveModulesAndContent() {
-        List<Map<String, Object>> modulesData = new ArrayList<>();
         j = 0;
         k = 0;
         int cont = 0;
@@ -689,7 +741,7 @@ public class CadastroCurso implements Initializable {
             moduleData.put("contentQuestionaire", contentQuestionaireData);
             moduleData.put("contentLesson", contentLessonData);
             modulesData.add(moduleData);
-        }    
+        }
 
         return modulesData;
     }
@@ -925,9 +977,9 @@ public class CadastroCurso implements Initializable {
                 createNumberField("Duração (horas) *", "Ex: 2.5", true));
         Label moduleDurationLabelError = new Label("Por favor, insira uma duração válida.");
         moduleDurationLabelError.getStyleClass().add("error-label");
-       moduleDurationLabelError.setVisible(false);
-       moduleDurationLabelError.setManaged(false);
-  
+        moduleDurationLabelError.setVisible(false);
+        moduleDurationLabelError.setManaged(false);
+
         VBox descriptionContainer = new VBox(5);
         Label descLabel = new Label("Descrição do Módulo *");
         descLabel.getStyleClass().add("field-label");
@@ -936,12 +988,14 @@ public class CadastroCurso implements Initializable {
         descArea.getStyleClass().add("custom-text-area");
         descArea.setPrefRowCount(3);
         descriptionContainer.getChildren().addAll(descLabel, descArea);
-        Label moduleDescripitonLabelError = new Label("Por favor, insira uma descrição válida, com pelo menos 10 caracteres");
+        Label moduleDescripitonLabelError = new Label(
+                "Por favor, insira uma descrição válida, com pelo menos 10 caracteres");
         moduleDescripitonLabelError.getStyleClass().add("error-label");
         moduleDescripitonLabelError.setVisible(false);
         moduleDescripitonLabelError.setManaged(false);
 
-        content.getChildren().addAll(titleContainer, detailsContainer,moduleDurationLabelError, descriptionContainer,moduleDescripitonLabelError);
+        content.getChildren().addAll(titleContainer, detailsContainer, moduleDurationLabelError, descriptionContainer,
+                moduleDescripitonLabelError);
         return content;
     }
 
@@ -1040,7 +1094,8 @@ public class CadastroCurso implements Initializable {
         descriptionArea.setPromptText("Descrição da avaliação e instruções...");
         descriptionArea.setPrefRowCount(3);
         descriptionArea.getStyleClass().add("custom-text-area");
-        Label descriptionErrorLabel = new Label("Por favor, insira uma descrição válida, com pelo menos 10 caracteres.");
+        Label descriptionErrorLabel = new Label(
+                "Por favor, insira uma descrição válida, com pelo menos 10 caracteres.");
         descriptionErrorLabel.getStyleClass().add("error-label");
         descriptionErrorLabel.setVisible(false);
         descriptionErrorLabel.setManaged(false);
@@ -1235,7 +1290,7 @@ public class CadastroCurso implements Initializable {
         videoField.getStyleClass().add("custom-text-field");
         Label lessonVideoLabelError = new Label("Por favor, insira um link de vídeo válido");
         lessonVideoLabelError.getStyleClass().add("error-label");
-        lessonVideoLabelError.setVisible(false);    
+        lessonVideoLabelError.setVisible(false);
         lessonVideoLabelError.setManaged(false);
 
         TextArea detailsArea = new TextArea();
@@ -1244,7 +1299,7 @@ public class CadastroCurso implements Initializable {
         detailsArea.getStyleClass().add("custom-text-area");
         Label lessonDetailsLabelError = new Label("Por favor, insira detalhes válidos, com no mínimo 10 caracteres");
         lessonDetailsLabelError.getStyleClass().add("error-label");
-        lessonDetailsLabelError.setVisible(false);  
+        lessonDetailsLabelError.setVisible(false);
         lessonDetailsLabelError.setManaged(false);
 
         TextArea materialsArea = new TextArea();
@@ -1359,29 +1414,29 @@ public class CadastroCurso implements Initializable {
     private void addNewQuestion(VBox questionsContainer, String type) {
         VBox questionCard = new VBox(10);
         questionCard.getStyleClass().add("question-card");
-    
+
         HBox questionHeader = new HBox(10);
         questionHeader.setAlignment(Pos.CENTER_LEFT);
-    
+
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-    
+
         int questionNumber = questionsContainer.getChildren().size() + 1; // Número baseado no tamanho atual
-    
+
         StackPane numberContainer = new StackPane();
         numberContainer.getStyleClass().add("question-number-container");
         Label number = new Label(String.valueOf(questionNumber));
         number.getStyleClass().add("questionaire-number");
         numberContainer.getChildren().add(number);
-    
+
         Button removeButton = new Button("X");
         removeButton.getStyleClass().add("simple-button");
         removeButton.setOnAction(e -> {
             removeQuestionWithAnimation(questionCard);
         });
-    
+
         questionHeader.getChildren().addAll(numberContainer, spacer, removeButton);
-    
+
         VBox questionContent = new VBox(10);
         TextArea questionText = new TextArea();
         questionText.setPromptText("Digite a pergunta da questão...");
@@ -1411,8 +1466,8 @@ public class CadastroCurso implements Initializable {
         scoreErrorLabel.setManaged(false);
 
         scoreHbox.getChildren().addAll(scoreLabel, scoreField);
-        questionContent.getChildren().addAll(scoreHbox,scoreErrorLabel, questionText, questionErrorLabel);
-    
+        questionContent.getChildren().addAll(scoreHbox, scoreErrorLabel, questionText, questionErrorLabel);
+
         switch (type) {
             case "DISCURSIVE":
                 addDiscursiveFields(questionContent);
@@ -1426,14 +1481,14 @@ public class CadastroCurso implements Initializable {
         }
         questionCard.getChildren().addAll(questionHeader, questionContent);
         questionsContainer.getChildren().add(questionCard);
-        
+
         validatorQuestoes.setupInitialStateQuestions(questionsContainer);
         updateQuestionNumbers(questionsContainer); // Atualiza os números após adicionar
     }
-    
+
     private void removeQuestionWithAnimation(Node questionCard) {
         VBox questionsContainer = (VBox) questionCard.getParent(); // Obtém o container das questões
-    
+
         FadeTransition fadeOut = new FadeTransition(Duration.millis(300), questionCard);
         fadeOut.setFromValue(1);
         fadeOut.setToValue(0);
@@ -1443,7 +1498,7 @@ public class CadastroCurso implements Initializable {
         });
         fadeOut.play();
     }
-    
+
     private void updateQuestionNumbers(VBox questionsContainer) {
         for (int i = 0; i < questionsContainer.getChildren().size(); i++) {
             VBox questionCard = (VBox) questionsContainer.getChildren().get(i);
@@ -1453,7 +1508,6 @@ public class CadastroCurso implements Initializable {
             numberLabel.setText(String.valueOf(i + 1)); // Define o número da questão
         }
     }
-    
 
     private void removeModuleWithAnimation(Node moduleCard) {
         currentModuleCount--;
@@ -1466,7 +1520,6 @@ public class CadastroCurso implements Initializable {
         });
         fadeOut.play();
     }
-
 
     private void updateModuleNumbers() {
         for (int i = 0; i < modulesList.getChildren().size(); i++) {
@@ -1492,7 +1545,8 @@ public class CadastroCurso implements Initializable {
         evaluationCriteria.getStyleClass().add("custom-text-area");
         Label evolutionCriteriaLabel = new Label("Critérios de Avaliação");
         evolutionCriteriaLabel.getStyleClass().add("field-label");
-        Label evaluationCriteriaErrorLabel = new Label("Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres.");
+        Label evaluationCriteriaErrorLabel = new Label(
+                "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres.");
         evaluationCriteriaErrorLabel.getStyleClass().add("error-label");
         evaluationCriteriaErrorLabel.setVisible(false);
         evaluationCriteriaErrorLabel.setManaged(false);
@@ -1510,7 +1564,7 @@ public class CadastroCurso implements Initializable {
 
         Button addOptionButton = new Button("+ Adicionar Opção");
         addOptionButton.getStyleClass().add("outline-button");
-        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer,container, toggleGroup, true));
+        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, container, toggleGroup, true));
         Label optionLabel = new Label("Opções (selecione a correta)");
         optionLabel.getStyleClass().add("field-label");
         Label optionErrorLabel = new Label("Por favor, selecione uma opção válida.");
@@ -1518,15 +1572,14 @@ public class CadastroCurso implements Initializable {
         optionErrorLabel.setVisible(false);
         optionErrorLabel.setManaged(false);
 
-    
         container.getChildren().addAll(
                 optionLabel,
                 optionsContainer,
                 addOptionButton, optionErrorLabel);
-                addChoiceOption(optionsContainer,container, toggleGroup, true);
-                addChoiceOption(optionsContainer,container, toggleGroup, true);
+        addChoiceOption(optionsContainer, container, toggleGroup, true);
+        addChoiceOption(optionsContainer, container, toggleGroup, true);
 
-        validatorOptions.setupInitialStateOptions(container,true);
+        validatorOptions.setupInitialStateOptions(container, true);
 
     }
 
@@ -1535,7 +1588,7 @@ public class CadastroCurso implements Initializable {
 
         Button addOptionButton = new Button("+ Adicionar Opção");
         addOptionButton.getStyleClass().add("outline-button");
-        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer,container, null, false));
+        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, container, null, false));
         Label optionLabel = new Label("Opções (selecione as corretas)");
         optionLabel.getStyleClass().add("field-label");
 
@@ -1544,21 +1597,20 @@ public class CadastroCurso implements Initializable {
         optionErrorLabel.setVisible(false);
         optionErrorLabel.setManaged(false);
 
-
         container.getChildren().addAll(
                 optionLabel,
                 optionsContainer,
-                addOptionButton,optionErrorLabel);
+                addOptionButton, optionErrorLabel);
 
-        addChoiceOption(optionsContainer,container, null, false);
-        addChoiceOption(optionsContainer,container, null, false);
-        validatorOptions.setupInitialStateOptions(container,false);
+        addChoiceOption(optionsContainer, container, null, false);
+        addChoiceOption(optionsContainer, container, null, false);
+        validatorOptions.setupInitialStateOptions(container, false);
     }
 
     private void addChoiceOption(VBox optionsContainer, VBox container, ToggleGroup toggleGroup, boolean singleChoice) {
         HBox optionBox = new HBox(10);
         optionBox.setAlignment(Pos.CENTER_LEFT);
-    
+
         Node selectionControl;
         if (singleChoice) {
             RadioButton radio = new RadioButton();
@@ -1569,18 +1621,18 @@ public class CadastroCurso implements Initializable {
             selectionControl = new CheckBox();
             selectionControl.getStyleClass().add("custom-checkbox");
         }
-    
+
         TextField optionText = new TextField();
         optionText.setPromptText("Digite a opção...");
         optionText.getStyleClass().add("custom-text-field");
         HBox.setHgrow(optionText, Priority.ALWAYS);
-    
+
         // Create error label specifically for this option
         Label optionErrorLabel = new Label("Por favor, insira uma opção válida, com pelo menos 1 caractere.");
         optionErrorLabel.getStyleClass().add("error-label");
         optionErrorLabel.setVisible(false);
         optionErrorLabel.setManaged(false);
-    
+
         Button removeOption = new Button("X");
         removeOption.getStyleClass().add("simple-button");
         removeOption.setOnAction(e -> {
@@ -1594,31 +1646,31 @@ public class CadastroCurso implements Initializable {
             });
             fadeOut.play();
         });
-    
+
         optionBox.getChildren().addAll(selectionControl, optionText, removeOption);
-    
+
         optionBox.setOpacity(0);
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), optionBox);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.play();
-    
+
         // Find the correct insertion position
         int positionOpcion = 0;
         for (int i = 0; i < container.getChildren().size(); i++) {
             if (container.getChildren().get(i) instanceof Button) {
-                break;    
+                break;
             } else {
                 positionOpcion = i;
             }
         }
-    
+
         // Insert the option box
         container.getChildren().add(positionOpcion + 1, optionBox);
-        
+
         // Insert the error label right after the option box
         container.getChildren().add(positionOpcion + 2, optionErrorLabel);
-    
+
         validatorOptions.setupInitialStateOptions(container, false);
     }
 

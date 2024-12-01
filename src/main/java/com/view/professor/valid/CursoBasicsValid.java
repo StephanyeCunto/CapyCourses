@@ -158,4 +158,28 @@ public class CursoBasicsValid {
         }
         return isValid;
     }
+
+    public boolean isTitleValid() {
+        return titleCourse.getText() != null && 
+               titleCourse.getText().length() >= MIN_TITLE_LENGTH && 
+               titleCourse.getText().length() <= 100;
+    }
+    
+    public boolean isDescriptionValid() {
+        return descritionCourse.getText() != null && 
+               descritionCourse.getText().length() >= MIN_DESCRIPTION_LENGTH;
+    }
+    
+    public boolean isCategorySelected() {
+        return categoryCourse.getValue() != null && 
+               !categoryCourse.getValue().trim().isEmpty() && 
+               !categoryCourse.getValue().equals("null");
+    }
+    
+    public boolean isLevelSelected() {
+        return levelCourse.getValue() != null && 
+               !levelCourse.getValue().trim().isEmpty() && 
+               !levelCourse.getValue().equals("null");
+    }
+    
 }

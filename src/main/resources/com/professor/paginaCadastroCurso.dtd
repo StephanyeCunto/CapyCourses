@@ -1,0 +1,22 @@
+<!ELEMENT GridPane (columnConstraints,rowConstraints,children?,VBox*)>
+<!ATTLIST GridPane maxHeight NMTOKEN #IMPLIED>
+<!ATTLIST GridPane maxWidth NMTOKEN #IMPLIED>
+<!ATTLIST GridPane styleClass NMTOKEN #IMPLIED>
+<!ATTLIST GridPane hgap NMTOKEN #IMPLIED>
+<!ATTLIST GridPane vgap NMTOKEN #IMPLIED>
+<!ELEMENT columnConstraints (ColumnConstraints+)>
+<!ELEMENT ColumnConstraints EMPTY>
+<!ATTLIST ColumnConstraints hgrow NMTOKEN #IMPLIED>
+<!ATTLIST ColumnConstraints minWidth NMTOKEN #IMPLIED>
+<!ATTLIST ColumnConstraints prefWidth NMTOKEN #IMPLIED>
+<!ATTLIST ColumnConstraints percentWidth NMTOKEN #IMPLIED>
+<!ELEMENT rowConstraints (RowConstraints)>
+<!ELEMENT RowConstraints EMPTY>
+<!ATTLIST RowConstraints minHeight NMTOKEN #IMPLIED>
+<!ATTLIST RowConstraints vgrow NMTOKEN #IMPLIED>
+<!ELEMENT children (VBox+,ScrollPane?,HBox?)>
+<!ELEMENT VBox (#PCDATA|children|Label|ProgressBar|VBox|HBox|GridPane|TextArea|ComboBox|FlowPane|ImageView|Button|TextField|CheckBox)*>
+<!ATTLIST VBox spacing (10|15|20|25|30|5|8) #REQUIRED><!ATTLIST VBox styleClass NMTOKEN #IMPLIED><!ATTLIST VBox GridPane.columnIndex NMTOKEN #IMPLIED><!ATTLIST VBox HBox.hgrow NMTOKEN #IMPLIED><!ELEMENT HBox(#PCDATA|Button|StackPane|Label|TextField|VBox|Region)*><!ATTLIST HBox alignment NMTOKEN #IMPLIED><!ATTLIST HBox spacing NMTOKEN #IMPLIED><!ATTLIST HBox styleClass NMTOKEN #IMPLIED><!ATTLIST HBox HBox.hgrow NMTOKEN #IMPLIED><!ELEMENT Button (padding?)><!ATTLIST Button styleClass NMTOKEN #REQUIRED><!ATTLIST Button text CDATA #REQUIRED><!ATTLIST Button onAction CDATA #IMPLIED><!ATTLIST Button maxWidth NMTOKEN #IMPLIED><!ELEMENT Label EMPTY><!ATTLIST Label styleClass (card-subtitle|card-title|char-counter|error-label|field-label|progress-text|required-fields|section-title|tip-text) #IMPLIED><!ATTLIST Label text CDATA #IMPLIED><!ATTLIST Label wrapText NMTOKEN #IMPLIED><!ATTLIST Label visible NMTOKEN #IMPLIED><!ATTLIST Label managed NMTOKEN #IMPLIED><!ELEMENT ProgressBar EMPTY><!ATTLIST ProgressBar styleClass NMTOKEN #REQUIRED><!ELEMENT ScrollPane (content)><!ATTLIST ScrollPane fitToWidth NMTOKEN #REQUIRED><!ATTLIST ScrollPane styleClass NMTOKEN #REQUIRED><!ATTLIST ScrollPane GridPane.columnIndex NMTOKEN #REQUIRED><!ELEMENT content (VBox)><!ELEMENT StackPane (Rectangle?,StackPane?,ToggleButton?,Circle?,ImageView*)><!ATTLIST StackPane alignment NMTOKEN #IMPLIED><!ATTLIST StackPane styleClass NMTOKEN #REQUIRED><!ELEMENT Rectangle EMPTY><!ATTLIST Rectangle width NMTOKEN #REQUIRED><!ATTLIST Rectangle height NMTOKEN #REQUIRED><!ATTLIST Rectangle styleClass NMTOKEN #REQUIRED><!ATTLIST Rectangle arcWidth NMTOKEN #REQUIRED><!ATTLIST Rectangle arcHeight NMTOKEN #REQUIRED><!ELEMENT Circle EMPTY><!ATTLIST Circle radius NMTOKEN #REQUIRED><!ATTLIST Circle styleClass NMTOKEN #REQUIRED><!ELEMENT ImageView EMPTY><!ATTLIST ImageView fitWidth NMTOKEN #REQUIRED><!ATTLIST ImageView fitHeight NMTOKEN #REQUIRED><!ATTLIST ImageView visible NMTOKEN #IMPLIED><!ATTLIST ImageView styleClass NMTOKEN #IMPLIED><!ELEMENT ToggleButton EMPTY><!ATTLIST ToggleButton mnemonicParsing NMTOKEN #REQUIRED><!ATTLIST ToggleButton styleClass NMTOKEN #REQUIRED><!ELEMENT TextField EMPTY><!ATTLIST TextField promptText CDATA #REQUIRED><!ATTLIST TextField styleClass NMTOKEN #REQUIRED><!ATTLIST TextField HBox.hgrow NMTOKEN #IMPLIED><!ELEMENT TextArea EMPTY><!ATTLIST TextArea promptText CDATA #REQUIRED><!ATTLIST TextArea styleClass NMTOKEN #REQUIRED><!ELEMENT ComboBox EMPTY><!ATTLIST ComboBox maxWidth NMTOKEN #REQUIRED><!ATTLIST ComboBox promptText CDATA #REQUIRED><!ATTLIST ComboBox styleClass NMTOKEN #REQUIRED><!ELEMENT FlowPane (Button+)><!ATTLIST FlowPane hgap NMTOKEN #REQUIRED><!ATTLIST FlowPane styleClass NMTOKEN #REQUIRED><!ATTLIST FlowPane vgap NMTOKEN #REQUIRED><!ELEMENT Region EMPTY><!ATTLIST Region HBox.hgrow NMTOKEN #REQUIRED><!ELEMENT CheckBox EMPTY><!ATTLIST CheckBox styleClass NMTOKEN #REQUIRED><!ATTLIST CheckBox text CDATA #REQUIRED><!ELEMENT padding (Insets)>
+<!ELEMENT Insets EMPTY>
+<!ATTLIST Insets bottom NMTOKEN #REQUIRED>
+<!ATTLIST Insets top NMTOKEN #REQUIRED>

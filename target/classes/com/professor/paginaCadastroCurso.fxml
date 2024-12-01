@@ -22,13 +22,12 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.layout.StackPane?>
 
-<GridPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0"
-    minWidth="800.0" styleClass="main-container"
-    xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1"
+<GridPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="800" styleClass="main-container"
+    xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.view.professor.CadastroCurso">
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER"  minWidth= "250" maxWidth="250"/>
-        <ColumnConstraints hgrow="ALWAYS" minWidth="400.0"/>
+        <ColumnConstraints hgrow="NEVER" minWidth="250" prefWidth="250" />
+        <ColumnConstraints hgrow="ALWAYS"/>
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="600.0" vgrow="ALWAYS" />
@@ -94,8 +93,8 @@
 
                     <GridPane hgap="30" vgap="25">
                         <columnConstraints>
-                            <ColumnConstraints percentWidth="70" />
-                            <ColumnConstraints percentWidth="30" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="550" prefWidth="1250" maxWidth="1250"/>
+                            <ColumnConstraints hgrow="NEVER" minWidth="350" prefWidth="350" maxWidth="350"/>
                         </columnConstraints>
 
                         <VBox spacing="25" GridPane.columnIndex="0">

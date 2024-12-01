@@ -24,15 +24,16 @@ public class CursoModulesValid {
     private List<TextArea> detailsFields = new ArrayList<>();
     private List<Label> detailsErrorLabels = new ArrayList<>();
 
-    public void setupInitialStateModules(VBox modulesList) {        
+    public void setupInitialStateModules(VBox modulesList) {
         loadValues(modulesList);
-        
+
         setupValidationListeners();
     }
-    
+
     private void loadValues(VBox modulesList) {
         for (Node moduleNode : modulesList.getChildren()) {
-            if (!(moduleNode instanceof VBox)) continue;
+            if (!(moduleNode instanceof VBox))
+                continue;
 
             VBox moduleCard = (VBox) moduleNode;
             VBox moduleContent = (VBox) moduleCard.getChildren().get(1);
@@ -135,39 +136,36 @@ public class CursoModulesValid {
 
     public boolean validateFields() {
         boolean isAllValid = true;
-        
+
         for (int i = 0; i < titleFields.size(); i++) {
             boolean isModuleValid = true;
 
             if (titleFields.get(i).getText().length() < MIN_TITLE_LENGTH) {
                 updateErrorDisplay(
-                    titleFields.get(i), 
-                    titleErrorLabels.get(i), 
-                    true,
-                    "Por favor, insira um título válido, entre 5 e 100 caracteres"
-                );
+                        titleFields.get(i),
+                        titleErrorLabels.get(i),
+                        true,
+                        "Por favor, insira um título válido, entre 5 e 100 caracteres");
                 isModuleValid = false;
             }
 
-            if (durationFields.get(i).getText() == null || 
-                durationFields.get(i).getText().isEmpty()) {
+            if (durationFields.get(i).getText() == null ||
+                    durationFields.get(i).getText().isEmpty()) {
                 updateErrorDisplay(
-                    durationFields.get(i), 
-                    durationErrorLabels.get(i), 
-                    true, 
-                    "Por favor, insira uma duração válida"
-                );
+                        durationFields.get(i),
+                        durationErrorLabels.get(i),
+                        true,
+                        "Por favor, insira uma duração válida");
                 isModuleValid = false;
             }
 
-            if (detailsFields.get(i).getText().length() < MIN_DETAILS_LENGTH || 
-                detailsFields.get(i).getText().isEmpty()) {
+            if (detailsFields.get(i).getText().length() < MIN_DETAILS_LENGTH ||
+                    detailsFields.get(i).getText().isEmpty()) {
                 updateErrorDisplay(
-                    detailsFields.get(i), 
-                    detailsErrorLabels.get(i), 
-                    true,
-                    "Por favor, insira uma descrição válida, no mínimo 10 caracteres"
-                );
+                        detailsFields.get(i),
+                        detailsErrorLabels.get(i),
+                        true,
+                        "Por favor, insira uma descrição válida, no mínimo 10 caracteres");
                 isModuleValid = false;
             }
 
@@ -178,4 +176,35 @@ public class CursoModulesValid {
 
         return isAllValid;
     }
+
+    public int getTotalTitleFields() {
+        return titleFields.size();
+    }
+
+    public int getTotalDurationFields() {
+        return durationFields.size();
+    }
+
+    public int getTotalDetailsFields() {
+        return detailsFields.size();
+    }
+
+    public int getValidatedTitleFields() {
+        return (int) titleFields.stream()
+                .filter(field -> field.getText().length() >= MIN_TITLE_LENGTH)
+                .count();
+    }
+
+    public int getValidatedDurationFields() {
+        return (int) durationFields.stream()
+                .filter(field -> field.getText() != null && !field.getText().trim().isEmpty())
+                .count();
+    }
+
+    public int getValidatedDetailsFields() {
+        return (int) detailsFields.stream()
+                .filter(field -> field.getText().length() >= MIN_DETAILS_LENGTH)
+                .count();
+    }
+
 }
