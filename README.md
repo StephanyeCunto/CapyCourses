@@ -6,7 +6,7 @@ Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos onl
 ![Java](https://img.shields.io/badge/Java-17%2B-brightgreen)
 ![JavaFX](https://img.shields.io/badge/JavaFX-19%2B-blue)
 ![MIT](https://img.shields.io/badge/License-MIT-green)
-
+<a href="https://wakatime.com/badge/github/StephanyeCunto/CapyCourses"><img src="https://wakatime.com/badge/github/StephanyeCunto/CapyCourses.svg" alt="wakatime"></a>
 ---
 
 ## 🌟 Principais Funcionalidades
