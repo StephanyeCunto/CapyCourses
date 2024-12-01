@@ -198,6 +198,7 @@
                                             text="Duração Total (horas)*" />
                                         <TextField fx:id="durationTotal" promptText="Ex: 40"
                                             styleClass="custom-text-field" />
+                                            <Label fx:id="durationTotalErrorLabel" visible="false" styleClass="error-label" managed="false"/>
                                     </VBox>
 
                                     <VBox fx:id="date" spacing="8">
@@ -221,6 +222,7 @@
                                         <Label styleClass="field-label" text="Visibilidade" />
                                         <ComboBox fx:id="ComboBoxVisibily" maxWidth="Infinity"
                                             promptText="Selecione" styleClass="custom-combo-box" />
+                                            <Label fx:id="comboBoxVisibilityErrorLabel" visible="false" styleClass="error-label" managed="false"/>
                                     </VBox>
                                 </VBox>
                             </VBox>

@@ -1,20 +1,11 @@
 package com.view.professor;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import javafx.util.Duration;
-import lombok.val;
 
 import com.controller.professor.CadastroCursoController;
 import com.view.Modo;
@@ -22,8 +13,7 @@ import com.view.elements.Calendario;
 import com.view.professor.valid.*;
 
 import javafx.animation.*;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
@@ -98,6 +88,10 @@ public class CadastroCurso implements Initializable {
     private Label categoryCourseErrorLabel;
     @FXML
     private Label levelCourseErrorLabel;
+    @FXML
+    Label durationTotalErrorLabel;
+    @FXML
+    Label comboBoxVisibilityErrorLabel;
 
     private boolean isLightMode = true;
 
@@ -130,6 +124,8 @@ public class CadastroCurso implements Initializable {
     private final CursoAulasValid validatorAulas = new CursoAulasValid();
     private final CursoQuestionarioValid validatorQuestionario = new CursoQuestionarioValid();
     private final CursoQuestoesValid validatorQuestoes = new CursoQuestoesValid();
+    private final CursoOptionsValid validatorOptions = new CursoOptionsValid();
+    private final CursoSettingsValidation validatorSettings = new CursoSettingsValidation();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -185,7 +181,9 @@ public class CadastroCurso implements Initializable {
 
         validatorBasic.setupInitialStateBasics(titleCourse, descritionCourse, categoryCourse, levelCourse,
                 basicsTitleErrorLabel, descritionBasicsErrorLabel, categoryCourseErrorLabel, levelCourseErrorLabel);
-        
+
+        validatorSettings.setupInitialState(durationTotal, ComboBoxVisibily,durationTotalErrorLabel, comboBoxVisibilityErrorLabel);
+     
     }
 
     private static final String STEP_PENDING = "step-pending";
@@ -611,7 +609,10 @@ public class CadastroCurso implements Initializable {
         boolean isAulas =validatorAulas.validateFields();
         boolean isQuestionario =validatorQuestionario.validateFields();
         boolean isQuestion = validatorQuestoes.validateFields();
-        if(isBasics && isModule && isAulas && isQuestionario && isQuestion){
+        boolean isOptions = validatorOptions.validateFields();
+        boolean isSettings = validatorSettings.validateFields();
+
+        if(isBasics && isModule && isAulas && isQuestionario && isQuestion && isOptions && isSettings){
             new CadastroCursoController(titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
             levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,
             saveModulesAndContent(), dateInputPopupStart.getLocalDate(), dateInputPopupEnd.getLocalDate(),
@@ -1425,7 +1426,7 @@ public class CadastroCurso implements Initializable {
         }
         questionCard.getChildren().addAll(questionHeader, questionContent);
         questionsContainer.getChildren().add(questionCard);
-    
+        
         validatorQuestoes.setupInitialStateQuestions(questionsContainer);
         updateQuestionNumbers(questionsContainer); // Atualiza os números após adicionar
     }
@@ -1509,7 +1510,7 @@ public class CadastroCurso implements Initializable {
 
         Button addOptionButton = new Button("+ Adicionar Opção");
         addOptionButton.getStyleClass().add("outline-button");
-        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, toggleGroup, true));
+        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer,container, toggleGroup, true));
         Label optionLabel = new Label("Opções (selecione a correta)");
         optionLabel.getStyleClass().add("field-label");
         Label optionErrorLabel = new Label("Por favor, selecione uma opção válida.");
@@ -1517,13 +1518,16 @@ public class CadastroCurso implements Initializable {
         optionErrorLabel.setVisible(false);
         optionErrorLabel.setManaged(false);
 
+    
         container.getChildren().addAll(
                 optionLabel,
                 optionsContainer,
                 addOptionButton, optionErrorLabel);
+                addChoiceOption(optionsContainer,container, toggleGroup, true);
+                addChoiceOption(optionsContainer,container, toggleGroup, true);
 
-        addChoiceOption(optionsContainer, toggleGroup, true);
-        addChoiceOption(optionsContainer, toggleGroup, true);
+        validatorOptions.setupInitialStateOptions(container,true);
+
     }
 
     private void addMultipleChoiceFields(VBox container) {
@@ -1531,7 +1535,7 @@ public class CadastroCurso implements Initializable {
 
         Button addOptionButton = new Button("+ Adicionar Opção");
         addOptionButton.getStyleClass().add("outline-button");
-        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, null, false));
+        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer,container, null, false));
         Label optionLabel = new Label("Opções (selecione as corretas)");
         optionLabel.getStyleClass().add("field-label");
 
@@ -1546,54 +1550,76 @@ public class CadastroCurso implements Initializable {
                 optionsContainer,
                 addOptionButton,optionErrorLabel);
 
-        addChoiceOption(optionsContainer, null, false);
-        addChoiceOption(optionsContainer, null, false);
+        addChoiceOption(optionsContainer,container, null, false);
+        addChoiceOption(optionsContainer,container, null, false);
+        validatorOptions.setupInitialStateOptions(container,false);
     }
 
-    private void addChoiceOption(VBox container, ToggleGroup toggleGroup, boolean singleChoice) {
+    private void addChoiceOption(VBox optionsContainer, VBox container, ToggleGroup toggleGroup, boolean singleChoice) {
         HBox optionBox = new HBox(10);
         optionBox.setAlignment(Pos.CENTER_LEFT);
-
+    
         Node selectionControl;
         if (singleChoice) {
             RadioButton radio = new RadioButton();
             radio.setToggleGroup(toggleGroup);
             selectionControl = radio;
             selectionControl.getStyleClass().add("radio-button");
-
         } else {
             selectionControl = new CheckBox();
             selectionControl.getStyleClass().add("custom-checkbox");
         }
-
+    
         TextField optionText = new TextField();
         optionText.setPromptText("Digite a opção...");
         optionText.getStyleClass().add("custom-text-field");
         HBox.setHgrow(optionText, Priority.ALWAYS);
+    
+        // Create error label specifically for this option
         Label optionErrorLabel = new Label("Por favor, insira uma opção válida, com pelo menos 1 caractere.");
         optionErrorLabel.getStyleClass().add("error-label");
         optionErrorLabel.setVisible(false);
         optionErrorLabel.setManaged(false);
-
+    
         Button removeOption = new Button("X");
         removeOption.getStyleClass().add("simple-button");
         removeOption.setOnAction(e -> {
+            // Remove both the option box and its corresponding error label
             FadeTransition fadeOut = new FadeTransition(Duration.millis(300), optionBox);
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
-            fadeOut.setOnFinished(event -> container.getChildren().remove(optionBox));
+            fadeOut.setOnFinished(event -> {
+                container.getChildren().removeAll(optionBox, optionErrorLabel);
+                validatorOptions.setupInitialStateOptions(container, singleChoice);
+            });
             fadeOut.play();
         });
-
+    
         optionBox.getChildren().addAll(selectionControl, optionText, removeOption);
-
+    
         optionBox.setOpacity(0);
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), optionBox);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.play();
-
-        container.getChildren().addAll(optionBox,optionErrorLabel);
+    
+        // Find the correct insertion position
+        int positionOpcion = 0;
+        for (int i = 0; i < container.getChildren().size(); i++) {
+            if (container.getChildren().get(i) instanceof Button) {
+                break;    
+            } else {
+                positionOpcion = i;
+            }
+        }
+    
+        // Insert the option box
+        container.getChildren().add(positionOpcion + 1, optionBox);
+        
+        // Insert the error label right after the option box
+        container.getChildren().add(positionOpcion + 2, optionErrorLabel);
+    
+        validatorOptions.setupInitialStateOptions(container, false);
     }
 
     protected void addDateInputField() {

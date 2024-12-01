@@ -16,7 +16,6 @@ public class CursoAulasValid {
     private static final int MIN_DETAILS_LENGTH = 10;
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
-    // Listas para armazenar referências de campos para cada aula
     private List<TextField> titleFields = new ArrayList<>();
     private List<Label> titleErrorLabels = new ArrayList<>();
     private List<TextField> videoFields = new ArrayList<>();
@@ -28,25 +27,10 @@ public class CursoAulasValid {
     private List<TextField> durationFields = new ArrayList<>();
     private List<Label> durationErrorLabels = new ArrayList<>();
 
-    public void setupInitialStateLessons(VBox lessonsList) {
-        clearFieldLists();
-        
+    public void setupInitialStateLessons(VBox lessonsList) {      
         loadValues(lessonsList);
         
         setupValidationListeners();
-    }
-
-    private void clearFieldLists() {
-        titleFields.clear();
-        titleErrorLabels.clear();
-        videoFields.clear();
-        videoErrorLabels.clear();
-        detailsFields.clear();
-        detailsErrorLabels.clear();
-        materialsFields.clear();
-        materialsErrorLabels.clear();
-        durationFields.clear();
-        durationErrorLabels.clear();
     }
 
     private void loadValues(VBox lessonsList) {

@@ -24,23 +24,12 @@ public class CursoModulesValid {
     private List<TextArea> detailsFields = new ArrayList<>();
     private List<Label> detailsErrorLabels = new ArrayList<>();
 
-    public void setupInitialStateModules(VBox modulesList) {
-        clearFieldLists();
-        
+    public void setupInitialStateModules(VBox modulesList) {        
         loadValues(modulesList);
         
         setupValidationListeners();
     }
-
-    private void clearFieldLists() {
-        titleFields.clear();
-        titleErrorLabels.clear();
-        durationFields.clear();
-        durationErrorLabels.clear();
-        detailsFields.clear();
-        detailsErrorLabels.clear();
-    }
-
+    
     private void loadValues(VBox modulesList) {
         for (Node moduleNode : modulesList.getChildren()) {
             if (!(moduleNode instanceof VBox)) continue;

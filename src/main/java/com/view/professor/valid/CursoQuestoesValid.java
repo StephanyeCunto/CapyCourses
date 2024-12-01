@@ -25,25 +25,13 @@ public class CursoQuestoesValid {
     private List<TextArea> evaluationCriteriaFields = new ArrayList<>();
 
     public void setupInitialStateQuestions(VBox questionsContainer) {
-        clearFieldLists();
         loadValues(questionsContainer);
         setupValidationListeners();
-    }
-
-    private void clearFieldLists() {
-        questionFields.clear();
-        questionErrorLabels.clear();
-        scoreFields.clear();
-        scoreErrorLabels.clear();
-        evaluationCriteriaErrorLabels.clear();
-        evaluationCriteriaFields.clear();
     }
 
     private void loadValues(VBox questionsContainer) {
         for (Node questionNode : questionsContainer.getChildren()) {
             if (!(questionNode instanceof VBox)) continue;
-
-
             VBox questionCard = (VBox) questionNode;
             VBox questionContent = (VBox) questionCard.getChildren().get(1);
   
@@ -59,7 +47,7 @@ public class CursoQuestoesValid {
             scoreFields.add(scoreField);
             scoreErrorLabels.add(scoreErrorLabel);
 
-            if(!((Label)questionContent.getChildren().get(4)).getText().equals("Opções (selecione a correta)") && !((Label)questionContent.getChildren().get(4)).getText().equals("Opção (selecione a correta)") ){
+            if(questionContent.getChildren().get(7) instanceof TextArea){
                 TextArea evaluationCriteria = (TextArea) questionContent.getChildren().get(7);
                 Label evaluationCriteriaError = (Label) questionContent.getChildren().get(8);
                 evaluationCriteriaFields.add(evaluationCriteria);
@@ -135,86 +123,6 @@ public class CursoQuestoesValid {
                         }, "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres"));
             });
         }
-    }
-
-    private boolean validateOptionsForContainer(VBox optionsContainer, Label optionErrorLabel) {
-        System.out.println("optionsContainer.getChildren().size() = "+optionsContainer.getChildren().size());
-        for(int i=0; i<optionsContainer.getChildren().size(); i++){
-            System.out.println("optionsContainer.getChildren().get("+i+") = "+optionsContainer.getChildren().get(i));
-        }
-        if (optionsContainer.getChildren().size() < 4) { 
-            updateErrorDisplay(
-                null, 
-                optionErrorLabel, 
-                true,
-                "Por favor, adicione pelo menos duas opções"
-            );
-            return false;
-        }
-
-        boolean hasSelectedOption = false;
-        boolean allOptionsValid = true;
-    
-        for (int i = 0; i < optionsContainer.getChildren().size(); i += 2) {
-            Node optionNode = optionsContainer.getChildren().get(i);
-            Node errorNode = optionsContainer.getChildren().get(i + 1);
-            
-            if (optionNode instanceof HBox) {
-                HBox optionHBox = (HBox) optionNode;
-                Node selectionControl = optionHBox.getChildren().get(0);
-                TextField optionTextField = (TextField) optionHBox.getChildren().get(1);
-    
-                if (selectionControl instanceof RadioButton && ((RadioButton) selectionControl).isSelected()) {
-                    hasSelectedOption = true;
-                } else if (selectionControl instanceof CheckBox && ((CheckBox) selectionControl).isSelected()) {
-                    hasSelectedOption = true;
-                }
-    
-                if (optionTextField.getText().trim().length() < 5) {
-                    optionTextField.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, true);
-                    if (errorNode instanceof Label) {
-                        ((Label) errorNode).setText("Opções devem ter pelo menos 5 caracteres");
-                        ((Label) errorNode).setVisible(true);
-                    }
-                    allOptionsValid = false;
-                } else {
-                    optionTextField.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, false);
-                    if (errorNode instanceof Label) {
-                        ((Label) errorNode).setVisible(false);
-                    }
-                }
-            }
-        }
-
-        if (!hasSelectedOption) {
-            updateErrorDisplay(
-                null, 
-                optionErrorLabel, 
-                true,
-                "Selecione pelo menos uma opção correta"
-            );
-            return false;
-        }
-    
-        if (!allOptionsValid) {
-            updateErrorDisplay(
-                null, 
-                optionErrorLabel, 
-                true,
-                "Corrija as opções inválidas"
-            );
-            return false;
-        }
-
-        updateErrorDisplay(
-            null, 
-            optionErrorLabel, 
-            false, 
-            null
-        );
-    
-
-        return true;
     }
 
 
