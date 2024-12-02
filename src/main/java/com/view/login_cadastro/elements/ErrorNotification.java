@@ -4,8 +4,7 @@ import javafx.animation.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -39,6 +38,27 @@ public class ErrorNotification {
         setupAnimations();
     }
 
+    public ErrorNotification(GridPane parent, String error) {
+        errorContainer = new StackPane();
+        errorContainer.setPickOnBounds(false);
+        errorContainer.setMouseTransparent(true);
+        errorContainer.setTranslateY(50);
+        errorContainer.setStyle("-fx-border-radius: 8px;");
+
+        errorBox = createErrorBox(error);
+        
+        errorContainer.getChildren().add(errorBox);
+        errorBox.setTranslateY(0);
+        if (parent != null) {
+            parent.add(errorContainer, 0, 0, parent.getColumnCount(), 1);
+            GridPane.setHalignment(errorContainer, javafx.geometry.HPos.CENTER);
+            GridPane.setValignment(errorContainer, javafx.geometry.VPos.TOP);
+            GridPane.setMargin(errorContainer, new javafx.geometry.Insets(-800, 0, 0, 0));
+        }
+
+        setupAnimations();
+    }
+
     private HBox createErrorBox(String error) {
         HBox box = new HBox();
         box.setAlignment(Pos.CENTER);
@@ -53,7 +73,7 @@ public class ErrorNotification {
             -fx-padding: 12px;
             -fx-min-height: 45px;
             -fx-max-height: 45px;
-            -fx-max-width: 280px;
+            -fx-max-width: 350px;
             """);
 
         Label errorSymbol = new Label("✕");

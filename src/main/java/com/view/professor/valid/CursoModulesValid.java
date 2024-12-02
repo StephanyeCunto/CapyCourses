@@ -8,9 +8,10 @@ import org.controlsfx.validation.Validator;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.css.PseudoClass;
+
+import com.view.login_cadastro.elements.ErrorNotification;
 
 public class CursoModulesValid {
     private static final int MIN_TITLE_LENGTH = 5;
@@ -23,6 +24,13 @@ public class CursoModulesValid {
     private List<Label> durationErrorLabels = new ArrayList<>();
     private List<TextArea> detailsFields = new ArrayList<>();
     private List<Label> detailsErrorLabels = new ArrayList<>();
+    private VBox lessonList;
+    private VBox moduleList;
+    private GridPane parentContainer;
+
+    public void setParentContainer(GridPane parentContainer) {
+        this.parentContainer = parentContainer;
+    }
 
     public void setupInitialStateModules(VBox modulesList) {
         loadValues(modulesList);
@@ -31,11 +39,16 @@ public class CursoModulesValid {
     }
 
     private void loadValues(VBox modulesList) {
+        moduleList = modulesList;
+
         for (Node moduleNode : modulesList.getChildren()) {
             if (!(moduleNode instanceof VBox))
                 continue;
 
             VBox moduleCard = (VBox) moduleNode;
+
+            lessonList = (VBox) moduleCard.getChildren().get(2);
+
             VBox moduleContent = (VBox) moduleCard.getChildren().get(1);
 
             TextField titleField = (TextField) ((HBox) ((VBox) moduleContent.getChildren().get(0)).getChildren().get(1))
@@ -169,8 +182,35 @@ public class CursoModulesValid {
                 isModuleValid = false;
             }
 
+            for (Node moduleNode : moduleList.getChildren()) {
+                VBox moduleCard = (VBox) moduleNode;
+                VBox lessonList = (VBox) moduleCard.getChildren().get(2);
+                if(lessonList.getChildren().size()<2){
+                    ErrorNotification errorNotification = new ErrorNotification(
+                        parentContainer, 
+                        "Adicione pelo menos uma aula no módulo" 
+                    );
+                    errorNotification.show();
+                }
+            }
+
+
             if (!isModuleValid) {
+                ErrorNotification errorNotification = new ErrorNotification(
+                    parentContainer, 
+                    "Preencha todos os campos corretamente" 
+                );
+    
+                errorNotification.show();
                 isAllValid = false;
+
+                for (Node moduleNode : moduleList.getChildren()) {
+                    VBox moduleCard = (VBox) moduleNode;
+                    VBox lessonList = (VBox) moduleCard.getChildren().get(2);
+                    if(lessonList.getChildren().size()<2){
+                        isAllValid = false;
+                    }
+                }
             }
         }
 

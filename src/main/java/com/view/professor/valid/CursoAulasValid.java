@@ -7,8 +7,11 @@ import org.controlsfx.validation.Validator;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.css.PseudoClass;
+
+import com.view.login_cadastro.elements.ErrorNotification;
 
 public class CursoAulasValid {
     private static final int MIN_TITLE_LENGTH = 5;
@@ -26,6 +29,12 @@ public class CursoAulasValid {
     private List<TextField> durationFields = new ArrayList<>();
     private List<Label> durationErrorLabels = new ArrayList<>();
 
+    private GridPane parentContainer;
+
+    public void setParentContainer(GridPane parentContainer) {
+        this.parentContainer = parentContainer;
+    }
+
     public void setupInitialStateLessons(VBox lessonsList) {
         loadValues(lessonsList);
 
@@ -40,37 +49,41 @@ public class CursoAulasValid {
             VBox lessonCard = (VBox) lessonNode;
             VBox lessonContent = (VBox) lessonCard.getChildren().get(1);
 
-            TextField titleField = (TextField) lessonContent.getChildren().get(0)
-                    .lookup(".custom-text-field");
-            Label titleErrorLabel = (Label) lessonContent.getChildren().get(1);
+            if (((VBox) lessonContent.getChildren().get(2)).getChildren().get(1) instanceof TextArea) {
+            } else {
 
-            TextField videoField = (TextField) lessonContent.getChildren().get(2)
-                    .lookup(".custom-text-field");
-            Label videoErrorLabel = (Label) lessonContent.getChildren().get(3);
+                TextField titleField = (TextField) lessonContent.getChildren().get(0)
+                        .lookup(".custom-text-field");
+                Label titleErrorLabel = (Label) lessonContent.getChildren().get(1);
 
-            TextArea detailsField = (TextArea) lessonContent.getChildren().get(4)
-                    .lookup(".custom-text-area");
-            Label detailsErrorLabel = (Label) lessonContent.getChildren().get(5);
+                TextField videoField = (TextField) lessonContent.getChildren().get(2)
+                        .lookup(".custom-text-field");
+                Label videoErrorLabel = (Label) lessonContent.getChildren().get(3);
 
-            TextArea materialsField = (TextArea) lessonContent.getChildren().get(6)
-                    .lookup(".custom-text-area");
+                TextArea detailsField = (TextArea) lessonContent.getChildren().get(4)
+                        .lookup(".custom-text-area");
+                Label detailsErrorLabel = (Label) lessonContent.getChildren().get(5);
 
-            Label materialsErrorLabel = (Label) lessonContent.getChildren().get(7);
+                TextArea materialsField = (TextArea) lessonContent.getChildren().get(6)
+                        .lookup(".custom-text-area");
 
-            TextField durationField = (TextField) lessonContent.getChildren().get(8)
-                    .lookup(".custom-text-field");
-            Label durationErrorLabel = (Label) lessonContent.getChildren().get(9);
+                Label materialsErrorLabel = (Label) lessonContent.getChildren().get(7);
 
-            titleFields.add(titleField);
-            titleErrorLabels.add(titleErrorLabel);
-            videoFields.add(videoField);
-            videoErrorLabels.add(videoErrorLabel);
-            detailsFields.add(detailsField);
-            detailsErrorLabels.add(detailsErrorLabel);
-            materialsFields.add(materialsField);
-            materialsErrorLabels.add(materialsErrorLabel);
-            durationFields.add(durationField);
-            durationErrorLabels.add(durationErrorLabel);
+                TextField durationField = (TextField) lessonContent.getChildren().get(8)
+                        .lookup(".custom-text-field");
+                Label durationErrorLabel = (Label) lessonContent.getChildren().get(9);
+
+                titleFields.add(titleField);
+                titleErrorLabels.add(titleErrorLabel);
+                videoFields.add(videoField);
+                videoErrorLabels.add(videoErrorLabel);
+                detailsFields.add(detailsField);
+                detailsErrorLabels.add(detailsErrorLabel);
+                materialsFields.add(materialsField);
+                materialsErrorLabels.add(materialsErrorLabel);
+                durationFields.add(durationField);
+                durationErrorLabels.add(durationErrorLabel);
+            }
         }
     }
 
@@ -86,6 +99,8 @@ public class CursoAulasValid {
             Label detailsErrorLabel = detailsErrorLabels.get(i);
             TextField durationField = durationFields.get(i);
             Label durationErrorLabel = durationErrorLabels.get(i);
+            TextArea materialsField = materialsFields.get(i);
+            Label materialsErrorLabel = materialsErrorLabels.get(i);
 
             titleField.textProperty().addListener((obs, old, newText) -> {
                 if (newText.length() >= MIN_TITLE_LENGTH) {
@@ -137,6 +152,24 @@ public class CursoAulasValid {
                             }
                             return false;
                         }, "Por favor, insira detalhes válidos, com no mínimo 10 caracteres"));
+            });
+
+            materialsField.textProperty().addListener((obs, old, newText) -> {
+                if (!newText.isEmpty()) {
+                    updateErrorDisplay(materialsField, materialsErrorLabel, false, null);
+                }
+            });
+
+            materialsField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+                validationSupport.registerValidator(materialsField, false,
+                        Validator.createPredicateValidator(value -> {
+                            if (value instanceof String) {
+                                String strValue = (String) value;
+                                return !strValue.trim().isEmpty()
+                                        && (strValue.startsWith("http://") || strValue.startsWith("https://"));
+                            }
+                            return false;
+                        }, "Por favor, insira um link válido"));
             });
 
             durationField.textProperty().addListener((obs, old, newText) -> {
@@ -227,6 +260,12 @@ public class CursoAulasValid {
             }
 
             if (!isLessonValid) {
+                ErrorNotification errorNotification = new ErrorNotification(
+                    parentContainer, 
+                    "Preencha todos os campos corretamente" 
+                );
+
+                errorNotification.show();
                 isAllValid = false;
             }
         }
@@ -234,7 +273,6 @@ public class CursoAulasValid {
         return isAllValid;
     }
 
-    // Retorna o número total de elementos em cada lista
     public int getTotalTitleFields() {
         return titleFields.size();
     }
@@ -296,9 +334,8 @@ public class CursoAulasValid {
                 .count();
     }
 
-   public int getModulesWithLessonsCount() {
-    return 0;
-   }
+    public int getModulesWithLessonsCount() {
+        return 0;
+    }
 
-}   
-
+}

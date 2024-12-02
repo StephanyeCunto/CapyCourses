@@ -92,6 +92,8 @@ public class CadastroCurso implements Initializable {
     Label durationTotalErrorLabel;
     @FXML
     Label comboBoxVisibilityErrorLabel;
+    @FXML
+    StackPane toggleButtonStackPane;
 
     private boolean isLightMode = true;
 
@@ -169,14 +171,14 @@ public class CadastroCurso implements Initializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
-        Timeline timeline0 = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
+        Timeline timeline0 = new Timeline(new KeyFrame(Duration.seconds(0.02), event -> {
             registrationProgress();
         }));
 
         timeline0.setCycleCount(Timeline.INDEFINITE);
         timeline0.play();
 
-        toggleButtonHBox.setOnMouseClicked(e -> toggle());
+        toggleButtonStackPane.setOnMouseClicked(e -> toggle());
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
@@ -187,6 +189,14 @@ public class CadastroCurso implements Initializable {
         validatorSettings.setupInitialState(durationTotal, ComboBoxVisibily, durationTotalErrorLabel,
                 comboBoxVisibilityErrorLabel);
 
+        validatorModules.setParentContainer(container);
+        validatorBasic.setParentContainer(container);
+        validatorSettings.setParentContainer(container);
+        validatorAulas.setParentContainer(container);
+        validatorOptions.setParentContainer(container);
+        validatorQuestionario.setParentContainer(container);
+        validatorQuestoes.setParentContainer(container);
+
     }
 
     private static final String STEP_PENDING = "step-pending";
@@ -195,14 +205,13 @@ public class CadastroCurso implements Initializable {
     private static final int MIN_LESSONS_PER_MODULE = 1;
 
     private void registrationProgress() {
-        double basics= calculeBasics();
+        double basics = calculeBasics();
         double settingsC = calculeSettings();
         double module = calculeModule();
         double lesson = calculeLesson();
 
-        double totalProgress = (basics + module + lesson + settingsC);   
-        double totalProgressMedia = (totalProgress)/4;
-
+        double totalProgress = (basics + module + lesson + settingsC);
+        double totalProgressMedia = (totalProgress) / 4;
 
         updateProgressDisplay(totalProgressMedia);
 
@@ -214,42 +223,48 @@ public class CadastroCurso implements Initializable {
     private double calculeBasics() {
         int completedFields = 0;
 
-        if(validatorBasic.isTitleValid())completedFields++;
-        if(validatorBasic.isDescriptionValid())completedFields++;
-        if(validatorBasic.isCategorySelected())completedFields++;
-        if(validatorBasic.isLevelSelected())completedFields++;
+        if (validatorBasic.isTitleValid())
+            completedFields++;
+        if (validatorBasic.isDescriptionValid())
+            completedFields++;
+        if (validatorBasic.isCategorySelected())
+            completedFields++;
+        if (validatorBasic.isLevelSelected())
+            completedFields++;
 
         return (completedFields * 100.0) / 4;
     }
 
-    private double calculeSettings(){
+    private double calculeSettings() {
         int completedFields = 0;
 
-        if(validatorSettings.isDurationValid())completedFields++;
-        if(validatorSettings.isVisibilitySelected())completedFields++;
+        if (validatorSettings.isDurationValid())
+            completedFields++;
+        if (validatorSettings.isVisibilitySelected())
+            completedFields++;
 
         return (completedFields * 100.0) / 2;
     }
 
-    private double calculeModule(){
+    private double calculeModule() {
         int totalTitleFields = validatorModules.getTotalTitleFields();
         int totalDurationFields = validatorModules.getTotalDurationFields();
         int totalDetailsFields = validatorModules.getTotalDetailsFields();
 
         int totalValidatedTitle = validatorModules.getValidatedTitleFields();
-        int totalValidatedDuration = validatorModules.getValidatedDurationFields(); 
+        int totalValidatedDuration = validatorModules.getValidatedDurationFields();
         int totalValidatedDetails = validatorModules.getValidatedDetailsFields();
 
         int totalFields = totalTitleFields + totalDurationFields + totalDetailsFields;
         int completedFields = totalValidatedTitle + totalValidatedDuration + totalValidatedDetails;
-        if(totalFields==0){
-            totalFields = 3;        
+        if (totalFields == 0) {
+            totalFields = 3;
         }
-      
+
         return (completedFields * 100.0) / totalFields;
     }
 
-    private double calculeLesson(){
+    private double calculeLesson() {
         int totalTitleFields = validatorAulas.getTotalTitleFields();
         int totalVideoFields = validatorAulas.getTotalVideoFields();
         int totalDetailsFields = validatorAulas.getTotalDetailsFields();
@@ -262,15 +277,16 @@ public class CadastroCurso implements Initializable {
         int totalValidatedMaterials = validatorAulas.getValidatedMaterialsFields();
         int totalValidatedDuration = validatorAulas.getValidatedDurationFields();
 
-        int totalFields = totalTitleFields + totalVideoFields + totalDetailsFields + totalMaterialsFields + totalDurationFields;
-        int completedFields = totalValidatedTitle + totalValidatedVideo + totalValidatedDetails + totalValidatedMaterials + totalValidatedDuration;
-        if(totalFields==0){
-            totalFields = 5;        
+        int totalFields = totalTitleFields + totalVideoFields + totalDetailsFields + totalMaterialsFields
+                + totalDurationFields;
+        int completedFields = totalValidatedTitle + totalValidatedVideo + totalValidatedDetails
+                + totalValidatedMaterials + totalValidatedDuration;
+        if (totalFields == 0) {
+            totalFields = 5;
         }
         return (completedFields * 100.0) / totalFields;
     }
 
-    
     private void updateStepLabel(Label label, String text, double completed, int total) {
         if (completed == 0) {
             setLabelPending(label, text);
@@ -285,13 +301,22 @@ public class CadastroCurso implements Initializable {
         label.getStyleClass().remove(STEP_CURRENT);
         label.getStyleClass().add(STEP_PENDING);
         label.setText(" " + text);
-        label.setStyle("-fx-text-fill: #797E8C;");
+        if (!Modo.getInstance().getModo()) {
+            label.setStyle("-fx-text-fill:#373a40;");
+        } else {
+            label.setStyle("-fx-text-fill:#ffffff;");
+        }
     }
 
     private void setLabelInProgress(Label label, String text) {
         label.getStyleClass().remove(STEP_PENDING);
         label.getStyleClass().add(STEP_CURRENT);
-        label.setStyle("-fx-text-fill: rgb(89, 92, 150);");
+        if (Modo.getInstance().getModo()) {
+            label.setStyle("-fx-text-fill: #839EFF;");
+        } else {
+            label.setStyle("-fx-text-fill: #2f3380;");
+
+        }
         label.setText("→ " + text);
     }
 
@@ -299,47 +324,25 @@ public class CadastroCurso implements Initializable {
         label.getStyleClass().remove(STEP_PENDING);
         label.getStyleClass().remove(STEP_CURRENT);
         label.getStyleClass().add(STEP_COMPLETED);
-        label.setStyle("-fx-text-fill: rgb(89, 150, 90);");
+        if (!Modo.getInstance().getModo()) {
+            label.setStyle("-fx-text-fill: #215222;");
+        } else {
+            label.setStyle("-fx-text-fill:rgb(89, 150, 90);");
+        }
         label.setText("✓ " + text);
     }
 
+    private int countModulesWithoutLessons = 0;
+
     private int countModulesWithoutLessons(List<Map<String, Object>> modulesData) {
-        int count = 0;
+        countModulesWithoutLessons = 0;
         for (Map<String, Object> moduleData : modulesData) {
             Object lessons = moduleData.get("lessons");
             if (lessons == null || !(lessons instanceof List) || ((List<?>) lessons).isEmpty()) {
-                count++;
+                countModulesWithoutLessons++;
             }
         }
-        return count;
-    }
-
-    private int countCompletedBaseFields() {
-        int completed = 0;
-        String[] fields = {
-                titleCourse.getText(),
-                descritionCourse.getText(),
-                categoryCourse.getValue(),
-                levelCourse.getValue(),
-                durationTotal.getText(),
-                String.valueOf(ComboBoxVisibily.getValue())
-        };
-
-        for (String field : fields) {
-            if (isFieldComplete(field)) {
-                completed++;
-            }
-        }
-        if (isImage)
-            completed++;
-        if (isTag > 0)
-            completed++;
-
-        return completed;
-    }
-
-    private int countTotalBaseFields() {
-        return 8;
+        return countModulesWithoutLessons;
     }
 
     private ModuleProgressData countModuleProgress(List<Map<String, Object>> modulesData) {
@@ -472,7 +475,6 @@ public class CadastroCurso implements Initializable {
         }
         return true;
     }
-
 
     private static class ModuleProgressData {
         final int completedFields;
@@ -910,7 +912,7 @@ public class CadastroCurso implements Initializable {
         moduleCard.setSpacing(15);
         HBox moduleHeader = createModuleHeader(currentModuleCount);
         VBox moduleContent = createModuleContent(currentModuleCount);
-        VBox lessonsList = createLessonsList();
+        VBox lessonsList = createLessonsList(modulesList);
         moduleCard.getChildren().addAll(moduleHeader, moduleContent, lessonsList);
         moduleCard.setOpacity(0);
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), moduleCard);
@@ -1027,7 +1029,7 @@ public class CadastroCurso implements Initializable {
         return container;
     }
 
-    private VBox createLessonsList() {
+    private VBox createLessonsList(VBox modulesList) {
         VBox lessonsList = new VBox();
         HBox buttonHBox = new HBox();
         lessonsList.setSpacing(15);
@@ -1037,7 +1039,10 @@ public class CadastroCurso implements Initializable {
         addLessonButton.getStyleClass().add("outline-button");
         String existingStyles = addLessonButton.getStyle();
         addLessonButton.setStyle(existingStyles + "-fx-max-width: 250;");
-        addLessonButton.setOnAction(e -> addNewLesson(lessonsList));
+        addLessonButton.setOnAction(e -> {
+            addNewLesson(lessonsList);
+            validatorModules.setupInitialStateModules(modulesList);
+        });
 
         Button addquestionaire = new Button("+ Adicionar Questionário");
         addquestionaire.getStyleClass().add("outline-button");
@@ -1047,6 +1052,7 @@ public class CadastroCurso implements Initializable {
 
         buttonHBox.getChildren().addAll(addLessonButton, addquestionaire);
         lessonsList.getChildren().add(buttonHBox);
+
         return lessonsList;
     }
 
@@ -1119,18 +1125,18 @@ public class CadastroCurso implements Initializable {
 
         HBox contextMenu = new HBox();
         Button addDiscursiveButton = new Button("Questão Discursiva");
-        addDiscursiveButton.setOnAction(e -> addNewQuestion(questionsContainer, "DISCURSIVE"));
+        addDiscursiveButton.setOnAction(e -> addNewQuestion(questionsContainer,lessonsList, "DISCURSIVE"));
         addDiscursiveButton.getStyleClass().add("simple-button");
         String existingStyles = addDiscursiveButton.getStyle();
         addDiscursiveButton.setStyle(existingStyles + "-fx-max-width: 250;");
 
         Button addSingleChoiceButton = new Button("Questão Única");
-        addSingleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer, "SINGLE_CHOICE"));
+        addSingleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer,lessonsList, "SINGLE_CHOICE"));
         addSingleChoiceButton.getStyleClass().add("simple-button");
         addSingleChoiceButton.setStyle(existingStyles + "-fx-max-width: 250;");
 
         Button addMultipleChoiceButton = new Button("Questão Múltipla");
-        addMultipleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer, "MULTIPLE_CHOICE"));
+        addMultipleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer,lessonsList, "MULTIPLE_CHOICE"));
         addMultipleChoiceButton.getStyleClass().add("simple-button");
         addMultipleChoiceButton.setStyle(existingStyles + "-fx-max-width: 250;");
 
@@ -1411,7 +1417,7 @@ public class CadastroCurso implements Initializable {
         setModulequestionaireCounter(moduleContent, tempquestionaireCounter);
     }
 
-    private void addNewQuestion(VBox questionsContainer, String type) {
+    private void addNewQuestion(VBox questionsContainer,VBox lessonsList, String type) {
         VBox questionCard = new VBox(10);
         questionCard.getStyleClass().add("question-card");
 
@@ -1421,7 +1427,7 @@ public class CadastroCurso implements Initializable {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        int questionNumber = questionsContainer.getChildren().size() + 1; // Número baseado no tamanho atual
+        int questionNumber = questionsContainer.getChildren().size() + 1; 
 
         StackPane numberContainer = new StackPane();
         numberContainer.getStyleClass().add("question-number-container");
@@ -1483,7 +1489,9 @@ public class CadastroCurso implements Initializable {
         questionsContainer.getChildren().add(questionCard);
 
         validatorQuestoes.setupInitialStateQuestions(questionsContainer);
-        updateQuestionNumbers(questionsContainer); // Atualiza os números após adicionar
+        validatorQuestionario.setupInitialStateQuestions(lessonsList);
+
+        updateQuestionNumbers(questionsContainer);
     }
 
     private void removeQuestionWithAnimation(Node questionCard) {

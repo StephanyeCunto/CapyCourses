@@ -8,9 +8,12 @@ import org.controlsfx.validation.Validator;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.css.PseudoClass;
+
+import com.view.login_cadastro.elements.ErrorNotification;
 
 public class CursoQuestoesValid {
     private static final int MIN_QUESTION_LENGTH = 10;
@@ -20,9 +23,15 @@ public class CursoQuestoesValid {
     private List<Label> questionErrorLabels = new ArrayList<>();
     private List<TextField> scoreFields = new ArrayList<>();
     private List<Label> scoreErrorLabels = new ArrayList<>();
-    
+
     private List<Label> evaluationCriteriaErrorLabels = new ArrayList<>();
     private List<TextArea> evaluationCriteriaFields = new ArrayList<>();
+
+    private GridPane parentContainer;
+
+    public void setParentContainer(GridPane parentContainer) {
+        this.parentContainer = parentContainer;
+    }
 
     public void setupInitialStateQuestions(VBox questionsContainer) {
         loadValues(questionsContainer);
@@ -31,14 +40,15 @@ public class CursoQuestoesValid {
 
     private void loadValues(VBox questionsContainer) {
         for (Node questionNode : questionsContainer.getChildren()) {
-            if (!(questionNode instanceof VBox)) continue;
+            if (!(questionNode instanceof VBox))
+                continue;
             VBox questionCard = (VBox) questionNode;
             VBox questionContent = (VBox) questionCard.getChildren().get(1);
-  
+
             HBox scoreHbox = (HBox) questionContent.getChildren().get(0);
             TextField scoreField = (TextField) scoreHbox.getChildren().get(1);
             Label scoreErrorLabel = (Label) questionContent.getChildren().get(1);
-    
+
             TextArea questionText = (TextArea) questionContent.getChildren().get(2);
             Label questionErrorLabel = (Label) questionContent.getChildren().get(3);
 
@@ -47,7 +57,7 @@ public class CursoQuestoesValid {
             scoreFields.add(scoreField);
             scoreErrorLabels.add(scoreErrorLabel);
 
-            if(questionContent.getChildren().get(7) instanceof TextArea){
+            if (questionContent.getChildren().get(7) instanceof TextArea) {
                 TextArea evaluationCriteria = (TextArea) questionContent.getChildren().get(7);
                 Label evaluationCriteriaError = (Label) questionContent.getChildren().get(8);
                 evaluationCriteriaFields.add(evaluationCriteria);
@@ -125,7 +135,6 @@ public class CursoQuestoesValid {
         }
     }
 
-
     private void updateErrorDisplay(Control field, Label errorLabel, boolean isValid, String message) {
         field.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, isValid);
         errorLabel.setText(isValid ? message : "");
@@ -140,28 +149,26 @@ public class CursoQuestoesValid {
 
     public boolean validateFields() {
         boolean isAllValid = true;
-        
+
         for (int i = 0; i < questionFields.size(); i++) {
             boolean isQuestionValid = true;
 
             if (questionFields.get(i).getText().length() < MIN_QUESTION_LENGTH) {
                 updateErrorDisplay(
-                    questionFields.get(i), 
-                    questionErrorLabels.get(i), 
-                    true,
-                    "Por favor, insira uma pergunta válida, com pelo menos 10 caracteres"
-                );
+                        questionFields.get(i),
+                        questionErrorLabels.get(i),
+                        true,
+                        "Por favor, insira uma pergunta válida, com pelo menos 10 caracteres");
                 isQuestionValid = false;
             }
 
-            if (scoreFields.get(i).getText() == null || 
-                scoreFields.get(i).getText().isEmpty()) {
+            if (scoreFields.get(i).getText() == null ||
+                    scoreFields.get(i).getText().isEmpty()) {
                 updateErrorDisplay(
-                    scoreFields.get(i), 
-                    scoreErrorLabels.get(i), 
-                    true, 
-                    "Por favor, insira uma pontuação válida"
-                );
+                        scoreFields.get(i),
+                        scoreErrorLabels.get(i),
+                        true,
+                        "Por favor, insira uma pontuação válida");
                 isQuestionValid = false;
             }
 
@@ -169,11 +176,10 @@ public class CursoQuestoesValid {
                 TextArea criteriaField = evaluationCriteriaFields.get(i);
                 if (criteriaField.getText().length() < MIN_QUESTION_LENGTH) {
                     updateErrorDisplay(
-                        criteriaField, 
-                        evaluationCriteriaErrorLabels.get(i), 
-                        true,
-                        "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres"
-                    );
+                            criteriaField,
+                            evaluationCriteriaErrorLabels.get(i),
+                            true,
+                            "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres");
                     isQuestionValid = false;
                 }
             }
@@ -182,18 +188,21 @@ public class CursoQuestoesValid {
                 TextArea criteriaField = evaluationCriteriaFields.get(i);
                 if (criteriaField.getText().length() < MIN_QUESTION_LENGTH) {
                     updateErrorDisplay(
-                        criteriaField, 
-                        evaluationCriteriaErrorLabels.get(i), 
-                        true,
-                        "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres"
-                    );
+                            criteriaField,
+                            evaluationCriteriaErrorLabels.get(i),
+                            true,
+                            "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres");
                     isQuestionValid = false;
                 }
             }
-    
-    
 
             if (!isQuestionValid) {
+                ErrorNotification errorNotification = new ErrorNotification(
+                        parentContainer,
+                        "Preencha todos os campos corretamente");
+
+                errorNotification.show();
+
                 isAllValid = false;
             }
         }

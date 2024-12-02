@@ -73,7 +73,7 @@
                         <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox"
                             HBox.hgrow="ALWAYS"
                             fx:id="toggleButtonHBox">
-                            <StackPane alignment="CENTER" styleClass="theme-toggle-switch"
+                            <StackPane alignment="CENTER" styleClass="theme-toggle-switch" fx:id="toggleButtonStackPane"
                                >
                                 <Rectangle fx:id="background" width="50" height="25"
                                     styleClass="toggle-background"

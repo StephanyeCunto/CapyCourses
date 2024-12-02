@@ -8,9 +8,12 @@ import org.controlsfx.validation.Validator;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.css.PseudoClass;
+
+import com.view.login_cadastro.elements.ErrorNotification;
 
 public class CursoOptionsValid {
     private static final int MIN_OPTION_LENGTH = 1;
@@ -21,15 +24,18 @@ public class CursoOptionsValid {
     private List<Node> selectionControls = new ArrayList<>();
     private ValidationSupport validationSupport = new ValidationSupport();
 
+    private GridPane parentContainer;
+
+    public void setParentContainer(GridPane parentContainer) {
+        this.parentContainer = parentContainer;
+    }
+
     public void setupInitialStateOptions(VBox optionsList, boolean singleChoice) {
         loadValues(optionsList);
         setupValidationListeners();
     }
 
     private void loadValues(VBox optionsList) {
-        optionFields.clear();
-        optionErrorLabels.clear();
-        selectionControls.clear();
 
         for (Node node : optionsList.getChildren()) {
             if (!(node instanceof HBox))
@@ -124,6 +130,14 @@ public class CursoOptionsValid {
             } else {
                 updateErrorDisplay(optionField, optionErrorLabel, false, null);
             }
+        }
+
+        if (!isAllValid) {
+            ErrorNotification errorNotification = new ErrorNotification(
+                    parentContainer,
+                    "Preencha todos os campos corretamente");
+
+            errorNotification.show();
         }
 
         return isAllValid;

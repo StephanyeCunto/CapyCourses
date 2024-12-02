@@ -1,10 +1,12 @@
 package com.view.professor.valid;
 
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
+import javafx.scene.layout.GridPane;
 import javafx.css.PseudoClass;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
+
+import com.view.login_cadastro.elements.ErrorNotification;
 
 public class CursoSettingsValidation {
     private ValidationSupport validationSupport;
@@ -13,13 +15,18 @@ public class CursoSettingsValidation {
     private ComboBox<String> comboBoxVisibility;
     private Label comboBoxVisibilityErrorLabel;
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
+    private GridPane parentContainer;
+
+    public void setParentContainer(GridPane parentContainer) {
+        this.parentContainer = parentContainer;
+    }
 
     public CursoSettingsValidation() {
         validationSupport = new ValidationSupport();
     }
 
     public void setupInitialState(TextField durationTotal, ComboBox<String> comboBoxVisibility,
-                                  Label durationTotalErrorLabel, Label comboBoxVisibilityErrorLabel) {
+            Label durationTotalErrorLabel, Label comboBoxVisibilityErrorLabel) {
         this.durationTotal = durationTotal;
         this.comboBoxVisibility = comboBoxVisibility;
         this.durationTotalErrorLabel = durationTotalErrorLabel;
@@ -37,48 +44,45 @@ public class CursoSettingsValidation {
     private void configureDurationValidation() {
         durationTotal.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.matches("\\d*")) {
-                durationTotal.setText(oldValue); 
+                durationTotal.setText(oldValue);
                 durationTotal.positionCaret(durationTotal.getText().length());
             }
         });
-    
-        validationSupport.registerValidator(durationTotal, false,
-            Validator.createPredicateValidator(value -> {
-                if (value instanceof String) {
-                    String strValue = (String) value;
-                    return !strValue.trim().isEmpty() && strValue.matches("^\\d+$");
-                }
-                return false;
-            }, "Por favor, insira uma duração válida"));
-    }
-    
 
-    
+        validationSupport.registerValidator(durationTotal, false,
+                Validator.createPredicateValidator(value -> {
+                    if (value instanceof String) {
+                        String strValue = (String) value;
+                        return !strValue.trim().isEmpty() && strValue.matches("^\\d+$");
+                    }
+                    return false;
+                }, "Por favor, insira uma duração válida"));
+    }
 
     private void configureVisibilityValidation() {
         validationSupport.registerValidator(comboBoxVisibility, false,
-            Validator.createPredicateValidator(value -> {
-                if (value instanceof String) {
-                    String strValue = (String) value;
-                    return strValue != null && !strValue.trim().isEmpty() && !strValue.equals("null");
-                }
-                return false;
-            }, "Por favor, selecione a visibilidade"));
+                Validator.createPredicateValidator(value -> {
+                    if (value instanceof String) {
+                        String strValue = (String) value;
+                        return strValue != null && !strValue.trim().isEmpty() && !strValue.equals("null");
+                    }
+                    return false;
+                }, "Por favor, selecione a visibilidade"));
     }
 
     private void addRealTimeValidationListeners() {
         // Listener para o campo de duração
         durationTotal.textProperty().addListener((observable, oldValue, newValue) -> {
             boolean isValid = newValue != null && !newValue.trim().isEmpty() && newValue.matches("^\\d+(\\.\\d+)?$");
-            updateErrorDisplay(durationTotal, durationTotalErrorLabel, !isValid, 
-                isValid ? null : "Por favor, insira uma duração válida");
+            updateErrorDisplay(durationTotal, durationTotalErrorLabel, !isValid,
+                    isValid ? null : "Por favor, insira uma duração válida");
         });
 
         // Listener para o comboBox de visibilidade
         comboBoxVisibility.valueProperty().addListener((observable, oldValue, newValue) -> {
             boolean isValid = newValue != null && !newValue.trim().isEmpty() && !newValue.equals("null");
-            updateErrorDisplay(comboBoxVisibility, comboBoxVisibilityErrorLabel, !isValid, 
-                isValid ? null : "Por favor, selecione a visibilidade");
+            updateErrorDisplay(comboBoxVisibility, comboBoxVisibilityErrorLabel, !isValid,
+                    isValid ? null : "Por favor, selecione a visibilidade");
         });
     }
 
@@ -86,14 +90,23 @@ public class CursoSettingsValidation {
         boolean isValid = true;
 
         if (durationTotal.getText() == null || durationTotal.getText().trim().isEmpty()
-            || !durationTotal.getText().matches("^\\d+(\\.\\d+)?$")) {
+                || !durationTotal.getText().matches("^\\d+(\\.\\d+)?$")) {
             updateErrorDisplay(durationTotal, durationTotalErrorLabel, true, "Por favor, insira uma duração válida");
             isValid = false;
         }
 
         if (comboBoxVisibility.getValue() == null || comboBoxVisibility.getValue().trim().isEmpty()) {
-            updateErrorDisplay(comboBoxVisibility, comboBoxVisibilityErrorLabel, true, "Por favor, selecione a visibilidade");
+            updateErrorDisplay(comboBoxVisibility, comboBoxVisibilityErrorLabel, true,
+                    "Por favor, selecione a visibilidade");
             isValid = false;
+        }
+
+        if (!isValid) {
+            ErrorNotification errorNotification = new ErrorNotification(
+                    parentContainer,
+                    "Preencha todos os campos corretamente");
+
+            errorNotification.show();
         }
 
         return isValid;
@@ -117,11 +130,11 @@ public class CursoSettingsValidation {
             return false;
         }
     }
-    
+
     public boolean isVisibilitySelected() {
-        return comboBoxVisibility != null && 
-               comboBoxVisibility.getValue() != null && 
-               !comboBoxVisibility.getValue().trim().isEmpty() && 
-               !comboBoxVisibility.getValue().equals("null");
+        return comboBoxVisibility != null &&
+                comboBoxVisibility.getValue() != null &&
+                !comboBoxVisibility.getValue().trim().isEmpty() &&
+                !comboBoxVisibility.getValue().equals("null");
     }
 }
