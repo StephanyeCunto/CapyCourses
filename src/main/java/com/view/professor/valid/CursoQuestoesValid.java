@@ -209,4 +209,34 @@ public class CursoQuestoesValid {
 
         return isAllValid;
     }
+
+    public int getQuestionFieldsCount() {
+        return questionFields.size();
+    }
+    
+    public int getScoreFieldsCount() {
+        return scoreFields.size();
+    }
+    
+    public int getEvaluationCriteriaFieldsCount() {
+        return evaluationCriteriaFields.size();
+    }
+    
+    public int getValidatedQuestionFieldsCount() {
+        return (int) questionFields.stream()
+            .filter(field -> field.getText().length() >= MIN_QUESTION_LENGTH)
+            .count();
+    }
+    
+    public int getValidatedScoreFieldsCount() {
+        return (int) scoreFields.stream()
+            .filter(field -> field.getText() != null && !field.getText().isEmpty() && field.getText().matches("\\d*\\.?\\d*"))
+            .count();
+    }
+    
+    public int getValidatedEvaluationCriteriaFieldsCount() {
+        return (int) evaluationCriteriaFields.stream()
+            .filter(field -> field.getText().length() >= MIN_QUESTION_LENGTH)
+            .count();
+    }
 }

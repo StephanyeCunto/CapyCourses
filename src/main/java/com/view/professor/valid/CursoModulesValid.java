@@ -188,7 +188,7 @@ public class CursoModulesValid {
                 if(lessonList.getChildren().size()<2){
                     ErrorNotification errorNotification = new ErrorNotification(
                         parentContainer, 
-                        "Adicione pelo menos uma aula no módulo" 
+                        "Adicione uma aula no módulo" 
                     );
                     errorNotification.show();
                 }
@@ -212,6 +212,16 @@ public class CursoModulesValid {
                     }
                 }
             }
+        }
+
+        if( getTotalTitleFields()==0){
+            ErrorNotification errorNotification = new ErrorNotification(
+                    parentContainer, 
+                    "Deve haver um módulo no curso" 
+                );
+    
+                errorNotification.show();
+                isAllValid = false;
         }
 
         return isAllValid;

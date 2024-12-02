@@ -146,7 +146,7 @@ public class CursoQuestionarioValid {
         }
     }
 
-    public boolean validateFields() {
+    public boolean validateFields(CheckBox isGradeMiniun) {
         boolean isAllValid = true;
 
         for (int i = 0; i < questionTextFields.size(); i++) {
@@ -186,7 +186,7 @@ public class CursoQuestionarioValid {
                     if (questionsContent.getChildren().size() == 0) {
                         ErrorNotification errorNotification = new ErrorNotification(
                                 parentContainer,
-                                "Adicione pelo menos uma questão ao questionário");
+                                "Adicione uma questão ao questionário");
 
                         errorNotification.show();
 
@@ -196,6 +196,47 @@ public class CursoQuestionarioValid {
             }
         }
 
+        if (isGradeMiniun.isSelected()) {
+            if (getTitleFieldsCount() < 1) {
+                ErrorNotification errorNotification = new ErrorNotification(
+                        parentContainer,
+                        "Adicione um questionário");
+
+                errorNotification.show();
+                isAllValid = false;
+            }
+        }
+
         return isAllValid;
+    }
+
+    public int getTitleFieldsCount() {
+        return titleFields.size();
+    }
+
+    public int getQuestionTextFieldsCount() {
+        return questionTextFields.size();
+    }
+
+    public int getScoreFieldsCount() {
+        return scoreFields.size();
+    }
+
+    public int getValidatedTitleFieldsCount() {
+        return (int) titleFields.stream()
+                .filter(field -> field.getText().length() >= MIN_TITLE_LENGTH && field.getText().length() <= 100)
+                .count();
+    }
+
+    public int getValidatedQuestionTextFieldsCount() {
+        return (int) questionTextFields.stream()
+                .filter(field -> field.getText().length() >= MIN_QUESTION_LENGTH)
+                .count();
+    }
+
+    public int getValidatedScoreFieldsCount() {
+        return (int) scoreFields.stream()
+                .filter(field -> !field.getText().isEmpty() && field.getText().matches("\\d*\\.?\\d*"))
+                .count();
     }
 }

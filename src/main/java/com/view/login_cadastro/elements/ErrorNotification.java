@@ -53,7 +53,7 @@ public class ErrorNotification {
             parent.add(errorContainer, 0, 0, parent.getColumnCount(), 1);
             GridPane.setHalignment(errorContainer, javafx.geometry.HPos.CENTER);
             GridPane.setValignment(errorContainer, javafx.geometry.VPos.TOP);
-            GridPane.setMargin(errorContainer, new javafx.geometry.Insets(-800, 0, 0, 0));
+            GridPane.setMargin(errorContainer, new javafx.geometry.Insets(-750, 0, 0, 0));
         }
 
         setupAnimations();

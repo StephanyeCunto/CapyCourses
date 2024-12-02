@@ -164,4 +164,32 @@ public class CursoOptionsValid {
 
         return selectedOptions;
     }
+
+    public int getOptionFieldsCount() {
+        return optionFields.size();
+    }
+    
+    public int getSelectionControlsCount() {
+        return selectionControls.size();
+    }
+    
+    public int getValidatedOptionFieldsCount() {
+        return (int) optionFields.stream()
+            .filter(field -> field.getText() != null && 
+                             field.getText().trim().length() >= MIN_OPTION_LENGTH)
+            .count();
+    }
+    
+    public int getSelectedOptionsCount() {
+        return (int) selectionControls.stream()
+            .filter(control -> {
+                if (control instanceof RadioButton) {
+                    return ((RadioButton) control).isSelected();
+                } else if (control instanceof CheckBox) {
+                    return ((CheckBox) control).isSelected();
+                }
+                return false;
+            })
+            .count();
+    }
 }
