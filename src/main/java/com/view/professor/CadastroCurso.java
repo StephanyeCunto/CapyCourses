@@ -348,7 +348,7 @@ public class CadastroCurso implements Initializable {
                 return 0.01;
             }
             return (totalValidated * 100) / totalFields;
-        }else if(isGradeMiniun.isSelected()){
+        } else if (isGradeMiniun.isSelected()) {
             return 0.01;
         }
         return 0;
@@ -871,7 +871,7 @@ public class CadastroCurso implements Initializable {
         moduleCard.setSpacing(15);
         HBox moduleHeader = createModuleHeader(currentModuleCount);
         VBox moduleContent = createModuleContent(currentModuleCount);
-        VBox lessonsList = createLessonsList(modulesList);
+        VBox lessonsList = createLessonsList(modulesList, moduleHeader);
         moduleCard.getChildren().addAll(moduleHeader, moduleContent, lessonsList);
         moduleCard.setOpacity(0);
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), moduleCard);
@@ -895,7 +895,9 @@ public class CadastroCurso implements Initializable {
         Button removeButton = new Button("X");
         removeButton.getStyleClass().add("outline-button");
         Tooltip.install(removeButton, new Tooltip("Remover módulo"));
-        removeButton.setOnAction(e -> removeModuleWithAnimation(header.getParent()));
+        removeButton.setOnAction(e -> {
+            removeModuleWithAnimation(header.getParent());
+        });
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         header.getChildren().addAll(numberContainer, spacer, removeButton);
@@ -988,7 +990,11 @@ public class CadastroCurso implements Initializable {
         return container;
     }
 
-    private VBox createLessonsList(VBox modulesList) {
+    private VBox createLessonsList(VBox modulesList, HBox moduleHeader) {
+        StackPane numberContainer = (StackPane) moduleHeader.getChildren().get(0);
+        Label numberLabel = (Label) numberContainer.getChildren().get(0);
+        int moduleNumber = Integer.parseInt(numberLabel.getText());
+
         VBox lessonsList = new VBox();
         HBox buttonHBox = new HBox();
         lessonsList.setSpacing(15);
@@ -999,7 +1005,7 @@ public class CadastroCurso implements Initializable {
         String existingStyles = addLessonButton.getStyle();
         addLessonButton.setStyle(existingStyles + "-fx-max-width: 250;");
         addLessonButton.setOnAction(e -> {
-            addNewLesson(lessonsList);
+            addNewLesson(lessonsList, moduleNumber);
             validatorModules.setupInitialStateModules(modulesList);
         });
 
@@ -1007,7 +1013,7 @@ public class CadastroCurso implements Initializable {
         addquestionaire.getStyleClass().add("outline-button");
         addquestionaire.setStyle(existingStyles + "-fx-max-width: 250;");
         HBox.setMargin(addquestionaire, new javafx.geometry.Insets(0, 0, 0, 20));
-        addquestionaire.setOnAction(e -> addNewquestionaire(lessonsList));
+        addquestionaire.setOnAction(e -> addNewquestionaire(lessonsList,moduleNumber));
 
         buttonHBox.getChildren().addAll(addLessonButton, addquestionaire);
         lessonsList.getChildren().add(buttonHBox);
@@ -1016,7 +1022,7 @@ public class CadastroCurso implements Initializable {
     }
 
     @FXML
-    private void addNewquestionaire(VBox lessonsList) {
+    private void addNewquestionaire(VBox lessonsList, int moduleNumber) {
         VBox moduleContent = (VBox) lessonsList.getParent();
 
         VBox questionaireCard = new VBox();
@@ -1041,7 +1047,7 @@ public class CadastroCurso implements Initializable {
 
         Button removeButton = new Button("X");
         removeButton.getStyleClass().add("outline-button");
-        removeButton.setOnAction(e -> removequestionaireWithAnimation(questionaireCard));
+        removeButton.setOnAction(e -> removequestionaireWithAnimation(questionaireCard, moduleNumber));
         questionaireHeader.getChildren().addAll(numberContainer, spacer, removeButton);
 
         VBox content = new VBox();
@@ -1084,18 +1090,18 @@ public class CadastroCurso implements Initializable {
 
         HBox contextMenu = new HBox();
         Button addDiscursiveButton = new Button("Questão Discursiva");
-        addDiscursiveButton.setOnAction(e -> addNewQuestion(questionsContainer, lessonsList, "DISCURSIVE"));
+        addDiscursiveButton.setOnAction(e -> addNewQuestion(questionsContainer, lessonsList, "DISCURSIVE",moduleNumber));
         addDiscursiveButton.getStyleClass().add("simple-button");
         String existingStyles = addDiscursiveButton.getStyle();
         addDiscursiveButton.setStyle(existingStyles + "-fx-max-width: 250;");
 
         Button addSingleChoiceButton = new Button("Questão Única");
-        addSingleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer, lessonsList, "SINGLE_CHOICE"));
+        addSingleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer, lessonsList, "SINGLE_CHOICE",moduleNumber));
         addSingleChoiceButton.getStyleClass().add("simple-button");
         addSingleChoiceButton.setStyle(existingStyles + "-fx-max-width: 250;");
 
         Button addMultipleChoiceButton = new Button("Questão Múltipla");
-        addMultipleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer, lessonsList, "MULTIPLE_CHOICE"));
+        addMultipleChoiceButton.setOnAction(e -> addNewQuestion(questionsContainer, lessonsList, "MULTIPLE_CHOICE",moduleNumber));
         addMultipleChoiceButton.getStyleClass().add("simple-button");
         addMultipleChoiceButton.setStyle(existingStyles + "-fx-max-width: 250;");
 
@@ -1124,7 +1130,7 @@ public class CadastroCurso implements Initializable {
 
         setModulequestionaireCounter(moduleContent, moduleSpecificCounter + 1);
         lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, questionaireCard);
-        validatorQuestionario.setupInitialStateQuestions(lessonsList);
+        validatorQuestionario.setupInitialStateQuestions(lessonsList,moduleNumber);
 
     }
 
@@ -1192,7 +1198,7 @@ public class CadastroCurso implements Initializable {
     }
 
     @FXML
-    private void addNewLesson(VBox lessonsList) {
+    private void addNewLesson(VBox lessonsList, int moduleNumber) {
         VBox moduleContent = (VBox) lessonsList.getParent();
 
         VBox lessonCard = new VBox();
@@ -1218,7 +1224,9 @@ public class CadastroCurso implements Initializable {
         Button removeLessonButton = new Button("X");
         removeLessonButton.getStyleClass().add("outline-button");
         Tooltip.install(removeLessonButton, new Tooltip("Remover aula"));
-        removeLessonButton.setOnAction(e -> removeLessonWithAnimation(lessonCard));
+        removeLessonButton.setOnAction(e -> {
+            removeLessonWithAnimation(lessonCard,moduleNumber);
+        });
         lessonHeader.getChildren().addAll(numberContainer, spacer, removeLessonButton);
 
         VBox lessonContent = createLessonContent(moduleSpecificCounter);
@@ -1234,7 +1242,7 @@ public class CadastroCurso implements Initializable {
         moduleContent.setUserData(moduleSpecificCounter + 1);
 
         lessonsList.getChildren().add(lessonsList.getChildren().size() - 1, lessonCard);
-        validatorAulas.setupInitialStateLessons(lessonsList);
+        validatorAulas.setupInitialStateLessons(lessonsList, moduleNumber);
     }
 
     private VBox createLessonContent(int lessonNumber) {
@@ -1283,6 +1291,9 @@ public class CadastroCurso implements Initializable {
             if (!newText.isEmpty() && !newText.matches("\\d*")) {
                 durationField.setText(old);
             }
+            if ("0".equals(newText)) {
+                durationField.setText(old); // Restaura o valor anterior se for zero
+            }
         });
         Label lessonDurationLabelError = new Label("Por favor, insira uma duração válida");
         lessonDurationLabelError.getStyleClass().add("error-label");
@@ -1312,7 +1323,7 @@ public class CadastroCurso implements Initializable {
         return container;
     }
 
-    private void removeLessonWithAnimation(Node lessonCard) {
+    private void removeLessonWithAnimation(Node lessonCard, int moduleNumber) {
         VBox lessonsList = (VBox) lessonCard.getParent();
         VBox moduleContent = (VBox) lessonsList.getParent();
 
@@ -1322,11 +1333,12 @@ public class CadastroCurso implements Initializable {
         fadeOut.setOnFinished(e -> {
             lessonsList.getChildren().remove(lessonCard);
             updateLessonNumbers(lessonsList, moduleContent);
+            validatorAulas.setupInitialStateLessons(lessonsList, moduleNumber);
         });
         fadeOut.play();
     }
 
-    private void removequestionaireWithAnimation(Node questionaireCard) {
+    private void removequestionaireWithAnimation(Node questionaireCard,int moduleNumber) {
         VBox lessonsList = (VBox) questionaireCard.getParent();
         VBox moduleContent = (VBox) lessonsList.getParent();
 
@@ -1336,6 +1348,7 @@ public class CadastroCurso implements Initializable {
         fadeOut.setOnFinished(e -> {
             lessonsList.getChildren().remove(questionaireCard);
             updatequestionaireNumbers(lessonsList, moduleContent);
+            validatorQuestionario.setupInitialStateQuestions(lessonsList,moduleNumber);
         });
         fadeOut.play();
     }
@@ -1376,7 +1389,7 @@ public class CadastroCurso implements Initializable {
         setModulequestionaireCounter(moduleContent, tempquestionaireCounter);
     }
 
-    private void addNewQuestion(VBox questionsContainer, VBox lessonsList, String type) {
+    private void addNewQuestion(VBox questionsContainer, VBox lessonsList, String type, int moduleNumber) {
         VBox questionCard = new VBox(10);
         questionCard.getStyleClass().add("question-card");
 
@@ -1397,7 +1410,7 @@ public class CadastroCurso implements Initializable {
         Button removeButton = new Button("X");
         removeButton.getStyleClass().add("simple-button");
         removeButton.setOnAction(e -> {
-            removeQuestionWithAnimation(questionCard);
+            removeQuestionWithAnimation(questionCard, moduleNumber);
         });
 
         questionHeader.getChildren().addAll(numberContainer, spacer, removeButton);
@@ -1438,22 +1451,22 @@ public class CadastroCurso implements Initializable {
                 addDiscursiveFields(questionContent);
                 break;
             case "SINGLE_CHOICE":
-                addSingleChoiceFields(questionContent);
+                addSingleChoiceFields(questionContent,moduleNumber);
                 break;
             case "MULTIPLE_CHOICE":
-                addMultipleChoiceFields(questionContent);
+                addMultipleChoiceFields(questionContent,moduleNumber);
                 break;
         }
         questionCard.getChildren().addAll(questionHeader, questionContent);
         questionsContainer.getChildren().add(questionCard);
 
-        validatorQuestoes.setupInitialStateQuestions(questionsContainer);
-        validatorQuestionario.setupInitialStateQuestions(lessonsList);
+        validatorQuestoes.setupInitialStateQuestions(questionsContainer,moduleNumber);
+        validatorQuestionario.setupInitialStateQuestions(lessonsList,moduleNumber);
 
         updateQuestionNumbers(questionsContainer);
     }
 
-    private void removeQuestionWithAnimation(Node questionCard) {
+    private void removeQuestionWithAnimation(Node questionCard, int moduleNumber) {
         VBox questionsContainer = (VBox) questionCard.getParent(); // Obtém o container das questões
 
         FadeTransition fadeOut = new FadeTransition(Duration.millis(300), questionCard);
@@ -1462,6 +1475,8 @@ public class CadastroCurso implements Initializable {
         fadeOut.setOnFinished(e -> {
             questionsContainer.getChildren().remove(questionCard); // Remove a questão
             updateQuestionNumbers(questionsContainer); // Atualiza os números após remover
+            validatorQuestoes.setupInitialStateQuestions(questionsContainer,moduleNumber);
+
         });
         fadeOut.play();
     }
@@ -1483,6 +1498,7 @@ public class CadastroCurso implements Initializable {
         fadeOut.setToValue(0);
         fadeOut.setOnFinished(e -> {
             modulesList.getChildren().remove(moduleCard);
+            validatorModules.setupInitialStateModules(modulesList);
             updateModuleNumbers();
         });
         fadeOut.play();
@@ -1525,13 +1541,13 @@ public class CadastroCurso implements Initializable {
                 evaluationCriteria, evaluationCriteriaErrorLabel);
     }
 
-    private void addSingleChoiceFields(VBox container) {
+    private void addSingleChoiceFields(VBox container, int moduleNumber) {
         VBox optionsContainer = new VBox(5);
         ToggleGroup toggleGroup = new ToggleGroup();
 
         Button addOptionButton = new Button("+ Adicionar Opção");
         addOptionButton.getStyleClass().add("outline-button");
-        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, container, toggleGroup, true));
+        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, container, toggleGroup, true,moduleNumber));
         Label optionLabel = new Label("Opções (selecione a correta)");
         optionLabel.getStyleClass().add("field-label");
         Label optionErrorLabel = new Label("Por favor, selecione uma opção válida.");
@@ -1543,19 +1559,19 @@ public class CadastroCurso implements Initializable {
                 optionLabel,
                 optionsContainer,
                 addOptionButton, optionErrorLabel);
-        addChoiceOption(optionsContainer, container, toggleGroup, true);
-        addChoiceOption(optionsContainer, container, toggleGroup, true);
+        addChoiceOption(optionsContainer, container, toggleGroup, true,moduleNumber);
+        addChoiceOption(optionsContainer, container, toggleGroup, true,moduleNumber);
 
-        validatorOptions.setupInitialStateOptions(container, true);
+        validatorOptions.setupInitialStateOptions(container, true,moduleNumber);
 
     }
 
-    private void addMultipleChoiceFields(VBox container) {
+    private void addMultipleChoiceFields(VBox container,int moduleNumber) {
         VBox optionsContainer = new VBox(5);
 
         Button addOptionButton = new Button("+ Adicionar Opção");
         addOptionButton.getStyleClass().add("outline-button");
-        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, container, null, false));
+        addOptionButton.setOnAction(e -> addChoiceOption(optionsContainer, container, null, false,moduleNumber));
         Label optionLabel = new Label("Opções (selecione as corretas)");
         optionLabel.getStyleClass().add("field-label");
 
@@ -1569,12 +1585,12 @@ public class CadastroCurso implements Initializable {
                 optionsContainer,
                 addOptionButton, optionErrorLabel);
 
-        addChoiceOption(optionsContainer, container, null, false);
-        addChoiceOption(optionsContainer, container, null, false);
-        validatorOptions.setupInitialStateOptions(container, false);
+        addChoiceOption(optionsContainer, container, null, false, moduleNumber);
+        addChoiceOption(optionsContainer, container, null, false, moduleNumber);
+        validatorOptions.setupInitialStateOptions(container, false,moduleNumber);
     }
 
-    private void addChoiceOption(VBox optionsContainer, VBox container, ToggleGroup toggleGroup, boolean singleChoice) {
+    private void addChoiceOption(VBox optionsContainer, VBox container, ToggleGroup toggleGroup, boolean singleChoice, int moduleNumber) {
         HBox optionBox = new HBox(10);
         optionBox.setAlignment(Pos.CENTER_LEFT);
 
@@ -1609,7 +1625,7 @@ public class CadastroCurso implements Initializable {
             fadeOut.setToValue(0);
             fadeOut.setOnFinished(event -> {
                 container.getChildren().removeAll(optionBox, optionErrorLabel);
-                validatorOptions.setupInitialStateOptions(container, singleChoice);
+                validatorOptions.setupInitialStateOptions(container, singleChoice,moduleNumber);
             });
             fadeOut.play();
         });
@@ -1638,7 +1654,7 @@ public class CadastroCurso implements Initializable {
         // Insert the error label right after the option box
         container.getChildren().add(positionOpcion + 2, optionErrorLabel);
 
-        validatorOptions.setupInitialStateOptions(container, false);
+        validatorOptions.setupInitialStateOptions(container, false,moduleNumber);
     }
 
     protected void addDateInputField() {

@@ -1,16 +1,13 @@
 package com.view.professor.valid;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.css.PseudoClass;
 
 import com.view.login_cadastro.elements.ErrorNotification;
@@ -19,9 +16,10 @@ public class CursoOptionsValid {
     private static final int MIN_OPTION_LENGTH = 1;
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
-    private List<TextField> optionFields = new ArrayList<>();
-    private List<Label> optionErrorLabels = new ArrayList<>();
-    private List<Node> selectionControls = new ArrayList<>();
+    private Map<Integer, List<TextField>> optionFieldsMap = new HashMap<>();
+    private Map<Integer, List<Label>> optionErrorLabelsMap = new HashMap<>();
+    private Map<Integer, List<Node>> selectionControlsMap = new HashMap<>();
+
     private ValidationSupport validationSupport = new ValidationSupport();
 
     private GridPane parentContainer;
@@ -30,12 +28,19 @@ public class CursoOptionsValid {
         this.parentContainer = parentContainer;
     }
 
-    public void setupInitialStateOptions(VBox optionsList, boolean singleChoice) {
-        loadValues(optionsList);
-        setupValidationListeners();
+    public void setupInitialStateOptions(VBox optionsList, boolean singleChoice, int moduleNumber) {
+        clearList(moduleNumber);
+        loadValues(optionsList, moduleNumber);
+        setupValidationListeners(moduleNumber);
     }
 
-    private void loadValues(VBox optionsList) {
+    private void clearList(int moduleNumber) {
+        optionFieldsMap.remove(moduleNumber);
+        optionErrorLabelsMap.remove(moduleNumber);
+        selectionControlsMap.remove(moduleNumber);
+    }
+
+    private void loadValues(VBox optionsList, int moduleNumber) {
 
         for (Node node : optionsList.getChildren()) {
             if (!(node instanceof HBox))
@@ -65,16 +70,18 @@ public class CursoOptionsValid {
                 }
             }
 
-            // Add to lists if all components are found
-            if (optionField != null && optionErrorLabel != null && selectionControl != null) {
-                optionFields.add(optionField);
-                optionErrorLabels.add(optionErrorLabel);
-                selectionControls.add(selectionControl);
+            if (selectionControl != null && optionField != null && optionErrorLabel != null) {
+                optionFieldsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(optionField);
+                optionErrorLabelsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(optionErrorLabel);
+                selectionControlsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(selectionControl);
             }
         }
     }
 
-    private void setupValidationListeners() {
+    private void setupValidationListeners(int moduleNumber) {
+        List<TextField> optionFields = optionFieldsMap.get(moduleNumber);
+        List<Label> optionErrorLabels = optionErrorLabelsMap.get(moduleNumber);
+
         for (int i = 0; i < optionFields.size(); i++) {
             TextField optionField = optionFields.get(i);
             Label optionErrorLabel = optionErrorLabels.get(i);
@@ -113,22 +120,25 @@ public class CursoOptionsValid {
     public boolean validateFields() {
         boolean isAllValid = true;
 
-        for (int i = 0; i < optionFields.size(); i++) {
-            TextField optionField = optionFields.get(i);
-            Label optionErrorLabel = optionErrorLabels.get(i);
+        for (Integer moduleNumber : optionFieldsMap.keySet()) {
+            List<TextField> optionFields = optionFieldsMap.get(moduleNumber);
+            List<Label> optionErrorLabels = optionErrorLabelsMap.get(moduleNumber);
 
-            boolean isFieldValid = optionField.getText() != null &&
-                    optionField.getText().trim().length() >= MIN_OPTION_LENGTH;
+            for (int i = 0; i < optionFields.size(); i++) {
 
-            if (!isFieldValid) {
-                updateErrorDisplay(
-                        optionField,
-                        optionErrorLabel,
-                        true,
-                        "Por favor, insira uma opção válida, com pelo menos 1 caracter");
-                isAllValid = false;
-            } else {
-                updateErrorDisplay(optionField, optionErrorLabel, false, null);
+                boolean isFieldValid = optionFields.get(i).getText() != null &&
+                        optionFields.get(i).getText().trim().length() >= MIN_OPTION_LENGTH;
+
+                if (!isFieldValid) {
+                    updateErrorDisplay(
+                            optionFields.get(i),
+                            optionErrorLabels.get(i),
+                            true,
+                            "Por favor, insira uma opção válida, com pelo menos 1 caracter");
+                    isAllValid = false;
+                } else {
+                    updateErrorDisplay(optionFields.get(i), optionErrorLabels.get(i), false, null);
+                }
             }
         }
 
@@ -146,18 +156,23 @@ public class CursoOptionsValid {
     public List<String> getSelectedOptions() {
         List<String> selectedOptions = new ArrayList<>();
 
-        for (int i = 0; i < optionFields.size(); i++) {
-            Node selectionControl = selectionControls.get(i);
+        for (Integer moduleNumber : optionFieldsMap.keySet()) {
+            List<TextField> optionFields = optionFieldsMap.get(moduleNumber);
+            List<Node> selectionControls = selectionControlsMap.get(moduleNumber);
 
-            if (selectionControl instanceof RadioButton) {
-                RadioButton radio = (RadioButton) selectionControl;
-                if (radio.isSelected()) {
-                    selectedOptions.add(optionFields.get(i).getText());
-                }
-            } else if (selectionControl instanceof CheckBox) {
-                CheckBox checkbox = (CheckBox) selectionControl;
-                if (checkbox.isSelected()) {
-                    selectedOptions.add(optionFields.get(i).getText());
+            for (int i = 0; i < optionFields.size(); i++) {
+                Node selectionControl = selectionControls.get(i);
+
+                if (selectionControl instanceof RadioButton) {
+                    RadioButton radio = (RadioButton) selectionControl;
+                    if (radio.isSelected()) {
+                        selectedOptions.add(optionFields.get(i).getText());
+                    }
+                } else if (selectionControl instanceof CheckBox) {
+                    CheckBox checkbox = (CheckBox) selectionControl;
+                    if (checkbox.isSelected()) {
+                        selectedOptions.add(optionFields.get(i).getText());
+                    }
                 }
             }
         }
@@ -166,30 +181,32 @@ public class CursoOptionsValid {
     }
 
     public int getOptionFieldsCount() {
-        return optionFields.size();
+        return optionFieldsMap.values().stream().mapToInt(List::size).sum();
     }
-    
+
     public int getSelectionControlsCount() {
-        return selectionControls.size();
+        return selectionControlsMap.values().stream().mapToInt(List::size).sum();
     }
-    
+
     public int getValidatedOptionFieldsCount() {
-        return (int) optionFields.stream()
-            .filter(field -> field.getText() != null && 
-                             field.getText().trim().length() >= MIN_OPTION_LENGTH)
-            .count();
+        return (int) optionFieldsMap.values().stream()
+                .flatMap(List::stream)
+                .filter(field -> field.getText() != null &&
+                        field.getText().trim().length() >= MIN_OPTION_LENGTH)
+                .count();
     }
-    
+
     public int getSelectedOptionsCount() {
-        return (int) selectionControls.stream()
-            .filter(control -> {
-                if (control instanceof RadioButton) {
-                    return ((RadioButton) control).isSelected();
-                } else if (control instanceof CheckBox) {
-                    return ((CheckBox) control).isSelected();
-                }
-                return false;
-            })
-            .count();
+        return (int) selectionControlsMap.values().stream()
+                .flatMap(List::stream)
+                .filter(control -> {
+                    if (control instanceof RadioButton) {
+                        return ((RadioButton) control).isSelected();
+                    } else if (control instanceof CheckBox) {
+                        return ((CheckBox) control).isSelected();
+                    }
+                    return false;
+                })
+                .count();
     }
 }

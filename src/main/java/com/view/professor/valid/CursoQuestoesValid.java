@@ -1,7 +1,6 @@
 package com.view.professor.valid;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -19,13 +18,12 @@ public class CursoQuestoesValid {
     private static final int MIN_QUESTION_LENGTH = 10;
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
-    private List<TextArea> questionFields = new ArrayList<>();
-    private List<Label> questionErrorLabels = new ArrayList<>();
-    private List<TextField> scoreFields = new ArrayList<>();
-    private List<Label> scoreErrorLabels = new ArrayList<>();
-
-    private List<Label> evaluationCriteriaErrorLabels = new ArrayList<>();
-    private List<TextArea> evaluationCriteriaFields = new ArrayList<>();
+    private Map<Integer, List<TextArea>> questionTextFieldsMap = new HashMap<>();
+    private Map<Integer, List<Label>> questionErrorLabelsMap = new HashMap<>();
+    private Map<Integer, List<TextField>> scoreFieldsMap = new HashMap<>();
+    private Map<Integer, List<Label>> scoreErrorLabelsMap = new HashMap<>();
+    private Map<Integer, List<TextArea>> evaluationCriteriaFieldsMaps = new HashMap<>();
+    private Map<Integer, List<Label>> evaluationCriteriaErrorLabelsMaps = new HashMap<>();
 
     private GridPane parentContainer;
 
@@ -33,12 +31,22 @@ public class CursoQuestoesValid {
         this.parentContainer = parentContainer;
     }
 
-    public void setupInitialStateQuestions(VBox questionsContainer) {
-        loadValues(questionsContainer);
-        setupValidationListeners();
+    public void setupInitialStateQuestions(VBox questionsContainer, int moduleNumber) {
+        clearLists(moduleNumber);
+        loadValues(questionsContainer, moduleNumber);
+        setupValidationListeners(moduleNumber);
     }
 
-    private void loadValues(VBox questionsContainer) {
+    private void clearLists(int moduleNumber) {
+        questionTextFieldsMap.remove(moduleNumber);
+        questionErrorLabelsMap.remove(moduleNumber);
+        scoreFieldsMap.remove(moduleNumber);
+        scoreErrorLabelsMap.remove(moduleNumber);
+        evaluationCriteriaFieldsMaps.remove(moduleNumber);
+        evaluationCriteriaErrorLabelsMaps.remove(moduleNumber);
+    }
+
+    private void loadValues(VBox questionsContainer, int moduleNumber) {
         for (Node questionNode : questionsContainer.getChildren()) {
             if (!(questionNode instanceof VBox))
                 continue;
@@ -49,30 +57,39 @@ public class CursoQuestoesValid {
             TextField scoreField = (TextField) scoreHbox.getChildren().get(1);
             Label scoreErrorLabel = (Label) questionContent.getChildren().get(1);
 
-            TextArea questionText = (TextArea) questionContent.getChildren().get(2);
+            TextArea questionTextArea = (TextArea) questionContent.getChildren().get(2);
             Label questionErrorLabel = (Label) questionContent.getChildren().get(3);
 
-            questionFields.add(questionText);
-            questionErrorLabels.add(questionErrorLabel);
-            scoreFields.add(scoreField);
-            scoreErrorLabels.add(scoreErrorLabel);
+            questionTextFieldsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(questionTextArea);
+            questionErrorLabelsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(questionErrorLabel);
+            scoreFieldsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(scoreField);
+            scoreErrorLabelsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(scoreErrorLabel);
 
             if (questionContent.getChildren().get(7) instanceof TextArea) {
                 TextArea evaluationCriteria = (TextArea) questionContent.getChildren().get(7);
                 Label evaluationCriteriaError = (Label) questionContent.getChildren().get(8);
-                evaluationCriteriaFields.add(evaluationCriteria);
-                evaluationCriteriaErrorLabels.add(evaluationCriteriaError);
+
+                evaluationCriteriaFieldsMaps.computeIfAbsent(moduleNumber, k -> new ArrayList<>())
+                        .add(evaluationCriteria);
+                evaluationCriteriaErrorLabelsMaps.computeIfAbsent(moduleNumber, k -> new ArrayList<>())
+                        .add(evaluationCriteriaError);
             }
 
         }
 
     }
 
-    private void setupValidationListeners() {
+    private void setupValidationListeners(int moduleNumber) {
         ValidationSupport validationSupport = new ValidationSupport();
+        List<TextArea> questionTextFields = questionTextFieldsMap.get(moduleNumber);
+        List<Label> questionErrorLabels = questionErrorLabelsMap.get(moduleNumber);
+        List<TextField> scoreFields = scoreFieldsMap.get(moduleNumber);
+        List<Label> scoreErrorLabels = scoreErrorLabelsMap.get(moduleNumber);
+        List<TextArea> evaluationCriteriaFields = evaluationCriteriaFieldsMaps.get(moduleNumber);
+        List<Label> evaluationCriteriaErrorLabels = evaluationCriteriaErrorLabelsMaps.get(moduleNumber);
 
-        for (int i = 0; i < questionFields.size(); i++) {
-            TextArea questionText = questionFields.get(i);
+        for (int i = 0; i < questionTextFields.size(); i++) {
+            TextArea questionText = questionTextFields.get(i);
             Label questionErrorLabel = questionErrorLabels.get(i);
             TextField scoreField = scoreFields.get(i);
             Label scoreErrorLabel = scoreErrorLabels.get(i);
@@ -97,6 +114,9 @@ public class CursoQuestoesValid {
             scoreField.textProperty().addListener((obs, old, newText) -> {
                 if (newText.length() > 0) {
                     updateErrorDisplay(scoreField, scoreErrorLabel, false, null);
+                }
+                if ("0".equals(newText)) {
+                    scoreField.setText(old);
                 }
             });
 
@@ -149,61 +169,70 @@ public class CursoQuestoesValid {
 
     public boolean validateFields() {
         boolean isAllValid = true;
+        for (Integer moduleNumber : questionTextFieldsMap.keySet()) {
 
-        for (int i = 0; i < questionFields.size(); i++) {
+            List<TextArea> questionTextFields = questionTextFieldsMap.get(moduleNumber);
+            List<Label> questionErrorLabels = questionErrorLabelsMap.get(moduleNumber);
+            List<TextField> scoreFields = scoreFieldsMap.get(moduleNumber);
+            List<Label> scoreErrorLabels = scoreErrorLabelsMap.get(moduleNumber);
+            List<TextArea> evaluationCriteriaFields = evaluationCriteriaFieldsMaps.get(moduleNumber);
+            List<Label> evaluationCriteriaErrorLabels = evaluationCriteriaErrorLabelsMaps.get(moduleNumber);
+
             boolean isQuestionValid = true;
+            for (int i = 0; i < questionTextFields.size(); i++) {
 
-            if (questionFields.get(i).getText().length() < MIN_QUESTION_LENGTH) {
-                updateErrorDisplay(
-                        questionFields.get(i),
-                        questionErrorLabels.get(i),
-                        true,
-                        "Por favor, insira uma pergunta válida, com pelo menos 10 caracteres");
-                isQuestionValid = false;
-            }
-
-            if (scoreFields.get(i).getText() == null ||
-                    scoreFields.get(i).getText().isEmpty()) {
-                updateErrorDisplay(
-                        scoreFields.get(i),
-                        scoreErrorLabels.get(i),
-                        true,
-                        "Por favor, insira uma pontuação válida");
-                isQuestionValid = false;
-            }
-
-            if (i < evaluationCriteriaFields.size()) {
-                TextArea criteriaField = evaluationCriteriaFields.get(i);
-                if (criteriaField.getText().length() < MIN_QUESTION_LENGTH) {
+                if (questionTextFields.get(i).getText().length() < MIN_QUESTION_LENGTH) {
                     updateErrorDisplay(
-                            criteriaField,
-                            evaluationCriteriaErrorLabels.get(i),
+                            questionTextFields.get(i),
+                            questionErrorLabels.get(i),
                             true,
-                            "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres");
+                            "Por favor, insira uma pergunta válida, com pelo menos 10 caracteres");
                     isQuestionValid = false;
                 }
-            }
 
-            if (i < evaluationCriteriaFields.size()) {
-                TextArea criteriaField = evaluationCriteriaFields.get(i);
-                if (criteriaField.getText().length() < MIN_QUESTION_LENGTH) {
+                if (scoreFields.get(i).getText() == null ||
+                        scoreFields.get(i).getText().isEmpty()) {
                     updateErrorDisplay(
-                            criteriaField,
-                            evaluationCriteriaErrorLabels.get(i),
+                            scoreFields.get(i),
+                            scoreErrorLabels.get(i),
                             true,
-                            "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres");
+                            "Por favor, insira uma pontuação válida");
                     isQuestionValid = false;
                 }
-            }
 
-            if (!isQuestionValid) {
-                ErrorNotification errorNotification = new ErrorNotification(
-                        parentContainer,
-                        "Preencha todos os campos corretamente");
+                if (i < evaluationCriteriaFields.size()) {
+                    TextArea criteriaField = evaluationCriteriaFields.get(i);
+                    if (criteriaField.getText().length() < MIN_QUESTION_LENGTH) {
+                        updateErrorDisplay(
+                                criteriaField,
+                                evaluationCriteriaErrorLabels.get(i),
+                                true,
+                                "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres");
+                        isQuestionValid = false;
+                    }
+                }
 
-                errorNotification.show();
+                if (i < evaluationCriteriaFields.size()) {
+                    TextArea criteriaField = evaluationCriteriaFields.get(i);
+                    if (criteriaField.getText().length() < MIN_QUESTION_LENGTH) {
+                        updateErrorDisplay(
+                                criteriaField,
+                                evaluationCriteriaErrorLabels.get(i),
+                                true,
+                                "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres");
+                        isQuestionValid = false;
+                    }
+                }
 
-                isAllValid = false;
+                if (!isQuestionValid) {
+                    ErrorNotification errorNotification = new ErrorNotification(
+                            parentContainer,
+                            "Preencha todos os campos corretamente");
+
+                    errorNotification.show();
+
+                    isAllValid = false;
+                }
             }
         }
 
@@ -211,32 +240,36 @@ public class CursoQuestoesValid {
     }
 
     public int getQuestionFieldsCount() {
-        return questionFields.size();
+        return questionTextFieldsMap.values().stream().mapToInt(List::size).sum();
     }
-    
+
     public int getScoreFieldsCount() {
-        return scoreFields.size();
+        return scoreFieldsMap.values().stream().mapToInt(List::size).sum();
     }
-    
+
     public int getEvaluationCriteriaFieldsCount() {
-        return evaluationCriteriaFields.size();
+        return evaluationCriteriaFieldsMaps.values().stream().mapToInt(List::size).sum();
+
     }
-    
+
     public int getValidatedQuestionFieldsCount() {
-        return (int) questionFields.stream()
-            .filter(field -> field.getText().length() >= MIN_QUESTION_LENGTH)
-            .count();
+        return (int) questionTextFieldsMap.values().stream()
+                .flatMap(List::stream)
+                .filter(field -> field.getText().length() >= MIN_QUESTION_LENGTH)
+                .count();
     }
-    
+
     public int getValidatedScoreFieldsCount() {
-        return (int) scoreFields.stream()
-            .filter(field -> field.getText() != null && !field.getText().isEmpty() && field.getText().matches("\\d*\\.?\\d*"))
-            .count();
+        return (int) scoreFieldsMap.values().stream()
+                .flatMap(List::stream)
+                .filter(field -> !field.getText().isEmpty() && field.getText().matches("\\d*\\.?\\d*"))
+                .count();
     }
-    
+
     public int getValidatedEvaluationCriteriaFieldsCount() {
-        return (int) evaluationCriteriaFields.stream()
-            .filter(field -> field.getText().length() >= MIN_QUESTION_LENGTH)
-            .count();
+        return (int) evaluationCriteriaFieldsMaps.values().stream()
+        .flatMap(List::stream)
+        .filter(field -> field.getText().length() >= MIN_QUESTION_LENGTH)
+        .count();
     }
 }

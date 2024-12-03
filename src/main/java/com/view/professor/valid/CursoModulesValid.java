@@ -1,7 +1,6 @@
 package com.view.professor.valid;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -18,12 +17,13 @@ public class CursoModulesValid {
     private static final int MIN_DETAILS_LENGTH = 10;
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
-    private List<TextField> titleFields = new ArrayList<>();
-    private List<Label> titleErrorLabels = new ArrayList<>();
-    private List<TextField> durationFields = new ArrayList<>();
-    private List<Label> durationErrorLabels = new ArrayList<>();
-    private List<TextArea> detailsFields = new ArrayList<>();
-    private List<Label> detailsErrorLabels = new ArrayList<>();
+    private Map<Integer, TextField> titleFields = new HashMap<>();
+    private Map<Integer, Label> titleErrorLabels = new HashMap<>();
+    private Map<Integer, TextField> durationFields = new HashMap<>();
+    private Map<Integer, Label> durationErrorLabels = new HashMap<>();
+    private Map<Integer, TextArea> detailsFields = new HashMap<>();
+    private Map<Integer, Label> detailsErrorLabels = new HashMap<>();
+
     private VBox lessonList;
     private VBox moduleList;
     private GridPane parentContainer;
@@ -38,15 +38,25 @@ public class CursoModulesValid {
         setupValidationListeners();
     }
 
+    private void moduleClear() {
+        titleFields.clear();
+        titleErrorLabels.clear();
+        durationFields.clear();
+        durationErrorLabels.clear();
+        detailsFields.clear();
+        detailsErrorLabels.clear();
+    }
+
     private void loadValues(VBox modulesList) {
         moduleList = modulesList;
+        moduleClear();
 
-        for (Node moduleNode : modulesList.getChildren()) {
+        for (int moduleIndex = 0; moduleIndex < modulesList.getChildren().size(); moduleIndex++) {
+            Node moduleNode = modulesList.getChildren().get(moduleIndex);
             if (!(moduleNode instanceof VBox))
                 continue;
 
             VBox moduleCard = (VBox) moduleNode;
-
             lessonList = (VBox) moduleCard.getChildren().get(2);
 
             VBox moduleContent = (VBox) moduleCard.getChildren().get(1);
@@ -62,25 +72,26 @@ public class CursoModulesValid {
             TextArea detailsField = (TextArea) ((VBox) moduleContent.getChildren().get(3)).getChildren().get(1);
             Label detailsErrorLabel = (Label) moduleContent.getChildren().get(4);
 
-            titleFields.add(titleField);
-            titleErrorLabels.add(titleErrorLabel);
-            durationFields.add(durationField);
-            durationErrorLabels.add(durationErrorLabel);
-            detailsFields.add(detailsField);
-            detailsErrorLabels.add(detailsErrorLabel);
+            titleFields.put(moduleIndex, titleField);
+            titleErrorLabels.put(moduleIndex, titleErrorLabel);
+            durationFields.put(moduleIndex, durationField);
+            durationErrorLabels.put(moduleIndex, durationErrorLabel);
+            detailsFields.put(moduleIndex, detailsField);
+            detailsErrorLabels.put(moduleIndex, detailsErrorLabel);
         }
     }
+
 
     private void setupValidationListeners() {
         ValidationSupport validationSupport = new ValidationSupport();
 
-        for (int i = 0; i < titleFields.size(); i++) {
-            TextField titleField = titleFields.get(i);
-            Label titleErrorLabel = titleErrorLabels.get(i);
-            TextField durationField = durationFields.get(i);
-            Label durationErrorLabel = durationErrorLabels.get(i);
-            TextArea detailsField = detailsFields.get(i);
-            Label detailsErrorLabel = detailsErrorLabels.get(i);
+        for (Integer moduleIndex : titleFields.keySet()) {
+            TextField titleField = titleFields.get(moduleIndex);
+            Label titleErrorLabel = titleErrorLabels.get(moduleIndex);
+            TextField durationField = durationFields.get(moduleIndex);
+            Label durationErrorLabel = durationErrorLabels.get(moduleIndex);
+            TextArea detailsField = detailsFields.get(moduleIndex);
+            Label detailsErrorLabel = detailsErrorLabels.get(moduleIndex);
 
             titleField.textProperty().addListener((obs, old, newText) -> {
                 if (newText.length() >= MIN_TITLE_LENGTH) {
@@ -102,6 +113,9 @@ public class CursoModulesValid {
             durationField.textProperty().addListener((obs, old, newText) -> {
                 if (newText.length() > 0) {
                     updateErrorDisplay(durationField, durationErrorLabel, false, null);
+                }
+                if ("0".equals(newText)) {
+                    durationField.setText(old); 
                 }
             });
 
@@ -150,78 +164,75 @@ public class CursoModulesValid {
     public boolean validateFields() {
         boolean isAllValid = true;
 
-        for (int i = 0; i < titleFields.size(); i++) {
+        for (Integer moduleIndex : titleFields.keySet()) {
             boolean isModuleValid = true;
 
-            if (titleFields.get(i).getText().length() < MIN_TITLE_LENGTH) {
+            if (titleFields.get(moduleIndex).getText().length() < MIN_TITLE_LENGTH) {
                 updateErrorDisplay(
-                        titleFields.get(i),
-                        titleErrorLabels.get(i),
+                        titleFields.get(moduleIndex),
+                        titleErrorLabels.get(moduleIndex),
                         true,
                         "Por favor, insira um título válido, entre 5 e 100 caracteres");
                 isModuleValid = false;
             }
 
-            if (durationFields.get(i).getText() == null ||
-                    durationFields.get(i).getText().isEmpty()) {
+            if (durationFields.get(moduleIndex).getText() == null ||
+                    durationFields.get(moduleIndex).getText().isEmpty()) {
                 updateErrorDisplay(
-                        durationFields.get(i),
-                        durationErrorLabels.get(i),
+                        durationFields.get(moduleIndex),
+                        durationErrorLabels.get(moduleIndex),
                         true,
                         "Por favor, insira uma duração válida");
                 isModuleValid = false;
             }
 
-            if (detailsFields.get(i).getText().length() < MIN_DETAILS_LENGTH ||
-                    detailsFields.get(i).getText().isEmpty()) {
+            if (detailsFields.get(moduleIndex).getText().length() < MIN_DETAILS_LENGTH ||
+                    detailsFields.get(moduleIndex).getText().isEmpty()) {
                 updateErrorDisplay(
-                        detailsFields.get(i),
-                        detailsErrorLabels.get(i),
+                        detailsFields.get(moduleIndex),
+                        detailsErrorLabels.get(moduleIndex),
                         true,
                         "Por favor, insira uma descrição válida, no mínimo 10 caracteres");
                 isModuleValid = false;
             }
+            int moduleIndexTrue = moduleIndex + 1;
 
             for (Node moduleNode : moduleList.getChildren()) {
                 VBox moduleCard = (VBox) moduleNode;
                 VBox lessonList = (VBox) moduleCard.getChildren().get(2);
-                if(lessonList.getChildren().size()<2){
+                if (lessonList.getChildren().size() < 2) {
                     ErrorNotification errorNotification = new ErrorNotification(
-                        parentContainer, 
-                        "Adicione uma aula no módulo" 
-                    );
+                            parentContainer,
+                            "Adicione uma aula no módulo "+ (moduleIndexTrue));
                     errorNotification.show();
                 }
             }
 
-
             if (!isModuleValid) {
                 ErrorNotification errorNotification = new ErrorNotification(
-                    parentContainer, 
-                    "Preencha todos os campos corretamente" 
-                );
-    
+                        parentContainer,
+                        "Preencha todos os campos corretamente");
+
                 errorNotification.show();
                 isAllValid = false;
 
                 for (Node moduleNode : moduleList.getChildren()) {
                     VBox moduleCard = (VBox) moduleNode;
                     VBox lessonList = (VBox) moduleCard.getChildren().get(2);
-                    if(lessonList.getChildren().size()<2){
+                    if (lessonList.getChildren().size() < 2) {
                         isAllValid = false;
                     }
                 }
             }
         }
 
-        if( getTotalTitleFields()==0){
+        if (getTotalTitleFields() == 0) {
             ErrorNotification errorNotification = new ErrorNotification(
-                    parentContainer, 
-                    "Deve haver um módulo no curso" 
-                );
-    
-                errorNotification.show();
-                isAllValid = false;
+                    parentContainer,
+                    "Deve haver um módulo no curso");
+
+            errorNotification.show();
+            isAllValid = false;
         }
 
         return isAllValid;
@@ -240,21 +251,20 @@ public class CursoModulesValid {
     }
 
     public int getValidatedTitleFields() {
-        return (int) titleFields.stream()
+        return (int) titleFields.values().stream()
                 .filter(field -> field.getText().length() >= MIN_TITLE_LENGTH)
                 .count();
     }
 
     public int getValidatedDurationFields() {
-        return (int) durationFields.stream()
+        return (int) durationFields.values().stream()
                 .filter(field -> field.getText() != null && !field.getText().trim().isEmpty())
                 .count();
     }
 
     public int getValidatedDetailsFields() {
-        return (int) detailsFields.stream()
+        return (int) detailsFields.values().stream()
                 .filter(field -> field.getText().length() >= MIN_DETAILS_LENGTH)
                 .count();
     }
-
 }

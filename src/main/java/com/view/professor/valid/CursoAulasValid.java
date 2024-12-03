@@ -18,16 +18,16 @@ public class CursoAulasValid {
     private static final int MIN_DETAILS_LENGTH = 10;
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
-    private List<TextField> titleFields = new ArrayList<>();
-    private List<Label> titleErrorLabels = new ArrayList<>();
-    private List<TextField> videoFields = new ArrayList<>();
-    private List<Label> videoErrorLabels = new ArrayList<>();
-    private List<TextArea> detailsFields = new ArrayList<>();
-    private List<Label> detailsErrorLabels = new ArrayList<>();
-    private List<TextArea> materialsFields = new ArrayList<>();
-    private List<Label> materialsErrorLabels = new ArrayList<>();
-    private List<TextField> durationFields = new ArrayList<>();
-    private List<Label> durationErrorLabels = new ArrayList<>();
+    private Map<Integer, List<TextField>> titleFieldsMap = new HashMap<>();
+    private Map<Integer, List<Label>> titleErrorLabelsMap = new HashMap<>();
+    private Map<Integer, List<TextField>> videoFieldsMap = new HashMap<>();
+    private Map<Integer, List<Label>> videoErrorLabelsMap = new HashMap<>();
+    private Map<Integer, List<TextArea>> detailsFieldsMap = new HashMap<>();
+    private Map<Integer, List<Label>> detailsErrorLabelsMap = new HashMap<>();
+    private Map<Integer, List<TextArea>> materialsFieldsMap = new HashMap<>();
+    private Map<Integer, List<Label>> materialsErrorLabelsMap = new HashMap<>();
+    private Map<Integer, List<TextField>> durationFieldsMap = new HashMap<>();
+    private Map<Integer, List<Label>> durationErrorLabelsMap = new HashMap<>();
 
     private GridPane parentContainer;
 
@@ -35,13 +35,46 @@ public class CursoAulasValid {
         this.parentContainer = parentContainer;
     }
 
-    public void setupInitialStateLessons(VBox lessonsList) {
-        loadValues(lessonsList);
-
-        setupValidationListeners();
+    public void setupInitialStateLessons(VBox lessonsList, int moduleNumber) {
+        loadValues(lessonsList, moduleNumber);
+        setupValidationListeners(moduleNumber);
     }
 
-    private void loadValues(VBox lessonsList) {
+    public void clearModuleLists(int moduleId) {
+        if (titleFieldsMap.containsKey(moduleId)) {
+            titleFieldsMap.get(moduleId).clear();
+        }
+        if (titleErrorLabelsMap.containsKey(moduleId)) {
+            titleErrorLabelsMap.get(moduleId).clear();
+        }
+        if (videoFieldsMap.containsKey(moduleId)) {
+            videoFieldsMap.get(moduleId).clear();
+        }
+        if (videoErrorLabelsMap.containsKey(moduleId)) {
+            videoErrorLabelsMap.get(moduleId).clear();
+        }
+        if (detailsFieldsMap.containsKey(moduleId)) {
+            detailsFieldsMap.get(moduleId).clear();
+        }
+        if (detailsErrorLabelsMap.containsKey(moduleId)) {
+            detailsErrorLabelsMap.get(moduleId).clear();
+        }
+        if (materialsFieldsMap.containsKey(moduleId)) {
+            materialsFieldsMap.get(moduleId).clear();
+        }
+        if (materialsErrorLabelsMap.containsKey(moduleId)) {
+            materialsErrorLabelsMap.get(moduleId).clear();
+        }
+        if (durationFieldsMap.containsKey(moduleId)) {
+            durationFieldsMap.get(moduleId).clear();
+        }
+        if (durationErrorLabelsMap.containsKey(moduleId)) {
+            durationErrorLabelsMap.get(moduleId).clear();
+        }
+    }
+    
+
+    private void loadValues(VBox lessonsList, int moduleNumber) {
         for (Node lessonNode : lessonsList.getChildren()) {
             if (!(lessonNode instanceof VBox))
                 continue;
@@ -73,22 +106,38 @@ public class CursoAulasValid {
                         .lookup(".custom-text-field");
                 Label durationErrorLabel = (Label) lessonContent.getChildren().get(9);
 
-                titleFields.add(titleField);
-                titleErrorLabels.add(titleErrorLabel);
-                videoFields.add(videoField);
-                videoErrorLabels.add(videoErrorLabel);
-                detailsFields.add(detailsField);
-                detailsErrorLabels.add(detailsErrorLabel);
-                materialsFields.add(materialsField);
-                materialsErrorLabels.add(materialsErrorLabel);
-                durationFields.add(durationField);
-                durationErrorLabels.add(durationErrorLabel);
+                clearModuleLists(moduleNumber);
+
+                titleFieldsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(titleField);
+                titleErrorLabelsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(titleErrorLabel);
+                videoFieldsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(videoField);
+                videoErrorLabelsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(videoErrorLabel);
+                detailsFieldsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(detailsField);
+                detailsErrorLabelsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(detailsErrorLabel);
+                materialsFieldsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(materialsField);
+                materialsErrorLabelsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(materialsErrorLabel);
+                durationFieldsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(durationField);
+                durationErrorLabelsMap.computeIfAbsent(moduleNumber, k -> new ArrayList<>()).add(durationErrorLabel);
             }
         }
     }
 
-    private void setupValidationListeners() {
+    private void setupValidationListeners(int moduleNumber) {
         ValidationSupport validationSupport = new ValidationSupport();
+
+        List<TextField> titleFields = titleFieldsMap.get(moduleNumber);
+        List<Label> titleErrorLabels = titleErrorLabelsMap.get(moduleNumber);
+        List<TextField> videoFields = videoFieldsMap.get(moduleNumber);
+        List<Label> videoErrorLabels = videoErrorLabelsMap.get(moduleNumber);
+        List<TextArea> detailsFields = detailsFieldsMap.get(moduleNumber);
+        List<Label> detailsErrorLabels = detailsErrorLabelsMap.get(moduleNumber);
+        List<TextField> durationFields = durationFieldsMap.get(moduleNumber);
+        List<Label> durationErrorLabels = durationErrorLabelsMap.get(moduleNumber);
+        List<TextArea> materialsFields = materialsFieldsMap.get(moduleNumber);
+        List<Label> materialsErrorLabels = materialsErrorLabelsMap.get(moduleNumber);
+
+        if (titleFields == null || titleErrorLabels == null)
+            return;
 
         for (int i = 0; i < titleFields.size(); i++) {
             TextField titleField = titleFields.get(i);
@@ -97,10 +146,10 @@ public class CursoAulasValid {
             Label videoErrorLabel = videoErrorLabels.get(i);
             TextArea detailsField = detailsFields.get(i);
             Label detailsErrorLabel = detailsErrorLabels.get(i);
-            TextField durationField = durationFields.get(i);
-            Label durationErrorLabel = durationErrorLabels.get(i);
             TextArea materialsField = materialsFields.get(i);
             Label materialsErrorLabel = materialsErrorLabels.get(i);
+            TextField durationField = durationFields.get(i);
+            Label durationErrorLabel = durationErrorLabels.get(i);
 
             titleField.textProperty().addListener((obs, old, newText) -> {
                 if (newText.length() >= MIN_TITLE_LENGTH) {
@@ -206,67 +255,80 @@ public class CursoAulasValid {
     public boolean validateFields() {
         boolean isAllValid = true;
 
-        for (int i = 0; i < titleFields.size(); i++) {
-            boolean isLessonValid = true;
+        for (Map.Entry<Integer, List<TextField>> entry : titleFieldsMap.entrySet()) {
+            int moduleNumber = entry.getKey();
+            List<TextField> titleFields = titleFieldsMap.get(moduleNumber);
+            List<Label> titleErrorLabels = titleErrorLabelsMap.get(moduleNumber);
+            List<TextField> videoFields = videoFieldsMap.get(moduleNumber);
+            List<Label> videoErrorLabels = videoErrorLabelsMap.get(moduleNumber);
+            List<TextArea> detailsFields = detailsFieldsMap.get(moduleNumber);
+            List<Label> detailsErrorLabels = detailsErrorLabelsMap.get(moduleNumber);
+            List<TextArea> materialsFields = materialsFieldsMap.get(moduleNumber);
+            List<Label> materialsErrorLabels = materialsErrorLabelsMap.get(moduleNumber);
+            List<TextField> durationFields = durationFieldsMap.get(moduleNumber);
+            List<Label> durationErrorLabels = durationErrorLabelsMap.get(moduleNumber);
 
-            if (titleFields.get(i).getText().length() < MIN_TITLE_LENGTH) {
-                updateErrorDisplay(
-                        titleFields.get(i),
-                        titleErrorLabels.get(i),
-                        true,
-                        "Por favor, insira um título válido, entre 5 e 100 caracteres");
-                isLessonValid = false;
-            }
+            for (int i = 0; i < titleFields.size(); i++) {
+                boolean isLessonValid = true;
 
-            if (videoFields.get(i).getText() == null ||
-                    videoFields.get(i).getText().isEmpty() ||
-                    !videoFields.get(i).getText().matches("^https?://.*")) {
-                updateErrorDisplay(
-                        videoFields.get(i),
-                        videoErrorLabels.get(i),
-                        true,
-                        "Por favor, insira um link de vídeo válido");
-                isLessonValid = false;
-            }
+                if (titleFields.get(i).getText().length() < MIN_TITLE_LENGTH) {
+                    updateErrorDisplay(
+                            titleFields.get(i),
+                            titleErrorLabels.get(i),
+                            true,
+                            "Por favor, insira um título válido, entre 5 e 100 caracteres");
+                    isLessonValid = false;
+                }
 
-            if (detailsFields.get(i).getText().length() < MIN_DETAILS_LENGTH ||
-                    detailsFields.get(i).getText().isEmpty()) {
-                updateErrorDisplay(
-                        detailsFields.get(i),
-                        detailsErrorLabels.get(i),
-                        true,
-                        "Por favor, insira detalhes válidos, com no mínimo 10 caracteres");
-                isLessonValid = false;
-            }
+                if (videoFields.get(i).getText() == null ||
+                        videoFields.get(i).getText().isEmpty() ||
+                        !videoFields.get(i).getText().matches("^https?://.*")) {
+                    updateErrorDisplay(
+                            videoFields.get(i),
+                            videoErrorLabels.get(i),
+                            true,
+                            "Por favor, insira um link de vídeo válido");
+                    isLessonValid = false;
+                }
 
-            if (!materialsFields.get(i).getText().matches("^https?://.*") ||
-                    materialsFields.get(i).getText().isEmpty()) {
-                updateErrorDisplay(
-                        materialsFields.get(i),
-                        materialsErrorLabels.get(i),
-                        true,
-                        "Por favor, insira um link de vídeo válido");
-                isLessonValid = false;
-            }
+                if (detailsFields.get(i).getText().length() < MIN_DETAILS_LENGTH ||
+                        detailsFields.get(i).getText().isEmpty()) {
+                    updateErrorDisplay(
+                            detailsFields.get(i),
+                            detailsErrorLabels.get(i),
+                            true,
+                            "Por favor, insira detalhes válidos, com no mínimo 10 caracteres");
+                    isLessonValid = false;
+                }
 
-            if (durationFields.get(i).getText() == null ||
-                    !durationFields.get(i).getText().matches("\\d+")) {
-                updateErrorDisplay(
-                        durationFields.get(i),
-                        durationErrorLabels.get(i),
-                        true,
-                        "Por favor, insira uma duração válida em minutos");
-                isLessonValid = false;
-            }
+                if (!materialsFields.get(i).getText().matches("^https?://.*") ||
+                        materialsFields.get(i).getText().isEmpty()) {
+                    updateErrorDisplay(
+                            materialsFields.get(i),
+                            materialsErrorLabels.get(i),
+                            true,
+                            "Por favor, insira um link válido");
+                    isLessonValid = false;
+                }
 
-            if (!isLessonValid) {
-                ErrorNotification errorNotification = new ErrorNotification(
-                    parentContainer, 
-                    "Preencha todos os campos corretamente" 
-                );
+                if (durationFields.get(i).getText() == null ||
+                        !durationFields.get(i).getText().matches("\\d+")) {
+                    updateErrorDisplay(
+                            durationFields.get(i),
+                            durationErrorLabels.get(i),
+                            true,
+                            "Por favor, insira uma duração válida em minutos");
+                    isLessonValid = false;
+                }
 
-                errorNotification.show();
-                isAllValid = false;
+                if (!isLessonValid) {
+                    ErrorNotification errorNotification = new ErrorNotification(
+                            parentContainer,
+                            "Preencha todos os campos corretamente");
+
+                    errorNotification.show();
+                    isAllValid = false;
+                }
             }
         }
 
@@ -274,68 +336,83 @@ public class CursoAulasValid {
     }
 
     public int getTotalTitleFields() {
-        return titleFields.size();
+        return titleFieldsMap.values().stream()
+                .mapToInt(List::size)
+                .sum();
     }
 
     public int getTotalVideoFields() {
-        return videoFields.size();
+        return videoFieldsMap.values().stream()
+                .mapToInt(List::size)
+                .sum();
     }
 
     public int getTotalDetailsFields() {
-        return detailsFields.size();
+        return detailsFieldsMap.values().stream()
+                .mapToInt(List::size)
+                .sum();
     }
 
     public int getTotalMaterialsFields() {
-        return materialsFields.size();
+        return materialsFieldsMap.values().stream()
+                .mapToInt(List::size)
+                .sum();
     }
 
     public int getTotalDurationFields() {
-        return durationFields.size();
+        return durationFieldsMap.values().stream()
+                .mapToInt(List::size)
+                .sum();
     }
 
     public int getValidatedTitleFields() {
-        return (int) titleFields.stream()
+        return titleFieldsMap.values().stream()
+                .flatMap(List::stream)
                 .filter(field -> field.getText().length() >= MIN_TITLE_LENGTH)
-                .count();
+                .mapToInt(e -> 1)
+                .sum();
     }
 
     public int getValidatedVideoFields() {
-        return (int) videoFields.stream()
+        return videoFieldsMap.values().stream()
+                .flatMap(List::stream)
                 .filter(field -> {
                     String text = field.getText();
                     return text != null && !text.trim().isEmpty()
                             && (text.startsWith("http://") || text.startsWith("https://"));
                 })
-                .count();
+                .mapToInt(e -> 1)
+                .sum();
     }
 
     public int getValidatedDetailsFields() {
-        return (int) detailsFields.stream()
+        return detailsFieldsMap.values().stream()
+                .flatMap(List::stream)
                 .filter(field -> field.getText().length() >= MIN_DETAILS_LENGTH)
-                .count();
+                .mapToInt(e -> 1)
+                .sum();
     }
 
     public int getValidatedMaterialsFields() {
-        return (int) materialsFields.stream()
+        return materialsFieldsMap.values().stream()
+                .flatMap(List::stream)
                 .filter(field -> {
                     String text = field.getText();
                     return text != null && !text.trim().isEmpty()
                             && (text.startsWith("http://") || text.startsWith("https://"));
                 })
-                .count();
+                .mapToInt(e -> 1)
+                .sum();
     }
 
     public int getValidatedDurationFields() {
-        return (int) durationFields.stream()
+        return durationFieldsMap.values().stream()
+                .flatMap(List::stream)
                 .filter(field -> {
                     String text = field.getText();
                     return text != null && text.matches("\\d+");
                 })
-                .count();
+                .mapToInt(e -> 1)
+                .sum();
     }
-
-    public int getModulesWithLessonsCount() {
-        return 0;
-    }
-
 }

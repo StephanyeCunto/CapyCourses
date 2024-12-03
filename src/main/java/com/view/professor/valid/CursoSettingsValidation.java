@@ -43,10 +43,14 @@ public class CursoSettingsValidation {
 
     private void configureDurationValidation() {
         durationTotal.textProperty().addListener((observable, oldValue, newValue) -> {
+            if ("0".equals(newValue)) {
+                durationTotal.setText(oldValue); 
+            }
             if (newValue != null && !newValue.matches("\\d*")) {
                 durationTotal.setText(oldValue);
                 durationTotal.positionCaret(durationTotal.getText().length());
             }
+
         });
 
         validationSupport.registerValidator(durationTotal, false,
@@ -71,14 +75,12 @@ public class CursoSettingsValidation {
     }
 
     private void addRealTimeValidationListeners() {
-        // Listener para o campo de duração
         durationTotal.textProperty().addListener((observable, oldValue, newValue) -> {
             boolean isValid = newValue != null && !newValue.trim().isEmpty() && newValue.matches("^\\d+(\\.\\d+)?$");
             updateErrorDisplay(durationTotal, durationTotalErrorLabel, !isValid,
                     isValid ? null : "Por favor, insira uma duração válida");
         });
 
-        // Listener para o comboBox de visibilidade
         comboBoxVisibility.valueProperty().addListener((observable, oldValue, newValue) -> {
             boolean isValid = newValue != null && !newValue.trim().isEmpty() && !newValue.equals("null");
             updateErrorDisplay(comboBoxVisibility, comboBoxVisibilityErrorLabel, !isValid,
