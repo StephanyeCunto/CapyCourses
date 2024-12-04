@@ -51,7 +51,6 @@ public class CursoOptionsValid {
             TextField optionField = null;
             Label optionErrorLabel = null;
 
-            // Find selection control and text field within the HBox
             for (Node child : optionBox.getChildren()) {
                 if (child instanceof RadioButton || child instanceof CheckBox) {
                     selectionControl = child;
@@ -61,7 +60,6 @@ public class CursoOptionsValid {
                 }
             }
 
-            // Find the corresponding error label
             int index = optionsList.getChildren().indexOf(node);
             if (index + 1 < optionsList.getChildren().size()) {
                 Node nextNode = optionsList.getChildren().get(index + 1);
@@ -81,27 +79,28 @@ public class CursoOptionsValid {
     private void setupValidationListeners(int moduleNumber) {
         List<TextField> optionFields = optionFieldsMap.get(moduleNumber);
         List<Label> optionErrorLabels = optionErrorLabelsMap.get(moduleNumber);
+        if (optionFields != null) {
+            for (int i = 0; i < optionFields.size(); i++) {
+                TextField optionField = optionFields.get(i);
+                Label optionErrorLabel = optionErrorLabels.get(i);
 
-        for (int i = 0; i < optionFields.size(); i++) {
-            TextField optionField = optionFields.get(i);
-            Label optionErrorLabel = optionErrorLabels.get(i);
+                optionField.textProperty().addListener((obs, old, newText) -> {
+                    if (newText.length() >= MIN_OPTION_LENGTH) {
+                        updateErrorDisplay(optionField, optionErrorLabel, false, null);
+                    }
+                });
 
-            optionField.textProperty().addListener((obs, old, newText) -> {
-                if (newText.length() >= MIN_OPTION_LENGTH) {
-                    updateErrorDisplay(optionField, optionErrorLabel, false, null);
-                }
-            });
-
-            optionField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
-                validationSupport.registerValidator(optionField, false,
-                        Validator.createPredicateValidator(value -> {
-                            if (value instanceof String) {
-                                String strValue = (String) value;
-                                return !strValue.trim().isEmpty() && strValue.length() >= MIN_OPTION_LENGTH;
-                            }
-                            return false;
-                        }, "Por favor, insira uma opção válida, com pelo menos 1 caracter"));
-            });
+                optionField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+                    validationSupport.registerValidator(optionField, false,
+                            Validator.createPredicateValidator(value -> {
+                                if (value instanceof String) {
+                                    String strValue = (String) value;
+                                    return !strValue.trim().isEmpty() && strValue.length() >= MIN_OPTION_LENGTH;
+                                }
+                                return false;
+                            }, "Por favor, insira uma opção válida, com pelo menos 1 caracter"));
+                });
+            }
         }
     }
 

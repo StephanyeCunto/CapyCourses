@@ -11,6 +11,7 @@ import com.controller.professor.CadastroCursoController;
 import com.view.Modo;
 import com.view.elements.Calendario;
 import com.view.professor.valid.*;
+import com.view.login_cadastro.elements.ErrorNotification;
 
 import javafx.animation.*;
 import javafx.fxml.*;
@@ -626,6 +627,12 @@ public class CadastroCurso implements Initializable {
         boolean isSettings = validatorSettings.validateFields();
 
         if (isBasics && isModule && isAulas && isQuestionario && isQuestion && isOptions && isSettings) {
+            ErrorNotification errorNotification = new ErrorNotification(
+                container,
+                "Curso salvo com sucesso");
+
+        errorNotification.show();  
+
             new CadastroCursoController(titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
                     levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,
                     saveModulesAndContent(), dateInputPopupStart.getLocalDate(), dateInputPopupEnd.getLocalDate(),
@@ -759,31 +766,29 @@ public class CadastroCurso implements Initializable {
             cont++;
             questionaireData.put("cont" + j, cont);
             HBox questionaireHeader = (HBox) questionaireCard.getChildren().get(0);
-            Label questionaireNumber = (Label) ((StackPane) questionaireHeader.getChildren().get(0)).getChildren()
-                    .get(0);
+            Label questionaireNumber = (Label) ((StackPane) questionaireHeader.getChildren().get(0)).getChildren().get(0);
 
             questionaireData.put("type", "questionaire");
             questionaireData.put("questionaireNumber" + j, questionaireNumber.getText());
 
             VBox container = (VBox) questionaireCard.getChildren().get(1);
 
-            VBox titleContainer = (VBox) container.getChildren().get(0);
+            VBox titleContainer = (VBox) container.getChildren().get(0); 
             TextField titleField = (TextField) titleContainer.getChildren().get(1);
             questionaireData.put("questionaireTitle" + j, titleField.getText());
 
-            VBox descriptionContainer = (VBox) container.getChildren().get(1);
+            VBox descriptionContainer = (VBox) container.getChildren().get(2);
             TextArea descriptionArea = (TextArea) descriptionContainer.getChildren().get(1);
             questionaireData.put("questionaireDescription" + j, descriptionArea.getText());
 
-            VBox scoreContainer = (VBox) container.getChildren().get(2);
+            VBox scoreContainer = (VBox) container.getChildren().get(4);
             TextField scoreField = (TextField) scoreContainer.getChildren().get(1);
             questionaireData.put("questionaireScore" + j, scoreField.getText());
 
-            VBox questionsContainer = (VBox) container.getChildren().get(3);
-            Map<String, Object> questionData = new HashMap<>();
+            VBox questionsContainer = (VBox) container.getChildren().get(6);
+           Map<String, Object> questionData = new HashMap<>();
 
             for (int i = 0; i < questionsContainer.getChildren().size(); i++) {
-
                 VBox questionContainer = (VBox) questionsContainer.getChildren().get(i);
                 questionaireData.put("questions" + j, saveQuestionData(questionContainer, questionData, cont));
             }
@@ -792,7 +797,7 @@ public class CadastroCurso implements Initializable {
         } catch (Exception e) {
             System.out.println("Erro ao processar dados do questionário: " + e.getMessage());
             return null;
-        }
+        }  
     }
 
     private int z = 0;
@@ -804,14 +809,14 @@ public class CadastroCurso implements Initializable {
         questionData.put("questionNumber" + z, questionNumber.getText());
 
         VBox questionContent = (VBox) questionCard.getChildren().get(1);
-        HBox scoreBox = (HBox) questionContent.getChildren().get(0);
+       HBox scoreBox = (HBox) questionContent.getChildren().get(0);
         TextField scoreField = (TextField) scoreBox.getChildren().get(1);
         questionData.put("questionScore" + z, scoreField.getText());
 
-        TextArea questionText = (TextArea) questionContent.getChildren().get(1);
+        TextArea questionText = (TextArea) questionContent.getChildren().get(2);
         questionData.put("questionText" + z, questionText.getText());
 
-        Node node = questionContent.getChildren().get(2);
+        Node node = questionContent.getChildren().get(4);
 
         Labeled labeled = (Labeled) node;
 
@@ -819,7 +824,7 @@ public class CadastroCurso implements Initializable {
         Map<String, Object> responseData = new HashMap<>();
         if (labeled.getText().equals("Opções (selecione a correta)")) {
             questionData.put("type" + z, "SINGLE_CHOICE");
-            VBox optionsContainer = (VBox) questionContent.getChildren().get(3);
+            VBox optionsContainer = (VBox) questionContent.getChildren().get(5);
             for (int e = 0; e < optionsContainer.getChildren().size(); e++) {
                 HBox response = (HBox) optionsContainer.getChildren().get(e);
                 RadioButton radioField = (RadioButton) response.getChildren().get(0);
@@ -833,7 +838,7 @@ public class CadastroCurso implements Initializable {
                 h++;
             }
         } else if (labeled.getText().equals("Opções (selecione as corretas)")) {
-            VBox optionsContainer = (VBox) questionContent.getChildren().get(3);
+            VBox optionsContainer = (VBox) questionContent.getChildren().get(5);
             questionData.put("type" + z, "MULTIPLE_CHOICE");
             for (int e = 0; e < optionsContainer.getChildren().size(); e++) {
                 HBox response = (HBox) optionsContainer.getChildren().get(e);
@@ -850,8 +855,8 @@ public class CadastroCurso implements Initializable {
 
         } else if (labeled.getText().equals("Resposta Esperada (opcional)")) {
             questionData.put("type" + z, "DISCURSIVE");
-            TextArea responseField = (TextArea) questionContent.getChildren().get(3);
-            TextArea responseField2 = (TextArea) questionContent.getChildren().get(5);
+            TextArea responseField = (TextArea) questionContent.getChildren().get(5);
+            TextArea responseField2 = (TextArea) questionContent.getChildren().get(7);
             responseData.put("responseField" + h, responseField.getText());
             responseData.put("responseField2" + h, responseField2.getText());
             h++;
@@ -859,7 +864,6 @@ public class CadastroCurso implements Initializable {
         questionData.put("response" + z, responseData);
         z++;
 
-        System.out.println("questionData view: " + questionData);
         return questionData;
     }
 
@@ -1292,7 +1296,7 @@ public class CadastroCurso implements Initializable {
                 durationField.setText(old);
             }
             if ("0".equals(newText)) {
-                durationField.setText(old); // Restaura o valor anterior se for zero
+                durationField.setText(old); 
             }
         });
         Label lessonDurationLabelError = new Label("Por favor, insira uma duração válida");
@@ -1467,15 +1471,17 @@ public class CadastroCurso implements Initializable {
     }
 
     private void removeQuestionWithAnimation(Node questionCard, int moduleNumber) {
-        VBox questionsContainer = (VBox) questionCard.getParent(); // Obtém o container das questões
+        VBox questionsContainer = (VBox) questionCard.getParent(); 
 
         FadeTransition fadeOut = new FadeTransition(Duration.millis(300), questionCard);
         fadeOut.setFromValue(1);
         fadeOut.setToValue(0);
         fadeOut.setOnFinished(e -> {
-            questionsContainer.getChildren().remove(questionCard); // Remove a questão
-            updateQuestionNumbers(questionsContainer); // Atualiza os números após remover
+            questionsContainer.getChildren().remove(questionCard); 
+            updateQuestionNumbers(questionsContainer); 
             validatorQuestoes.setupInitialStateQuestions(questionsContainer,moduleNumber);
+            validatorOptions.setupInitialStateOptions(questionsContainer, true,moduleNumber);
+            validatorOptions.setupInitialStateOptions(questionsContainer, false,moduleNumber);
 
         });
         fadeOut.play();
@@ -1487,7 +1493,7 @@ public class CadastroCurso implements Initializable {
             HBox questionHeader = (HBox) questionCard.getChildren().get(0);
             StackPane numberContainer = (StackPane) questionHeader.getChildren().get(0);
             Label numberLabel = (Label) numberContainer.getChildren().get(0);
-            numberLabel.setText(String.valueOf(i + 1)); // Define o número da questão
+            numberLabel.setText(String.valueOf(i + 1)); 
         }
     }
 
@@ -1610,7 +1616,6 @@ public class CadastroCurso implements Initializable {
         optionText.getStyleClass().add("custom-text-field");
         HBox.setHgrow(optionText, Priority.ALWAYS);
 
-        // Create error label specifically for this option
         Label optionErrorLabel = new Label("Por favor, insira uma opção válida, com pelo menos 1 caractere.");
         optionErrorLabel.getStyleClass().add("error-label");
         optionErrorLabel.setVisible(false);
@@ -1619,13 +1624,13 @@ public class CadastroCurso implements Initializable {
         Button removeOption = new Button("X");
         removeOption.getStyleClass().add("simple-button");
         removeOption.setOnAction(e -> {
-            // Remove both the option box and its corresponding error label
             FadeTransition fadeOut = new FadeTransition(Duration.millis(300), optionBox);
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
             fadeOut.setOnFinished(event -> {
                 container.getChildren().removeAll(optionBox, optionErrorLabel);
                 validatorOptions.setupInitialStateOptions(container, singleChoice,moduleNumber);
+                validatorOptions.setupInitialStateOptions(container, !singleChoice,moduleNumber);
             });
             fadeOut.play();
         });
@@ -1638,7 +1643,6 @@ public class CadastroCurso implements Initializable {
         fadeIn.setToValue(1);
         fadeIn.play();
 
-        // Find the correct insertion position
         int positionOpcion = 0;
         for (int i = 0; i < container.getChildren().size(); i++) {
             if (container.getChildren().get(i) instanceof Button) {
@@ -1648,10 +1652,7 @@ public class CadastroCurso implements Initializable {
             }
         }
 
-        // Insert the option box
         container.getChildren().add(positionOpcion + 1, optionBox);
-
-        // Insert the error label right after the option box
         container.getChildren().add(positionOpcion + 2, optionErrorLabel);
 
         validatorOptions.setupInitialStateOptions(container, false,moduleNumber);

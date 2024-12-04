@@ -26,6 +26,7 @@ public class CursoQuestoesValid {
     private Map<Integer, List<Label>> evaluationCriteriaErrorLabelsMaps = new HashMap<>();
 
     private GridPane parentContainer;
+    private VBox questionsContentGlobal;
 
     public void setParentContainer(GridPane parentContainer) {
         this.parentContainer = parentContainer;
@@ -47,6 +48,7 @@ public class CursoQuestoesValid {
     }
 
     private void loadValues(VBox questionsContainer, int moduleNumber) {
+        questionsContentGlobal = questionsContainer;
         for (Node questionNode : questionsContainer.getChildren()) {
             if (!(questionNode instanceof VBox))
                 continue;
@@ -132,26 +134,28 @@ public class CursoQuestoesValid {
             });
         }
 
-        for (int i = 0; i < evaluationCriteriaFields.size(); i++) {
-            TextArea evaluationCriteria = evaluationCriteriaFields.get(i);
-            Label evaluationCriteriaErrorLabel = evaluationCriteriaErrorLabels.get(i);
+        if (evaluationCriteriaFields != null) {
+            for (int i = 0; i < evaluationCriteriaFields.size(); i++) {
+                TextArea evaluationCriteria = evaluationCriteriaFields.get(i);
+                Label evaluationCriteriaErrorLabel = evaluationCriteriaErrorLabels.get(i);
 
-            evaluationCriteria.textProperty().addListener((obs, old, newText) -> {
-                if (newText.length() >= MIN_QUESTION_LENGTH) {
-                    updateErrorDisplay(evaluationCriteria, evaluationCriteriaErrorLabel, false, null);
-                }
-            });
+                evaluationCriteria.textProperty().addListener((obs, old, newText) -> {
+                    if (newText.length() >= MIN_QUESTION_LENGTH) {
+                        updateErrorDisplay(evaluationCriteria, evaluationCriteriaErrorLabel, false, null);
+                    }
+                });
 
-            evaluationCriteria.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
-                validationSupport.registerValidator(evaluationCriteria, false,
-                        Validator.createPredicateValidator(value -> {
-                            if (value instanceof String) {
-                                String strValue = (String) value;
-                                return !strValue.trim().isEmpty() && strValue.length() >= MIN_QUESTION_LENGTH;
-                            }
-                            return false;
-                        }, "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres"));
-            });
+                evaluationCriteria.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+                    validationSupport.registerValidator(evaluationCriteria, false,
+                            Validator.createPredicateValidator(value -> {
+                                if (value instanceof String) {
+                                    String strValue = (String) value;
+                                    return !strValue.trim().isEmpty() && strValue.length() >= MIN_QUESTION_LENGTH;
+                                }
+                                return false;
+                            }, "Por favor, insira critérios de avaliação válidos, com pelo menos 10 caracteres"));
+                });
+            }
         }
     }
 
@@ -200,7 +204,7 @@ public class CursoQuestoesValid {
                     isQuestionValid = false;
                 }
 
-                if (i < evaluationCriteriaFields.size()) {
+                if (evaluationCriteriaFields != null && i < evaluationCriteriaFields.size()) {
                     TextArea criteriaField = evaluationCriteriaFields.get(i);
                     if (criteriaField.getText().length() < MIN_QUESTION_LENGTH) {
                         updateErrorDisplay(
@@ -212,7 +216,7 @@ public class CursoQuestoesValid {
                     }
                 }
 
-                if (i < evaluationCriteriaFields.size()) {
+                if (evaluationCriteriaFields != null && i < evaluationCriteriaFields.size()) {
                     TextArea criteriaField = evaluationCriteriaFields.get(i);
                     if (criteriaField.getText().length() < MIN_QUESTION_LENGTH) {
                         updateErrorDisplay(
@@ -234,6 +238,70 @@ public class CursoQuestoesValid {
                     isAllValid = false;
                 }
             }
+        }
+
+        boolean isSelect = false;
+        if (questionsContentGlobal != null) {
+            for (Node questionNode : questionsContentGlobal.getChildren()) {
+                VBox questionCard = (VBox) questionNode;
+                VBox questionContent = (VBox) questionCard.getChildren().get(1);
+                if (questionContent.getChildren().get(7) instanceof TextArea) {
+                } else {
+                    if (questionContent.getChildren().get(6) instanceof HBox) {
+                        if (questionContent.getChildren().get(8) instanceof HBox) {
+                            for (int i = 0; i < questionsContentGlobal.getChildren().size(); i++) {
+
+                                VBox questionCardI = (VBox) questionNode;
+                                VBox questionContentI = (VBox) questionCardI.getChildren().get(1);
+
+                                for (int j = 0; j < questionContentI.getChildren().size(); j++) {
+                                    if (questionContentI.getChildren().get(j) instanceof HBox) {
+                                        HBox selectHBox = (HBox) questionContentI.getChildren().get(j);
+                                        if (selectHBox.getChildren().get(0) instanceof RadioButton) {
+                                            RadioButton isSelectionRadio = (RadioButton) selectHBox.getChildren()
+                                                    .get(0);
+                                            if (isSelectionRadio.isSelected()) {
+                                                isSelect = true;
+                                            }
+                                        } else if (selectHBox.getChildren().get(0) instanceof CheckBox) {
+                                            CheckBox isSelectionCheck = (CheckBox) selectHBox.getChildren().get(0);
+                                            if (isSelectionCheck.isSelected()) {
+                                                isSelect = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        } else {
+                            ErrorNotification errorNotification = new ErrorNotification(
+                                    parentContainer,
+                                    "Adicione mais uma alternativa, por favor");
+
+                            errorNotification.show();
+                            isAllValid = false;
+                        }
+                    } else {
+                        ErrorNotification errorNotification = new ErrorNotification(
+                                parentContainer,
+                                "Adicione no mínimo duas alternativas, por favor");
+
+                        errorNotification.show();
+                        isAllValid = false;
+                    }
+
+                    if (!isSelect) {
+                        ErrorNotification errorNotification = new ErrorNotification(
+                                parentContainer,
+                                "Selecione uma alternativa, por favor");
+
+                        errorNotification.show();
+                        isAllValid = false;
+                    }
+                }
+            }
+        }else{
+
         }
 
         return isAllValid;
@@ -268,8 +336,8 @@ public class CursoQuestoesValid {
 
     public int getValidatedEvaluationCriteriaFieldsCount() {
         return (int) evaluationCriteriaFieldsMaps.values().stream()
-        .flatMap(List::stream)
-        .filter(field -> field.getText().length() >= MIN_QUESTION_LENGTH)
-        .count();
+                .flatMap(List::stream)
+                .filter(field -> field.getText().length() >= MIN_QUESTION_LENGTH)
+                .count();
     }
 }
