@@ -2,8 +2,8 @@ package com.view.elements;
 
 import java.util.List;
 
-import com.model.Course;
 import com.model.CourseReader;
+import com.model.Course.Course;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,8 +45,9 @@ public class LoadCourses {
         HBox courseInfo = new HBox(8);
         courseInfo.getChildren().addAll(
                 createStyledLabel("⭐ " + course.getRating(), "Franklin Gothic Medium", 14, Color.web("#ffffff80")),
-                createStyledLabel("•", "Franklin Gothic Medium", 14, Color.web("#ffffff80")),
-                createStyledLabel(course.getHours() + " horas", "Franklin Gothic Medium", 14, Color.web("#ffffff80")));
+                createStyledLabel("•", "Franklin Gothic Medium", 14, Color.web("#ffffff80")));
+             //  createStyledLabel(course.getHours() + " horas", "Franklin Gothic Medium", 14, Color.web("#ffffff80")));
+             
         Label descLabel = createStyledLabel(course.getDescription(), "Franklin Gothic Medium", 14,
                 Color.web("#ffffff80"));
         Button startButton = createStartButton();

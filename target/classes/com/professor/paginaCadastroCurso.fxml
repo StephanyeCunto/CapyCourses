@@ -22,12 +22,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.layout.StackPane?>
 
-<GridPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="800" styleClass="main-container"
+<GridPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="800"
+    styleClass="main-container"
     xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.view.professor.CadastroCurso">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="250" prefWidth="250" />
-        <ColumnConstraints hgrow="ALWAYS"/>
+        <ColumnConstraints hgrow="ALWAYS" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="600.0" vgrow="ALWAYS" />
@@ -73,8 +74,9 @@
                         <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox"
                             HBox.hgrow="ALWAYS"
                             fx:id="toggleButtonHBox">
-                            <StackPane alignment="CENTER" styleClass="theme-toggle-switch" fx:id="toggleButtonStackPane"
-                               >
+                            <StackPane alignment="CENTER" styleClass="theme-toggle-switch"
+                                fx:id="toggleButtonStackPane"
+                            >
                                 <Rectangle fx:id="background" width="50" height="25"
                                     styleClass="toggle-background"
                                     arcWidth="25" arcHeight="25" />
@@ -93,8 +95,10 @@
 
                     <GridPane hgap="30" vgap="25">
                         <columnConstraints>
-                            <ColumnConstraints hgrow="ALWAYS" minWidth="550" prefWidth="1250" maxWidth="1250"/>
-                            <ColumnConstraints hgrow="NEVER" minWidth="350" prefWidth="350" maxWidth="350"/>
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="550" prefWidth="1250"
+                                maxWidth="1250" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="350" prefWidth="350"
+                                maxWidth="350" />
                         </columnConstraints>
 
                         <VBox spacing="25" GridPane.columnIndex="0">
@@ -114,16 +118,19 @@
                                             <Label fx:id="coutTitleCourse" styleClass="char-counter"
                                                 text="0/100" />
                                         </HBox>
-                                        <Label fx:id="basicsTitleErrorLabel" visible="false" styleClass="error-label"
-                                        managed="false" />
+                                        <Label fx:id="basicsTitleErrorLabel" visible="false"
+                                            styleClass="error-label"
+                                            managed="false" />
                                     </VBox>
 
                                     <VBox spacing="8">
                                         <Label styleClass="field-label" text="Descrição do Curso*" />
                                         <TextArea fx:id="descritionCourse"
                                             promptText="Descreva o conteúdo e objetivos do curso..."
+                                            wrapText="false"
                                             styleClass="custom-text-area" />
-                                            <Label fx:id="descritionBasicsErrorLabel" visible="false" styleClass="error-label"
+                                        <Label fx:id="descritionBasicsErrorLabel" visible="false"
+                                            styleClass="error-label"
                                             managed="false" />
                                     </VBox>
 
@@ -133,7 +140,8 @@
                                             <ComboBox fx:id="categoryCourse" maxWidth="300"
                                                 promptText="Selecione uma categoria"
                                                 styleClass="combo-box" />
-                                                <Label fx:id="categoryCourseErrorLabel" visible="false" styleClass="error-label"
+                                            <Label fx:id="categoryCourseErrorLabel" visible="false"
+                                                styleClass="error-label"
                                                 managed="false" />
                                         </VBox>
                                         <VBox spacing="8" HBox.hgrow="ALWAYS">
@@ -141,7 +149,8 @@
                                             <ComboBox fx:id="levelCourse" maxWidth="300"
                                                 promptText="Selecione o nível"
                                                 styleClass="combo-box" />
-                                                <Label fx:id="levelCourseErrorLabel" visible="false" styleClass="error-label"
+                                            <Label fx:id="levelCourseErrorLabel" visible="false"
+                                                styleClass="error-label"
                                                 managed="false" />
                                         </VBox>
                                     </HBox>
@@ -173,7 +182,7 @@
                             <VBox spacing="20">
 
                                 <VBox fx:id="modulesList" spacing="15" styleClass="modules-list">
-    
+
                                 </VBox>
 
                             </VBox>
@@ -197,7 +206,8 @@
                                             text="Duração Total (horas)*" />
                                         <TextField fx:id="durationTotal" promptText="Ex: 40"
                                             styleClass="custom-text-field" />
-                                            <Label fx:id="durationTotalErrorLabel" visible="false" styleClass="error-label" managed="false"/>
+                                        <Label fx:id="durationTotalErrorLabel" visible="false"
+                                            styleClass="error-label" managed="false" />
                                     </VBox>
 
                                     <VBox fx:id="date" spacing="8">
@@ -221,7 +231,8 @@
                                         <Label styleClass="field-label" text="Visibilidade" />
                                         <ComboBox fx:id="ComboBoxVisibily" maxWidth="Infinity"
                                             promptText="Selecione" styleClass="custom-combo-box" />
-                                            <Label fx:id="comboBoxVisibilityErrorLabel" visible="false" styleClass="error-label" managed="false"/>
+                                        <Label fx:id="comboBoxVisibilityErrorLabel" visible="false"
+                                            styleClass="error-label" managed="false" />
                                     </VBox>
                                 </VBox>
                             </VBox>

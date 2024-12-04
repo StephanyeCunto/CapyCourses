@@ -46,6 +46,7 @@
 .custom-text-area{
     -fx-min-height: 100px; 
     -fx-max-height: 100px; 
+    -fx-wrap-text: true;
 }
 
 .custom-text-field:focused,

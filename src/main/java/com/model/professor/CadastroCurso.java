@@ -18,7 +18,7 @@ public class CadastroCurso {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_curso.csv", true))) {
             writer.write(UserSession.getInstance().getUserEmail() + "," + title + "," + description + "," + category
-                    + "," + level + "," + tags);
+                    + "," + level + "," + tags+ ","+0.0);
             writer.newLine();
             registerModules(modulesData, title);
             registerSettings(title, dateStart, dateEnd, durationTotal, isDateEnd, isCertificate,
@@ -80,13 +80,13 @@ public class CadastroCurso {
 
             Map<String, Object> questions = (Map<String, Object>) questionaireData.get("questions" + h);
 
-            registerQuestions(questions, moduleTitle, questionaireNumber, questionaireTitle);
+            registerQuestions(title,questions, moduleTitle, questionaireNumber, questionaireTitle);
             writerThread.start();
             g++;
         }
     }
 
-    private void registerQuestions(Map<String, Object> questionData, String moduleTitle, String questionaireNumber,
+    private void registerQuestions(String title,Map<String, Object> questionData, String moduleTitle, String questionaireNumber,
             String questionaireTitle) {
         for (int i = 0; i < questionData.size(); i++) {
             StringBuilder questionArea = new StringBuilder();
@@ -128,7 +128,7 @@ public class CadastroCurso {
                     try (BufferedWriter writer = new BufferedWriter(
                             new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_questions.csv",
                                     true))) {
-                        writer.write(moduleTitle + "," + questionaireNumber + "," + questionaireTitle + "," +
+                        writer.write(title+","+moduleTitle + "," + questionaireNumber + "," + questionaireTitle + "," +
                                 questionNumber + "," + questionText + "," +
                                 questionType + "," + responseAnswers + "," + responseIsTrues + "," + questionScore + ","
                                 + questionArea);

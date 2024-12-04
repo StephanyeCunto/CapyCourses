@@ -237,17 +237,16 @@ public class CursoQuestionarioValid {
                         }
                     }
                 }
-            }
+            }      
+        }
+        if (isGradeMiniun.isSelected()) {
+            if (getTitleFieldsCount() < 1) {
+                ErrorNotification errorNotification = new ErrorNotification(
+                        parentContainer,
+                        "Adicione um questionário");
 
-            if (isGradeMiniun.isSelected()) {
-                if (getTitleFieldsCount() < 1) {
-                    ErrorNotification errorNotification = new ErrorNotification(
-                            parentContainer,
-                            "Adicione um questionário");
-
-                    errorNotification.show();
-                    isAllValid = false;
-                }
+                errorNotification.show();
+                isAllValid = false;
             }
         }
         return isAllValid;

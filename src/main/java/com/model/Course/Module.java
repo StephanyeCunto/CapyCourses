@@ -1,4 +1,4 @@
-package com.model;
+package com.model.Course;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class Module {
     private String title;
     private String description;
     private String duration;
-    private List<Classes> aulas;
+    private List<Lessons> aulas;
 
     public Module(int moduleNumber, String title, String description, String duration) {
         this.moduleNumber = moduleNumber;

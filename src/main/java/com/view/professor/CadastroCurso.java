@@ -141,6 +141,8 @@ public class CadastroCurso implements Initializable {
         setupInterestButtons();
         // changeModeStyle();
 
+        descritionCourse.setWrapText(true);
+
         uploadButton.setOnAction(event -> uploadImage());
 
         VBox lessonsList = new VBox();
@@ -487,8 +489,7 @@ public class CadastroCurso implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Escolha uma imagem de capa");
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Imagens", ".png", ".jpg", ".jpeg", ".gif"));
-
+                new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg", "*gif"));
         File selectedFile = fileChooser.showOpenDialog(uploadButton.getScene().getWindow());
         if (selectedFile != null) {
             try {

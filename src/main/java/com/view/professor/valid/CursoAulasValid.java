@@ -172,6 +172,9 @@ public class CursoAulasValid {
                 if (!newText.isEmpty()) {
                     updateErrorDisplay(videoField, videoErrorLabel, false, null);
                 }
+                if (newText.contains(" ")) {
+                    materialsField.setText(old);
+                }
             });
 
             videoField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
@@ -207,6 +210,9 @@ public class CursoAulasValid {
                 if (!newText.isEmpty()) {
                     updateErrorDisplay(materialsField, materialsErrorLabel, false, null);
                 }
+                if (newText.contains(" ")) {
+                    materialsField.setText(old);
+                }
             });
 
             materialsField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
@@ -215,7 +221,7 @@ public class CursoAulasValid {
                             if (value instanceof String) {
                                 String strValue = (String) value;
                                 return !strValue.trim().isEmpty()
-                                        && (strValue.startsWith("http://") || strValue.startsWith("https://"));
+                                        && (strValue.matches("(https?://)[^\\\\s]+$"));
                             }
                             return false;
                         }, "Por favor, insira um link válido"));
