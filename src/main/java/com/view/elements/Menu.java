@@ -51,11 +51,13 @@ public class Menu {
         Button meusCursosBtn = createButton("Meus Cursos");
         Button progressoBtn = createButton("Progresso");
         Button certificadosBtn = createButton("Certificados");
+        Button bibliotecaBtn = createButton("Biblioteca");
+        Button forumBtn = createButton("Forum");
         Button configuracoesBtn = createButton("Configurações");
         Button sairBtn = createButton("Sair");
-
-        vbox.getChildren().addAll(cursosDisponiveisBtn, meusCursosBtn, progressoBtn, certificadosBtn, configuracoesBtn);
-
+    
+        vbox.getChildren().addAll(cursosDisponiveisBtn, meusCursosBtn, progressoBtn, 
+            certificadosBtn, bibliotecaBtn, forumBtn, configuracoesBtn);
         Platform.runLater(() -> {
             Scene currentScene = sairBtn.getScene();
             double sceneHeight = currentScene.getHeight();
@@ -71,10 +73,9 @@ public class Menu {
         button.setMaxWidth(Double.MAX_VALUE);
         fillMap();
         if (buttonMenu.get(currentPage) == text) {
-            button.getStyleClass().add("modern-button");
+            button.getStyleClass().add("outline-button");
         } else if (!text.equals("Sair")) {
-            button.getStyleClass().add("modern-button");
-            button.setStyle("-fx-background-color:  rgba(255,255,255,0.08);");
+            button.getStyleClass().add("simple-button");
         } else {
             button.getStyleClass().add("register-button");
         }

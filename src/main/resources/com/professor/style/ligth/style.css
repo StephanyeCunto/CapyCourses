@@ -188,22 +188,21 @@
 
 .outline-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #3498db;
-    -fx-border-color: #3498db;
-    -fx-border-radius: 12px;
+    -fx-text-fill: #6C8DFF;
+    -fx-border-color: #6C8DFF;
+    -fx-border-radius: 12;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
-    -fx-padding: 12px 20px;
+    -fx-padding: 12 20;
     -fx-cursor: hand;
-    -fx-transition: background-color 0.3s ease, -fx-text-fill 0.3s ease;
-    
 }
 
 .outline-button:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.1);
-    -fx-border-color: transparent;
-    -fx-text-fill: #246896;
-    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 10, 0, 0, 0);
+    -fx-background-color: #6C8DFF;
+    -fx-text-fill:  #1A1A1A;
+    -fx-border-color: rgba(255, 255, 255, 0);
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
 }
 
 .simple-button {

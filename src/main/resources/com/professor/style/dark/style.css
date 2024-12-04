@@ -8,12 +8,6 @@
     -fx-spacing: 24;
 }
 
-#sideMenu {
-    -fx-background-radius: 0 20 20 0;
-    -fx-padding: 25;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0, 0, 0);
-}
-
 .progress-tracker {
     -fx-background-color: rgba(255, 255, 255, 0.05);
     -fx-background-radius: 12;
@@ -27,6 +21,7 @@
     -fx-prompt-text-fill: rgba(255, 255, 255, 0.6);
     -fx-padding: 12;
     -fx-font-size: 14px;
+    -fx-wrap-text: true;
 }
 
 .custom-text-area .content {
@@ -40,7 +35,7 @@
 
 .side-menu {
     -fx-background-color: rgba(255, 255, 255, 0.05);
-    -fx-background-radius: 20 0 0 20;
+    -fx-background-radius: 0 20 20 0;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
     -fx-padding: 32 24;
 }
@@ -169,11 +164,12 @@
 }
 
 .outline-button:hover {
-    -fx-background-color: rgba(163, 194, 219, 0.1);
-    -fx-text-fill: #A3C2DB;
+    -fx-background-color: #6C8DFF;
+    -fx-text-fill:  #1A1A1A;
     -fx-border-color: rgba(255, 255, 255, 0);
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
 }
-
 .outline-button:pressed {
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;

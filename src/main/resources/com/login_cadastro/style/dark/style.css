@@ -5,11 +5,6 @@
     -surface-dark: #242942;
 }
 
-#container {
-    -fx-background-color: linear-gradient(to right bottom, #1E1E2E, #2E2E3E);
-
-}
-
 .background-overlay {
     -fx-fill: rgba(0, 0, 0, 0.4);
 }
@@ -76,6 +71,7 @@
     -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);
     -fx-font-size: 14px;
     -fx-padding: 12 16;
+    -fx-wrap-text: true;
 }
 
 .custom-text-field:focused,
