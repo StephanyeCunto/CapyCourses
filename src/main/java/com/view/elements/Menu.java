@@ -72,6 +72,7 @@ public class Menu {
         Button button = new Button(text);
         button.setMaxWidth(Double.MAX_VALUE);
         fillMap();
+        System.out.println(currentPage);
         if (buttonMenu.get(currentPage) == text) {
             button.getStyleClass().add("outline-button");
         } else if (!text.equals("Sair")) {
@@ -147,8 +148,12 @@ public class Menu {
     private void redirectTo(String button) {
         try {
             String pageNext = getNextPage(button);
+            System.out.println(pageNext);
             if (pageNext != null) {
                 Stage stage = (Stage) sideMenu.getScene().getWindow();
+                if(pageNext.equals("/com/estudante/paginaInicial.fxml")){
+                    pageNext = "/com/estudante/paginaInicial/paginaInicial.fxml";
+                }
                 Parent root = FXMLLoader.load(getClass().getResource(pageNext));
                 Scene currentScene = stage.getScene();
                 Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());

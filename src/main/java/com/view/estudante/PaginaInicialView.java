@@ -1,19 +1,14 @@
 package com.view.estudante;
 
 import javafx.animation.*;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.fxml.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,6 +46,8 @@ public class PaginaInicialView implements Initializable {
     private Button themeToggleBtn;
     @FXML
     private StackPane toggleButtonStackPane;
+    @FXML
+    private GridPane container;
 
     private static final Duration INITIAL_ANIMATION_DURATION = Duration.millis(1000);
     private static final Interpolator EASE_IN_OUT = Interpolator.SPLINE(0.42, 0.0, 0.58, 1.0);
@@ -60,15 +57,16 @@ public class PaginaInicialView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadCarousel();
-        loadCourses();
-        loadMenu();
-        loadEffect();
-
+        changeMode();
         toggleButtonStackPane.setOnMouseClicked(e -> toggle());
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
+
+        loadCarousel();
+        loadCourses();
+        loadMenu();
+        loadEffect();
     }
 
     private void loadCourses() {
@@ -149,10 +147,10 @@ public class PaginaInicialView implements Initializable {
 
         if (isLightMode) {
             changeMode();
-            // background.getStyleClass().remove("dark");
+            background.getStyleClass().remove("dark");
         } else {
             changeMode();
-            // background.getStyleClass().add("dark");
+            background.getStyleClass().add("dark");
         }
 
         updateIconsVisibility();
@@ -168,37 +166,32 @@ public class PaginaInicialView implements Initializable {
     }
 
     private void toggleInitialize() {
-        if (!Modo.getInstance().getModo()) {
+        if (Modo.getInstance().getModo()) {
             background.getStyleClass().add("dark");
-            sunIcon.setVisible(Modo.getInstance().getModo());
-            moonIcon.setVisible(!Modo.getInstance().getModo());
+            sunIcon.setVisible(!Modo.getInstance().getModo());
+            moonIcon.setVisible(Modo.getInstance().getModo());
             TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
-            thumbTransition.setToX(!Modo.getInstance().getModo() ? 12.0 : -12.0);
+            thumbTransition.setToX(Modo.getInstance().getModo() ? 12.0 : -12.0);
             thumbTransition.play();
         } else {
             TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
-            thumbTransition.setToX(Modo.getInstance().getModo() ? -12.0 : 12.0);
+            thumbTransition.setToX(!Modo.getInstance().getModo() ? -12.0 : 12.0);
             thumbTransition.play();
             background.getStyleClass().remove("dark");
-            sunIcon.setVisible(Modo.getInstance().getModo());
-            moonIcon.setVisible(!Modo.getInstance().getModo());
+            sunIcon.setVisible(!Modo.getInstance().getModo());
+            moonIcon.setVisible(Modo.getInstance().getModo());
         }
     }
 
     protected void changeMode() {
-        /*
-         * container.getStylesheets().clear();
-         * if (Modo.getInstance().getModo()) {
-         * container.getStylesheets()
-         * .add(getClass().getResource("/com/login_cadastro/style/ligth/style.css").
-         * toExternalForm());
-         * Modo.getInstance().setModo();
-         * } else {
-         * container.getStylesheets()
-         * .add(getClass().getResource("/com/login_cadastro/style/dark/style.css").
-         * toExternalForm());
-         * Modo.getInstance().setModo();
-         * }
-         */
+          container.getStylesheets().clear();
+          if (!Modo.getInstance().getModo()) {
+         container.getStylesheets().add(getClass().getResource("/com/estudante/paginaInicial/style/ligth/style.css").toExternalForm());
+          Modo.getInstance().setModo();
+          } else {
+          container.getStylesheets().add(getClass().getResource("/com/estudante/paginaInicial/style/dark/style.css").toExternalForm());
+          Modo.getInstance().setModo();
+          }
+         
     }
 }

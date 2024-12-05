@@ -14,10 +14,10 @@
 <?import javafx.scene.control.ToggleButton?>
 
 
-<GridPane fx:controller="com.view.estudante.PaginaInicialView" stylesheets="@style/style.css"
+<GridPane fx:controller="com.view.estudante.PaginaInicialView"
   maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
   prefHeight="768.0" prefWidth="1366.0"
-  styleClass="container"
+  styleClass="container" fx:id="container"
   xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" />

@@ -12,9 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class LoadCourses {
@@ -35,7 +33,6 @@ public class LoadCourses {
             courseGrid.add(courseBox, i % numColumns, i / numColumns);
         }
 
-        // Atualiza layout ao redimensionar a janela
         courseContainer.widthProperty().addListener((obs, oldVal, newVal) -> {
             int columns = calculateColumns();
             reorganizeGrid(columns);
@@ -57,7 +54,7 @@ public class LoadCourses {
 
     private int calculateColumns() {
         double width = courseContainer.getWidth();
-        return Math.max(1, (int) (width / 450)); // Ajusta para largura mínima de 350px
+        return Math.max(1, (int) (width / 450)); 
     }
 
     private void reorganizeGrid(int numColumns) {
@@ -78,9 +75,9 @@ public class LoadCourses {
         content.setStyle("-fx-padding: 20;");
 
         ImageView courseImage = createCourseImage();
-        Label categoryLabel = createStyledLabel(course.getCategoria().toUpperCase(), "Franklin Gothic Medium", 12, Color.web("#FFD700"));
-        Label titleLabel = createStyledLabel(course.getTitle(), "Franklin Gothic Medium", 24, Color.WHITE);
-        Label authorLabel = createStyledLabel("Por " + course.getName(), "Franklin Gothic Medium", 14, Color.web("#ffffff90"));
+        Label categoryLabel = createStyledLabel(course.getCategoria().toUpperCase(), "Franklin Gothic Medium", 12);
+        Label titleLabel = createStyledLabel(course.getTitle(), "Franklin Gothic Medium", 24);
+        Label authorLabel = createStyledLabel("Por " + course.getName(), "Franklin Gothic Medium", 14);
 
         HBox courseInfo = createCourseInfo(course, settings);
         Label descLabel = createDescriptionLabel(course.getDescription());
@@ -116,7 +113,7 @@ public class LoadCourses {
     }
 
     private Label createDescriptionLabel(String description) {
-        Label descLabel = createStyledLabel(description, "Franklin Gothic Medium", 14, Color.web("#ffffff90"));
+        Label descLabel = createStyledLabel(description, "Franklin Gothic Medium", 14);
         descLabel.setWrapText(true);
 
         javafx.animation.FadeTransition fade = new javafx.animation.FadeTransition(javafx.util.Duration.millis(1000), descLabel);
@@ -135,7 +132,7 @@ public class LoadCourses {
         statusInfo.setStyle("-fx-background-color: rgba(255, 255, 255, 0.03); -fx-padding: 10; -fx-background-radius: 5;");
 
         if (settings.isCertificate()) {
-            Label certificateLabel = createStyledLabel("✓ Certificado", "Franklin Gothic Medium", 13, Color.web("#90EE90"));
+            Label certificateLabel = createStyledLabel("✓ Certificado", "Franklin Gothic Medium", 13);
             statusInfo.getChildren().add(certificateLabel);
         }
         return statusInfo;
@@ -154,7 +151,7 @@ public class LoadCourses {
     }
 
     private Label createInfoLabel(String text) {
-        Label label = createStyledLabel(text, "Franklin Gothic Medium", 14, Color.web("#ffffff90"));
+        Label label = createStyledLabel(text, "Franklin Gothic Medium", 14);
         label.setStyle("-fx-padding: 5 10; -fx-background-color: rgba(255, 255, 255, 0.03); -fx-background-radius: 15;");
         return label;
     }
@@ -165,10 +162,9 @@ public class LoadCourses {
         return button;
     }
 
-    private Label createStyledLabel(String text, String fontFamily, double fontSize, Color color) {
+    private Label createStyledLabel(String text, String fontFamily, double fontSize) {
         Label label = new Label(text);
         label.setFont(Font.font(fontFamily, fontSize));
-        label.setTextFill(color);
         return label;
     }
 

@@ -114,7 +114,6 @@
 
 .content-card {
     -fx-background-color: rgba(255, 255, 255, 0.7);
-
     -fx-background-radius: 20px;
     -fx-padding: 24px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 8, 0, 0, 0);
