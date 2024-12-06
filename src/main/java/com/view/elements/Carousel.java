@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -30,6 +31,11 @@ public class Carousel {
     private Button leftButton;
     @FXML
     private HBox indicator;
+    @FXML 
+    private ImageView rightButtonImage;
+    @FXML 
+    private ImageView leftButtonImage;
+
 
     private int currentIndex = 0;
     private Timeline timeline;
@@ -45,9 +51,46 @@ public class Carousel {
         setupCarouselControls();
         startAutoCarousel();
 
-        rigthButton.getStyleClass().add("outline-button-seta");
-        leftButton.getStyleClass().add("outline-button-seta");
+        rigthButton.setOnMouseEntered(event -> {
+            try {
+                Image hoverImage = new Image(getClass().getResourceAsStream("/com/icons/seta-carrosel-hover.png"));
+                rightButtonImage.setRotate(270);
+                rightButtonImage.setImage(hoverImage);
+            } catch (Exception ex) {
+                System.err.println("Error loading hover image: " + ex.getMessage());
+            }
+        });
+        
+        rigthButton.setOnMouseExited(event -> {
+            try {
+                Image normalImage = new Image(getClass().getResourceAsStream("/com/icons/seta-carrosel.png"));
+                rightButtonImage.setRotate(0);
+                rightButtonImage.setImage(normalImage);
+            } catch (Exception ex) {
+                System.err.println("Error loading normal image: " + ex.getMessage());
+            }
+        });
 
+        leftButton.setOnMouseEntered(event -> {
+            try {
+                Image hoverImage = new Image(getClass().getResourceAsStream("/com/icons/seta-carrosel-hover.png"));
+                leftButtonImage.setRotate(90);
+                leftButtonImage.setImage(hoverImage);
+            } catch (Exception ex) {
+                System.err.println("Error loading hover image: " + ex.getMessage());
+            }
+        });
+
+        leftButton.setOnMouseExited(event -> {
+            try {
+                Image normalImage = new Image(getClass().getResourceAsStream("/com/icons/seta-carrosel.png"));
+                leftButtonImage.setRotate(180);
+                leftButtonImage.setImage(normalImage);
+            } catch (Exception ex) {
+                System.err.println("Error loading normal image: " + ex.getMessage());
+            }
+        });
+        
     }
 
     private void startAutoCarousel() {
@@ -341,6 +384,5 @@ private Label createInfoLabel(String text) {
 
         // Exibir modal
         modal.showCourseDetails(courseTitle, createdBy, creationDate, numberOfLessons, numberOfModules, modulesWithLessons, quizzes);
-        modal.openModal();
     }
 }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -15,13 +16,19 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
-<VBox fx:id="featuredCourseSection" fx:controller="com.view.elements.Carousel" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="featuredCourseSection" fx:controller="com.view.elements.Carousel"
+    xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
     <HBox spacing="20" alignment="CENTER">
-        <Button fx:id="leftButton" styleClass="modern-button" style="-fx-min-width: 45; -fx-min-height: 45; -fx-max-width: 45; -fx-max-height: 45; -fx-padding: 0; -fx-border-radius: 22.5; -fx-background-radius: 22.5;-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 0);" text="&lt;">
-            <font>
-                <Font name="Franklin Gothic Medium" size="20.0" />
-            </font>
+        <Button fx:id="leftButton"
+            style="-fx-min-width: 50; -fx-min-height: 50; -fx-max-width: 50; -fx-max-height: 50; -fx-padding: 0; -fx-background-color: transparent; -fx-border-color: transparent;">
+            <graphic>
+                <ImageView rotate="180" fx:id="leftButtonImage">
+                    <Image url="@../icons/seta-carrosel.png" />
+                </ImageView>
+            </graphic>
             <HBox.margin>
                 <Insets top="50.0" />
             </HBox.margin>
@@ -31,10 +38,13 @@
         </Button>
         <VBox fx:id="rigthContainer" alignment="CENTER">
         </VBox>
-        <Button fx:id="rigthButton" styleClass="modern-button" style="-fx-min-width: 45; -fx-min-height: 45; -fx-max-width: 45; -fx-max-height: 45; -fx-padding: 0; -fx-background-radius: 22.5; -fx-border-radius: 22.5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 0);" text="&gt;">
-            <font>
-                <Font name="Franklin Gothic Medium" size="20.0" />
-            </font>
+        <Button fx:id="rigthButton"
+            style="-fx-min-width: 50; -fx-min-height: 50; -fx-max-width: 50; -fx-max-height: 50; -fx-padding: 0; -fx-background-color: transparent; -fx-border-color: transparent;">
+            <graphic>
+                <ImageView fx:id="rightButtonImage">
+                    <Image  url="@../icons/seta-carrosel.png" />
+                </ImageView>
+            </graphic>
             <HBox.margin>
                 <Insets top="50.0" />
             </HBox.margin>

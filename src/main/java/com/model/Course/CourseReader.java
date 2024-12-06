@@ -21,10 +21,10 @@ public class CourseReader {
                 String description = values[2];
                 String categoria = values[3];
                 String nivel = values[4];
-                String tags = values[5];
+                
                 double rating = Double.parseDouble(values[6]);
 
-                Course course = new Course(name, title, description, categoria, nivel, rating,tags);
+                Course course = new Course(name, title, description, categoria, nivel, rating);
 
                 courses.add(course);
             }

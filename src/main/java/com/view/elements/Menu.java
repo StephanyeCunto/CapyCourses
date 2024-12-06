@@ -72,7 +72,6 @@ public class Menu {
         Button button = new Button(text);
         button.setMaxWidth(Double.MAX_VALUE);
         fillMap();
-        System.out.println(currentPage);
         if (buttonMenu.get(currentPage) == text) {
             button.getStyleClass().add("outline-button");
         } else if (!text.equals("Sair")) {

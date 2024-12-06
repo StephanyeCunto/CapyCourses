@@ -241,7 +241,7 @@
                                 <Button maxWidth="Infinity" onAction="#createCourse"
                                     styleClass="modern-button" text="Publicar Curso" />
                                 <Button maxWidth="Infinity" styleClass="outline-button"
-                                    text="Salvar como Rascunho" />
+                                    text="Salvar Como Rascunho" />
                                 <Button maxWidth="Infinity" styleClass="simple-button"
                                     text="Visualizar">
                                     <padding>

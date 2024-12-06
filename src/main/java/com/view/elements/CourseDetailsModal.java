@@ -1,24 +1,26 @@
 package com.view.elements;
 
-import java.util.*;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.*;
+
+import java.util.List;
+import java.util.Map;
 
 public class CourseDetailsModal {
+
     private final Stage modalStage;
-    private final double WIDTH = 800;
+    private final double WIDTH = 850;
     private final double HEIGHT = 600;
 
     public CourseDetailsModal() {
         modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
-        modalStage.initStyle(StageStyle.TRANSPARENT); // Makes the window borderless
-        modalStage.setTitle("Detalhes do Curso");
+        modalStage.initStyle(StageStyle.TRANSPARENT); // Design sem bordas
     }
 
     public void showCourseDetails(
@@ -30,125 +32,121 @@ public class CourseDetailsModal {
             Map<String, List<String>> modulesWithLessons,
             List<String> quizzes
     ) {
-        // Backdrop effect
-        StackPane backdrop = new StackPane();
-        backdrop.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+        // Backdrop para foco no modal
+        StackPane backdrop = createBackdrop();
 
-        // Main container with modern styling
-        VBox mainContainer = new VBox(20);
-        mainContainer.setMaxWidth(WIDTH * 0.9);
-        mainContainer.setMaxHeight(HEIGHT * 0.9);
-        mainContainer.getStyleClass().addAll("modal-container", "glass-effect");
-        mainContainer.setPadding(new Insets(25));
-        
-        // Add drop shadow effect
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setColor(Color.rgb(0, 0, 0, 0.3));
-        dropShadow.setRadius(20);
-        mainContainer.setEffect(dropShadow);
+        // Container principal
+        VBox modalContainer = new VBox(20);
+        modalContainer.setPadding(new Insets(20));
+        modalContainer.setMaxWidth(WIDTH * 0.8);
+        modalContainer.setMaxHeight(HEIGHT * 0.9);
+        modalContainer.setStyle("-fx-background-color: #2a2d3e; -fx-background-radius: 15;");
+        modalContainer.setEffect(createDropShadow());
 
-        // Header section
+        // Adicionando as seções
         VBox header = createHeader(courseTitle, createdBy, creationDate, numberOfLessons, numberOfModules);
-        
-        // Content section with modules and quizzes
         VBox content = createContent(modulesWithLessons, quizzes);
+        HBox footer = createFooter();
 
-        // Close button with modern styling
-        Button closeButton = new Button("Fechar");
-        closeButton.getStyleClass().addAll("modal-close-button", "hoverable");
-        closeButton.setOnAction(e -> modalStage.close());
+        modalContainer.getChildren().addAll(header, new ScrollPane(content), footer);
+        backdrop.getChildren().add(modalContainer);
 
-        // Organize layout
-        ScrollPane scrollPane = new ScrollPane(content);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+        // Configuração da cena
+        Scene scene = new Scene(backdrop, WIDTH, HEIGHT);
+        scene.setFill(Color.TRANSPARENT);
+        scene.getStylesheets().add(getClass().getResource("/com/style/modal.css").toExternalForm());
 
-        mainContainer.getChildren().addAll(header, scrollPane, closeButton);
-        backdrop.getChildren().add(mainContainer);
-
-        // Scene setup
-        Scene modalScene = new Scene(backdrop, WIDTH, HEIGHT);
-        modalScene.setFill(Color.TRANSPARENT);
-        modalScene.getStylesheets().addAll(
-            getClass().getResource("/com/estudante/paginaInicial/style/dark/style.css").toExternalForm(),
-            getClass().getResource("/com/estudante/paginaInicial/style/dark/modal.css").toExternalForm()
-        );
-
-        // Click outside to close
-        backdrop.setOnMouseClicked(e -> {
-            if (e.getTarget() == backdrop) {
-                modalStage.close();
-            }
-        });
-
-        modalStage.setScene(modalScene);
-        modalStage.centerOnScreen();
+        modalStage.setScene(scene);
+        modalStage.showAndWait();
     }
 
-    private VBox createHeader(String courseTitle, String createdBy, String creationDate, 
-                            int numberOfLessons, int numberOfModules) {
+    private StackPane createBackdrop() {
+        StackPane backdrop = new StackPane();
+        backdrop.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+        backdrop.setOnMouseClicked(event -> modalStage.close()); // Fecha ao clicar fora
+        return backdrop;
+    }
+
+    private DropShadow createDropShadow() {
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.color(0, 0, 0, 0.5));
+        shadow.setRadius(20);
+        return shadow;
+    }
+
+    private VBox createHeader(String courseTitle, String createdBy, String creationDate, int lessons, int modules) {
         VBox header = new VBox(10);
-        header.getStyleClass().add("modal-header");
+        header.setAlignment(Pos.CENTER);
+        header.setPadding(new Insets(10));
+        header.setStyle("-fx-background-color: #1f2133; -fx-background-radius: 15;");
 
         Label titleLabel = new Label(courseTitle);
-        titleLabel.getStyleClass().add("modal-title");
+        titleLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        GridPane infoGrid = new GridPane();
-        infoGrid.setHgap(20);
-        infoGrid.setVgap(5);
-        infoGrid.addRow(0, new Label("Criado por:"), new Label(createdBy));
-        infoGrid.addRow(1, new Label("Data:"), new Label(creationDate));
-        infoGrid.addRow(2, new Label("Aulas:"), new Label(String.valueOf(numberOfLessons)));
-        infoGrid.addRow(3, new Label("Módulos:"), new Label(String.valueOf(numberOfModules)));
+        GridPane detailsGrid = new GridPane();
+        detailsGrid.setHgap(15);
+        detailsGrid.setVgap(5);
+        detailsGrid.addRow(0, createLabel("Criado por:"), createLabel(createdBy));
+        detailsGrid.addRow(1, createLabel("Data de Criação:"), createLabel(creationDate));
+        detailsGrid.addRow(2, createLabel("Total de Aulas:"), createLabel(String.valueOf(lessons)));
+        detailsGrid.addRow(3, createLabel("Total de Módulos:"), createLabel(String.valueOf(modules)));
 
-        header.getChildren().addAll(titleLabel, infoGrid);
+        header.getChildren().addAll(titleLabel, detailsGrid);
         return header;
     }
 
     private VBox createContent(Map<String, List<String>> modulesWithLessons, List<String> quizzes) {
         VBox content = new VBox(20);
-        content.getStyleClass().add("modal-content");
+        content.setPadding(new Insets(10));
+        content.setStyle("-fx-background-color: #2a2d3e; -fx-background-radius: 15;");
 
-        // Modules section
+        // Seção de módulos
+        Label modulesLabel = new Label("Módulos e Aulas");
+        modulesLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
+
         VBox modulesSection = new VBox(15);
-        modulesSection.getStyleClass().add("content-section");
-        
-        Label modulesTitle = new Label("Módulos");
-        modulesTitle.getStyleClass().add("section-title");
-        modulesSection.getChildren().add(modulesTitle);
-
         modulesWithLessons.forEach((module, lessons) -> {
-            TitledPane modulePane = new TitledPane();
-            modulePane.setText(module);
-            VBox lessonsBox = new VBox(5);
-            lessons.forEach(lesson -> {
-                Label lessonLabel = new Label("• " + lesson);
-                lessonLabel.getStyleClass().add("lesson-item");
-                lessonsBox.getChildren().add(lessonLabel);
-            });
-            modulePane.setContent(lessonsBox);
+            TitledPane modulePane = new TitledPane(module, createLessonList(lessons));
+            modulePane.setStyle("-fx-text-fill: white;");
             modulesSection.getChildren().add(modulePane);
         });
 
-        // Quizzes section
+        // Seção de quizzes
+        Label quizzesLabel = new Label("Questionários");
+        quizzesLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
+
         VBox quizzesSection = new VBox(10);
-        quizzesSection.getStyleClass().add("content-section");
-        
-        Label quizzesTitle = new Label("Questionários");
-        quizzesTitle.getStyleClass().add("section-title");
-        quizzesSection.getChildren().add(quizzesTitle);
+        quizzes.forEach(quiz -> quizzesSection.getChildren().add(createLabel("• " + quiz)));
 
-        quizzes.forEach(quiz -> {
-            Label quizLabel = new Label("• " + quiz);
-            quizLabel.getStyleClass().add("quiz-item");
-            quizzesSection.getChildren().add(quizLabel);
-        });
-
-        content.getChildren().addAll(modulesSection, quizzesSection);
+        content.getChildren().addAll(modulesLabel, modulesSection, quizzesLabel, quizzesSection);
         return content;
     }
 
-    public void openModal() {
-        modalStage.showAndWait();
+    private VBox createLessonList(List<String> lessons) {
+        VBox lessonList = new VBox(5);
+        lessons.forEach(lesson -> {
+            Label lessonLabel = createLabel("• " + lesson);
+            lessonList.getChildren().add(lessonLabel);
+        });
+        return lessonList;
+    }
+
+    private HBox createFooter() {
+        HBox footer = new HBox();
+        footer.setAlignment(Pos.CENTER_RIGHT);
+        footer.setPadding(new Insets(10));
+
+        Button closeButton = new Button("Fechar");
+        closeButton.setStyle("-fx-background-color: #ff4f5a; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10 20; -fx-background-radius: 10;");
+        closeButton.setOnAction(event -> modalStage.close());
+
+        footer.getChildren().add(closeButton);
+        return footer;
+    }
+
+    private Label createLabel(String text) {
+        Label label = new Label(text);
+        label.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+        return label;
     }
 }

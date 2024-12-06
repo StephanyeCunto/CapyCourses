@@ -14,5 +14,4 @@ public class Course {
     private String categoria;
     private String nivel;
     private double rating;
-    private String tags;
 }

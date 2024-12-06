@@ -871,21 +871,67 @@ public class CadastroCurso implements Initializable {
     @FXML
     private void addNewModule() {
         currentModuleCount++;
+
+        // Criar o card principal do módulo
         VBox moduleCard = new VBox();
         moduleCard.getStyleClass().addAll("module-card", "fade-in", "content-card");
         moduleCard.setSpacing(15);
+
+        // Criar o cabeçalho do módulo
         HBox moduleHeader = createModuleHeader(currentModuleCount);
+        moduleHeader.getStyleClass().add("module-header");
+
+        ImageView arrowI = new ImageView(new Image(getClass().getResourceAsStream("/com/icons/seta-baixo-dark.png")));
+        arrowI.setFitWidth(24);
+        arrowI.setFitHeight(24);
+        arrowI .setRotate(180);
+
+        Label arrowIndicator = new Label("");
+        arrowIndicator.setGraphic(arrowI);
+            arrowIndicator.setText("");
+        moduleHeader.getChildren().add(1, arrowIndicator);
+
         VBox moduleContent = createModuleContent(currentModuleCount);
+        moduleContent.setVisible(true);
+        moduleContent.managedProperty().bind(moduleContent.visibleProperty());
+
         VBox lessonsList = createLessonsList(modulesList, moduleHeader);
+        lessonsList.setVisible(true);
+        lessonsList.managedProperty().bind(lessonsList.visibleProperty());
+
+        moduleHeader.setOnMouseClicked(event -> {
+            boolean isCurrentlyVisible = moduleContent.isVisible() || lessonsList.isVisible();
+            moduleContent.setVisible(!isCurrentlyVisible);
+            lessonsList.setVisible(!isCurrentlyVisible);
+            ImageView arrow = new ImageView(new Image(getClass().getResourceAsStream("/com/icons/seta-baixo-dark.png")));
+            arrow.setFitWidth(24);
+            arrow.setFitHeight(24);
+            if(!isCurrentlyVisible) {
+                arrow.setRotate(180);
+            }
+            arrowIndicator.setGraphic(arrow);
+            arrowIndicator.setText("");
+            arrowIndicator.getStyleClass().removeAll("collapsed", "expanded");
+            arrowIndicator.getStyleClass().add(isCurrentlyVisible ? "collapsed" : "expanded");
+            moduleHeader.setStyle(isCurrentlyVisible ? 
+            "-fx-border-width: 1px;" : 
+            "-fx-border-width: 1px 1px 0 1px;");
+        });
+
         moduleCard.getChildren().addAll(moduleHeader, moduleContent, lessonsList);
+
         moduleCard.setOpacity(0);
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), moduleCard);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.play();
+
         modulesList.getChildren().add(moduleCard);
+
+
         validatorModules.setupInitialStateModules(modulesList);
     }
+    
 
     private HBox createModuleHeader(int moduleNumber) {
         HBox header = new HBox();
