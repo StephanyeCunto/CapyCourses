@@ -53,8 +53,6 @@ public class PaginaInicialView implements Initializable {
     private static final Interpolator EASE_IN_OUT = Interpolator.SPLINE(0.42, 0.0, 0.58, 1.0);
     private static final Interpolator SMOOTH_STEP = Interpolator.SPLINE(0.4, 0, 0.2, 1);
 
-    private boolean isLightMode = Modo.getInstance().getModo();
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         changeMode();
@@ -134,64 +132,56 @@ public class PaginaInicialView implements Initializable {
     }
 
     private void toggle() {
+        // Modo.getInstance().getModo() == dark
+        Modo.getInstance().setModo();
+
         TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
-        thumbTransition.setToX(isLightMode ? 12.0 : -12.0);
+        thumbTransition.setToX(!Modo.getInstance().getModo() ? 12.0 : -12.0);
         thumbTransition.play();
 
-        FillTransition fillTransition = new FillTransition(Duration.millis(200), background);
-        fillTransition.setFromValue(isLightMode ? Color.web("#FFA500") : Color.web("#4169E1"));
-        fillTransition.setToValue(isLightMode ? Color.web("#4169E1") : Color.web("#FFA500"));
-        fillTransition.play();
+      FillTransition fillTransition = new FillTransition(Duration.millis(200), background);
+        fillTransition.setFromValue(!Modo.getInstance().getModo() ? Color.web("#FFA500") : Color.web("#4169E1"));
+      fillTransition.setToValue(!Modo.getInstance().getModo() ? Color.web("#4169E1") : Color.web("#FFA500"));
+       fillTransition.play();
 
-        isLightMode = !isLightMode;
-
-        if (isLightMode) {
-            changeMode();
-            background.getStyleClass().remove("dark");
-        } else {
-            changeMode();
-            background.getStyleClass().add("dark");
-        }
+        changeMode();
 
         updateIconsVisibility();
     }
 
-    public boolean isLightMode() {
-        return isLightMode;
-    }
-
     private void updateIconsVisibility() {
-        sunIcon.setVisible(isLightMode);
-        moonIcon.setVisible(!isLightMode);
+        sunIcon.setVisible(Modo.getInstance().getModo());
+        moonIcon.setVisible(!Modo.getInstance().getModo());
     }
 
     private void toggleInitialize() {
-        if (Modo.getInstance().getModo()) {
+        if (!Modo.getInstance().getModo()) {
             background.getStyleClass().add("dark");
-            sunIcon.setVisible(!Modo.getInstance().getModo());
-            moonIcon.setVisible(Modo.getInstance().getModo());
+            sunIcon.setVisible(Modo.getInstance().getModo());
+            moonIcon.setVisible(!Modo.getInstance().getModo());
             TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
-            thumbTransition.setToX(Modo.getInstance().getModo() ? 12.0 : -12.0);
+            thumbTransition.setToX(!Modo.getInstance().getModo() ? 12.0 : -12.0);
             thumbTransition.play();
         } else {
             TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
-            thumbTransition.setToX(!Modo.getInstance().getModo() ? -12.0 : 12.0);
+            thumbTransition.setToX(Modo.getInstance().getModo() ? -12.0 : 12.0);
             thumbTransition.play();
             background.getStyleClass().remove("dark");
-            sunIcon.setVisible(!Modo.getInstance().getModo());
-            moonIcon.setVisible(Modo.getInstance().getModo());
+            sunIcon.setVisible(Modo.getInstance().getModo());
+            moonIcon.setVisible(!Modo.getInstance().getModo());
         }
     }
 
-    protected void changeMode() {
-          container.getStylesheets().clear();
-          if (!Modo.getInstance().getModo()) {
-         container.getStylesheets().add(getClass().getResource("/com/estudante/paginaInicial/style/ligth/style.css").toExternalForm());
-          Modo.getInstance().setModo();
-          } else {
-          container.getStylesheets().add(getClass().getResource("/com/estudante/paginaInicial/style/dark/style.css").toExternalForm());
-          Modo.getInstance().setModo();
-          }
-         
+    private void changeMode() {
+        container.getStylesheets().clear();
+        if (!Modo.getInstance().getModo()) {
+            background.getStyleClass().add("dark");
+            container.getStylesheets()
+                    .add(getClass().getResource("/com/estudante/paginaInicial/style/ligth/style.css").toExternalForm());
+        } else {
+            background.getStyleClass().remove("dark");
+            container.getStylesheets()
+                    .add(getClass().getResource("/com/estudante/paginaInicial/style/dark/style.css").toExternalForm());
+        }
     }
 }

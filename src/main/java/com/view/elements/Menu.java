@@ -148,7 +148,6 @@ public class Menu {
     private void redirectTo(String button) {
         try {
             String pageNext = getNextPage(button);
-            System.out.println(pageNext);
             if (pageNext != null) {
                 Stage stage = (Stage) sideMenu.getScene().getWindow();
                 if(pageNext.equals("/com/estudante/paginaInicial.fxml")){

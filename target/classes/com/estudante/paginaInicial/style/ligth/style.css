@@ -147,6 +147,11 @@
     -fx-text-fill: black;
 }
 
+.label{
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-text-fill: black;
+}
+
 .card-info {
     -fx-text-fill: black;
 }
@@ -168,3 +173,64 @@
     -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 10, 0, 0, 0);
 }
 
+.outline-button-seta {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-text-fill: linear-gradient(to right, #09223f, #165043);
+    -fx-border-color:linear-gradient(to right, #216abe, #23b192);
+    -fx-border-radius: 12;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 12 20;
+    -fx-cursor: hand;
+}
+
+.outline-button-seta:hover {
+    -fx-background-color: linear-gradient(to right, #216abe, #23b192);
+    -fx-text-fill:  #1A1A1A;
+    -fx-border-color: rgba(255, 255, 255, 0);
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+}
+
+
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 0 2;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgba(74, 144, 226, 0.7);  
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
+    -fx-min-width: 12px; 
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(74, 144, 226, 0.9);  
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0, 0, 0);
+}
+
+.scroll-bar .thumb:pressed {
+    -fx-background-color: #4A90E2; 
+}
+
+.scroll-bar .track {
+    -fx-background-color: rgba(0, 0, 0, 0.1); 
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-opacity: 0;
+}
+
+.scroll-bar:vertical {
+    -fx-pref-width: 12px; 
+}
+
+.scroll-bar:horizontal {
+    -fx-pref-height: 12px;  
+}

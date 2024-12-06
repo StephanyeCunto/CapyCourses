@@ -159,12 +159,14 @@ public class LoadCourses {
     private Button createDetailsButton() {
         Button button = new Button("Ver Detalhes");
         button.getStyleClass().add("outline-button");
+        button.setStyle("-fx-border-radius: 20; -fx-background-radius: 20");
         return button;
     }
 
     private Label createStyledLabel(String text, String fontFamily, double fontSize) {
         Label label = new Label(text);
         label.setFont(Font.font(fontFamily, fontSize));
+        label.getStyleClass().add("label");
         return label;
     }
 

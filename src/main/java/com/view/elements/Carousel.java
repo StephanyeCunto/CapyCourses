@@ -1,25 +1,21 @@
 package com.view.elements;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.model.Course.Course;
 import com.model.Course.CourseSettings;
 import com.model.Course.CourseReader;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.ParallelTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.shape.Circle;
@@ -49,8 +45,8 @@ public class Carousel {
         setupCarouselControls();
         startAutoCarousel();
 
-        rigthButton.getStyleClass().add("outline-button");
-        leftButton.getStyleClass().add("outline-button");
+        rigthButton.getStyleClass().add("outline-button-seta");
+        leftButton.getStyleClass().add("outline-button-seta");
 
     }
 
@@ -63,8 +59,18 @@ public class Carousel {
             }
             displayCourses();
         }));
+
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
+        rigthContainer.setOnMouseEntered(event -> {
+            timeline.stop();
+        });
+    
+        rigthContainer.setOnMouseExited(event -> {
+            timeline.stop(); 
+            timeline.play();
+        });
     }
 
     private void displayCourses() {
@@ -73,6 +79,7 @@ public class Carousel {
         rigthContainer.getChildren().clear();
         rigthContainer.setSpacing(20.0);
         rigthContainer.setAlignment(Pos.CENTER);
+     
         VBox courseBox = createCourseBoxCarousel(courses.get(currentIndex));
         TranslateTransition transition2 = new TranslateTransition(Duration.millis(600));
         ParallelTransition transition = new ParallelTransition(transition2);
@@ -120,16 +127,23 @@ public class Carousel {
             if (currentIndex > 0) {
                 previousIndex = currentIndex;
                 currentIndex--;
-                displayCourses();
+            }else{
+                currentIndex = courses.size() - 1;
+                previousIndex = 0;
             }
+            displayCourses();
         });
 
         rigthButton.setOnAction(e -> {
             if (currentIndex < courses.size() - 1) {
                 previousIndex = currentIndex;
                 currentIndex++;
-                displayCourses();
+            }else{
+                currentIndex = 0;
+                previousIndex = courses.size() - 1;
             }
+            displayCourses();
+
         });
     }
 
@@ -144,113 +158,159 @@ public class Carousel {
         return indicatorHBox;
     }
 
-    private VBox createCourseBoxCarousel(Course course) {
-        CourseSettings settings = reader.courseSettings(course.getTitle());
-        VBox courseBox = new VBox();
-        courseBox.getStyleClass().add("card");
-        courseBox.setPrefWidth(800);
-        courseBox.setPrefHeight(300);
+private VBox createCourseBoxCarousel(Course course) {
+    CourseSettings settings = reader.courseSettings(course.getTitle());
+    
+    VBox courseBox = new VBox();
+    courseBox.getStyleClass().add("card");
+    VBox.setVgrow(courseBox, Priority.ALWAYS);
+    courseBox.setFillWidth(true);
+    courseBox.setPrefWidth(2000);
+    courseBox.setMaxWidth(Double.MAX_VALUE);
+    courseBox.setPrefHeight(300);
+    courseBox.setMaxHeight(300);
 
-        HBox content = new HBox(12);
-        VBox contentVBox = new VBox(12);
-        content.setStyle("-fx-padding: 20;");
+    HBox content = new HBox();
+    content.setFillHeight(true);
+    HBox.setHgrow(content, Priority.ALWAYS);
+    content.setPadding(new Insets(20));
+    content.setSpacing(20);
 
-        ImageView courseImage = new ImageView();
-        courseImage.setFitWidth(260);
-        courseImage.setFitHeight(150);
-        courseImage.setStyle(
-                "-fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 5);");
+    VBox imageContainer = new VBox();
+    imageContainer.setAlignment(Pos.CENTER);
+    imageContainer.setPrefWidth(260);
+    imageContainer.setMaxWidth(260);
 
-        javafx.scene.effect.Reflection reflection = new javafx.scene.effect.Reflection();
-        reflection.setFraction(0.2);
-        courseImage.setEffect(reflection);
+    ImageView courseImage = new ImageView();
+    courseImage.setFitWidth(260);
+    courseImage.setFitHeight(150);
+    courseImage.setPreserveRatio(true);
+    courseImage.setStyle("-fx-background-radius: 12;");
+    
+    javafx.scene.effect.Reflection reflection = new javafx.scene.effect.Reflection();
+    reflection.setFraction(0.2);
+    courseImage.setEffect(reflection);
+    
+    imageContainer.getChildren().add(courseImage);
 
-        Label categoryLabel = createStyledLabel(course.getCategoria().toUpperCase(), "Franklin Gothic Medium", 12,
-                Color.web("#FFD700"));
-        categoryLabel.setEffect(new javafx.scene.effect.Glow(0.4));
+    VBox detailsContainer = new VBox(10);
+    detailsContainer.setFillWidth(true);
+    HBox.setHgrow(detailsContainer, Priority.ALWAYS);
+    detailsContainer.setPrefWidth(480);
 
-        Label titleLabel = createStyledLabel(course.getTitle(), "Franklin Gothic Medium", 24, Color.WHITE);
-        Label authorLabel = createStyledLabel("Por " + course.getName(), "Franklin Gothic Medium", 14,
-                Color.web("#ffffff90"));
+    Label titleLabel = createFixedLabel(
+        course.getTitle(), 
+        "Franklin Gothic Medium", 
+        24, 
+        Color.WHITE
+    );
 
-        HBox courseInfo = new HBox(15);
+    Label categoryLabel = createFixedLabel(
+        course.getCategoria().toUpperCase(), 
+        "Franklin Gothic Medium", 
+        12, 
+        Color.web("#FFD700")
+    );
 
-        courseInfo.setAlignment(Pos.CENTER_LEFT);
-        courseInfo.getChildren().addAll(
-                createInfoLabel("⭐ " + course.getRating()),
-                createInfoLabel(settings.getDurationTotal() + " horas"),
-                createInfoLabel("Nível: " + course.getNivel()));
+    Label authorLabel = createFixedLabel(
+        "Por " + course.getName(), 
+        "Franklin Gothic Medium", 
+        14, 
+        Color.web("#ffffff90")
+    );
 
-        Label descLabel = createStyledLabel(course.getDescription(), "Franklin Gothic Medium", 14,
-                Color.web("#ffffff90"));
-        descLabel.setWrapText(true);
-        javafx.animation.FadeTransition fade = new javafx.animation.FadeTransition(javafx.util.Duration.millis(1000),
-                descLabel);
-        fade.setFromValue(0.7);
-        fade.setToValue(1.0);
-        fade.setCycleCount(javafx.animation.Animation.INDEFINITE);
-        fade.setAutoReverse(true);
-        fade.play();
+    HBox courseInfo = new HBox(15);
+    courseInfo.setAlignment(Pos.CENTER_LEFT);
+    courseInfo.getChildren().addAll(
+        createInfoLabel("⭐ " + course.getRating()),
+        createInfoLabel(settings.getDurationTotal() + " horas"),
+        createInfoLabel("Nível: " + course.getNivel())
+    );
 
-        HBox statusInfo = new HBox(15);
-        statusInfo.setAlignment(Pos.CENTER_LEFT);
-        statusInfo.setStyle(
-                "-fx-background-color: rgba(255, 255, 255, 0.03); -fx-padding: 10; -fx-background-radius: 5;");
+    Label descLabel = createFixedLabel(
+        course.getDescription(), 
+        "Franklin Gothic Medium", 
+        14, 
+        Color.web("#ffffff90")
+    );
+    descLabel.setWrapText(true);
+    descLabel.setMaxHeight(60);
 
-        Label certificateLabel = createStyledLabel(
-                settings.isCertificate() ? "✓ Certificado" : "✗ Sem Certificado",
-                "Franklin Gothic Medium", 13,
-                settings.isCertificate() ? Color.web("#90EE90") : Color.web("#ffffff60"));
+    HBox statusInfo = new HBox(15);
+    statusInfo.setAlignment(Pos.CENTER_LEFT);
+    statusInfo.setStyle(
+        "-fx-background-color: rgba(255, 255, 255, 0.03); " +
+        "-fx-padding: 10; " +
+        "-fx-background-radius: 5;"
+    );
 
-        statusInfo.getChildren().addAll(certificateLabel);
+    Label certificateLabel = createFixedLabel(
+        settings.isCertificate() ? "✓ Certificado" : "✗ Sem Certificado",
+        "Franklin Gothic Medium", 
+        13,
+        settings.isCertificate() ? Color.web("#90EE90") : Color.web("#ffffff60")
+    );
 
-        HBox buttonContainer = new HBox(15);
-        buttonContainer.setAlignment(Pos.CENTER_LEFT);
-        buttonContainer.setPadding(new javafx.geometry.Insets(10, 0, 0, 0));
+    statusInfo.getChildren().add(certificateLabel);
 
-        Button startButton = createStartButton();
-        Button detailsButton = createDetailsButton();
+    HBox buttonContainer = new HBox(15);
+    buttonContainer.setAlignment(Pos.CENTER_LEFT);
+    buttonContainer.setPadding(new Insets(10, 0, 0, 0));
 
-        buttonContainer.getChildren().addAll(startButton, detailsButton);
+    Button startButton = createStartButton();
+    Button detailsButton = createDetailsButton(course);
 
-        contentVBox.getChildren().addAll(
-                titleLabel,
-                categoryLabel,
-                authorLabel,
-                courseInfo,
-                descLabel,
-                statusInfo,
-                buttonContainer);
-        content.getChildren().addAll(
-                courseImage,
-                contentVBox);
+    buttonContainer.getChildren().addAll(startButton, detailsButton);
 
-        courseBox.getChildren().add(content);
-        return courseBox;
-    }
+    detailsContainer.getChildren().addAll(
+        titleLabel,
+        categoryLabel,
+        authorLabel,
+        courseInfo,
+        descLabel,
+        statusInfo,
+        buttonContainer
+    );
 
-    private Label createInfoLabel(String text) {
-        Label label = createStyledLabel(text, "Franklin Gothic Medium", 14, Color.web("#ffffff90"));
-        label.setStyle(
-                "-fx-padding: 5 10; -fx-background-color: rgba(255, 255, 255, 0.03); -fx-background-radius: 15;");
-        return label;
-    }
+    content.getChildren().addAll(imageContainer, detailsContainer);
+    courseBox.getChildren().add(content);
 
-    private Button createDetailsButton() {
+    return courseBox;
+}
+
+private Label createFixedLabel(String text, String fontFamily, double fontSize, Color color) {
+    Label label = new Label(text);
+    label.setFont(Font.font(fontFamily, fontSize));
+    label.setTextFill(color);
+    label.setMaxWidth(Double.MAX_VALUE);
+    label.setWrapText(true);
+    return label;
+}
+
+private Label createInfoLabel(String text) {
+    Label label = createFixedLabel(text, "Franklin Gothic Medium", 14, Color.web("#ffffff90"));
+    label.setStyle(
+        "-fx-padding: 5 10; " +
+        "-fx-background-color: rgba(255, 255, 255, 0.03); " +
+        "-fx-background-radius: 15;"
+    );
+    return label;
+}
+    
+   
+
+    private Button createDetailsButton(Course course) {
         Button button = new Button("Ver Detalhes");
         button.getStyleClass().add("outline-button");
         button.setStyle("-fx-border-radius: 20; -fx-background-radius: 20;");
 
         button.setOnMouseEntered(e -> button.setStyle("-fx-border-radius: 20; -fx-background-radius: 20;"));
         button.setOnMouseExited(e -> button.setStyle("-fx-border-radius: 20; -fx-background-radius: 20;"));
+        button.onActionProperty().set(e -> {
+            CourseDetailsModal modal = new CourseDetailsModal();
+           modalTeste();
+        });
         return button;
-    }
-
-    private Label createStyledLabel(String text, String fontFamily, double fontSize, Color color) {
-        Label label = new Label(text);
-        label.setFont(Font.font(fontFamily, fontSize));
-        label.setTextFill(color);
-        return label;
     }
 
     private Button createStartButton() {
@@ -258,5 +318,29 @@ public class Carousel {
         button.getStyleClass().add("simple-button");
         button.setPrefHeight(35);
         return button;
+    }
+
+    private void  modalTeste(){
+        CourseDetailsModal modal = new CourseDetailsModal();
+
+        // Dados fictícios do curso
+        String courseTitle = "Desenvolvimento Web";
+        String createdBy = "Professor João";
+        String creationDate = "05/12/2024";
+        int numberOfLessons = 10;
+        int numberOfModules = 3;
+
+        // Módulos e aulas
+        Map<String, List<String>> modulesWithLessons = new HashMap<>();
+        modulesWithLessons.put("Módulo 1: Fundamentos", Arrays.asList("Introdução ao HTML", "Introdução ao CSS"));
+        modulesWithLessons.put("Módulo 2: JavaScript", Arrays.asList("Variáveis", "Funções", "Eventos"));
+        modulesWithLessons.put("Módulo 3: Projeto Final", Arrays.asList("Estruturação do projeto", "Entrega"));
+
+        // Questionários
+        List<String> quizzes = Arrays.asList("Quiz 1: HTML", "Quiz 2: CSS", "Quiz 3: JavaScript");
+
+        // Exibir modal
+        modal.showCourseDetails(courseTitle, createdBy, creationDate, numberOfLessons, numberOfModules, modulesWithLessons, quizzes);
+        modal.openModal();
     }
 }
