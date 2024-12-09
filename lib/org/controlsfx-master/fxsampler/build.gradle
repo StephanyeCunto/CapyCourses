@@ -1,0 +1,17 @@
+ext.moduleName = 'org.controlsfx.fxsampler'
+
+version = fxsampler_version
+
+javafx {
+    version = javafx_version
+    modules = [ 'javafx.controls', 'javafx.web' ]
+}
+
+javadoc {
+    options.windowTitle("FXSampler Project ${version}")
+}
+
+// do not publish fxsampler
+tasks.withType(PublishToMavenRepository).configureEach { it.enabled = false }
+
+

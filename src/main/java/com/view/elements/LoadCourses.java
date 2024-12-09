@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.model.Course.Course;
 import com.model.Course.CourseSettings;
+import com.view.Modo;
 import com.model.Course.CourseReader;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -38,8 +39,8 @@ public class LoadCourses {
             reorganizeGrid(columns);
         });
 
-        courseGrid.setAlignment(Pos.CENTER); 
-        courseContainer.setAlignment(Pos.CENTER); 
+        courseGrid.setAlignment(Pos.CENTER);
+        courseContainer.setAlignment(Pos.CENTER);
 
         courseContainer.getChildren().add(courseGrid);
     }
@@ -54,7 +55,7 @@ public class LoadCourses {
 
     private int calculateColumns() {
         double width = courseContainer.getWidth();
-        return Math.max(1, (int) (width / 450)); 
+        return Math.max(1, (int) (width / 450));
     }
 
     private void reorganizeGrid(int numColumns) {
@@ -76,15 +77,21 @@ public class LoadCourses {
 
         ImageView courseImage = createCourseImage();
         Label categoryLabel = createStyledLabel(course.getCategoria().toUpperCase(), "Franklin Gothic Medium", 12);
+        categoryLabel.getStyleClass().add("category");
+
         Label titleLabel = createStyledLabel(course.getTitle(), "Franklin Gothic Medium", 24);
+        titleLabel.getStyleClass().add("title");
+
         Label authorLabel = createStyledLabel("Por " + course.getName(), "Franklin Gothic Medium", 14);
+        authorLabel.getStyleClass().add("author");
 
         HBox courseInfo = createCourseInfo(course, settings);
         Label descLabel = createDescriptionLabel(course.getDescription());
         HBox statusInfo = createStatusInfo(settings);
         HBox buttonContainer = createButtonContainer();
 
-        content.getChildren().addAll(courseImage, categoryLabel, titleLabel, authorLabel, courseInfo, descLabel, statusInfo, buttonContainer);
+        content.getChildren().addAll(courseImage, categoryLabel, titleLabel, authorLabel, courseInfo, descLabel,
+                statusInfo, buttonContainer);
         courseBox.getChildren().add(content);
         return courseBox;
     }
@@ -93,7 +100,8 @@ public class LoadCourses {
         ImageView courseImage = new ImageView();
         courseImage.setFitWidth(260);
         courseImage.setFitHeight(150);
-        courseImage.setStyle("-fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 5);");
+        courseImage.setStyle(
+                "-fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 5);");
 
         javafx.scene.effect.Reflection reflection = new javafx.scene.effect.Reflection();
         reflection.setFraction(0.2);
@@ -105,10 +113,11 @@ public class LoadCourses {
         HBox courseInfo = new HBox(15);
         courseInfo.setAlignment(Pos.CENTER_LEFT);
         courseInfo.getChildren().addAll(
-            createInfoLabel("⭐ " + course.getRating()),
-            createInfoLabel(settings.getDurationTotal() + " horas"),
-            createInfoLabel("Nível: " + course.getNivel())
-        );
+                createInfoLabel("⭐ " + course.getRating()),
+                createInfoLabel(settings.getDurationTotal() + " horas"),
+                createInfoLabel("Nível: " + course.getNivel()));
+
+                courseInfo.getStyleClass().add("info");
         return courseInfo;
     }
 
@@ -116,7 +125,8 @@ public class LoadCourses {
         Label descLabel = createStyledLabel(description, "Franklin Gothic Medium", 14);
         descLabel.setWrapText(true);
 
-        javafx.animation.FadeTransition fade = new javafx.animation.FadeTransition(javafx.util.Duration.millis(1000), descLabel);
+        javafx.animation.FadeTransition fade = new javafx.animation.FadeTransition(javafx.util.Duration.millis(1000),
+                descLabel);
         fade.setFromValue(0.7);
         fade.setToValue(1.0);
         fade.setCycleCount(javafx.animation.Animation.INDEFINITE);
@@ -129,9 +139,10 @@ public class LoadCourses {
     private HBox createStatusInfo(CourseSettings settings) {
         HBox statusInfo = new HBox(15);
         statusInfo.setAlignment(Pos.CENTER_LEFT);
-        statusInfo.setStyle("-fx-background-color: rgba(255, 255, 255, 0.03); -fx-padding: 10; -fx-background-radius: 5;");
 
         if (settings.isCertificate()) {
+            statusInfo.setStyle(
+                "-fx-background-color: rgba(255, 255, 255, 0.03); -fx-padding: 10; -fx-background-radius: 5;");
             Label certificateLabel = createStyledLabel("✓ Certificado", "Franklin Gothic Medium", 13);
             statusInfo.getChildren().add(certificateLabel);
         }
@@ -152,7 +163,7 @@ public class LoadCourses {
 
     private Label createInfoLabel(String text) {
         Label label = createStyledLabel(text, "Franklin Gothic Medium", 14);
-        label.setStyle("-fx-padding: 5 10; -fx-background-color: rgba(255, 255, 255, 0.03); -fx-background-radius: 15;");
+                label.getStyleClass().add("info-label");
         return label;
     }
 

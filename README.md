@@ -36,6 +36,17 @@ Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos onl
   <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCadastroCursoLigth.png" alt="Tela de Cadastro Curso - Modo Claro" width="48%" />
 </p>
 
+### Tela Inicial Estudante
+<p align="center">
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaInicialDark.png" alt="Tela Inicial Estudante - Modo Escuro" width="48%" />
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaInicialLigth.png" alt="Tela Inicial Estudante - Modo Claro" width="48%" />
+</p>
+
+### Tela Inicial Estudante - ver Detalhes
+<p align="center">
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalVerDetalhesDark.png" alt="Tela Inicial Estudante Ver Detalhes - Modo Escuro" width="48%" />
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalVerDetalhesLigth.png" alt="Tela Inicial Estudante Ver Detalhes - Modo Claro" width="48%" />
+</p>
 ---
 
 ## 🛠️ Tecnologias Utilizadas

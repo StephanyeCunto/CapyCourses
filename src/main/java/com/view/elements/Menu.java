@@ -119,17 +119,17 @@ public class Menu {
     }
 
     private StackPane circleName() {
-        LinearGradient gradient = new LinearGradient(0, 0, 1, 1, true, null, new Stop(0, Color.web("#6c63ff")),
-                new Stop(1, Color.web("#8d86ff")));
-        Circle circle = new Circle(40);
-        circle.setFill(gradient);
+        StackPane avatarCircle = new StackPane();
+        avatarCircle.setMinSize(80, 80);
+        avatarCircle.setMaxSize(80, 80);
+        avatarCircle.getStyleClass().add("avatar-circle");
 
         Label nameInitial = new Label(initialName());
         nameInitial.setFont(Font.font("Franklin Gothic Medium", 24));
         nameInitial.setStyle("-fx-text-fill: white;");
 
         StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(circle, nameInitial);
+        stackPane.getChildren().addAll(avatarCircle, nameInitial);
 
         return stackPane;
     }

@@ -14,7 +14,7 @@ public class Module {
     private String duration;
     private List<Lessons> aulas;
 
-    public Module(int moduleNumber, String title, String description, String duration) {
+    public Module(int moduleNumber, String title, String description, String duration, List<Lessons> aulas) {
         this.moduleNumber = moduleNumber;
         this.title = title;
         this.description = description;

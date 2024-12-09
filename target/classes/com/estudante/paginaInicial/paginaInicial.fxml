@@ -63,7 +63,7 @@
             </HBox>
           </VBox>
           <VBox fx:id="courseContainer" spacing="20">
-            <Label text="Todos os Cursos" textFill="WHITE">
+            <Label text="Todos os Cursos" textFill="WHITE" styleClass="todosOsCursos">
               <font>
                 <Font name="Franklin Gothic Medium" size="22.0" />
               </font>

@@ -187,8 +187,8 @@
 
 .outline-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #6C8DFF;
-    -fx-border-color: #6C8DFF;
+    -fx-text-fill: #4A90E2;
+    -fx-border-color: #4A90E2;
     -fx-border-radius: 12;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
@@ -197,7 +197,7 @@
 }
 
 .outline-button:hover {
-    -fx-background-color: #6C8DFF;
+    -fx-background-color: #4A90E2;
     -fx-text-fill:  #1A1A1A;
     -fx-border-color: rgba(255, 255, 255, 0);
     -fx-border-radius: 12;

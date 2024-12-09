@@ -13,4 +13,7 @@ public class Lessons {
     private String details;
     private String materials;
     private String duration;
+    String module;
+    int numberOfModule;
+    int numberOfLesson;
 }

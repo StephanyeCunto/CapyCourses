@@ -17,4 +17,8 @@ public class CourseSettings {
     boolean isCertificate;
     boolean isGradeMiniun;
     Object ComboBoxVisibily;
+
+    public boolean isDateEnd() {
+        return isDateEnd;
+    }
 }

@@ -14,7 +14,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Image icon = new Image("/capyCourses 012.png");
+        Image icon = new Image(getClass().getResourceAsStream("/capyCourses 012.png"));
         stage.getIcons().add(icon);
         stage.setTitle("CapyCourse");
 

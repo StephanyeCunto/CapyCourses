@@ -3,7 +3,7 @@
 }
 
 .sideMenu {
-    -fx-background-color: rgba(255, 255, 255, 0.5);   
+    -fx-background-color: rgba(255, 255, 255, 0.5);
     -fx-background-radius: 0 20 20 0;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
     -fx-padding: 32 24
@@ -11,8 +11,8 @@
 
 .outline-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #6C8DFF;
-    -fx-border-color: #6C8DFF;
+    -fx-text-fill:#4A90E2;
+    -fx-border-color: #4A90E2;
     -fx-border-radius: 12;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
@@ -21,8 +21,8 @@
 }
 
 .outline-button:hover {
-    -fx-background-color: #6C8DFF;
-    -fx-text-fill:  #1A1A1A;
+    -fx-background-color: #4A90E2;
+    -fx-text-fill: #1A1A1A;
     -fx-border-color: rgba(255, 255, 255, 0);
     -fx-border-radius: 12;
     -fx-background-radius: 12;
@@ -147,7 +147,7 @@
     -fx-text-fill: black;
 }
 
-.label{
+.label {
     -fx-font-family: "Franklin Gothic Medium";
     -fx-text-fill: black;
 }
@@ -176,7 +176,7 @@
 .outline-button-seta {
     -fx-background-color: rgba(0, 0, 0, 0.1);
     -fx-text-fill: linear-gradient(to right, #09223f, #165043);
-    -fx-border-color:linear-gradient(to right, #216abe, #23b192);
+    -fx-border-color: linear-gradient(to right, #216abe, #23b192);
     -fx-border-radius: 12;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
@@ -186,7 +186,7 @@
 
 .outline-button-seta:hover {
     -fx-background-color: linear-gradient(to right, #216abe, #23b192);
-    -fx-text-fill:  #1A1A1A;
+    -fx-text-fill: #1A1A1A;
     -fx-border-color: rgba(255, 255, 255, 0);
     -fx-border-radius: 12;
     -fx-background-radius: 12;
@@ -199,23 +199,23 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: rgba(74, 144, 226, 0.7);  
+    -fx-background-color: rgba(74, 144, 226, 0.7);
     -fx-background-radius: 8px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
-    -fx-min-width: 12px; 
+    -fx-min-width: 12px;
 }
 
 .scroll-bar .thumb:hover {
-    -fx-background-color: rgba(74, 144, 226, 0.9);  
+    -fx-background-color: rgba(74, 144, 226, 0.9);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0, 0, 0);
 }
 
 .scroll-bar .thumb:pressed {
-    -fx-background-color: #4A90E2; 
+    -fx-background-color: #4A90E2;
 }
 
 .scroll-bar .track {
-    -fx-background-color: rgba(0, 0, 0, 0.1); 
+    -fx-background-color: rgba(0, 0, 0, 0.1);
     -fx-background-radius: 8px;
     -fx-border-radius: 8px;
 }
@@ -228,9 +228,93 @@
 }
 
 .scroll-bar:vertical {
-    -fx-pref-width: 12px; 
+    -fx-pref-width: 12px;
 }
 
 .scroll-bar:horizontal {
-    -fx-pref-height: 12px;  
+    -fx-pref-height: 12px;
+}
+
+.author {
+    -fx-text-fill: #66666b;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 16px;
+}
+
+.title {
+    -fx-text-fill: #424242;
+    -fx-font-family: "Segoe UI Bold";
+    -fx-font-size: 25px;
+}
+
+.category {
+    -fx-text-fill: #6C7293;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+}
+
+.todosOsCursos {
+    -fx-text-fill: #131313;
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-font-size: 20px;
+}
+
+.info-label, .info-label-modal {
+    -fx-padding: 5 10;
+    -fx-background-color: rgba(116, 116, 116, 0.363);
+    -fx-background-radius: 15;
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-font-size: 14px;
+}
+
+.info-label-modal {
+    -fx-font-size: 15px;
+}
+
+.avatar-circle {
+    -fx-background-radius: 50%;
+    -fx-background-color: linear-gradient(to right, #4A90E2, #50E3C2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0, 0, 2); /* Sombra mais suave */
+}
+
+.initials-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgba(17, 17, 17, 0.658);
+    -fx-font-family: 'Segoe UI';
+}
+
+.professor-title {
+    -fx-text-fill: #647D8B;
+    -fx-font-size: 12px;
+    -fx-font-family: 'Segoe UI';
+}
+
+.professor-title {
+    -fx-text-fill: #4A4A4A; /* Cinza escuro */
+    -fx-font-size: 12px;
+    -fx-font-family: 'Segoe UI';
+}
+
+.professor-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Segoe UI Bold';
+    -fx-text-fill: #0c213d; /* Azul */
+}
+
+.professor-credentials {
+    -fx-text-fill: #414141; /* Cinza médio */
+    -fx-font-size: 12px;
+    -fx-font-family: 'Segoe UI';
+}
+
+.professor-experience {
+    -fx-text-fill: #1f1f1f; /* Cinza escuro */
+    -fx-font-size: 11px;
+    -fx-font-family: 'Segoe UI';
+}
+
+.circle{
+    -fx-background-color: linear-gradient(to right, #4A90E2, #6AB2FF);
 }

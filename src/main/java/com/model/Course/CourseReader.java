@@ -21,7 +21,7 @@ public class CourseReader {
                 String description = values[2];
                 String categoria = values[3];
                 String nivel = values[4];
-                
+
                 double rating = Double.parseDouble(values[6]);
 
                 Course course = new Course(name, title, description, categoria, nivel, rating);
@@ -34,8 +34,8 @@ public class CourseReader {
         return courses;
     }
 
-    public CourseSettings courseSettings(String titleVerific){
-        
+    public CourseSettings courseSettings(String titleVerific) {
+
         try (BufferedReader br = new BufferedReader(
                 new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_settingsCurso.csv"))) {
             String title;
@@ -50,19 +50,20 @@ public class CourseReader {
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 title = values[0];
-                dateStart = LocalDate.parse(values[1]);
-                dateEnd = LocalDate.parse(values[2]);
-                durationTotal = values[3];
-                isDateEnd = Boolean.parseBoolean(values[4]);
-                isCertificate = Boolean.parseBoolean(values[5]);
-                isGradeMiniun = Boolean.parseBoolean(values[6]);
-                ComboBoxVisibily = values[7];
+                if (titleVerific.equals(title)) {
+                    dateStart = LocalDate.parse(values[1]);
+                    dateEnd = LocalDate.parse(values[2]);
+                    durationTotal = values[3];
+                    isDateEnd = Boolean.parseBoolean(values[4]);
+                    isCertificate = Boolean.parseBoolean(values[5]);
+                    isGradeMiniun = Boolean.parseBoolean(values[6]);
+                    ComboBoxVisibily = values[7];
 
-                        if(titleVerific.equals(title)){
-                            CourseSettings courseSetting = new CourseSettings(title, dateStart, dateEnd, durationTotal, isDateEnd,
+                    CourseSettings courseSetting = new CourseSettings(title, dateStart, dateEnd, durationTotal,
+                            isDateEnd,
                             isCertificate, isGradeMiniun, ComboBoxVisibily);
-                            return courseSetting;
-                        }
+                    return courseSetting;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,6 +71,59 @@ public class CourseReader {
 
         return null;
     }
+
+    public List<Module> courseModule(String titleVerific) {
+        List<Module> modules = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_modulos.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                String titleCourse = values[0];
+                if (titleVerific.equals(titleCourse)) {
+                    int moduleNumber = Integer.parseInt(values[1]);
+                    String title = values[2];
+                    String duration = values[3];
+                    String description = values[4];
+                    
+                    List<Lessons> lessons = courseLessons(titleCourse, moduleNumber);
+                    Module moduleCourse = new Module(moduleNumber, title, description, duration, lessons);
+                    modules.add(moduleCourse);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return modules;
+    }
+
+    public List<Lessons> courseLessons(String titleCourseVerific, int moduleNumberVerific) {
+        List<Lessons> lessons = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_lessons.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                String titleCourse = values[0];
+                int moduleNumber = Integer.parseInt(values[2]);
+                
+                if (titleCourseVerific.equals(titleCourse) && moduleNumberVerific == moduleNumber) {
+                    String module = values[1];
+                    int numberOfLesson = Integer.parseInt(values[3]);
+                    String title = values[4];
+                    String videoLink = values[5];
+                    String details = values[6];
+                    String materials = values[7];
+                    String duration = values[8];
+
+                    Lessons lesson = new Lessons(title, videoLink, details, materials, duration, module,
+                            moduleNumber, numberOfLesson);
+                    lessons.add(lesson);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lessons;
+    }
 }
-
-
