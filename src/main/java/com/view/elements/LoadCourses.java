@@ -15,6 +15,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class LoadCourses {
     @FXML
@@ -88,7 +90,7 @@ public class LoadCourses {
         HBox courseInfo = createCourseInfo(course, settings);
         Label descLabel = createDescriptionLabel(course.getDescription());
         HBox statusInfo = createStatusInfo(settings);
-        HBox buttonContainer = createButtonContainer();
+        HBox buttonContainer = createButtonContainer(course);
 
         content.getChildren().addAll(courseImage, categoryLabel, titleLabel, authorLabel, courseInfo, descLabel,
                 statusInfo, buttonContainer);
@@ -149,13 +151,13 @@ public class LoadCourses {
         return statusInfo;
     }
 
-    private HBox createButtonContainer() {
+    private HBox createButtonContainer(Course course) {
         HBox buttonContainer = new HBox(15);
         buttonContainer.setAlignment(Pos.CENTER_LEFT);
         buttonContainer.setPadding(new javafx.geometry.Insets(10, 0, 0, 0));
 
         Button startButton = createStartButton();
-        Button detailsButton = createDetailsButton();
+        Button detailsButton = createDetailsButton(course);
 
         buttonContainer.getChildren().addAll(startButton, detailsButton);
         return buttonContainer;
@@ -167,11 +169,22 @@ public class LoadCourses {
         return label;
     }
 
-    private Button createDetailsButton() {
+    private Button createDetailsButton(Course course) {
         Button button = new Button("Ver Detalhes");
+       
         button.getStyleClass().add("outline-button");
         button.setStyle("-fx-border-radius: 20; -fx-background-radius: 20");
+        button.setOnAction(e -> {
+            new CourseDetailsModal(getDefaultWindow(), course);
+        });
         return button;
+    }
+
+        private Window getDefaultWindow() {
+        return Stage.getWindows().stream()
+                .filter(Window::isShowing)
+                .findFirst()
+                .orElse(null);
     }
 
     private Label createStyledLabel(String text, String fontFamily, double fontSize) {

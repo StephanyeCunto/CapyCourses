@@ -318,3 +318,55 @@
 .circle{
     -fx-background-color: linear-gradient(to right, #4A90E2, #6AB2FF);
 }
+
+.module-container {
+    -fx-pref-width: 200px;
+    -fx-max-width: 200px;
+    -fx-fit-to-width: true;
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: as-needed;
+}
+
+.module-container > .viewport {
+    -fx-background-color: transparent;
+}
+
+.module-box {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-background-radius: 10;
+    -fx-border-color: #4A90E2;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-padding: 15;
+}
+
+.module-box:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.555);
+    -fx-scale-x: 1.001;
+    -fx-scale-y: 1.001;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.module-number {
+    -fx-text-fill: #4a90e2;
+    -fx-font-size: 16px;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.module-title {
+    -fx-text-fill: #1a1a1a;
+    -fx-font-size: 18px;
+    -fx-font-family: "Segoe UI Bold";
+}
+
+.module-duration {
+ -fx-text-fill: #3a3a3a;
+ -fx-font-size: 14px;
+ -fx-font-family: "Segoe UI";
+}
+
+.module-description {
+    -fx-text-fill: #1f1f1f;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI";
+}

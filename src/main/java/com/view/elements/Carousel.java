@@ -442,7 +442,7 @@ public class Carousel {
         try {
             if (rigthContainer != null && rigthContainer.getScene() != null) {
                 Platform.runLater(() -> {
-               new CourseDetailsModal(getDefaultWindow(), course);
+                    new CourseDetailsModal(getDefaultWindow(), course);
                 });
             } else {
                 System.out.println("rigthContainer or Scene is null");
@@ -453,10 +453,9 @@ public class Carousel {
     }
 
     private Window getDefaultWindow() {
-    return Stage.getWindows().stream()
-        .filter(Window::isShowing)
-        .findFirst()
-        .orElse(null);
-}
-
+        return Stage.getWindows().stream()
+                .filter(Window::isShowing)
+                .findFirst()
+                .orElse(null);
+    }
 }

@@ -11,9 +11,13 @@ import javafx.scene.text.Font;
 import javafx.stage.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.util.Duration;
 
 import com.model.Course.Course;
+import com.model.Course.Module;
 import com.model.Course.CourseReader;
 import com.model.Course.CourseSettings;
 import com.view.Modo;
@@ -55,7 +59,7 @@ public class CourseDetailsModal {
                 settings.isDateEnd(),
                 settings.isCertificate(),
                 settings.isGradeMiniun(),
-                settings.getComboBoxVisibily());
+                settings.getComboBoxVisibily(), courseReader);
     }
 
     private StackPane createBackdrop() {
@@ -81,7 +85,7 @@ public class CourseDetailsModal {
             String description, String categoria, String nivel, double rating,
             LocalDate dateStart, LocalDate dateEnd, String durationTotal,
             Boolean isDateEnd, Boolean isCertificate, Boolean isGradeMiniun,
-            Object ComboBoxVisibily) {
+            Object ComboBoxVisibily, CourseReader courseReader) {
 
         StackPane backdrop = createBackdrop();
         VBox modalContainer = new VBox(20);
@@ -95,9 +99,22 @@ public class CourseDetailsModal {
         modalContainer.getStyleClass().add("card");
         modalContainer.setEffect(createDropShadow());
 
-        VBox header = createHeader(categoria, courseTitle, name,  nivel, rating, durationTotal);
+        VBox header = createHeader(categoria, courseTitle, name, nivel, rating, durationTotal);
 
-        modalContainer.getChildren().addAll(header);
+        VBox content = new VBox(20);
+        content.setPadding(new Insets(0, 20, 10, 20));
+        content.setAlignment(Pos.CENTER);
+
+        ScrollPane module = createModule(courseTitle, courseReader);
+        content.getChildren().add(module);
+
+        VBox footer = new VBox(20);
+        footer.setAlignment(Pos.BOTTOM_LEFT);
+        VBox.setVgrow(footer, Priority.ALWAYS);
+
+        footer.getChildren().add(createStartButton());
+
+        modalContainer.getChildren().addAll(header, content,footer);
 
         backdrop.getChildren().add(modalContainer);
         Scene scene = new Scene(backdrop, WIDTH, HEIGHT);
@@ -106,12 +123,77 @@ public class CourseDetailsModal {
 
         modalStage.setScene(scene);
         modalStage.showAndWait();
-    }
+        }
 
-    private VBox createHeader(String categoria, String title, String name, String nivel, double rating,
+        private ScrollPane createModule(String title, CourseReader courseReader) {
+        VBox module = new VBox(15);
+
+        ScrollPane scrollPane = new ScrollPane(module);
+        scrollPane.setMaxHeight(HEIGHT * 0.5); 
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+        module.setMaxHeight(Double.MAX_VALUE);
+
+        module.setPadding(new Insets(20,20,0,0));
+        module.getStyleClass().add("modules-container");
+
+        List<Module> modules = courseReader.courseModule(title);
+
+        for (int i = 0; i < modules.size(); i++) {
+            Module moduleGet = modules.get(i);
+            VBox moduleBox = new VBox();
+            moduleBox.getStyleClass().add("module-box");
+            moduleBox.setPadding(new Insets(0,0,15,0));
+            moduleBox.setStyle("-fx-background-radius: 10;");
+
+            HBox header = new HBox(15);
+            header.setAlignment(Pos.CENTER_LEFT);
+            header.getStyleClass().add("module-header");
+            header.setPadding(new Insets(0, 0, 10, 0));
+
+            Label moduleNumber = createStyledLabel("Módulo " + moduleGet.getModuleNumber(), "Segoe UI Semibold", 16);
+            moduleNumber.getStyleClass().add("module-number");
+
+            Label moduleTitle = createStyledLabel(moduleGet.getTitle(), "Segoe UI Bold", 18);
+            moduleTitle.getStyleClass().add("module-title");
+            moduleTitle.setWrapText(true);
+
+            Label duration = createStyledLabel("⏱ " + moduleGet.getDuration() + " min", "Segoe UI", 14);
+            duration.getStyleClass().add("module-duration");
+
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+            
+            header.getChildren().addAll(moduleNumber, moduleTitle, spacer, duration);
+
+            VBox content = new VBox(10);
+            content.setPadding(new Insets(0,0,10,0));
+            content.getStyleClass().add("module-content");
+
+            Label description = createStyledLabel(moduleGet.getDescription(), "Segoe UI", 14);
+            description.setWrapText(true);
+            description.getStyleClass().add("module-description");
+            content.getChildren().add(description);
+
+            moduleBox.getChildren().addAll(header, content);
+
+            // Add shadow effect
+            DropShadow shadow = new DropShadow();
+            shadow.setRadius(5);
+            shadow.setSpread(0.1);
+            shadow.setColor(Color.rgb(0, 0, 0, 0.2));
+            moduleBox.setEffect(shadow);
+
+            module.getChildren().add(moduleBox);
+        }
+
+        return scrollPane;
+        }
+
+        private VBox createHeader(String categoria, String title, String name, String nivel, double rating,
             String durationTotal) {
         VBox content = new VBox(15);
-        content.setPadding(new Insets(20));
+        content.setPadding(new Insets(20,20,0,20));
 
         Label categoryLabel = createStyledLabel(categoria.toUpperCase(), "Segoe UI", 14);
         categoryLabel.getStyleClass().add("category");
@@ -128,11 +210,11 @@ public class CourseDetailsModal {
         closeButtonBox.setAlignment(Pos.TOP_RIGHT);
 
         HBox courseInfo = createCourseInfo(rating, durationTotal, nivel);
-        
+
         HBox header = new HBox(15);
         header.setAlignment(Pos.CENTER_LEFT);
         header.getChildren().addAll(titleLabel, courseInfo);
-        
+
         HBox mainHeader = new HBox();
         mainHeader.getChildren().addAll(header, closeButtonBox);
         HBox.setHgrow(header, Priority.ALWAYS);
@@ -229,6 +311,13 @@ public class CourseDetailsModal {
             fade.setOnFinished(e -> modalStage.hide());
             fade.play();
         });
+    }
+
+    private Button createStartButton() {
+        Button button = new Button("Começar Curso");
+        button.getStyleClass().add("outline-button");
+        button.setPrefHeight(40);
+        return button;
     }
 }
 

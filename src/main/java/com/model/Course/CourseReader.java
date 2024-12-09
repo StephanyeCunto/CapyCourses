@@ -100,7 +100,7 @@ public class CourseReader {
     public List<Lessons> courseLessons(String titleCourseVerific, int moduleNumberVerific) {
         List<Lessons> lessons = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(
-                new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_lessons.csv"))) {
+                new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_aulas.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
