@@ -38,7 +38,7 @@ Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos onl
 
 ### Tela Inicial Estudante
 <p align="center">
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaInicialDark.png" alt="Tela Inicial Estudante - Modo Escuro" width="48%" />
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaIncialDark.png" alt="Tela Inicial Estudante - Modo Escuro" width="48%" />
   <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaInicialLigth.png" alt="Tela Inicial Estudante - Modo Claro" width="48%" />
 </p>
 
