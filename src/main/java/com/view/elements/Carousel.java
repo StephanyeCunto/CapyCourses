@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.model.Course.Course;
 import com.model.Course.CourseSettings;
+import com.model.student.MyCourseStudent;
 import com.model.Course.CourseReader;
 import com.view.Modo;
 
@@ -45,10 +46,12 @@ public class Carousel {
     CourseReader reader = new CourseReader();
     List<Course> courses = reader.readCourses();
     GridPane courseGrid = new GridPane();
+    private MyCourseStudent myCourseStudent = new MyCourseStudent();
 
+    @SuppressWarnings("unused")
     public void loadCarousel() {
         CourseReader reader = new CourseReader();
-        courses = reader.readCourses();
+        courses = loadListCourses();
         displayCourses();
         setupCarouselControls();
         startAutoCarousel();
@@ -142,6 +145,18 @@ public class Carousel {
 
     }
 
+    private List loadListCourses() {
+        List<Course> coursesSelection = new ArrayList<>();
+
+        for (int i = 0; i < courses.size(); i++) {
+            if (!myCourseStudent.searhCourse(courses.get(i).getTitle())) {
+                coursesSelection.add(courses.get(i));
+            }
+        }
+        return coursesSelection;
+    }
+
+    @SuppressWarnings("unused")
     private void startAutoCarousel() {
         timeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> {
             if (currentIndex < courses.size() - 1) {
@@ -236,6 +251,7 @@ public class Carousel {
 
     private int previousIndex = 0;
 
+    @SuppressWarnings("unused")
     private void setupCarouselControls() {
         leftButton.setOnAction(e -> {
             try {
@@ -418,6 +434,7 @@ public class Carousel {
         return label;
     }
 
+    @SuppressWarnings("unused")
     private Button createDetailsButton(Course course) {
         Button button = new Button("Ver Detalhes");
         button.getStyleClass().add("outline-button");

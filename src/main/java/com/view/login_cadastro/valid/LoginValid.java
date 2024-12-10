@@ -26,6 +26,7 @@ public class LoginValid {
     @FXML
     private Label passwordErrorLabel;
 
+    @SuppressWarnings("unused")
     public void setupInitialState(TextField user, PasswordField password, Label userErrorLabel, Label passwordErrorLabel) {
         userErrorLabel.setVisible(false);
         passwordErrorLabel.setVisible(false);

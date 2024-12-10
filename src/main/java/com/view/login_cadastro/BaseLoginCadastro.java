@@ -118,6 +118,7 @@ public class BaseLoginCadastro extends Base {
         animateNode(node, distance, delay);
     }
 
+    @SuppressWarnings("unused")
     private void loadCSS() {
         mainPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
@@ -216,6 +217,7 @@ public class BaseLoginCadastro extends Base {
         date.getChildren().add(dateContainer);
     }
 
+    @SuppressWarnings("unused")
     protected void setupInterestButtons() {
         interestContainer.getChildren().forEach(node -> {
             if (node instanceof Button) {

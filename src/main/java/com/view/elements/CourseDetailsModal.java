@@ -11,8 +11,7 @@ import javafx.scene.text.Font;
 import javafx.stage.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javafx.util.Duration;
 
@@ -190,6 +189,7 @@ public class CourseDetailsModal {
         return scrollPane;
         }
 
+        @SuppressWarnings("unused")
         private VBox createHeader(String categoria, String title, String name, String nivel, double rating,
             String durationTotal) {
         VBox content = new VBox(15);
@@ -298,6 +298,7 @@ public class CourseDetailsModal {
         return label;
     }
 
+    @SuppressWarnings("unused")
     private void setupCloseAnimation() {
         modalStage.setOnCloseRequest(event -> {
             event.consume();

@@ -17,8 +17,9 @@ public class TrelloBoard extends Application {
     private HBox board;
     private VBox draggedModule = null;
 
+    @SuppressWarnings("unused")
     @Override
-    public void start(Stage primaryStage) {
+    public void start(@SuppressWarnings("exports") Stage primaryStage) {
         VBox root = new VBox(10);
         root.setPadding(new Insets(15));
 
@@ -63,6 +64,7 @@ public class TrelloBoard extends Application {
         primaryStage.show();
     }
 
+    @SuppressWarnings("unused")
     private VBox createModule(String title, String description, String duration, int lessonCount,
             double progress) {
         VBox module = new VBox(10);
@@ -299,6 +301,7 @@ public class TrelloBoard extends Application {
         });
     }
 
+    @SuppressWarnings("unused")
     private VBox createLesson(String content) {
         VBox lessonCard = new VBox(10);
         lessonCard.getStyleClass().add("lesson-card");
@@ -437,12 +440,6 @@ public class TrelloBoard extends Application {
         public String getStatus() { return status; }
         public String getDuration() { return duration; }
         public String getDifficulty() { return difficulty; }
-    }
-    
-    // Utility method to get current module's lesson count (you'll need to implement this)
-    private int getCurrentModuleLessonCount() {
-        // This is a placeholder. In a real implementation, you'd track the current module's lessons
-        return 0;
     }
 
     public static class ModuleDetails {

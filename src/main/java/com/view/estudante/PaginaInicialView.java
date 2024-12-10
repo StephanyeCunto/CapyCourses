@@ -53,6 +53,7 @@ public class PaginaInicialView implements Initializable {
     private static final Interpolator EASE_IN_OUT = Interpolator.SPLINE(0.42, 0.0, 0.58, 1.0);
     private static final Interpolator SMOOTH_STEP = Interpolator.SPLINE(0.4, 0, 0.2, 1);
 
+    @SuppressWarnings("unused")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         changeMode();

@@ -1,19 +1,18 @@
 package com.view.elements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.model.Course.Course;
 import com.model.Course.CourseSettings;
-import com.view.Modo;
+import com.model.student.MyCourseStudent;
 import com.model.Course.CourseReader;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -23,13 +22,18 @@ public class LoadCourses {
     private VBox courseContainer;
 
     private final CourseReader reader = new CourseReader();
-    private final List<Course> courses = reader.readCourses();
+    private List<Course> courses = reader.readCourses();
     private final GridPane courseGrid = new GridPane();
 
+    private MyCourseStudent myCourseStudent = new MyCourseStudent();
+
+    @SuppressWarnings("unused")
     public void loadCourses() {
         setupCourseGrid();
 
         int numColumns = calculateColumns();
+
+        courses = loadListCourses();
 
         for (int i = 0; i < courses.size(); i++) {
             VBox courseBox = createCourseBox(courses.get(i));
@@ -45,6 +49,17 @@ public class LoadCourses {
         courseContainer.setAlignment(Pos.CENTER);
 
         courseContainer.getChildren().add(courseGrid);
+    }
+
+    private List loadListCourses() {
+        List <Course> coursesSelection = new ArrayList<>();
+
+        for(int i=0; i<courses.size();i++){
+            if(!myCourseStudent.searhCourse(courses.get(i).getTitle())){
+                coursesSelection.add(courses.get(i));
+            }
+        }
+        return coursesSelection;
     }
 
     private void setupCourseGrid() {
@@ -119,7 +134,7 @@ public class LoadCourses {
                 createInfoLabel(settings.getDurationTotal() + " horas"),
                 createInfoLabel("Nível: " + course.getNivel()));
 
-                courseInfo.getStyleClass().add("info");
+        courseInfo.getStyleClass().add("info");
         return courseInfo;
     }
 
@@ -144,8 +159,13 @@ public class LoadCourses {
 
         if (settings.isCertificate()) {
             statusInfo.setStyle(
-                "-fx-background-color: rgba(255, 255, 255, 0.03); -fx-padding: 10; -fx-background-radius: 5;");
+                    "-fx-background-color: rgba(255, 255, 255, 0.03); -fx-padding: 10; -fx-background-radius: 5;");
             Label certificateLabel = createStyledLabel("✓ Certificado", "Franklin Gothic Medium", 13);
+            statusInfo.getChildren().add(certificateLabel);
+        } else {
+            statusInfo.setStyle(
+                    "-fx-padding: 10; -fx-background-radius: 5;");
+            Label certificateLabel = createStyledLabel(" ", "Franklin Gothic Medium", 13);
             statusInfo.getChildren().add(certificateLabel);
         }
         return statusInfo;
@@ -156,7 +176,7 @@ public class LoadCourses {
         buttonContainer.setAlignment(Pos.CENTER_LEFT);
         buttonContainer.setPadding(new javafx.geometry.Insets(10, 0, 0, 0));
 
-        Button startButton = createStartButton();
+        Button startButton = createStartButton(course);
         Button detailsButton = createDetailsButton(course);
 
         buttonContainer.getChildren().addAll(startButton, detailsButton);
@@ -165,13 +185,14 @@ public class LoadCourses {
 
     private Label createInfoLabel(String text) {
         Label label = createStyledLabel(text, "Franklin Gothic Medium", 14);
-                label.getStyleClass().add("info-label");
+        label.getStyleClass().add("info-label");
         return label;
     }
 
+    @SuppressWarnings("unused")
     private Button createDetailsButton(Course course) {
         Button button = new Button("Ver Detalhes");
-       
+
         button.getStyleClass().add("outline-button");
         button.setStyle("-fx-border-radius: 20; -fx-background-radius: 20");
         button.setOnAction(e -> {
@@ -180,7 +201,7 @@ public class LoadCourses {
         return button;
     }
 
-        private Window getDefaultWindow() {
+    private Window getDefaultWindow() {
         return Stage.getWindows().stream()
                 .filter(Window::isShowing)
                 .findFirst()
@@ -194,9 +215,15 @@ public class LoadCourses {
         return label;
     }
 
-    private Button createStartButton() {
+    private Button createStartButton(Course course) {
         Button button = new Button("Começar Curso");
         button.getStyleClass().add("simple-button");
+        button.setOnMouseClicked(e -> {
+            try {
+                myCourseStudent.addCourse(course);
+            } catch (Exception ex) {
+            }
+        });
         button.setPrefHeight(35);
         return button;
     }

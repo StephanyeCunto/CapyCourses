@@ -31,6 +31,7 @@ public class CadastroSecudarioValid {
     private static final ValidationSupport validationSupport = new ValidationSupport();
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
+    @SuppressWarnings("unused")
     public void setupInitialState(ComboBox<String> comboBoxEducation, TextField textFieldCPF, TextField textFieldPhone, Label cpfErrorLabel, Label educationErrorLabel,
             Label phoneErrorLabel) {
         loadField(comboBoxEducation, textFieldCPF, textFieldPhone, cpfErrorLabel,

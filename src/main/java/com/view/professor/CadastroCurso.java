@@ -51,6 +51,7 @@ public class CadastroCurso implements Initializable {
     private VBox date;
     @FXML
     private CheckBox dateEnd;
+    @SuppressWarnings("rawtypes")
     @FXML
     private ComboBox ComboBoxVisibily;
     @FXML
@@ -108,20 +109,18 @@ public class CadastroCurso implements Initializable {
     private Calendario dateInputPopupEnd = new Calendario();
 
     private static final String DEFAULT_MODULE_TITLE = "Novo Módulo";
-    private static final String DEFAULT_LESSON_TITLE = "Nova Aula";
 
     private VBox dateContainerStart = new VBox(5);
     private VBox dateContainerEnd = new VBox(5);
 
     private String valueComBox = "Visível";
     private LocalDate dateCurrent = dateInputPopupStart.getLocalDate();
+    @SuppressWarnings("unused")
     private boolean isImage = false;
     private int isTag = 0;
 
     private List<Map<String, Object>> modulesData = new ArrayList<>();
 
-    private int lessonCounter = 1;
-    private int questionaireCounter = 1;
     private int currentModuleCount = 0;
 
     private final CursoBasicsValid validatorBasic = new CursoBasicsValid();
@@ -132,6 +131,7 @@ public class CadastroCurso implements Initializable {
     private final CursoOptionsValid validatorOptions = new CursoOptionsValid();
     private final CursoSettingsValidation validatorSettings = new CursoSettingsValidation();
 
+    @SuppressWarnings({ "unused", "unchecked" })
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         checkTitle();
@@ -205,7 +205,6 @@ public class CadastroCurso implements Initializable {
     private static final String STEP_PENDING = "step-pending";
     private static final String STEP_CURRENT = "step-current";
     private static final String STEP_COMPLETED = "step-completed";
-    private static final int MIN_LESSONS_PER_MODULE = 1;
 
     private void registrationProgress() {
         double basics = calculeBasics();
@@ -401,11 +400,6 @@ public class CadastroCurso implements Initializable {
         return 0;
     }
 
-    private double calculeOptions() {
-
-        return 0.0;
-    }
-
     private void updateStepLabel(Label label, String text, double completed, int total) {
         if (completed == 0) {
             setLabelPending(label, text);
@@ -480,6 +474,7 @@ public class CadastroCurso implements Initializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void loadComBoxVisibily(String valueCombox) {
         ComboBoxVisibily.getItems().clear();
         ComboBoxVisibily.getItems().addAll(valueCombox.split(","));
@@ -502,6 +497,7 @@ public class CadastroCurso implements Initializable {
         }
     }
 
+    @SuppressWarnings("unused")
     private void setupInterestButtons() {
         interestContainer.getChildren().forEach(node -> {
             if (node instanceof Button) {
@@ -517,6 +513,7 @@ public class CadastroCurso implements Initializable {
         updateSelectedCount();
     }
 
+    @SuppressWarnings("unused")
     private void addNewInterest() {
         TextField interestInput = new TextField();
         interestInput.setPromptText("Digite a nova tag...");
@@ -533,6 +530,7 @@ public class CadastroCurso implements Initializable {
         });
     }
 
+    @SuppressWarnings("unused")
     private void confirmInterestInput(TextField interestInput, int inputIndex) {
         String interest = interestInput.getText().trim();
         if (!interest.isEmpty()) {
@@ -588,6 +586,7 @@ public class CadastroCurso implements Initializable {
                 "Cybersegurança");
     }
 
+    @SuppressWarnings("unused")
     private void checkTitle() {
         titleCourse.setOnKeyPressed(event -> {
             titleCourse.setEditable(true);
@@ -868,6 +867,7 @@ public class CadastroCurso implements Initializable {
         return questionData;
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void addNewModule() {
         currentModuleCount++;
@@ -933,6 +933,7 @@ public class CadastroCurso implements Initializable {
     }
     
 
+    @SuppressWarnings("unused")
     private HBox createModuleHeader(int moduleNumber) {
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER_LEFT);
@@ -955,6 +956,7 @@ public class CadastroCurso implements Initializable {
         return header;
     }
 
+    @SuppressWarnings("unused")
     private VBox createModuleContent(int moduleNumber) {
         VBox content = new VBox();
         content.setSpacing(15);
@@ -1013,6 +1015,7 @@ public class CadastroCurso implements Initializable {
         return content;
     }
 
+    @SuppressWarnings({ "static-access", "unused" })
     private VBox createNumberField(String label, String prompt, boolean allowDecimals) {
         VBox container = new VBox(5);
         container.setVgrow(container, Priority.ALWAYS);
@@ -1041,6 +1044,7 @@ public class CadastroCurso implements Initializable {
         return container;
     }
 
+    @SuppressWarnings("unused")
     private VBox createLessonsList(VBox modulesList, HBox moduleHeader) {
         StackPane numberContainer = (StackPane) moduleHeader.getChildren().get(0);
         Label numberLabel = (Label) numberContainer.getChildren().get(0);
@@ -1072,6 +1076,7 @@ public class CadastroCurso implements Initializable {
         return lessonsList;
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void addNewquestionaire(VBox lessonsList, int moduleNumber) {
         VBox moduleContent = (VBox) lessonsList.getParent();
@@ -1225,10 +1230,11 @@ public class CadastroCurso implements Initializable {
         }
     }
 
-    public void resetModuleLessonCounter(VBox moduleContent) {
+    public void resetModuleLessonCounter(@SuppressWarnings("exports") VBox moduleContent) {
         moduleContent.setUserData(1);
     }
 
+    @SuppressWarnings("exports")
     public void setModuleLessonCounter(VBox moduleContent, int value) {
         if (value > 0) {
             moduleContent.setUserData(value);

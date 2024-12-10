@@ -36,6 +36,7 @@ public class texte {
     @FXML
     private Button certificateButton;
 
+    @SuppressWarnings("unused")
     @FXML
     private void initialize() {
         videoClassesButton.setOnAction(e -> loadVideoClasses());

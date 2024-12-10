@@ -103,6 +103,7 @@ public class Calendario extends Region {
         updateDateInput(dateInputField);
     }
 
+    @SuppressWarnings("unused")
     private Button createDayButton(int day) {
         Button button = new Button(String.valueOf(day));
         LocalDate date = selectedDate.withDayOfMonth(day);
@@ -150,6 +151,7 @@ public class Calendario extends Region {
         return button;
     }
 
+    @SuppressWarnings("unused")
     private Button createNavigationButton(String text) {
         Button button = new Button(text);
         button.setStyle("""
@@ -196,6 +198,7 @@ public class Calendario extends Region {
         dateInputField = createDateInputField();
     }
 
+    @SuppressWarnings("unused")
     public HBox getDateInputField() {
         HBox inputContainer = new HBox(10);
         inputContainer.setAlignment(Pos.CENTER_LEFT);
@@ -255,6 +258,7 @@ public class Calendario extends Region {
         updateCalendar();
     }
 
+    @SuppressWarnings("unused")
     private TextField createDateInputField() {
         TextField field = new TextField();
         field.setEditable(false);
@@ -281,6 +285,7 @@ public class Calendario extends Region {
         return field;
     }
 
+    @SuppressWarnings("unused")
     private Button createCalendarButton() {
         Button button = new Button("📅");
         button.setStyle("""
@@ -302,6 +307,7 @@ public class Calendario extends Region {
         field.setText(getDate());
     }
 
+    @SuppressWarnings("unused")
     private void showDatePopup() {
         closeAllPopups();
         Popup popup = new Popup();
@@ -343,6 +349,7 @@ public class Calendario extends Region {
         return content;
     }
 
+    @SuppressWarnings("unused")
     private HBox createHeader() {
         HBox header = new HBox(10);
         header.setAlignment(Pos.CENTER);
@@ -438,6 +445,7 @@ public class Calendario extends Region {
         return grid;
     }
 
+    @SuppressWarnings("unused")
     private Button createSelectionButton(String text, Runnable action) {
         Button button = new Button(text);
         button.setStyle("""
@@ -460,6 +468,7 @@ public class Calendario extends Region {
 
     int countyearGridStartYear = 0;
 
+    @SuppressWarnings("unused")
     private HBox createYearNavigationHeader() {
         HBox header = new HBox(10);
         header.setAlignment(Pos.CENTER);

@@ -30,6 +30,7 @@ public class CadastroValid {
     @FXML
     private Label passwordConfirmErrorLabel;
 
+    @SuppressWarnings("unused")
     public void setupInitialState(TextField textFieldName, TextField textFieldEmail,
             PasswordField passwordFieldPassword,
             PasswordField passwordFieldPasswordConfirm,

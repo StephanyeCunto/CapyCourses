@@ -59,6 +59,7 @@ public class Login extends BaseLoginCadastro implements Initializable {
     private final LoginValid validator = new LoginValid();
     private ErrorNotification errorNotification;
 
+    @SuppressWarnings("unused")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
@@ -101,6 +102,7 @@ public class Login extends BaseLoginCadastro implements Initializable {
         super.changeMode(false);
     }
 
+    @SuppressWarnings("unused")
     private void setupErrorNotification() {
         StackPane root = new StackPane();
         leftSection.sceneProperty().addListener((obs, oldScene, newScene) -> {

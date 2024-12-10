@@ -64,6 +64,7 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
 
     private final CadastroSecudarioValid validator = new CadastroSecudarioValid();
 
+    @SuppressWarnings("unused")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
@@ -152,6 +153,7 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         }
     }
 
+    @SuppressWarnings("unused")
     private void setupErrorNotification() {
         StackPane root = new StackPane();
         leftSection.sceneProperty().addListener((obs, oldScene, newScene) -> {

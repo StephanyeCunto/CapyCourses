@@ -28,6 +28,7 @@ public class CadastroCurso {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void registerModules(List<Map<String, Object>> modulesData, String title) {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_modulos.csv", true))) {
@@ -78,6 +79,7 @@ public class CadastroCurso {
                 }
             });
 
+            @SuppressWarnings("unchecked")
             Map<String, Object> questions = (Map<String, Object>) questionaireData.get("questions" + h);
 
             registerQuestions(title,questions, moduleTitle, questionaireNumber, questionaireTitle);
@@ -86,6 +88,7 @@ public class CadastroCurso {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void registerQuestions(String title,Map<String, Object> questionData, String moduleTitle, String questionaireNumber,
             String questionaireTitle) {
         for (int i = 0; i < questionData.size(); i++) {

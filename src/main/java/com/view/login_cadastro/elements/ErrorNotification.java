@@ -16,6 +16,7 @@ public class ErrorNotification {
     private PauseTransition pauseTransition;
     private FadeTransition fadeOut;
 
+    @SuppressWarnings("exports")
     public ErrorNotification(StackPane parent,String error) {
         errorContainer = new StackPane();
         errorContainer.setPickOnBounds(false);
@@ -38,7 +39,7 @@ public class ErrorNotification {
         setupAnimations();
     }
 
-    public ErrorNotification(GridPane parent, String error) {
+    public ErrorNotification(@SuppressWarnings("exports") GridPane parent, String error) {
         errorContainer = new StackPane();
         errorContainer.setPickOnBounds(false);
         errorContainer.setMouseTransparent(true);
@@ -100,6 +101,7 @@ public class ErrorNotification {
         return box;
     }
 
+    @SuppressWarnings("unused")
     private void setupAnimations() {
         slideIn = new Timeline(
             new KeyFrame(Duration.ZERO,
@@ -129,6 +131,7 @@ public class ErrorNotification {
         pauseTransition.setOnFinished(event -> fadeOut.play());
     }
 
+    @SuppressWarnings("unused")
     public void show() {
         if (pauseTransition != null) pauseTransition.stop();
         if (fadeOut != null) fadeOut.stop();
@@ -145,6 +148,7 @@ public class ErrorNotification {
         fadeOut.play();
     }
 
+    @SuppressWarnings("exports")
     public StackPane getContainer() {
         return errorContainer;
     }

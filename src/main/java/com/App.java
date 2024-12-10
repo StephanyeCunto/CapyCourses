@@ -13,11 +13,11 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(@SuppressWarnings("exports") Stage stage) throws IOException {
         Image icon = new Image(getClass().getResourceAsStream("/capyCourses 012.png"));
         stage.getIcons().add(icon);
         stage.setTitle("CapyCourse");
-
+        
         scene = new Scene(loadFXML("/com/login_cadastro/paginaLogin"));
         stage.setMaximized(true);
         stage.setScene(scene);

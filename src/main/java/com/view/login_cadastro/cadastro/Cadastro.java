@@ -76,6 +76,7 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     private String typeUser;
     private final CadastroValid validator = new CadastroValid();
 
+    @SuppressWarnings("unused")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();

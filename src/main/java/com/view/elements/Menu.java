@@ -8,9 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
@@ -68,6 +65,7 @@ public class Menu {
         return vbox;
     }
 
+    @SuppressWarnings("unused")
     private Button createButton(String text) {
         Button button = new Button(text);
         button.setMaxWidth(Double.MAX_VALUE);
