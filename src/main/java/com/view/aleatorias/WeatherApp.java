@@ -1,4 +1,4 @@
-package com;
+package com.view.aleatorias;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -16,7 +16,7 @@ import java.net.URI;
 
 public class WeatherApp extends Application {
 
-    private static final String API_KEY = "afefb36d3a6330492df7d328f23fbf6c"; // Substitua pela sua chave de API do OpenWeatherMap
+    private static final String API_KEY = ""; // Substitua pela sua chave de API do OpenWeatherMap
     private static final String API_URL = "https://api.openweathermap.org/data/2.5/weather?lat=-21.1642&lon=-43.2121&units=metric&appid=YOUR_API_KEY" + API_KEY;
 
     @Override

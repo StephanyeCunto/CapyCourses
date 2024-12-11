@@ -5,8 +5,12 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
+@Getter
+@Setter
 public class Login {
     private String user;
     private String password;

@@ -8,25 +8,22 @@ import org.controlsfx.validation.decoration.GraphicValidationDecoration;
 
 import com.UserSession;
 
-import javafx.animation.FillTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.image.*;
-
 
 import com.controller.login_cadastro.LoginController;
 import com.view.Modo;
 import com.view.login_cadastro.elements.ErrorNotification;
 import com.view.login_cadastro.valid.LoginValid;
+import com.view.login_cadastro.CreateJson;
 
 public class Login extends BaseLoginCadastro implements Initializable {
     @FXML
@@ -53,6 +50,8 @@ public class Login extends BaseLoginCadastro implements Initializable {
     private Rectangle background;
     @FXML
     private StackPane toggleButtonStackPane;
+    @FXML
+    private CheckBox lembrar;
 
     private boolean isLightMode = Modo.getInstance().getModo();
 
@@ -70,6 +69,17 @@ public class Login extends BaseLoginCadastro implements Initializable {
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
+
+        loadInformation();
+    }
+
+    private void loadInformation(){
+        String email = CreateJson.getSavedEmail("CapyCourses\\src\\main\\resources\\com\\json\\login.json");
+        String senha = CreateJson.getSavedPassword("CapyCourses\\src\\main\\resources\\com\\json\\login.json");
+        if(email != null && senha != null){
+            user.setText(email);
+            password.setText(senha);
+        }
     }
 
     @FXML
@@ -85,7 +95,7 @@ public class Login extends BaseLoginCadastro implements Initializable {
         Stage stage = (Stage) leftSection.getScene().getWindow();
 
         switch (isCheck) {
-            case "true" -> super.redirectTo("/com/estudante/paginaInicial/paginaInicial.fxml", stage);
+            case "true" -> {createJson(); super.redirectTo("/com/estudante/paginaInicial/paginaInicial.fxml", stage);}
             case "incomplete student" ->{ UserSession.getInstance().setRegisterIncomplet("Student"); super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);}
             case "incomplete teacher" ->{ UserSession.getInstance().setRegisterIncomplet("Teacher"); super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);}
             default -> {
@@ -94,6 +104,14 @@ public class Login extends BaseLoginCadastro implements Initializable {
                 password.clear();
                 user.requestFocus();
             }
+        }
+    }
+
+    private void createJson(){
+        if(lembrar.isSelected()){
+            CreateJson.saveLoginData(user.getText(), password.getText(), "CapyCourses\\src\\main\\resources\\com\\json\\login.json");
+        }else{
+            CreateJson.verifyAndDeleteLoginData(user.getText(), password.getText(), "CapyCourses\\src\\main\\resources\\com\\json\\login.json");
         }
     }
 
@@ -161,16 +179,16 @@ public class Login extends BaseLoginCadastro implements Initializable {
         moonIcon.setVisible(!isLightMode);
     }
 
-    private void toggleInitialize(){
-        if(!Modo.getInstance().getModo()){ 
+    private void toggleInitialize() {
+        if (!Modo.getInstance().getModo()) {
             background.getStyleClass().add("dark");
             sunIcon.setVisible(Modo.getInstance().getModo());
             moonIcon.setVisible(!Modo.getInstance().getModo());
-            TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer); 
+            TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
             thumbTransition.setToX(!Modo.getInstance().getModo() ? 12.0 : -12.0);
             thumbTransition.play();
-        }else{
-            TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer); 
+        } else {
+            TranslateTransition thumbTransition = new TranslateTransition(Duration.millis(200), thumbContainer);
             thumbTransition.setToX(Modo.getInstance().getModo() ? -12.0 : 12.0);
             thumbTransition.play();
             background.getStyleClass().remove("dark");

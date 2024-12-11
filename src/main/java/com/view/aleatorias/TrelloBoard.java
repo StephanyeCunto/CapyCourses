@@ -1,4 +1,4 @@
-package com;
+package com.view.aleatorias;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
