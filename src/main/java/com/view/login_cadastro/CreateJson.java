@@ -34,6 +34,7 @@ public class CreateJson {
             Login savedLogin = mapper.readValue(new File(filePath), Login.class);
             return savedLogin.getUser();
         } catch (IOException e) {
+            System.out.println("erro"+e);
             return null;
         }
     }

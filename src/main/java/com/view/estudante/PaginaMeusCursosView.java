@@ -2,7 +2,6 @@ package com.view.estudante;
 
 import javafx.animation.*;
 import javafx.fxml.*;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -15,7 +14,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.view.Modo;
-import com.view.elements.Carousel;
 import com.view.elements.LoadCourses;
 import com.view.elements.Menu;
 
