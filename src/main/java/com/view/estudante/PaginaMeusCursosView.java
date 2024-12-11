@@ -46,6 +46,12 @@ public class PaginaMeusCursosView implements Initializable {
     private StackPane toggleButtonStackPane;
     @FXML
     private GridPane container;
+    @FXML
+    private Button selectionTodos;
+    @FXML
+    private Button selectionStarted;
+    @FXML
+    private Button selectionCompleted;
 
     @SuppressWarnings("unused")
     @Override
@@ -58,6 +64,54 @@ public class PaginaMeusCursosView implements Initializable {
 
         loadCourses();
         loadMenu();
+
+        selectionTodos.setOnAction(e -> {
+            buttonSelection("todos");
+        });
+
+        selectionStarted.setOnAction(e -> {
+            buttonSelection("started");
+        });
+
+        selectionCompleted.setOnAction(e -> {
+            buttonSelection("completed");
+        });
+    }
+
+    private void buttonSelection(String selection) {
+        courseContainer.getChildren().clear();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
+            VBox courseList = loader.load();
+            LoadCourses course = loader.getController();
+            course.loadCoursesSelection(selection);
+            courseContainer.getChildren().add(courseList);
+            loadClass(selection);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadClass(String selection) {
+        // Remove all selection classes from all buttons
+        selectionTodos.getStyleClass().removeAll("outline-button-seletion", "outline-button-not-seletion");
+        selectionStarted.getStyleClass().removeAll("outline-button-seletion", "outline-button-not-seletion");
+        selectionCompleted.getStyleClass().removeAll("outline-button-seletion", "outline-button-not-seletion");
+
+        // Add appropriate classes based on selection
+        if (selection.equals("todos")) {
+            selectionTodos.getStyleClass().add("outline-button-seletion");
+            selectionStarted.getStyleClass().add("outline-button-not-seletion");
+            selectionCompleted.getStyleClass().add("outline-button-not-seletion");
+        } else if (selection.equals("started")) {
+            selectionStarted.getStyleClass().add("outline-button-seletion");
+            selectionTodos.getStyleClass().add("outline-button-not-seletion");
+            selectionCompleted.getStyleClass().add("outline-button-not-seletion");
+        } else {
+            selectionCompleted.getStyleClass().add("outline-button-seletion");
+            selectionTodos.getStyleClass().add("outline-button-not-seletion");
+            selectionStarted.getStyleClass().add("outline-button-not-seletion");
+        }
     }
 
     private void loadCourses() {
@@ -65,7 +119,7 @@ public class PaginaMeusCursosView implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
             VBox courseList = loader.load();
             LoadCourses course = loader.getController();
-            course.loadCoursesStarted("started");
+            course.loadCoursesSelection("started");
             courseContainer.getChildren().add(courseList);
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,10 +147,10 @@ public class PaginaMeusCursosView implements Initializable {
         thumbTransition.setToX(!Modo.getInstance().getModo() ? 12.0 : -12.0);
         thumbTransition.play();
 
-      FillTransition fillTransition = new FillTransition(Duration.millis(200), background);
+        FillTransition fillTransition = new FillTransition(Duration.millis(200), background);
         fillTransition.setFromValue(!Modo.getInstance().getModo() ? Color.web("#FFA500") : Color.web("#4169E1"));
-      fillTransition.setToValue(!Modo.getInstance().getModo() ? Color.web("#4169E1") : Color.web("#FFA500"));
-       fillTransition.play();
+        fillTransition.setToValue(!Modo.getInstance().getModo() ? Color.web("#4169E1") : Color.web("#FFA500"));
+        fillTransition.play();
 
         changeMode();
 
@@ -131,11 +185,11 @@ public class PaginaMeusCursosView implements Initializable {
         if (!Modo.getInstance().getModo()) {
             background.getStyleClass().add("dark");
             container.getStylesheets()
-                    .add(getClass().getResource("/com/estudante/paginaInicial/style/ligth/style.css").toExternalForm());
+                    .add(getClass().getResource("/com/estudante/meusCursos/style/ligth/style.css").toExternalForm());
         } else {
             background.getStyleClass().remove("dark");
             container.getStylesheets()
-                    .add(getClass().getResource("/com/estudante/paginaInicial/style/dark/style.css").toExternalForm());
+                    .add(getClass().getResource("/com/estudante/meusCursos/style/dark/style.css").toExternalForm());
         }
     }
 }

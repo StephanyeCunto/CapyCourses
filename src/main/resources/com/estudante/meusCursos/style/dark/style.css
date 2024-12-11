@@ -13,8 +13,8 @@
     -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.3), 20, 0, 0, 5);
 }
 
-.outline-button,
-.outline-button-seta {
+.outline-button,.outline-button-seletion,
+.outline-button-seta, .outline-button-not-seletion:hover {
     -fx-background-color: transparent;
     -fx-text-fill: #6C8DFF;
     -fx-border-color: #6C8DFF;
@@ -35,9 +35,21 @@
 }
 
 .outline-button:pressed,
-.outline-button-seta:pressed {
+.outline-button-seta:pressed, .outline-button-not-seletion:pressed {
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
+}
+
+.outline-button-not-seletion{
+    -fx-background-color: #6C8DFF;
+    -fx-text-fill: #1A1A1A;
+    -fx-border-color: rgba(255, 255, 255, 0);
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 12 20;
+    -fx-cursor: hand;
 }
 
 .simple-button {
@@ -364,35 +376,26 @@
  -fx-font-family: "Segoe UI";
 }
 
-.custom-progress-bar{
-     -fx-border-radius: 20px; 
-    -fx-background-radius: 20px;
-    -fx-accent: #2ecc71; 
-    -fx-background: #2c3e50;
-    -fx-control-inner-background: #34495e; 
+.progress-label{
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI";
 }
 
-.custom-progress-bar > .bar {
-    -fx-background-color: #4CAF50;
-    -fx-background-radius: 5;
+.tag , .button-filter {
+    -fx-background-color: #6C8DFF;
+    -fx-background-radius: 12;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI";
+    -fx-padding: 6 12;
+    -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.2), 8, 0, 0, 0);
+    -fx-cursor: hand;
 }
 
-.custom-progress-bar > .track {
-    -fx-background-color: #E0E0E0;
-    -fx-background-radius: 5;
-}
-
-.custom-progress-bar {
-    -fx-accent: #019267;
-    -fx-control-inner-background: #2C2C2C;
-}
-
-.custom-progress-bar .bar {
-    -fx-padding: 1px;
-    -fx-background-radius: 2px;
-}
-
-.custom-progress-bar .track {
-    -fx-background-radius: 2px;
-    -fx-border-radius: 2px;
+.tag-label, .button-filter {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI Bold";
+    -fx-opacity: 0.9;
 }

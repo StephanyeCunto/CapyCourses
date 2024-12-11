@@ -58,13 +58,12 @@
               </StackPane>
             </HBox>
           </HBox>
-          <VBox fx:id="courseContainer" spacing="20">
-            <Label text="Meus Cursos" textFill="WHITE" styleClass="todosOsCursos">
-              <font>
-                <Font name="Franklin Gothic Medium" size="22.0" />
-              </font>
-            </Label>
-          </VBox>
+          <HBox spacing="20">
+            <Button text="Todos" styleClass="outline-button-seletion" fx:id="selectionTodos"></Button>
+            <Button text="Em andamento" styleClass="outline-button-not-seletion" fx:id="selectionStarted"></Button>
+            <Button text="Concluidos" styleClass="outline-button-not-seletion"  fx:id="selectionCompleted"></Button>
+
+          </HBox>
         </VBox>
       </content>
     </ScrollPane>

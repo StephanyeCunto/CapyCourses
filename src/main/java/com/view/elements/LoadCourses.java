@@ -51,7 +51,7 @@ public class LoadCourses {
         courseContainer.getChildren().add(courseGrid);
     }
 
-    public void loadCoursesStarted(String status) {
+    public void loadCoursesSelection(String status) {
         setupCourseGrid();
 
         int numColumns = calculateColumns();
@@ -124,6 +124,16 @@ public class LoadCourses {
         content.setStyle("-fx-padding: 20;");
 
         ImageView courseImage = createCourseImage();
+
+        if (status.equals("started") || status.equals("completed") || status.equals("todos")) {
+            HBox tagContainer = new HBox();
+            tagContainer.setAlignment(Pos.CENTER_RIGHT);
+            tagContainer.setMaxWidth(Double.MAX_VALUE);
+            VBox tag = createTag("started");
+            tagContainer.getChildren().add(tag);
+            content.getChildren().add(tagContainer);
+        }
+
         Label categoryLabel = createStyledLabel(course.getCategoria().toUpperCase(), "Franklin Gothic Medium", 12);
         categoryLabel.getStyleClass().add("category");
 
@@ -141,18 +151,41 @@ public class LoadCourses {
             HBox buttonContainer = createButtonContainer(course, status);
             content.getChildren().addAll(courseImage, categoryLabel, titleLabel, authorLabel, courseInfo, descLabel,
                     statusInfo, buttonContainer);
-        } else if (status.equals("started")) {
+        } else if (status.equals("started") || status.equals("completed") || status.equals("todos")) {
             HBox buttonContainer = createButtonContainer(course, status);
             ProgressBar progressBarCourse = new ProgressBar();
-            progressBarCourse.getStyleClass().add("custom-progress-bar");
+            progressBarCourse.getStyleClass().add("progress-bar");
+            String cssFile = getClass().getResource("/com/progressbar.css").toExternalForm();
+            progressBarCourse.getStylesheets().add(cssFile);
+            progressBarCourse.getStyleClass().add("modern-progress-bar");
+
             progressBarCourse.setProgress(0.5);
             progressBarCourse.setPrefWidth(260);
             progressBarCourse.setPrefHeight(10);
-            content.getChildren().addAll(courseImage, categoryLabel, titleLabel, authorLabel,progressBarCourse, buttonContainer);
+
+            progressBarCourse.setPadding(new javafx.geometry.Insets(0));
+            progressBarCourse.setBorder(null);
+
+            Label progressLabel = createStyledLabel("50% Completo", "Franklin Gothic Medium", 14);
+            progressLabel.getStyleClass().add("progress-label");
+
+            content.getChildren().addAll(courseImage, categoryLabel, titleLabel, authorLabel, progressBarCourse,
+                    progressLabel,
+                    buttonContainer);
         }
 
         courseBox.getChildren().add(content);
         return courseBox;
+    }
+
+    private VBox createTag(String status) {
+        VBox tag = new VBox();
+        tag.setMaxWidth(Region.USE_PREF_SIZE); 
+        Label tagLabel = createStyledLabel("Em Andamento", "Franklin Gothic Medium", 12);
+        tagLabel.getStyleClass().add("tag-label");
+        tag.getChildren().add(tagLabel);
+        tag.getStyleClass().add("tag");
+        return tag;
     }
 
     private ImageView createCourseImage() {
@@ -268,7 +301,10 @@ public class LoadCourses {
     private Label createStyledLabel(String text, String fontFamily, double fontSize) {
         Label label = new Label(text);
         label.setFont(Font.font(fontFamily, fontSize));
-        label.getStyleClass().add("label");
+        if (!text.equals("Em Andamento")) {
+            label.getStyleClass().add("label");
+
+        }
         return label;
     }
 
