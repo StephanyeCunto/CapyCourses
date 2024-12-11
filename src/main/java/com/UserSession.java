@@ -11,6 +11,7 @@ public class UserSession {
     private static UserSession instance;
     private String userEmail;
     private String registerIncomplet;
+    private Boolean started=false;
 
     public static UserSession getInstance() {
         if (instance == null) {
@@ -29,6 +30,14 @@ public class UserSession {
 
     public String getRegisterIncomplet(){
         return registerIncomplet;
+    }
+
+    public Boolean getStarted(){
+        if(!started){
+            this.started=true;
+            return false;
+        }
+        return true;
     }
 
     public String getUserName(){

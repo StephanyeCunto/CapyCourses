@@ -6,6 +6,7 @@ C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\profe
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\professor\valid\CursoSettingsValidation.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\login_cadastro\Cadastro.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\elements\Menu.java
+C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\estudante\PaginaMeusCursosView.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\controller\login_cadastro\LoginController.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\professor\CadastroCurso.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\Course\Course.java
@@ -13,6 +14,7 @@ C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\profes
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\login_cadastro\CadastroTeacher.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\professor\valid\CursoModulesValid.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\controller\login_cadastro\CadastroStudentController.java
+C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\WeatherApp.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\elements\CourseDetailsModal.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\estudante\PaginaInicialView.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\login_cadastro\Login.java
@@ -20,6 +22,7 @@ C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\Cours
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\login_cadastro\teste.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\notification\SpecificDateNotification.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\login_cadastro\cadastro\CadastroTeacher.java
+C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\student\CourseStudent.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\Course\CourseSettings.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\login_cadastro\CadastroStudent.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\login_cadastro\elements\ErrorNotification.java
@@ -28,8 +31,9 @@ C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\notifi
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\login_cadastro\cadastro\valid\CadastroValid.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\App.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\TrelloBoard.java
-C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\Student.java
+C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\student\Student.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\module-info.java
+C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\student\MyCourse.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\UserSession.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\login_cadastro\cadastro\Cadastro.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\professor\valid\CursoAulasValid.java
@@ -39,6 +43,7 @@ C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\login_
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\professor\valid\CursoQuestionarioValid.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\login_cadastro\cadastro\CadastroStudent.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\controller\login_cadastro\CadastroTeacherController.java
+C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\model\student\MyCourseStudent.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\elements\LoadCourses.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\elements\Carousel.java
 C:\Users\steph\Desktop\CapyCourses_LPS\CapyCourses\src\main\java\com\view\login_cadastro\BaseLoginCadastro.java

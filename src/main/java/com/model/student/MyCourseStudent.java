@@ -14,7 +14,7 @@ public class MyCourseStudent {
     public void addCourse(Course course) throws FileNotFoundException, IOException {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_myCourse.csv", true))) {
-            writer.write(UserSession.getInstance().getUserEmail() + "," + course.getTitle()+ ","+"iniciado");
+            writer.write(UserSession.getInstance().getUserEmail() + "," + course.getTitle()+ ","+"started");
             writer.newLine();
         }
     }
@@ -34,4 +34,23 @@ public class MyCourseStudent {
         }
         return false;
     }
+
+    public boolean searhCourseFilter(String title, String status) {
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_myCourse.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] elements = line.split(",");
+                for(int i=0; i<elements.length; i++){
+                }
+                
+                if (UserSession.getInstance().getUserEmail().equals(elements[0]) && title.equals(elements[1]) && status.equals(elements[2])) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    } 
 }

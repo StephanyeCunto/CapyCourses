@@ -1,19 +1,31 @@
 package com.view.elements;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.ParallelTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.util.Duration;
 
 import com.UserSession;
 
@@ -52,13 +64,13 @@ public class Menu {
         Button forumBtn = createButton("Forum");
         Button configuracoesBtn = createButton("Configurações");
         Button sairBtn = createButton("Sair");
-    
-        vbox.getChildren().addAll(cursosDisponiveisBtn, meusCursosBtn, progressoBtn, 
-            certificadosBtn, bibliotecaBtn, forumBtn, configuracoesBtn);
+
+        vbox.getChildren().addAll(cursosDisponiveisBtn, meusCursosBtn, progressoBtn,
+                certificadosBtn, bibliotecaBtn, forumBtn, configuracoesBtn);
         Platform.runLater(() -> {
             Scene currentScene = sairBtn.getScene();
             double sceneHeight = currentScene.getHeight();
-            VBox.setMargin(sairBtn, new Insets(sceneHeight - sizeUser -100 , 0, 0, 0));
+            VBox.setMargin(sairBtn, new Insets(sceneHeight - sizeUser - 100, 0, 0, 0));
         });
 
         vbox.getChildren().add(sairBtn);
@@ -77,6 +89,7 @@ public class Menu {
         } else {
             button.getStyleClass().add("register-button");
         }
+
         button.setOnAction(event -> {
             redirectTo(text);
         });
@@ -85,7 +98,7 @@ public class Menu {
 
     private void fillMap() {
         buttonMenu.put("/com/estudante/paginaInicial", "Cursos Disponíveis");
-        buttonMenu.put("/com/paginaMeusCursosAndamento", "Meus Cursos");
+        buttonMenu.put("/com/estudante/meusCursos/paginaMeusCursos", "Meus Cursos");
         buttonMenu.put("/com/paginaProgresso", "Progresso");
         buttonMenu.put("/com/paginaMeusCursosFinalizados", "Certificados");
         buttonMenu.put("/com/paginaPerfil", "Configurações");
@@ -146,20 +159,28 @@ public class Menu {
         try {
             String pageNext = getNextPage(button);
             if (pageNext != null) {
+                
                 Stage stage = (Stage) sideMenu.getScene().getWindow();
-                if(pageNext.equals("/com/estudante/paginaInicial.fxml")){
+                if (pageNext.equals("/com/estudante/paginaInicial.fxml")) {
                     pageNext = "/com/estudante/paginaInicial/paginaInicial.fxml";
                 }
                 Parent root = FXMLLoader.load(getClass().getResource(pageNext));
                 Scene currentScene = stage.getScene();
                 Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
+
+                animateSceneTransition(currentScene, newScene, stage);
+
                 stage.setScene(newScene);
                 stage.show();
+
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+private void animateSceneTransition(Scene currentScene, Scene newScene, Stage stage) {
+ 
+}
 
     private String getNextPage(String button) {
         for (HashMap.Entry<String, String> entry : buttonMenu.entrySet()) {
