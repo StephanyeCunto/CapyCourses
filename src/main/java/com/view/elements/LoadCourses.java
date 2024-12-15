@@ -20,8 +20,71 @@ import javafx.stage.Window;
 public class LoadCourses {
     @FXML
     private VBox courseContainer;
+    private List<Course> courses;
+    private final GridPane courseGrid = new GridPane();
 
-    private final CourseReader reader = new CourseReader();
+    public void loadCourses(String status){
+        CourseReader reader = new CourseReader();
+        List<Course> courses = reader.readCourses();
+        GridPane courseGrid = new GridPane();
+        MyCourseStudent myCourseStudent = new MyCourseStudent();
+
+        setupCourseGrid();
+
+        int numColumns = calculateColumns();
+
+        courses = loadListCourses(courses, myCourseStudent, status);
+        System.out.println("course: "+ courses);
+
+        for (int i = 0; i < courses.size(); i++) {
+            VBox courseBox = createCourseBox(courses.get(i), status);
+            courseGrid.add(courseBox, i % numColumns, i / numColumns);
+        }
+
+        courseContainer.widthProperty().addListener((obs, oldVal, newVal) -> {
+            int columns = calculateColumns();
+            reorganizeGrid(columns,status);
+        });
+
+        courseGrid.setAlignment(Pos.CENTER);
+        courseContainer.setAlignment(Pos.CENTER);
+
+        courseContainer.getChildren().add(courseGrid);
+    }
+
+    private List<Course> loadListCourses(List<Course> course,MyCourseStudent myCourseStudent,String status){
+        for(int i=0; i<course.size(); i++){
+            myCourseStudent.searhCourseFilter(course.get(i).getTitle(), status);
+        }
+        return null;
+    }
+
+    private void setupCourseGrid() {
+        courseGrid.setHgap(20);
+        courseGrid.setVgap(20);
+        courseGrid.setPadding(new javafx.geometry.Insets(20));
+        courseGrid.setMaxWidth(Double.MAX_VALUE);
+        courseContainer.setMaxWidth(Double.MAX_VALUE);
+    }
+
+    private int calculateColumns() {
+        double width = courseContainer.getWidth();
+        return Math.max(1, (int) (width / 450));
+    }
+
+    private void reorganizeGrid(int numColumns,String status) {
+        courseGrid.getChildren().clear();
+        for (int i = 0; i < courses.size(); i++) {
+           VBox courseBox = createCourseBox(courses.get(i), status);
+        courseGrid.add(courseBox, i % numColumns, i / numColumns);
+        }
+    }
+
+    private VBox createCourseBox(Course course,String status){
+        return null;
+    }
+
+  /*   private final CourseReader reader = new CourseReader();
     private List<Course> courses = reader.readCourses();
     private final GridPane courseGrid = new GridPane();
 
@@ -83,7 +146,7 @@ public class LoadCourses {
                     coursesSelection.add(courses.get(i));
                 }
             }
-        } else {
+        }else {
             for (int i = 0; i < courses.size(); i++) {
                 if (myCourseStudent.searhCourseFilter(courses.get(i).getTitle(), status)) {
                     coursesSelection.add(courses.get(i));
@@ -125,7 +188,7 @@ public class LoadCourses {
 
         ImageView courseImage = createCourseImage();
 
-        if (status.equals("started") || status.equals("completed") || status.equals("todos")) {
+        if (status.equals("started") || status.equals("completed")) {
             HBox tagContainer = new HBox();
             tagContainer.setAlignment(Pos.CENTER_RIGHT);
             tagContainer.setMaxWidth(Double.MAX_VALUE);
@@ -151,7 +214,7 @@ public class LoadCourses {
             HBox buttonContainer = createButtonContainer(course, status);
             content.getChildren().addAll(courseImage, categoryLabel, titleLabel, authorLabel, courseInfo, descLabel,
                     statusInfo, buttonContainer);
-        } else if (status.equals("started") || status.equals("completed") || status.equals("todos")) {
+        } else if (status.equals("started") || status.equals("completed")) {
             HBox buttonContainer = createButtonContainer(course, status);
             ProgressBar progressBarCourse = new ProgressBar();
             progressBarCourse.getStyleClass().add("progress-bar");
@@ -258,7 +321,10 @@ public class LoadCourses {
         } else if (status.equals("started")) {
             Button continueButton = createContinueButton(course);
             buttonContainer.getChildren().addAll(continueButton);
-
+        }else if(status.equals("todos")){
+            Button startButton = createStartButton(course);
+            Button detailsButton = createDetailsButton(course);
+            buttonContainer.getChildren().addAll(startButton, detailsButton);
         }
 
         return buttonContainer;
@@ -319,5 +385,5 @@ public class LoadCourses {
         });
         button.setPrefHeight(35);
         return button;
-    }
+    } */
 }

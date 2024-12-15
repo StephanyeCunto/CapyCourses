@@ -23,7 +23,6 @@ import com.controller.login_cadastro.LoginController;
 import com.view.Modo;
 import com.view.login_cadastro.elements.ErrorNotification;
 import com.view.login_cadastro.valid.LoginValid;
-import com.view.login_cadastro.CreateJson;
 
 public class Login extends BaseLoginCadastro implements Initializable {
     @FXML

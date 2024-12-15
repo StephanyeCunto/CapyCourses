@@ -41,18 +41,17 @@ public class MyCourseStudent {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] elements = line.split(",");
-
-                if (UserSession.getInstance().getUserEmail().equals(elements[0]) && title.equals(elements[1])
-                        && status.equals(elements[2])) {
-                    return true;
-                }
-
                 if (status.equals("todos")) {
                     if (UserSession.getInstance().getUserEmail().equals(elements[0]) && title.equals(elements[1])
                             && (elements[2].equals("started") || elements[2].equals("completed"))) {
                         return true;
                     }
+                }else if (UserSession.getInstance().getUserEmail().equals(elements[0]) && title.equals(elements[1])
+                        && status.equals(elements[2])) {
+                    return true;
                 }
+
+              
             }
         } catch (IOException e) {
             e.printStackTrace();

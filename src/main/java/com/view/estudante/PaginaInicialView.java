@@ -12,13 +12,14 @@ import javafx.scene.image.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import com.UserSession;
 import com.view.Modo;
 import com.view.elements.Carousel;
 import com.view.elements.LoadCourses;
 import com.view.elements.Menu;
+import com.model.Course.*;
 
 public class PaginaInicialView implements Initializable {
     @FXML
@@ -76,7 +77,9 @@ public class PaginaInicialView implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
             VBox courseList = loader.load();
             LoadCourses course = loader.getController();
-            course.loadCoursesNotStarted();
+
+           List<Course> courseNotVisble =course.loadCourses("todos");
+           
             courseContainer.getChildren().add(courseList);
         } catch (IOException e) {
             e.printStackTrace();

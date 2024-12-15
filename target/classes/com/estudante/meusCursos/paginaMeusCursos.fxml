@@ -60,11 +60,11 @@
           </HBox>
           <HBox spacing="20">
             <Button text="Todos" styleClass="outline-button-seletion" fx:id="selectionTodos"></Button>
-            <Button text="Em andamento" styleClass="outline-button-not-seletion"
-              fx:id="selectionStarted"></Button>
-            <Button text="Concluidos" styleClass="outline-button-not-seletion"
-              fx:id="selectionCompleted"></Button>
+            <Button text="Em andamento" styleClass="outline-button-not-seletion" fx:id="selectionStarted"></Button>
+            <Button text="Concluidos" styleClass="outline-button-not-seletion"  fx:id="selectionCompleted"></Button>
+
           </HBox>
+
           <VBox fx:id="courseContainer" spacing="20"></VBox>
         </VBox>
       </content>

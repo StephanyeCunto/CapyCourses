@@ -62,7 +62,7 @@ public class PaginaMeusCursosView implements Initializable {
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
 
-        loadCourses();
+        loadCourses("todos");
         loadMenu();
 
         selectionTodos.setOnAction(e -> {
@@ -84,7 +84,7 @@ public class PaginaMeusCursosView implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
             VBox courseList = loader.load();
             LoadCourses course = loader.getController();
-            course.loadCoursesSelection(selection);
+            course.loadCourses(selection);
             courseContainer.getChildren().add(courseList);
             loadClass(selection);
         } catch (IOException e) {
@@ -103,6 +103,8 @@ public class PaginaMeusCursosView implements Initializable {
             selectionTodos.getStyleClass().add("outline-button-seletion");
             selectionStarted.getStyleClass().add("outline-button-not-seletion");
             selectionCompleted.getStyleClass().add("outline-button-not-seletion");
+
+            loadCourses("started");
         } else if (selection.equals("started")) {
             selectionStarted.getStyleClass().add("outline-button-seletion");
             selectionTodos.getStyleClass().add("outline-button-not-seletion");
@@ -114,12 +116,19 @@ public class PaginaMeusCursosView implements Initializable {
         }
     }
 
-    private void loadCourses() {
+    private void loadCourses(String status) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
             VBox courseList = loader.load();
             LoadCourses course = loader.getController();
-            course.loadCoursesSelection("started");
+            if(status.equals("started")) {
+                course.loadCourses("started");
+            } else if(status.equals("completed")) {
+                course.loadCourses("completed");
+            }else{
+                course.loadCourses("todos");
+            }
+
             courseContainer.getChildren().add(courseList);
         } catch (IOException e) {
             e.printStackTrace();
