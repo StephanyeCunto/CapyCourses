@@ -64,8 +64,6 @@
             <Button text="Concluidos" styleClass="outline-button-not-seletion"  fx:id="selectionCompleted"></Button>
 
           </HBox>
-
-          <VBox fx:id="courseContainer" spacing="20"></VBox>
         </VBox>
       </content>
     </ScrollPane>

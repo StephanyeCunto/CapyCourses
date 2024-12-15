@@ -2,37 +2,38 @@ package com.view.login_cadastro;
 
 import java.io.File;
 import java.io.IOException;
-import com.model.login_cadastro.Login;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.controller.login_cadastro.LoginJsonController;
+
 public class CreateJson {
-    public static void saveLoginData(String email, String senha, String filePath) {
+    public static void saveLoginData(String userName, String userPassword, String filePath) {
         ObjectMapper mapper = new ObjectMapper();
 
-        Login login = new Login(email, senha);
+        LoginJsonController loginJsonController = new LoginJsonController(userName, userPassword);
 
         try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), login);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), loginJsonController);
         } catch (IOException e) {
         }
     }
 
-    public static void verifyAndDeleteLoginData(String email, String senha, String filePath) {
+    public static void verifyAndDeleteLoginData(String userName, String userPassword, String filePath) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            Login savedLogin = mapper.readValue(new File(filePath), Login.class);
-            if (savedLogin.getUser().equals(email) && savedLogin.getPassword().equals(senha)) {
+            LoginJsonController savedLogin = mapper.readValue(new File(filePath), LoginJsonController.class);
+            if (savedLogin.getUserName().equals(userName) && savedLogin.getUserPassword().equals(userPassword)) {
                 new File(filePath).delete();
             }
         } catch (IOException e) {
         }
     }
 
-    public static String getSavedEmail(String filePath) {
+    public static String getSavedName(String filePath) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            Login savedLogin = mapper.readValue(new File(filePath), Login.class);
-            return savedLogin.getUser();
+            LoginJsonController savedLogin = mapper.readValue(new File(filePath), LoginJsonController.class);
+            return savedLogin.getUserName();
         } catch (IOException e) {
             System.out.println("erro"+e);
             return null;
@@ -42,8 +43,8 @@ public class CreateJson {
     public static String getSavedPassword(String filePath) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            Login savedLogin = mapper.readValue(new File(filePath), Login.class);
-            return savedLogin.getPassword();
+            LoginJsonController savedLogin = mapper.readValue(new File(filePath), LoginJsonController.class);
+            return savedLogin.getUserPassword();
         } catch (IOException e) {
             return null;
         }
