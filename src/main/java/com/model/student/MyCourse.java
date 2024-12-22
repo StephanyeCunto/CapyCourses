@@ -2,6 +2,10 @@ package com.model.student;
 
 import com.model.Course.Course;
 
+import lombok.*;
+
+@Getter
+@Setter
 public class MyCourse {
     private String email;
     private Course course;

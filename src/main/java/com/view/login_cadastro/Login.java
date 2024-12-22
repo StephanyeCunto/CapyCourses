@@ -3,6 +3,7 @@ package com.view.login_cadastro;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.awt.Toolkit;
+import java.io.File;
 
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
 
@@ -72,12 +73,18 @@ public class Login extends BaseLoginCadastro implements Initializable {
         loadInformation();
     }
 
-    private void loadInformation(){
-        String email = CreateJson.getSavedEmail("CapyCourses\\src\\main\\resources\\com\\json\\login.json");
-        String senha = CreateJson.getSavedPassword("CapyCourses\\src\\main\\resources\\com\\json\\login.json");
-        if(email != null && senha != null){
-            user.setText(email);
-            password.setText(senha);
+    private void loadInformation() {
+        String filePath = "CapyCourses\\src\\main\\resources\\com\\json\\login.json";
+        File file = new File(filePath);
+
+        if (file.exists() && file.length() > 0) {
+            String email = CreateJson.getSavedName(filePath);
+            String senha = CreateJson.getSavedPassword(filePath);
+
+            if (email != null && senha != null) {
+                user.setText(email);
+                password.setText(senha);
+            }
         }
     }
 
@@ -94,9 +101,23 @@ public class Login extends BaseLoginCadastro implements Initializable {
         Stage stage = (Stage) leftSection.getScene().getWindow();
 
         switch (isCheck) {
-            case "true" -> {createJson(); super.redirectTo("/com/estudante/paginaInicial/paginaInicial.fxml", stage);}
-            case "incomplete student" ->{ UserSession.getInstance().setRegisterIncomplet("Student"); super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);}
-            case "incomplete teacher" ->{ UserSession.getInstance().setRegisterIncomplet("Teacher"); super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);}
+            case "true" -> {
+                CreateJson json = new CreateJson();
+                if(lembrar.isSelected()) {
+                    json.saveLoginData(user.getText(), password.getText(), "CapyCourses\\src\\main\\resources\\com\\json\\login.json");
+                } else {
+                    json.verifyAndDeleteLoginData(user.getText(), password.getText(), "CapyCourses\\src\\main\\resources\\com\\json\\login.json");
+                }
+                super.redirectTo("/com/estudante/paginaInicial/paginaInicial.fxml", stage);
+            }
+            case "incomplete student" -> {
+                UserSession.getInstance().setRegisterIncomplet("Student");
+                super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);
+            }
+            case "incomplete teacher" -> {
+                UserSession.getInstance().setRegisterIncomplet("Teacher");
+                super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);
+            }
             default -> {
                 UserSession.getInstance().clearSession();
                 showError();
@@ -106,11 +127,13 @@ public class Login extends BaseLoginCadastro implements Initializable {
         }
     }
 
-    private void createJson(){
-        if(lembrar.isSelected()){
-            CreateJson.saveLoginData(user.getText(), password.getText(), "CapyCourses\\src\\main\\resources\\com\\json\\login.json");
-        }else{
-            CreateJson.verifyAndDeleteLoginData(user.getText(), password.getText(), "CapyCourses\\src\\main\\resources\\com\\json\\login.json");
+    private void createJson() {
+        if (lembrar.isSelected()) {
+            CreateJson.saveLoginData(user.getText(), password.getText(),
+                    "CapyCourses\\src\\main\\resources\\com\\json\\login.json");
+        } else {
+            CreateJson.verifyAndDeleteLoginData(user.getText(), password.getText(),
+                    "CapyCourses\\src\\main\\resources\\com\\json\\login.json");
         }
     }
 

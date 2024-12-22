@@ -15,4 +15,8 @@ public class Student {
         this.name = name;
         this.course = new ArrayList<>();
     }
+
+    public void addCourse(MyCourse course){
+        this.course.add(course);
+    }
 }

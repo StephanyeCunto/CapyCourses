@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.*;
 
 import com.UserSession;
+import com.controller.student.loadCourses;
 import com.view.Modo;
 import com.view.elements.Carousel;
 import com.view.elements.LoadCourses;
@@ -70,6 +71,10 @@ public class PaginaInicialView implements Initializable {
         if(!UserSession.getInstance().getStarted()){
             loadEffect();
         }
+
+        LoadCourses loadCourses = new LoadCourses();
+
+        System.out.println(loadCourses.loadMyCourses();
     }
 
     private void loadCourses() {
@@ -78,7 +83,7 @@ public class PaginaInicialView implements Initializable {
             VBox courseList = loader.load();
             LoadCourses course = loader.getController();
 
-           List<Course> courseNotVisble =course.loadCourses("todos");
+          // List<Course> courseNotVisble =course.loadCourses("todos");
            
             courseContainer.getChildren().add(courseList);
         } catch (IOException e) {

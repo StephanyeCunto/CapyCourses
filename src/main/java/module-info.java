@@ -27,4 +27,5 @@ module com {
     exports com.view.professor;
     exports com.view.estudante;
     exports com.model.login_cadastro to com.fasterxml.jackson.databind;
+    exports com.controller.login_cadastro to com.fasterxml.jackson.databind;
 }

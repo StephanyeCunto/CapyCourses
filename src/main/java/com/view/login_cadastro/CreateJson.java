@@ -15,6 +15,7 @@ public class CreateJson {
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), loginJsonController);
         } catch (IOException e) {
+            System.out.println(e);
         }
     }
 
