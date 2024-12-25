@@ -62,7 +62,8 @@ public class PaginaMeusCursosView implements Initializable {
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
 
-        loadCourses("todos");
+//      loadCourses("todos");
+loadCourses();
         loadMenu();
 
         selectionTodos.setOnAction(e -> {
@@ -84,7 +85,7 @@ public class PaginaMeusCursosView implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
             VBox courseList = loader.load();
             LoadCourses course = loader.getController();
-            course.loadCourses(selection);
+          //  course.loadCourses(selection);
             courseContainer.getChildren().add(courseList);
             loadClass(selection);
         } catch (IOException e) {
@@ -104,7 +105,7 @@ public class PaginaMeusCursosView implements Initializable {
             selectionStarted.getStyleClass().add("outline-button-not-seletion");
             selectionCompleted.getStyleClass().add("outline-button-not-seletion");
 
-            loadCourses("started");
+//            loadCourses("started");
         } else if (selection.equals("started")) {
             selectionStarted.getStyleClass().add("outline-button-seletion");
             selectionTodos.getStyleClass().add("outline-button-not-seletion");
@@ -116,24 +117,38 @@ public class PaginaMeusCursosView implements Initializable {
         }
     }
 
-    private void loadCourses(String status) {
+    /*private void loadCourses(String status) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
             VBox courseList = loader.load();
             LoadCourses course = loader.getController();
-            if(status.equals("started")) {
-                course.loadCourses("started");
-            } else if(status.equals("completed")) {
-                course.loadCourses("completed");
-            }else{
-                course.loadCourses("todos");
-            }
+         //   if(status.equals("started")) {
+       //         course.loadCourses("started");
+          //  } else if(status.equals("completed")) {
+        //        course.loadCourses("completed");
+        //    }else{
+        //        course.loadCourses("todos");
+          //  }
 
+//            courseContainer.getChildren().add(courseList);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    private void loadCourses() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
+            VBox courseList = loader.load();
+            LoadCourses course = loader.getController();
+            course.loadCoursesNotStarted();
             courseContainer.getChildren().add(courseList);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     private void loadMenu() {
         try {

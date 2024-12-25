@@ -15,6 +15,7 @@ import java.util.*;
 
 import javafx.util.Duration;
 
+import com.dto.paginaPrincipalDto;
 import com.model.Course.Course;
 import com.model.Course.Module;
 import com.model.Course.CourseReader;
@@ -31,7 +32,7 @@ public class CourseDetailsModal {
         this.HEIGHT = HEIGHT;
     }
 
-    public CourseDetailsModal(Window owner, Course course) {
+    public CourseDetailsModal(Window owner, paginaPrincipalDto course) {
         updateDimensions(owner.getWidth(), owner.getHeight());
         modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
@@ -41,9 +42,7 @@ public class CourseDetailsModal {
         setupCloseAnimation();
     }
 
-    private void loadValues(Course course) {
-        CourseReader courseReader = new CourseReader();
-        CourseSettings settings = courseReader.courseSettings(course.getTitle());
+    private void loadValues(paginaPrincipalDto course) {
 
         showCourseDetails(
                 course.getTitle(),
@@ -52,13 +51,10 @@ public class CourseDetailsModal {
                 course.getCategoria(),
                 course.getNivel(),
                 course.getRating(),
-                settings.getDateStart(),
-                settings.getDateEnd(),
-                settings.getDurationTotal(),
-                settings.isDateEnd(),
-                settings.isCertificate(),
-                settings.isGradeMiniun(),
-                settings.getComboBoxVisibily(), courseReader);
+                course.getDateEnd(),
+                course.getDurationTotal(),
+                course.isDateEnd(),
+                course.isCertificate());
     }
 
     private StackPane createBackdrop() {
@@ -81,10 +77,7 @@ public class CourseDetailsModal {
     }
 
     private void showCourseDetails(String courseTitle, String name,
-            String description, String categoria, String nivel, double rating,
-            LocalDate dateStart, LocalDate dateEnd, String durationTotal,
-            Boolean isDateEnd, Boolean isCertificate, Boolean isGradeMiniun,
-            Object ComboBoxVisibily, CourseReader courseReader) {
+            String description, String categoria, String nivel, double rating,LocalDate dateEnd, String durationTotal,Boolean isDateEnd, Boolean isCertificate) {
 
         StackPane backdrop = createBackdrop();
         VBox modalContainer = new VBox(20);
@@ -104,7 +97,7 @@ public class CourseDetailsModal {
         content.setPadding(new Insets(0, 20, 10, 20));
         content.setAlignment(Pos.CENTER);
 
-        ScrollPane module = createModule(courseTitle, courseReader);
+        ScrollPane module = createModule(courseTitle);
         content.getChildren().add(module);
 
         VBox footer = new VBox(20);
@@ -124,7 +117,7 @@ public class CourseDetailsModal {
         modalStage.showAndWait();
         }
 
-        private ScrollPane createModule(String title, CourseReader courseReader) {
+        private ScrollPane createModule(String title) {
         VBox module = new VBox(15);
 
         ScrollPane scrollPane = new ScrollPane(module);
@@ -136,6 +129,7 @@ public class CourseDetailsModal {
         module.setPadding(new Insets(20,20,0,0));
         module.getStyleClass().add("modules-container");
 
+        CourseReader courseReader = new CourseReader();
         List<Module> modules = courseReader.courseModule(title);
 
         for (int i = 0; i < modules.size(); i++) {

@@ -15,12 +15,10 @@ import java.net.URL;
 import java.util.*;
 
 import com.UserSession;
-import com.controller.student.loadCourses;
 import com.view.Modo;
 import com.view.elements.Carousel;
 import com.view.elements.LoadCourses;
 import com.view.elements.Menu;
-import com.model.Course.*;
 
 public class PaginaInicialView implements Initializable {
     @FXML
@@ -66,15 +64,14 @@ public class PaginaInicialView implements Initializable {
         toggleInitialize();
 
         loadCarousel();
-        loadCourses();
         loadMenu();
-        if(!UserSession.getInstance().getStarted()){
+        if (!UserSession.getInstance().getStarted()) {
             loadEffect();
         }
+        
+        loadCourses();
 
-        LoadCourses loadCourses = new LoadCourses();
-
-        System.out.println(loadCourses.loadMyCourses();
+        // System.out.println(loadCourses.loadMyCourses(student));
     }
 
     private void loadCourses() {
@@ -82,9 +79,7 @@ public class PaginaInicialView implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
             VBox courseList = loader.load();
             LoadCourses course = loader.getController();
-
-          // List<Course> courseNotVisble =course.loadCourses("todos");
-           
+            course.loadCoursesNotStarted();
             courseContainer.getChildren().add(courseList);
         } catch (IOException e) {
             e.printStackTrace();
@@ -151,10 +146,10 @@ public class PaginaInicialView implements Initializable {
         thumbTransition.setToX(!Modo.getInstance().getModo() ? 12.0 : -12.0);
         thumbTransition.play();
 
-      FillTransition fillTransition = new FillTransition(Duration.millis(200), background);
+        FillTransition fillTransition = new FillTransition(Duration.millis(200), background);
         fillTransition.setFromValue(!Modo.getInstance().getModo() ? Color.web("#FFA500") : Color.web("#4169E1"));
-      fillTransition.setToValue(!Modo.getInstance().getModo() ? Color.web("#4169E1") : Color.web("#FFA500"));
-       fillTransition.play();
+        fillTransition.setToValue(!Modo.getInstance().getModo() ? Color.web("#4169E1") : Color.web("#FFA500"));
+        fillTransition.play();
 
         changeMode();
 

@@ -9,14 +9,14 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 public class CourseSettings {
-    String title;
-    LocalDate dateStart;
-    LocalDate dateEnd;
-    String durationTotal;
-    boolean isDateEnd;
-    boolean isCertificate;
-    boolean isGradeMiniun;
-    Object ComboBoxVisibily;
+   private String title;
+    private LocalDate dateStart;
+    private LocalDate dateEnd;
+    private String durationTotal;
+    private boolean isDateEnd;
+    private boolean isCertificate;
+    private boolean isGradeMiniun;
+    private Object ComboBoxVisibily;
 
     public boolean isDateEnd() {
         return isDateEnd;

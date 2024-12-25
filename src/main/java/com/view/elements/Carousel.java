@@ -3,10 +3,8 @@ package com.view.elements;
 import java.io.InputStream;
 import java.util.*;
 
-import com.model.Course.Course;
-import com.model.Course.CourseSettings;
-import com.model.student.MyCourseStudent;
-import com.model.Course.CourseReader;
+import com.controller.student.LoadCoursesController;
+import com.dto.paginaPrincipalDto;
 import com.view.Modo;
 
 import javafx.animation.*;
@@ -43,15 +41,11 @@ public class Carousel {
     private int currentIndex = 0;
     private Timeline timeline;
 
-    CourseReader reader = new CourseReader();
-    List<Course> courses = reader.readCourses();
-    GridPane courseGrid = new GridPane();
-    private MyCourseStudent myCourseStudent = new MyCourseStudent();
+    LoadCoursesController paginaPrincipalController = new LoadCoursesController();
+    List<paginaPrincipalDto> courses = paginaPrincipalController.loadCourses();
 
     @SuppressWarnings("unused")
     public void loadCarousel() {
-        CourseReader reader = new CourseReader();
-        courses = loadListCourses();
         displayCourses();
         setupCarouselControls();
         startAutoCarousel();
@@ -143,17 +137,6 @@ public class Carousel {
             }
         });
 
-    }
-
-    private List loadListCourses() {
-        List<Course> coursesSelection = new ArrayList<>();
-
-        for (int i = 0; i < courses.size(); i++) {
-            if (!myCourseStudent.searhCourse(courses.get(i).getTitle())) {
-                coursesSelection.add(courses.get(i));
-            }
-        }
-        return coursesSelection;
     }
 
     @SuppressWarnings("unused")
@@ -300,9 +283,7 @@ public class Carousel {
         }
     }
 
-    private VBox createCourseBoxCarousel(Course course) {
-        CourseSettings settings = reader.courseSettings(course.getTitle());
-
+    private VBox createCourseBoxCarousel(paginaPrincipalDto course) {
         VBox courseBox = new VBox();
         courseBox.getStyleClass().add("card");
         VBox.setVgrow(courseBox, Priority.ALWAYS);
@@ -369,7 +350,7 @@ public class Carousel {
         courseInfo.setAlignment(Pos.CENTER_LEFT);
         courseInfo.getChildren().addAll(
                 createInfoLabel("⭐ " + course.getRating()),
-                createInfoLabel(settings.getDurationTotal() + " horas"),
+                createInfoLabel(course.getDurationTotal() + " horas"),
                 createInfoLabel("Nível: " + course.getNivel()));
 
         Label descLabel = createFixedLabel(
@@ -388,10 +369,10 @@ public class Carousel {
                         "-fx-background-radius: 5;");
 
         Label certificateLabel = createFixedLabel(
-                settings.isCertificate() ? "✓ Certificado" : "✗ Sem Certificado",
+                course.isCertificate() ? "✓ Certificado" : "✗ Sem Certificado",
                 "Franklin Gothic Medium",
                 13,
-                settings.isCertificate() ? Color.web("#90EE90") : Color.web("#ffffff60"));
+                course.isCertificate() ? Color.web("#90EE90") : Color.web("#ffffff60"));
 
         statusInfo.getChildren().add(certificateLabel);
 
@@ -435,7 +416,7 @@ public class Carousel {
     }
 
     @SuppressWarnings("unused")
-    private Button createDetailsButton(Course course) {
+    private Button createDetailsButton(paginaPrincipalDto course) {
         Button button = new Button("Ver Detalhes");
         button.getStyleClass().add("outline-button");
         button.setStyle("-fx-border-radius: 20; -fx-background-radius: 20;");
@@ -455,11 +436,11 @@ public class Carousel {
         return button;
     }
 
-    private void modal(Course course) {
+    private void modal(paginaPrincipalDto course) {
         try {
             if (rigthContainer != null && rigthContainer.getScene() != null) {
                 Platform.runLater(() -> {
-                    new CourseDetailsModal(getDefaultWindow(), course);
+                   new CourseDetailsModal(getDefaultWindow(), course);
                 });
             } else {
                 System.out.println("rigthContainer or Scene is null");

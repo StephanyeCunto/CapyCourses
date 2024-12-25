@@ -126,4 +126,20 @@ public class CourseReader {
         }
         return lessons;
     }
+
+    public List<Questionaire> courseQuestionaire(String titleCourseVerific, int moduleNumberVerific){
+        List<Questionaire> questionaires = new ArrayList<>();
+
+        return questionaires;
+    }
+
+    public Course course(String titleVerific){
+        List<Course> courses = readCourses();
+        for(int i=0; i<courses.size(); i++){
+            if(courses.get(i).getTitle().equals(titleVerific)){
+                return courses.get(i);
+            }
+        }
+        return null;
+    }
 }

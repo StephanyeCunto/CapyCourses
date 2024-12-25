@@ -1,7 +1,7 @@
 package com.model.student;
 
 import com.model.Course.Course;
-
+import com.model.Course.CourseReader;
 import lombok.*;
 
 @Getter
@@ -17,16 +17,22 @@ public class MyCourse {
     private int questionaireTotal;
     private int questionaireCompleted;
     private int courseTotal;
-
-    private MyCourse(Course course){
-        this.course = course;
-        this.courseTitle = course.getTitle();
-        this.moduleTotal = 0;
+    private String status;
+    
+    public MyCourse(String title){
+        this.courseTitle = title;
+        CourseReader courseReader = new CourseReader();
+        this.course = courseReader.course(title);
+        this.moduleTotal = courseReader.courseModule(title).size();
+        for(int i=0; i<this.moduleTotal; i++){
+            this.lessonTotal =+ courseReader.courseLessons(title,i).size();
+            this.questionaireTotal =+ courseReader.courseQuestionaire(title,i).size();
+        }
         this.moduleCompleted = 0;
-        this.lessonTotal = 0;
         this.lessonCompleted = 0;
-        this.questionaireTotal = 0;
         this.questionaireCompleted = 0;
-        this.courseTotal = 0;
+
+        this.courseTotal = this.moduleTotal + this.lessonTotal + this.questionaireTotal;
+        this.status = "Started";
     }
 }
