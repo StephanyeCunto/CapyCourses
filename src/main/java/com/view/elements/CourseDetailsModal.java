@@ -16,10 +16,8 @@ import java.util.*;
 import javafx.util.Duration;
 
 import com.dto.paginaPrincipalDto;
-import com.model.Course.Course;
 import com.model.Course.Module;
 import com.model.Course.CourseReader;
-import com.model.Course.CourseSettings;
 import com.view.Modo;
 
 public class CourseDetailsModal {

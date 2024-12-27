@@ -62,8 +62,7 @@ public class PaginaMeusCursosView implements Initializable {
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
 
-//      loadCourses("todos");
-loadCourses();
+        loadCourses("todos");
         loadMenu();
 
         selectionTodos.setOnAction(e -> {
@@ -85,7 +84,7 @@ loadCourses();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
             VBox courseList = loader.load();
             LoadCourses course = loader.getController();
-          //  course.loadCourses(selection);
+            // course.loadCourses(selection);
             courseContainer.getChildren().add(courseList);
             loadClass(selection);
         } catch (IOException e) {
@@ -104,51 +103,57 @@ loadCourses();
             selectionTodos.getStyleClass().add("outline-button-seletion");
             selectionStarted.getStyleClass().add("outline-button-not-seletion");
             selectionCompleted.getStyleClass().add("outline-button-not-seletion");
-
-//            loadCourses("started");
+            loadCourses("todos");
+  
         } else if (selection.equals("started")) {
             selectionStarted.getStyleClass().add("outline-button-seletion");
             selectionTodos.getStyleClass().add("outline-button-not-seletion");
             selectionCompleted.getStyleClass().add("outline-button-not-seletion");
+
+            loadCourses("started");
         } else {
             selectionCompleted.getStyleClass().add("outline-button-seletion");
             selectionTodos.getStyleClass().add("outline-button-not-seletion");
             selectionStarted.getStyleClass().add("outline-button-not-seletion");
+
+            loadCourses("completed");
         }
     }
 
-    /*private void loadCourses(String status) {
+    /*
+     * private void loadCourses(String status) {
+     * try {
+     * FXMLLoader loader = new
+     * FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
+     * VBox courseList = loader.load();
+     * LoadCourses course = loader.getController();
+     * // if(status.equals("started")) {
+     * // course.loadCourses("started");
+     * // } else if(status.equals("completed")) {
+     * // course.loadCourses("completed");
+     * // }else{
+     * // course.loadCourses("todos");
+     * // }
+     * 
+     * // courseContainer.getChildren().add(courseList);
+     * 
+     * } catch (IOException e) {
+     * e.printStackTrace();
+     * }
+     * }
+     */
+
+    private void loadCourses(String status) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
             VBox courseList = loader.load();
             LoadCourses course = loader.getController();
-         //   if(status.equals("started")) {
-       //         course.loadCourses("started");
-          //  } else if(status.equals("completed")) {
-        //        course.loadCourses("completed");
-        //    }else{
-        //        course.loadCourses("todos");
-          //  }
-
-//            courseContainer.getChildren().add(courseList);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    private void loadCourses() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/courses.fxml"));
-            VBox courseList = loader.load();
-            LoadCourses course = loader.getController();
-            course.loadCoursesNotStarted();
+            course.loadCoursesStarted(status);
             courseContainer.getChildren().add(courseList);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     private void loadMenu() {
         try {

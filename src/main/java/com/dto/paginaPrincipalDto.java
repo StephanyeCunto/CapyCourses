@@ -16,6 +16,7 @@ public class paginaPrincipalDto {
     private boolean isDateEnd;
     private boolean isCertificate;
     private String status;
+    private int percentual;
 
     public void loadCourses(String name, String title, String description, String categoria, String nivel, double rating){
         this.name = name;
@@ -26,12 +27,13 @@ public class paginaPrincipalDto {
         this.rating = rating;
     }
 
-    public void loadCoursesSettings(LocalDate dateEnd, String durationTotal, Boolean isDateEnd, boolean isCertificate, String status){
+    public void loadCoursesSettings(LocalDate dateEnd, String durationTotal, Boolean isDateEnd, boolean isCertificate, String status, int percentual){
         this.dateEnd = dateEnd;
         this.durationTotal = durationTotal;
         this.isDateEnd = isDateEnd;
         this.isCertificate = isCertificate;
         this.status = status;
+        this.percentual = percentual;
     }
 
     public boolean isDateEnd() {

@@ -18,6 +18,7 @@ public class MyCourse {
     private int questionaireCompleted;
     private int courseTotal;
     private String status;
+    private int percentual;
     
     public MyCourse(String title){
         this.courseTitle = title;
@@ -33,6 +34,7 @@ public class MyCourse {
         this.questionaireCompleted = 0;
 
         this.courseTotal = this.moduleTotal + this.lessonTotal + this.questionaireTotal;
-        this.status = "Started";
+        this.percentual = courseReader.percentual(this.courseTitle);
+        this.status = courseReader.status(title);
     }
 }

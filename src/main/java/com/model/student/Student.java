@@ -40,10 +40,4 @@ public class Student {
         }
         return titleCourse;
     }
-
-    /*
-     * public void addCourse(MyCourse course){
-     * this.course.add(course);
-     * }
-     */
 }

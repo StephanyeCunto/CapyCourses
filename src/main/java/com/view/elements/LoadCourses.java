@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.dto.paginaPrincipalDto;
 import com.controller.student.LoadCoursesController;
-
+import com.controller.student.LoadMyCourses;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -19,11 +19,12 @@ public class LoadCourses {
     @FXML
     private VBox courseContainer;
 
-  //  LoadMyCourses paginaPrincipalController = new LoadMyCourses();
-   // private List<paginaPrincipalDto> courses = paginaPrincipalController.loadMyCourses();
+    // LoadMyCourses paginaPrincipalController = new LoadMyCourses();
+    // private List<paginaPrincipalDto> courses =
+    // paginaPrincipalController.loadMyCourses();
 
-           LoadCoursesController paginaPrincipalController = new LoadCoursesController();
-        List<paginaPrincipalDto> courses = paginaPrincipalController.loadCourses();
+    LoadCoursesController paginaPrincipalController = new LoadCoursesController();
+    List<paginaPrincipalDto> courses = paginaPrincipalController.loadCourses();
 
     private final GridPane courseGrid = new GridPane();
 
@@ -45,6 +46,43 @@ public class LoadCourses {
         courseContainer.widthProperty().addListener((obs, oldVal, newVal) -> {
             int columns = calculateColumns();
             reorganizeGrid(columns, "notStarted");
+        });
+
+        courseGrid.setAlignment(Pos.CENTER);
+        courseContainer.setAlignment(Pos.CENTER);
+
+        courseContainer.getChildren().add(courseGrid);
+    }
+
+    public void loadCoursesStarted(String status) {
+        setupCourseGrid();
+        LoadMyCourses paginaMeusCursosController = new LoadMyCourses();
+
+        switch (status) {
+            case "todos":
+                courses = paginaMeusCursosController.loadMyCourses();
+                break;
+            case "started":
+                courses = paginaMeusCursosController.loadMyCoursesStarted();
+                break;
+            case "completed":
+                courses = paginaMeusCursosController.loadMyCoursesCompleted();
+                break;
+        }
+
+        int numColumns = calculateColumns();
+
+        int i = 0;
+
+        for (paginaPrincipalDto course : courses) {
+            VBox courseBox = createCourseBox(course, "started");
+            courseGrid.add(courseBox, i % numColumns, i / numColumns);
+            i++;
+        }
+
+        courseContainer.widthProperty().addListener((obs, oldVal, newVal) -> {
+            int columns = calculateColumns();
+            reorganizeGrid(columns, "started");
         });
 
         courseGrid.setAlignment(Pos.CENTER);
@@ -136,7 +174,7 @@ public class LoadCourses {
             HBox tagContainer = new HBox();
             tagContainer.setAlignment(Pos.CENTER_RIGHT);
             tagContainer.setMaxWidth(Double.MAX_VALUE);
-            VBox tag = createTag("started");
+            VBox tag = createTag(course);
             tagContainer.getChildren().add(tag);
             content.getChildren().add(tagContainer);
         }
@@ -166,14 +204,15 @@ public class LoadCourses {
             progressBarCourse.getStylesheets().add(cssFile);
             progressBarCourse.getStyleClass().add("modern-progress-bar");
 
-            progressBarCourse.setProgress(0.5);
+            progressBarCourse.setProgress(course.getPercentual() / 100.0);
             progressBarCourse.setPrefWidth(260);
             progressBarCourse.setPrefHeight(10);
 
             progressBarCourse.setPadding(new javafx.geometry.Insets(0));
             progressBarCourse.setBorder(null);
 
-            Label progressLabel = createStyledLabel("50% Completo", "Franklin Gothic Medium", 14);
+            Label progressLabel = createStyledLabel(course.getPercentual() + "% Completo", "Franklin Gothic Medium",
+                    14);
             progressLabel.getStyleClass().add("progress-label");
 
             content.getChildren().addAll(courseImage, categoryLabel, titleLabel, authorLabel, progressBarCourse,
@@ -185,14 +224,22 @@ public class LoadCourses {
         return courseBox;
     }
 
-    private VBox createTag(String status) {
+    private VBox createTag(paginaPrincipalDto course) {
         VBox tag = new VBox();
         tag.setMaxWidth(Region.USE_PREF_SIZE);
-        Label tagLabel = createStyledLabel("Em Andamento", "Franklin Gothic Medium", 12);
-        tagLabel.getStyleClass().add("tag-label");
-        tag.getChildren().add(tagLabel);
-        tag.getStyleClass().add("tag");
-        return tag;
+        if(course.getPercentual() == 100){
+            Label tagLabel = createStyledLabel("Concluído", "Franklin Gothic Medium", 12);
+            tagLabel.getStyleClass().add("tag-label");
+            tag.getChildren().add(tagLabel);
+            tag.getStyleClass().add("tag");
+            return tag;
+        }else{
+            Label tagLabel = createStyledLabel("Em Andamento", "Franklin Gothic Medium", 12);
+            tagLabel.getStyleClass().add("tag-label");
+            tag.getChildren().add(tagLabel);
+            tag.getStyleClass().add("tag");
+            return tag;
+        }
     }
 
     private ImageView createCourseImage() {
@@ -278,12 +325,21 @@ public class LoadCourses {
     }
 
     private Button createContinueButton(paginaPrincipalDto course) {
-        Button button = new Button("Continuar Curso");
-        button.getStyleClass().add("outline-button");
-        button.setOnMouseClicked(e -> {
-        });
-        button.setPrefHeight(35);
-        return button;
+        if (course.getPercentual() != 100) {
+            Button button = new Button("Continuar Curso");
+            button.getStyleClass().add("outline-button");
+            button.setOnMouseClicked(e -> {
+            });
+            button.setPrefHeight(35);
+            return button;
+        } else {
+            Button button = new Button("Visualizar Curso");
+            button.getStyleClass().add("outline-button");
+            button.setOnMouseClicked(e -> {
+            });
+            button.setPrefHeight(35);
+            return button;
+        }
     }
 
     @SuppressWarnings("unused")

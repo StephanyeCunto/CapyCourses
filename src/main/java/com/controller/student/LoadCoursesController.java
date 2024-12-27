@@ -31,45 +31,10 @@ public class LoadCoursesController {
                 CourseSettings courseSettings = courseReader.courseSettings(coursesTotais.get(i).getTitle());
                 dto.loadCoursesSettings(courseSettings.getDateEnd(),
                         courseSettings.getDurationTotal(), courseSettings.isDateEnd(),
-                        courseSettings.isCertificate(), "notStarted");
+                        courseSettings.isCertificate(), "notStarted", 0);
                 courses.add(dto);
             }
         }
-        /*
-         * for(int i = 0; i < course.size(); i++) {
-         * MyCourse courseT = course.get(i);
-         * Course course = courseT.getCourse();
-         * 
-         * paginaPrincipalDto dto = new paginaPrincipalDto();
-         * dto.loadCourses(course.getName(), course.getTitle(), course.getDescription(),
-         * course.getCategoria(), course.getNivel(), course.getRating());
-         * 
-         * CourseReader courseReader = new CourseReader();
-         * CourseSettings courseSettings =
-         * courseReader.courseSettings(course.getTitle());
-         * dto.loadCoursesSettings(courseSettings.getDateEnd(),
-         * courseSettings.getDurationTotal(), courseSettings.isDateEnd(),
-         * courseSettings.isCertificate(), courseT.getStatus());
-         * courses.add(dto);
-         * }
-         * for(int i = 0; i < course.size(); i++) {
-         * MyCourse courseT = course.get(i);
-         * Course course = courseT.getCourse();
-         * 
-         * paginaPrincipalDto dto = new paginaPrincipalDto();
-         * dto.loadCourses(course.getName(), course.getTitle(), course.getDescription(),
-         * course.getCategoria(), course.getNivel(), course.getRating());
-         * 
-         * CourseReader courseReader = new CourseReader();
-         * CourseSettings courseSettings =
-         * courseReader.courseSettings(course.getTitle());
-         * dto.loadCoursesSettings(courseSettings.getDateEnd(),
-         * courseSettings.getDurationTotal(), courseSettings.isDateEnd(),
-         * courseSettings.isCertificate(), courseT.getStatus());
-         * courses.add(dto);
-         * }
-         */
-
         return courses;
     }
 

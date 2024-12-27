@@ -14,7 +14,7 @@ public class MyCourseStudent {
     public void addCourse(Course course) throws FileNotFoundException, IOException {
         try (BufferedWriter writer = new BufferedWriter(
                 new FileWriter("CapyCourses\\src\\main\\resources\\com\\bd\\bd_myCourse.csv", true))) {
-            writer.write(UserSession.getInstance().getUserEmail() + "," + course.getTitle() + "," + "started");
+            writer.write(UserSession.getInstance().getUserEmail() + "," + course.getTitle() + "," + "started"+","+0);
             writer.newLine();
         }
     }

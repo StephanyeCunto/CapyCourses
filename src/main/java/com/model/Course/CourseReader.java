@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.UserSession;
+
 public class CourseReader {
     public List<Course> readCourses() {
         List<Course> courses = new ArrayList<>();
@@ -85,7 +87,7 @@ public class CourseReader {
                     String title = values[2];
                     String duration = values[3];
                     String description = values[4];
-                    
+
                     List<Lessons> lessons = courseLessons(titleCourse, moduleNumber);
                     Module moduleCourse = new Module(moduleNumber, title, description, duration, lessons);
                     modules.add(moduleCourse);
@@ -106,7 +108,7 @@ public class CourseReader {
                 String[] values = line.split(",");
                 String titleCourse = values[0];
                 int moduleNumber = Integer.parseInt(values[2]);
-                
+
                 if (titleCourseVerific.equals(titleCourse) && moduleNumberVerific == moduleNumber) {
                     String module = values[1];
                     int numberOfLesson = Integer.parseInt(values[3]);
@@ -127,19 +129,61 @@ public class CourseReader {
         return lessons;
     }
 
-    public List<Questionaire> courseQuestionaire(String titleCourseVerific, int moduleNumberVerific){
+    public List<Questionaire> courseQuestionaire(String titleCourseVerific, int moduleNumberVerific) {
         List<Questionaire> questionaires = new ArrayList<>();
 
         return questionaires;
     }
 
-    public Course course(String titleVerific){
+    public Course course(String titleVerific) {
         List<Course> courses = readCourses();
-        for(int i=0; i<courses.size(); i++){
-            if(courses.get(i).getTitle().equals(titleVerific)){
+        for (int i = 0; i < courses.size(); i++) {
+            if (courses.get(i).getTitle().equals(titleVerific)) {
                 return courses.get(i);
             }
         }
         return null;
+    }
+
+    public int percentual(String title) {
+        int percentual = 0;
+        String email = UserSession.getInstance().getUserEmail();
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_myCourse.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+
+                if(email==null || title == null){
+                    return 0;
+                }
+                if (email.equals(values[0]) && title.equals(values[1])) {
+                    percentual = Integer.parseInt(values[3]);
+                    return percentual;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return percentual;
+    }
+
+    public String status(String title) {
+        String status = "";
+        String email = UserSession.getInstance().getUserEmail();
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("CapyCourses\\src\\main\\resources\\com\\bd\\bd_myCourse.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (email.equals(values[0]) && title.equals(values[1])) {
+                    status = values[2];
+                    return status;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return status;
     }
 }

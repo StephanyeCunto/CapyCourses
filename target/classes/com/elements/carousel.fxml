@@ -20,7 +20,8 @@
 <?import javafx.scene.image.ImageView?>
 
 <VBox fx:id="featuredCourseSection" fx:controller="com.view.elements.Carousel"
-    xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    xmlns="http://javafx.com/javafx/23"
+     xmlns:fx="http://javafx.com/fxml/1">
     <HBox spacing="20" alignment="CENTER">
         <Button fx:id="leftButton"
             style="-fx-min-width: 50; -fx-min-height: 50; -fx-max-width: 50; -fx-max-height: 50; -fx-padding: 0; -fx-background-color: transparent; -fx-border-color: transparent;">
