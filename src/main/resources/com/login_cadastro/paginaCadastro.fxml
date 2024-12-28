@@ -60,7 +60,7 @@
             </image>
           </ImageView>
         </StackPane>
-        <Label text="CapyCourse" styleClass="platform-name">
+        <Label text="CapyCourses" styleClass="platform-name">
           <font>
             <Font name="Plus Jakarta Sans Bold" size="32" />
           </font>

@@ -3,13 +3,13 @@ package com.controller.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.UserSession;
 import com.dto.paginaPrincipalDto;
 import com.model.Course.Course;
 import com.model.Course.CourseReader;
 import com.model.Course.CourseSettings;
 import com.model.student.MyCourse;
 import com.model.student.Student;
+import com.singleton.UserSession;
 
 public class LoadCoursesController {
     private List<MyCourse> course;

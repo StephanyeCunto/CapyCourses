@@ -1,7 +1,7 @@
 package com.controller.student;
 
-import com.UserSession;
 import com.model.student.MyCourse;
+import com.singleton.UserSession;
 
 import lombok.*;
 import java.io.*;

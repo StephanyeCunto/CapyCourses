@@ -79,7 +79,7 @@ public class BaseLoginCadastro extends Base {
             Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
             stage.setScene(newScene);
             stage.getIcons().add(icon);
-            stage.setTitle("CapyCourse");
+            stage.setTitle("CapyCourses");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

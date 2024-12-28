@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.UserSession;
+import com.singleton.UserSession;
 
 public class CourseReader {
     public List<Course> readCourses() {

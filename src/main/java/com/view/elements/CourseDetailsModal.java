@@ -295,7 +295,6 @@ public class CourseDetailsModal {
         modalStage.setOnCloseRequest(event -> {
             event.consume();
             if (modalStage.getScene() == null) {
-                System.out.println("achei");
                 return;
             }
             FadeTransition fade = new FadeTransition(Duration.millis(200), modalStage.getScene().getRoot());

@@ -4,8 +4,8 @@ import com.model.Course.CourseReader;
 import com.model.Course.CourseSettings;
 import com.model.student.MyCourse;
 import com.model.student.Student;
+import com.singleton.UserSession;
 import com.model.Course.Course;
-import com.UserSession;
 import com.dto.paginaPrincipalDto;
 
 import java.util.*;

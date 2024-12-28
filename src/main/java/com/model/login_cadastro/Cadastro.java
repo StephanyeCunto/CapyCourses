@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-import com.UserSession;
+import com.singleton.UserSession;
 
 public class Cadastro {
     public Cadastro(String name, String email, String password, LocalDateTime dateRegister, String typeUser) {

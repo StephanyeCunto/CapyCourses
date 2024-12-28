@@ -11,9 +11,9 @@ import javafx.stage.Stage;
 import javafx.geometry.*;
 import javafx.application.Platform;
 
-import com.UserSession;
-
 import java.util.HashMap;
+
+import com.singleton.UserSession;
 
 public class Menu {
     private String currentPage;
@@ -84,7 +84,7 @@ public class Menu {
         buttonMenu.put("/com/estudante/paginaInicial", "Cursos Disponíveis");
         buttonMenu.put("/com/estudante/meusCursos/paginaMeusCursos", "Meus Cursos");
         buttonMenu.put("/com/paginaProgresso", "Progresso");
-        buttonMenu.put("/com/paginaMeusCursosFinalizados", "Certificados");
+        buttonMenu.put("/com/estudante/certificados/paginaCertificados", "Certificados");
         buttonMenu.put("/com/paginaPerfil", "Configurações");
         buttonMenu.put("/com/paginaLogin", "Sair");
     }

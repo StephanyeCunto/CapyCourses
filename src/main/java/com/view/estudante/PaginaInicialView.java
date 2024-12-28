@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import com.UserSession;
+import com.singleton.UserSession;
 import com.view.Modo;
 import com.view.elements.Carousel;
 import com.view.elements.LoadCourses;

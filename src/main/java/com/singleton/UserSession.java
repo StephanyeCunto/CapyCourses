@@ -1,4 +1,4 @@
-package com;
+package com.singleton;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

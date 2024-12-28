@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import com.UserSession;
+import com.singleton.UserSession;
 
 public class CadastroCurso {
 

@@ -7,8 +7,6 @@ import java.io.File;
 
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
 
-import com.UserSession;
-
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +19,7 @@ import javafx.util.Duration;
 import javafx.scene.image.*;
 
 import com.controller.login_cadastro.LoginController;
+import com.singleton.UserSession;
 import com.view.Modo;
 import com.view.login_cadastro.elements.ErrorNotification;
 import com.view.login_cadastro.valid.LoginValid;

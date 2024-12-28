@@ -6,8 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import com.UserSession;
 import com.controller.login_cadastro.CadastroTeacherController;
+import com.singleton.UserSession;
 import com.view.Modo;
 import com.view.login_cadastro.BaseLoginCadastro;
 import com.view.login_cadastro.cadastro.valid.CadastroSecudarioValid;

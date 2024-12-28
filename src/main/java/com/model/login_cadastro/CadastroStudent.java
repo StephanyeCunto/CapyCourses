@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
-import com.UserSession;
+import com.singleton.UserSession;
 
 public class CadastroStudent {
     public CadastroStudent(Date dateOfBirth, String CPF, String telephone, String education, String areaOfInterest) {
