@@ -2,6 +2,7 @@ package com.view.elements;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import com.view.Modo;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -11,17 +12,37 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public class GeradorCertificado {
-    private static final BaseColor BACKGROUND_COLOR = new BaseColor(28, 31, 47); 
-    private static final BaseColor PRIMARY_TEXT = new BaseColor(255, 255, 255); 
-    private static final BaseColor ACCENT_COLOR = new BaseColor(82, 109, 255); 
-    private static final BaseColor SECONDARY_COLOR = new BaseColor(137, 160, 255); 
-    private static final BaseColor GRADIENT_END = new BaseColor(156, 171, 237);
-    private static final BaseColor WATERMARK_COLOR = new BaseColor(255, 255, 255, 20); 
+    private static BaseColor BACKGROUND_COLOR;
+    private static BaseColor PRIMARY_TEXT;
+    private static BaseColor ACCENT_COLOR;
+    private static BaseColor SECONDARY_COLOR;
+    private static BaseColor GRADIENT_END;
+    private static BaseColor WATERMARK_COLOR;
 
-    public static void gerarCertificado(String nomeAluno, String nomeCurso, int cargaHoraria, String cidade, File diretorio) {
+    private static void loadColor() {
+        if (Modo.getInstance().getModo()) {
+            BACKGROUND_COLOR = new BaseColor(28, 31, 47);
+            PRIMARY_TEXT = new BaseColor(255, 255, 255);
+            ACCENT_COLOR = new BaseColor(82, 109, 255);
+            SECONDARY_COLOR = new BaseColor(137, 160, 255);
+            GRADIENT_END = new BaseColor(156, 171, 237);
+            WATERMARK_COLOR = new BaseColor(255, 255, 255, 20);
+        } else {
+            BACKGROUND_COLOR = new BaseColor(255, 255, 255);      // Branco (mantido)
+            PRIMARY_TEXT = new BaseColor(28, 31, 47);            // Cor do texto (mantida)
+            ACCENT_COLOR = new BaseColor(51, 204, 255);          // Azul claro/ciano
+            SECONDARY_COLOR = new BaseColor(0, 153, 204);        // Azul ciano médio
+            GRADIENT_END = new BaseColor(51, 204, 255);          // Mesmo que o ACCENT_COLOR para manter consistência
+            WATERMARK_COLOR = new BaseColor(0, 0, 0, 20);        // Transparência (mantida)
+        }
+    }
+
+    public static void gerarCertificado(String nomeAluno, String nomeCurso, int cargaHoraria, String cidade,
+            File diretorio) {
         Document documento = new Document(PageSize.A4.rotate(), 60, 60, 60, 60);
+        loadColor();
         try {
-            String arquivoPDF = diretorio+ "/" + formatarNomeArquivo(nomeCurso+"_"+nomeAluno);
+            String arquivoPDF = diretorio + "/" + formatarNomeArquivo(nomeCurso + "_" + nomeAluno);
             if (!diretorio.exists()) {
                 diretorio.mkdirs();
             }
@@ -55,7 +76,7 @@ public class GeradorCertificado {
 
     private static void aplicarFundoCapyCourse(PdfWriter writer, Rectangle pageSize) {
         PdfContentByte canvas = writer.getDirectContentUnder();
-        
+
         canvas.setColorFill(BACKGROUND_COLOR);
         canvas.rectangle(0, 0, pageSize.getWidth(), pageSize.getHeight());
         canvas.fill();
@@ -72,11 +93,10 @@ public class GeradorCertificado {
         float borderWidth = 2f;
         for (float i = 0; i < borderWidth; i += 0.5) {
             border.setColorStroke(new BaseColor(
-                ACCENT_COLOR.getRed(),
-                ACCENT_COLOR.getGreen(),
-                ACCENT_COLOR.getBlue(),
-                (int)(255 * (1 - i / borderWidth))
-            ));
+                    ACCENT_COLOR.getRed(),
+                    ACCENT_COLOR.getGreen(),
+                    ACCENT_COLOR.getBlue(),
+                    (int) (255 * (1 - i / borderWidth))));
             border.setLineWidth(0.5f);
             adicionarBordaElegante(border, 30 + i, 30 + i,
                     pageSize.getWidth() - 2 * (30 + i),
@@ -91,9 +111,9 @@ public class GeradorCertificado {
             Image watermark = Image.getInstance("CapyCourses\\src\\main\\resources\\capyCourses.png");
             watermark.scalePercent(60);
             watermark.setAbsolutePosition(
-                (pageSize.getWidth() - watermark.getScaledWidth()) / 2 + 40,
-                (pageSize.getHeight() - watermark.getScaledHeight()) / 2- 60 ); 
-            watermark.setTransparency(new int[]{0x1E, 0x1E});
+                    (pageSize.getWidth() - watermark.getScaledWidth()) / 2 + 40,
+                    (pageSize.getHeight() - watermark.getScaledHeight()) / 2 - 60);
+            watermark.setTransparency(new int[] { 0x1E, 0x1E });
             canvas.addImage(watermark);
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,18 +140,18 @@ public class GeradorCertificado {
             String nomeCurso, int cargaHoraria, String cidade,
             Font fonteTitulo, Font fonteSubtitulo, Font fonteNome,
             Font fonteCurso, Font fonteTexto) throws DocumentException {
-        
+
         adicionarParagrafo(documento, "CERTIFICADO", fonteTitulo, Element.ALIGN_CENTER, 1);
         adicionarParagrafo(documento, "Certificamos que", fonteSubtitulo, Element.ALIGN_CENTER, 1);
         adicionarParagrafo(documento, nomeAluno, fonteNome, Element.ALIGN_CENTER, 1);
         adicionarParagrafo(documento, "concluiu com êxito o curso", fonteTexto, Element.ALIGN_CENTER, 1);
         adicionarParagrafo(documento, nomeCurso, fonteCurso, Element.ALIGN_CENTER, 1);
-        adicionarParagrafo(documento, 
+        adicionarParagrafo(documento,
                 String.format("com carga horária total de %d horas", cargaHoraria),
                 fonteTexto, Element.ALIGN_CENTER, 2);
         LocalDate hoje = LocalDate.now();
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy", new Locale("pt", "BR"));
-        adicionarParagrafo(documento, 
+        adicionarParagrafo(documento,
                 String.format("%s, %s", cidade, hoje.format(formatador)),
                 fonteTexto, Element.ALIGN_CENTER, 1);
     }
@@ -143,7 +163,7 @@ public class GeradorCertificado {
 
         for (int y = 0; y < altura; y++) {
             for (int x = 0; x < largura; x++) {
-                int pixel = original.getRGB( x , y);
+                int pixel = original.getRGB(x, y);
 
                 int alfa = (pixel >> 24) & 0xff;
                 int vermelho = 255 - ((pixel >> 16) & 0xff);
@@ -156,7 +176,8 @@ public class GeradorCertificado {
         return invertida;
     }
 
-    private static void adicionarAssinaturas(Document documento, Font font, Font fonteRodape) throws DocumentException, IOException {
+    private static void adicionarAssinaturas(Document documento, Font font, Font fonteRodape)
+            throws DocumentException, IOException {
         BufferedImage original = ImageIO.read(new File("CapyCourses\\src\\main\\resources\\com\\img\\assinatura.png"));
         BufferedImage processada = inverterImagem(original);
 
@@ -175,17 +196,16 @@ public class GeradorCertificado {
         tempFile.delete();
     }
 
-
-    private static void adicionarElementosSeguranca(Document documento, PdfWriter writer, Font fonteRodape) throws DocumentException {
+    private static void adicionarElementosSeguranca(Document documento, PdfWriter writer, Font fonteRodape)
+            throws DocumentException {
         String codigoVerificacao = gerarCodigoVerificacao();
-        
+
         BarcodeQRCode qrCode = new BarcodeQRCode(
                 "https://capycourse.com/certificados/verificar/" + codigoVerificacao,
                 90, 90, null);
         Image qrCodeImage = qrCode.getImage();
         qrCodeImage.setAbsolutePosition(50, 50);
         documento.add(qrCodeImage);
-
 
         Paragraph verificacao = new Paragraph(
                 "Verificar autenticidade: " + codigoVerificacao,
@@ -220,11 +240,10 @@ public class GeradorCertificado {
     public static void main(String[] args) {
         File diretorio = new File("C:\\Users\\steph\\Downloads\\TESTE");
         gerarCertificado(
-            "João da Silva",
-            "Desenvolvimento Full Stack",
-            120,
-            "São Paulo",
-            diretorio
-        );
+                "João da Silva",
+                "Desenvolvimento Full Stack",
+                120,
+                "São Paulo",
+                diretorio);
     }
 }

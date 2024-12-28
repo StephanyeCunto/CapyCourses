@@ -4,8 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.print.PrinterJob;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -22,7 +20,6 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 import com.singleton.UserSession;
 import com.dto.paginaPrincipalDto;
 import com.view.Modo;
-import java.awt.print.Printable;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 
@@ -163,28 +160,23 @@ public class CertificateViewerModal {
     
         printButton.setOnAction(e -> {
             try {
-                // Configurar impressora e formato da página
                 PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
                 if (printServices.length == 0) {
                     showError("Nenhuma impressora encontrada");
                     return;
                 }
         
-                // Configurar página
                 PageFormat pageFormat = new PageFormat();
                 Paper paper = new Paper();
-                paper.setSize(612, 792); // Tamanho A4 em pontos
+                paper.setSize(612, 792);
                 paper.setImageableArea(0, 0, paper.getWidth(), paper.getHeight());
                 pageFormat.setPaper(paper);
         
-                // Criar o objeto printable do PDF de forma mais simples
                 PDFPrintable printable = new PDFPrintable(document);
         
-                // Configurar o trabalho de impressão
                 java.awt.print.PrinterJob printerJob = java.awt.print.PrinterJob.getPrinterJob();
                 printerJob.setPrintable(printable, pageFormat);
         
-                // Mostrar diálogo de impressão
                 if (printerJob.printDialog()) {
                     try {
                         printerJob.print();

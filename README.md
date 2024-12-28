@@ -51,7 +51,19 @@ Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos onl
 ### Tela Meus Cursos Estudante
 <p align="center">
 <img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaMeusCursosDark.png" alt="Tela Meus Cursos Estudante - Modo Escuro" width="48%">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaMeusCursosLigth.png" alt="Tela Meus Cursos Estudante - Modo Cla" width="48%">
+<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaMeusCursosLigth.png" alt="Tela Meus Cursos Estudante - Modo Claro" width="48%">
+</p>
+
+### Tela Certificados Estudante
+<p align="center">
+<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCertificadosDark.png" alt="Tela Certificados Estudante - Modo Escuro" width="48%">
+<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCertificadosLigth.png" alt="Tela Certificados Estudante - Modo Cla" width="48%">
+</p>
+
+### Tela Certificados Estudante - Certificado
+<p align="center">
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalCertificadoDark.png" alt="Tela Certificados Estudante - Certificado - Modo Escuro" width="48%" />
+  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalCertificadoLigth.png" alt="Tela Certificados Estudante - Certificado - Modo Claro" width="48%" />
 </p>
 ---
 
