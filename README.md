@@ -65,6 +65,7 @@ Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos onl
   <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalCertificadoDark.png" alt="Tela Certificados Estudante - Certificado - Modo Escuro" width="48%" />
   <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalCertificadoLigth.png" alt="Tela Certificados Estudante - Certificado - Modo Claro" width="48%" />
 </p>
+
 ---
 
 ## 🛠️ Tecnologias Utilizadas
