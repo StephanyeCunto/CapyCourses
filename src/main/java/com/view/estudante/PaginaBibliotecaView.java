@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.view.elements.Biblioteca;
 import com.view.Modo;
-import com.view.elements.Menu;
+import com.view.elements.Biblioteca.Biblioteca;
+import com.view.elements.MenuEstudante.Menu;
 
 import javafx.animation.*;
 import javafx.application.Platform;

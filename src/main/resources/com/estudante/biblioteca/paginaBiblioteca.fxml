@@ -37,7 +37,7 @@
           <HBox>
             <HBox fx:id="searchBar" maxWidth="400" maxHeight="20">
               <TextField fx:id="searchField"
-                promptText="🔍 Pesquisar cursos..."
+                promptText="🔍 Pesquisar conteúdo..."
                 styleClass="custom-text-field"
                 HBox.hgrow="ALWAYS" />
             </HBox>

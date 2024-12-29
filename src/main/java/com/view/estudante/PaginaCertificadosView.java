@@ -14,8 +14,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.view.Modo;
-import com.view.elements.LoadCourses;
-import com.view.elements.Menu;
+import com.view.elements.Courses.LoadCourses;
+import com.view.elements.MenuEstudante.Menu;
 
 public class PaginaCertificadosView implements Initializable {
     @FXML

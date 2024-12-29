@@ -16,9 +16,9 @@ import java.util.*;
 
 import com.singleton.UserSession;
 import com.view.Modo;
-import com.view.elements.Carousel;
-import com.view.elements.LoadCourses;
-import com.view.elements.Menu;
+import com.view.elements.Carousel.Carousel;
+import com.view.elements.Courses.LoadCourses;
+import com.view.elements.MenuEstudante.Menu;
 
 public class PaginaInicialView implements Initializable {
     @FXML

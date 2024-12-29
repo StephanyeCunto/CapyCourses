@@ -16,7 +16,13 @@ module com {
 
     opens com.singleton to javafx.fxml;
     opens com.view to javafx.fxml;
-    opens com.view.elements to javafx.fxml;
+    opens com.view.elements.Biblioteca to javafx.fxml;
+    opens com.view.elements.Forum to javafx.fxml;
+    opens com.view.elements.Calendario to javafx.fxml;
+    opens com.view.elements.Carousel to javafx.fxml;
+    opens com.view.elements.Certificado to javafx.fxml;
+    opens com.view.elements.Courses to javafx.fxml;
+    opens com.view.elements.MenuEstudante to javafx.fxml;
     opens com.view.login_cadastro to javafx.fxml;
     opens com.view.login_cadastro.cadastro to javafx.fxml;
     opens com.view.login_cadastro.elements to javafx.fxml;
@@ -30,6 +36,13 @@ module com {
     exports com.view.login_cadastro.elements;
     exports com.view.professor;
     exports com.view.estudante;
+    exports com.view.elements.Biblioteca;
+    exports com.view.elements.Forum;
+    exports com.view.elements.Calendario;
+    exports com.view.elements.Carousel;
+    exports com.view.elements.Certificado;
+    exports com.view.elements.Courses;
+    exports com.view.elements.MenuEstudante;
     exports com.model.login_cadastro to com.fasterxml.jackson.databind;
     exports com.controller.login_cadastro to com.fasterxml.jackson.databind;
 }

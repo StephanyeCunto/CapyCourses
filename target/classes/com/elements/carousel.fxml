@@ -19,7 +19,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 
-<VBox fx:id="featuredCourseSection" fx:controller="com.view.elements.Carousel"
+<VBox fx:id="featuredCourseSection" fx:controller="com.view.elements.Carousel.Carousel"
     xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
     <HBox spacing="20" alignment="CENTER">
         <Button fx:id="leftButton"

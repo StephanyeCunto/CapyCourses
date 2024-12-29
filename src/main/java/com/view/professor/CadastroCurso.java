@@ -9,7 +9,7 @@ import javafx.util.Duration;
 
 import com.controller.professor.CadastroCursoController;
 import com.view.Modo;
-import com.view.elements.Calendario;
+import com.view.elements.Calendario.Calendario;
 import com.view.professor.valid.*;
 import com.view.login_cadastro.elements.ErrorNotification;
 
