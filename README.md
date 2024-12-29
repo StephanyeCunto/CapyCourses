@@ -70,14 +70,13 @@ Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos onl
 <p align="center">
 <img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaBibliotecaDark.png" alt="Tela Biblioteca Estudante - Modo Escuro" width="48%">
 <img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaBibliotecaLigth.png" alt="Tela Biblioteca Estudante - Modo Claro" width="48%">
-</p>
+</p> 
 
-### Tela Certificados Estudante - Visualizar
+### Tela Biblioteca Estudante - Visualizar
 <p align="center">
   <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalBibliotecaDark.png" alt="Tela Biblioteca Estudante - Certificado - Modo Escuro" width="48%" />
   <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalBibliotecaLigth.png" alt="Tela Biblioteca Estudante - Certificado - Modo Claro" width="48%" />
 </p>
-
 ---
 
 ## 🛠️ Tecnologias Utilizadas
