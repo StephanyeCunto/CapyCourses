@@ -60,10 +60,9 @@
           </HBox>
             <HBox spacing="20">
             <Button text="Todos" styleClass="outline-button-seletion" fx:id="selectionTodos" prefWidth="100" prefHeight="30"></Button>
-            <Button text="Favoritos" styleClass="outline-button-not-seletion" fx:id="selectionFavorite" prefWidth="120" prefHeight="30"></Button>
             <Button text="Meus Fóruns" styleClass="outline-button-not-seletion" fx:id="selectionParticipated" prefWidth="140" prefHeight="30"></Button>
           </HBox>
-            <VBox fx:id="ForumContainer" spacing="20">
+            <VBox fx:id="forumContainer" spacing="20">
 
           </VBox>
         </VBox>

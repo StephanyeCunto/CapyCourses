@@ -11,10 +11,6 @@ public class ForumDTO {
     private String title;
     private String description;
     private String category;
-    private LocalDateTime dateTime;
+    private String dateTime;
     private int topics;
-
-    public void setDate(LocalDateTime date) {
-        this.dateTime = date;
-    }
 }

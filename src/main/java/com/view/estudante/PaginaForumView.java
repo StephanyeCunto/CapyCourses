@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.model.student.LoadForum;
 import com.view.Modo;
+import com.view.elements.Forum.LoadForumView;
 import com.view.elements.MenuEstudante.Menu;
 
 import javafx.animation.FillTransition;
@@ -23,17 +25,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.image.*;
 
-public class PaginaForumView  implements Initializable{
-      @FXML
+public class PaginaForumView implements Initializable {
+    @FXML
     private VBox sideMenu;
     @FXML
     private HBox searchBar;
-    @FXML
-    private VBox featuredCourseSection;
-    @FXML
-    private VBox courseContainer;
-    @FXML
-    private VBox carouselCourse;
     @FXML
     private ImageView sunIcon;
     @FXML
@@ -51,11 +47,9 @@ public class PaginaForumView  implements Initializable{
     @FXML
     private GridPane container;
     @FXML
-    private VBox bibliotecaContainer;
+    private VBox forumContainer;
     @FXML
     private Button selectionTodos;
-    @FXML
-    private Button selectionFavorite;
     @FXML
     private Button selectionParticipated;
 
@@ -63,28 +57,48 @@ public class PaginaForumView  implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Platform.runLater(() -> {
-           /*  Biblioteca biblioteca = new Biblioteca();
-            bibliotecaContainer.getChildren().clear();
-            bibliotecaContainer.getChildren().add(biblioteca.loadBiblioteca("todos"));
+            LoadForumView loadForum = new LoadForumView();
+            forumContainer.getChildren().clear();
+            forumContainer.getChildren().add(loadForum.loadForum());
+            /*
+             * Biblioteca biblioteca = new Biblioteca();
+             * bibliotecaContainer.getChildren().clear();
+             * bibliotecaContainer.getChildren().add(biblioteca.loadBiblioteca("todos"));
+             * 
+             * selectionTodos.setOnMouseClicked(e -> {
+             * loadClass("todos");
+             * bibliotecaContainer.getChildren().clear();
+             * bibliotecaContainer.getChildren().add(biblioteca.loadBiblioteca("todos"));
+             * });
+             * 
+             * selectionFavorite.setOnMouseClicked(e -> {
+             * loadClass("favorites");
+             * bibliotecaContainer.getChildren().clear();
+             * bibliotecaContainer.getChildren().add(biblioteca.loadBiblioteca("favorites"))
+             * ;
+             * });
+             * 
+             * selectionParticipated.setOnMouseClicked(e -> {
+             * loadClass("participated");
+             * bibliotecaContainer.getChildren().clear();
+             * bibliotecaContainer.getChildren().add(biblioteca.loadBiblioteca(
+             * "participated"));
+             * });
+             */
 
-            selectionTodos.setOnMouseClicked(e -> {
-                loadClass("todos");
-                bibliotecaContainer.getChildren().clear();
-                bibliotecaContainer.getChildren().add(biblioteca.loadBiblioteca("todos"));
-            });
+             selectionTodos.setOnMouseClicked(e -> {
+                 loadClass("todos");
+               /*   LoadForumView loadForumTodos = new LoadForumView();
+                 forumContainer.getChildren().clear();
+                 forumContainer.getChildren().add(loadForumTodos.loadForum());*/
+             });
 
-            selectionFavorite.setOnMouseClicked(e -> {
-                loadClass("favorites");
-                bibliotecaContainer.getChildren().clear();
-                bibliotecaContainer.getChildren().add(biblioteca.loadBiblioteca("favorites"));
-            });
-            
-            selectionParticipated.setOnMouseClicked(e -> {
-                loadClass("participated");
-                bibliotecaContainer.getChildren().clear();
-                bibliotecaContainer.getChildren().add(biblioteca.loadBiblioteca("participated"));
-            });
-            */
+             selectionParticipated.setOnMouseClicked(e -> {
+                 loadClass("participated");
+              /*    LoadForumView loadForumParticipated = new LoadForumView();
+                 forumContainer.getChildren().clear();
+                 forumContainer.getChildren().add(loadForumParticipated.loadForum());*/
+             });
         });
 
         changeMode();
@@ -162,24 +176,19 @@ public class PaginaForumView  implements Initializable{
         }
     }
 
-    
     private void loadClass(String selection) {
         selectionTodos.getStyleClass().removeAll("outline-button-seletion", "outline-button-not-seletion");
-        selectionFavorite.getStyleClass().removeAll("outline-button-seletion", "outline-button-not-seletion");
         selectionParticipated.getStyleClass().removeAll("outline-button-seletion", "outline-button-not-seletion");
 
         if (selection.equals("todos")) {
             selectionTodos.getStyleClass().add("outline-button-seletion");
-            selectionFavorite.getStyleClass().add("outline-button-not-seletion");
             selectionParticipated.getStyleClass().add("outline-button-not-seletion");
-       
-        } else if(selection.equals("favorites")) {
-            selectionFavorite.getStyleClass().add("outline-button-seletion");
+
+        } else if (selection.equals("favorites")) {
             selectionParticipated.getStyleClass().add("outline-button-not-seletion");
             selectionTodos.getStyleClass().add("outline-button-not-seletion");
-        }else{
+        } else {
             selectionParticipated.getStyleClass().add("outline-button-seletion");
-            selectionFavorite.getStyleClass().add("outline-button-not-seletion");
             selectionTodos.getStyleClass().add("outline-button-not-seletion");
         }
     }

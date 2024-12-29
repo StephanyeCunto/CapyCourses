@@ -399,3 +399,43 @@
     -fx-font-family: "Segoe UI Bold";
     -fx-opacity: 0.9;
 }
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
+}
+
+.category-tag {
+    -fx-background-color: #f0f4f8;
+    -fx-background-radius: 4;
+    -fx-padding: 4 12;
+    -fx-text-fill: #2d5c88;
+}
+
+.title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1f36;
+}
+
+.author {
+    -fx-text-fill: #4a5568;
+}
+
+.author-role {
+    -fx-text-fill: #718096;
+}
+
+.description {
+    -fx-text-fill: #4a5568;
+    -fx-wrap-text: true;
+}
+
+.stats-label {
+    -fx-text-fill: #718096;
+    -fx-opacity: 0.9;
+}
+
+.date-label {
+    -fx-text-fill: #a0aec0;
+}
