@@ -3,10 +3,10 @@ package com.controller.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dto.paginaPrincipalDto;
-import com.model.Course.Course;
-import com.model.Course.CourseReader;
-import com.model.Course.CourseSettings;
+import com.Course.Course;
+import com.Course.CourseReader;
+import com.Course.CourseSettings;
+import com.dto.PaginaPrincipalDto;
 import com.model.student.MyCourse;
 import com.model.student.Student;
 import com.singleton.UserSession;
@@ -16,14 +16,14 @@ public class LoadCoursesController {
 
     CourseReader reader = new CourseReader();
     private List<Course> coursesTotais = reader.readCourses();
-    private List<paginaPrincipalDto> courses = new ArrayList<>();
+    private List<PaginaPrincipalDto> courses = new ArrayList<>();
     
-    public List<paginaPrincipalDto> loadCourses() {
+    public List<PaginaPrincipalDto> loadCourses() {
         Student student = new Student(UserSession.getInstance().getUserEmail());
         course = student.getCourse();
         for (int i = 0; i < coursesTotais.size(); i++) {
             if (checkCourses(coursesTotais.get(i))) {
-                paginaPrincipalDto dto = new paginaPrincipalDto();
+                PaginaPrincipalDto dto = new PaginaPrincipalDto();
                 dto.loadCourses(coursesTotais.get(i).getName(), coursesTotais.get(i).getTitle(), coursesTotais.get(i).getDescription(),
                         coursesTotais.get(i).getCategoria(), coursesTotais.get(i).getNivel(), coursesTotais.get(i).getRating());
 

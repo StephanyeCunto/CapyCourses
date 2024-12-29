@@ -1,4 +1,4 @@
-package com.model.Course;
+package com.Course;
 
 public class Questionaire {
     

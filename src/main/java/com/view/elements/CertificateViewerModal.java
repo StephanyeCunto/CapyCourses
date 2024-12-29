@@ -18,7 +18,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import com.singleton.UserSession;
-import com.dto.paginaPrincipalDto;
+import com.dto.PaginaPrincipalDto;
 import com.view.Modo;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
@@ -46,7 +46,7 @@ public class CertificateViewerModal {
         this.HEIGHT = HEIGHT;
     }
 
-    public CertificateViewerModal(Window owner, paginaPrincipalDto course, File selectedDirectory) {
+    public CertificateViewerModal(Window owner, PaginaPrincipalDto course, File selectedDirectory) {
         updateDimensions(owner.getWidth(), owner.getHeight());
         modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
@@ -56,7 +56,7 @@ public class CertificateViewerModal {
         setupCloseAnimation();
     }
 
-    private void loadCertificate(paginaPrincipalDto course, File selectedDirectory) {
+    private void loadCertificate(PaginaPrincipalDto course, File selectedDirectory) {
         String fileName = selectedDirectory.getAbsolutePath() + "\\" +
                 course.getTitle().replace(" ", "_") + "_" +
                 UserSession.getInstance().getUserName().replace(" ", "_") +
@@ -77,7 +77,7 @@ public class CertificateViewerModal {
         }
     }
 
-    private void showCertificate(paginaPrincipalDto course) {
+    private void showCertificate(PaginaPrincipalDto course) {
         StackPane backdrop = createBackdrop();
         VBox modalContainer = new VBox(20);
         modalContainer.setPadding(new Insets(30));
@@ -123,7 +123,7 @@ public class CertificateViewerModal {
         modalStage.setOnCloseRequest(e -> closeDocument());
     }
 
-    private VBox createHeader(paginaPrincipalDto course) {
+    private VBox createHeader(PaginaPrincipalDto course) {
         VBox content = new VBox(15);
         content.setPadding(new Insets(20, 20, 0, 20));
 

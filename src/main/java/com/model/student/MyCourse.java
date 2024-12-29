@@ -1,7 +1,8 @@
 package com.model.student;
 
-import com.model.Course.Course;
-import com.model.Course.CourseReader;
+import com.Course.Course;
+import com.Course.CourseReader;
+
 import lombok.*;
 
 @Getter

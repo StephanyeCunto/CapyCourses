@@ -85,8 +85,9 @@ public class Menu {
         buttonMenu.put("/com/estudante/meusCursos/paginaMeusCursos", "Meus Cursos");
         buttonMenu.put("/com/paginaProgresso", "Progresso");
         buttonMenu.put("/com/estudante/certificados/paginaCertificados", "Certificados");
+        buttonMenu.put("/com/estudante/biblioteca/paginaBiblioteca", "Biblioteca");
         buttonMenu.put("/com/paginaPerfil", "Configurações");
-        buttonMenu.put("/com/paginaLogin", "Sair");
+        buttonMenu.put("/com/login_cadastro/paginaLogin", "Sair");
     }
 
     private VBox perfilMenu() {

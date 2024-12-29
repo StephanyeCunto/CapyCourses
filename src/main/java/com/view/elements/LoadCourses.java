@@ -1,36 +1,22 @@
 package com.view.elements;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.rendering.PDFRenderer;
-
-import com.dto.paginaPrincipalDto;
-import com.itextpdf.text.Image;
+import com.dto.PaginaPrincipalDto;
 import com.singleton.UserSession;
 import com.controller.student.LoadCoursesController;
 import com.controller.student.LoadMyCourses;
-import com.view.elements.GeradorCertificado;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.scene.web.*;
 
 public class LoadCourses {
     @FXML
@@ -41,7 +27,7 @@ public class LoadCourses {
     // paginaPrincipalController.loadMyCourses();
 
     LoadCoursesController paginaPrincipalController = new LoadCoursesController();
-    List<paginaPrincipalDto> courses = paginaPrincipalController.loadCourses();
+    List<PaginaPrincipalDto> courses = paginaPrincipalController.loadCourses();
 
     private final GridPane courseGrid = new GridPane();
 
@@ -54,7 +40,7 @@ public class LoadCourses {
         // courses = loadListCourses("notStarted");
 
         int i = 0;
-        for (paginaPrincipalDto course : courses) {
+        for (PaginaPrincipalDto course : courses) {
             VBox courseBox = createCourseBox(course, "notStarted");
             courseGrid.add(courseBox, i % numColumns, i / numColumns);
             i++;
@@ -94,7 +80,7 @@ public class LoadCourses {
 
         int i = 0;
 
-        for (paginaPrincipalDto course : courses) {
+        for (PaginaPrincipalDto course : courses) {
             VBox courseBox = createCourseBox(course, "started");
             courseGrid.add(courseBox, i % numColumns, i / numColumns);
             i++;
@@ -119,7 +105,7 @@ public class LoadCourses {
         // courses = loadListCourses(status);
 
         int i = 0;
-        for (paginaPrincipalDto course : courses) {
+        for (PaginaPrincipalDto course : courses) {
             VBox courseBox = createCourseBox(course, status);
             courseGrid.add(courseBox, i % numColumns, i / numColumns);
             i++;
@@ -173,14 +159,14 @@ public class LoadCourses {
     private void reorganizeGrid(int numColumns, String status) {
         courseGrid.getChildren().clear();
         int i = 0;
-        for (paginaPrincipalDto course : courses) {
+        for (PaginaPrincipalDto course : courses) {
             VBox courseBox = createCourseBox(course, status);
             courseGrid.add(courseBox, i % numColumns, i / numColumns);
             i++;
         }
     }
 
-    private VBox createCourseBox(paginaPrincipalDto course, String status) {
+    private VBox createCourseBox(PaginaPrincipalDto course, String status) {
         VBox courseBox = new VBox();
         courseBox.getStyleClass().add("card");
         courseBox.setPrefWidth(500);
@@ -245,7 +231,7 @@ public class LoadCourses {
         return courseBox;
     }
 
-    private VBox createTag(paginaPrincipalDto course) {
+    private VBox createTag(PaginaPrincipalDto course) {
         VBox tag = new VBox();
         tag.setMaxWidth(Region.USE_PREF_SIZE);
         if (course.getPercentual() == 100) {
@@ -276,7 +262,7 @@ public class LoadCourses {
         return courseImage;
     }
 
-    private HBox createCourseInfo(paginaPrincipalDto course) {
+    private HBox createCourseInfo(PaginaPrincipalDto course) {
         HBox courseInfo = new HBox(15);
         courseInfo.setAlignment(Pos.CENTER_LEFT);
         courseInfo.getChildren().addAll(
@@ -303,7 +289,7 @@ public class LoadCourses {
         return descLabel;
     }
 
-    private HBox createStatusInfo(paginaPrincipalDto course) {
+    private HBox createStatusInfo(PaginaPrincipalDto course) {
         HBox statusInfo = new HBox(15);
         statusInfo.setAlignment(Pos.CENTER_LEFT);
 
@@ -321,7 +307,7 @@ public class LoadCourses {
         return statusInfo;
     }
 
-    private HBox createButtonContainer(paginaPrincipalDto course, String status) {
+    private HBox createButtonContainer(PaginaPrincipalDto course, String status) {
         HBox buttonContainer = new HBox(15);
         buttonContainer.setAlignment(Pos.CENTER_LEFT);
         buttonContainer.setPadding(new javafx.geometry.Insets(10, 0, 0, 0));
@@ -342,7 +328,7 @@ public class LoadCourses {
         return buttonContainer;
     }
 
-    private Button createCertificadoButton(paginaPrincipalDto course) {
+    private Button createCertificadoButton(PaginaPrincipalDto course) {
         Button button = new Button("Gerar Certificado");
         button.getStyleClass().add("simple-button");
         button.setOnMouseClicked(e -> {
@@ -360,101 +346,20 @@ public class LoadCourses {
         });
         button.setPrefHeight(35);
         return button;
-        }
-
-        private void loadCertificates(File selectedDirectory, paginaPrincipalDto course) {
-/* 
-        String path = selectedDirectory.getAbsolutePath() + "\\" + 
-                     course.getTitle().replace(" ", "_") + "_" +
-                     UserSession.getInstance().getUserName().replace(" ", "_") + 
-                     "_certificado.pdf";
-        
-        try {
-            File certificadoPdf = new File(path.toLowerCase());
-            
-            
-            PDDocument document = PDDocument.load(certificadoPdf);
-            PDFRenderer pdfRenderer = new PDFRenderer(document);
-            
-            Dialog<Void> dialog = new Dialog<>();
-            dialog.setTitle("Visualizador de Certificado");
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            
-            // Create the header
-            Label headerLabel = new Label("Certificado do Curso");
-            headerLabel.setFont(Font.font("System", FontWeight.BOLD, 20));
-            headerLabel.setTextFill(Color.WHITE);
-            
-            Label courseLabel = new Label(course.getTitle());
-            courseLabel.setFont(Font.font("System", 14));
-            courseLabel.setTextFill(Color.web("#8B8B8B"));
-            
-            VBox header = new VBox(5, headerLabel, courseLabel);
-            header.setPadding(new Insets(20));
-            
-            // Create the certificate view
-            BufferedImage bImage = pdfRenderer.renderImageWithDPI(0, 100);
-            WritableImage image = SwingFXUtils.toFXImage(bImage, null);
-            
-            ImageView imageView = new ImageView(image);
-            imageView.setPreserveRatio(true);
-            
-            ScrollPane scrollPane = new ScrollPane(imageView);
-            scrollPane.setStyle("-fx-background: #1B1B1B; -fx-background-color: #1B1B1B;");
-            scrollPane.setFitToWidth(true);
-            scrollPane.setFitToHeight(true);
-            
-            // Create close button
-            Button closeButton = new Button("×");
-            closeButton.setStyle("-fx-background-color: #FF4B6E; -fx-text-fill: white; " +
-                               "-fx-font-size: 16px; -fx-min-width: 30px; -fx-min-height: 30px; " +
-                               "-fx-background-radius: 15px;");
-            closeButton.setOnAction(e -> dialog.close());
-            
-            // Layout
-            BorderPane layout = new BorderPane();
-            layout.setTop(header);
-            layout.setCenter(scrollPane);
-            layout.setRight(closeButton);
-            BorderPane.setMargin(closeButton, new Insets(10));
-            layout.setStyle("-fx-background-color: #1B1B1B;");
-            
-            // Calculate dimensions
-            double aspectRatio = bImage.getWidth() / bImage.getHeight();
-            double dialogWidth = 850;
-            double dialogHeight = dialogWidth / aspectRatio + 100; // Extra space for header
-            
-            dialog.getDialogPane().setContent(layout);
-            dialog.getDialogPane().setPrefSize(dialogWidth, dialogHeight);
-            dialog.getDialogPane().setStyle("-fx-background-color: #1B1B1B;");
-            
-            // Bind imageView size
-            imageView.fitWidthProperty().bind(scrollPane.widthProperty());
-            imageView.fitHeightProperty().bind(scrollPane.heightProperty());
-            
-            // Cleanup on close
-            dialog.setOnCloseRequest(e -> {
-                try {
-                    document.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            });
-            
-            dialog.show();
-            
-        } catch (IOException e) {
-        }*/
-        CertificateViewerModal certificateViewer = new CertificateViewerModal(getDefaultWindow(), course, selectedDirectory);
     }
 
-        private Label createInfoLabel(String text) {
+    private void loadCertificates(File selectedDirectory, PaginaPrincipalDto course) {
+        CertificateViewerModal certificateViewer = new CertificateViewerModal(getDefaultWindow(), course,
+                selectedDirectory);
+    }
+
+    private Label createInfoLabel(String text) {
         Label label = createStyledLabel(text, "Franklin Gothic Medium", 14);
         label.getStyleClass().add("info-label");
         return label;
     }
 
-    private Button createContinueButton(paginaPrincipalDto course, String status) {
+    private Button createContinueButton(PaginaPrincipalDto course, String status) {
         if (course.getPercentual() != 100) {
             Button button = new Button("Continuar Curso");
             button.getStyleClass().add("outline-button");
@@ -473,7 +378,7 @@ public class LoadCourses {
     }
 
     @SuppressWarnings("unused")
-    private Button createDetailsButton(paginaPrincipalDto course) {
+    private Button createDetailsButton(PaginaPrincipalDto course) {
         Button button = new Button("Ver Detalhes");
 
         button.getStyleClass().add("outline-button");
@@ -501,7 +406,7 @@ public class LoadCourses {
         return label;
     }
 
-    private Button createStartButton(paginaPrincipalDto course) {
+    private Button createStartButton(PaginaPrincipalDto course) {
         Button button = new Button("Começar Curso");
         button.getStyleClass().add("simple-button");
         button.setOnMouseClicked(e -> {

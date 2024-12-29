@@ -28,12 +28,12 @@ public class GeradorCertificado {
             GRADIENT_END = new BaseColor(156, 171, 237);
             WATERMARK_COLOR = new BaseColor(255, 255, 255, 20);
         } else {
-            BACKGROUND_COLOR = new BaseColor(255, 255, 255);      // Branco (mantido)
-            PRIMARY_TEXT = new BaseColor(28, 31, 47);            // Cor do texto (mantida)
-            ACCENT_COLOR = new BaseColor(51, 204, 255);          // Azul claro/ciano
-            SECONDARY_COLOR = new BaseColor(0, 153, 204);        // Azul ciano médio
-            GRADIENT_END = new BaseColor(51, 204, 255);          // Mesmo que o ACCENT_COLOR para manter consistência
-            WATERMARK_COLOR = new BaseColor(0, 0, 0, 20);        // Transparência (mantida)
+            BACKGROUND_COLOR = new BaseColor(255, 255, 255);
+            PRIMARY_TEXT = new BaseColor(28, 31, 47);
+            ACCENT_COLOR = new BaseColor(51, 204, 255);
+            SECONDARY_COLOR = new BaseColor(0, 153, 204);
+            GRADIENT_END = new BaseColor(51, 204, 255);
+            WATERMARK_COLOR = new BaseColor(0, 0, 0, 20);
         }
     }
 
@@ -178,22 +178,34 @@ public class GeradorCertificado {
 
     private static void adicionarAssinaturas(Document documento, Font font, Font fonteRodape)
             throws DocumentException, IOException {
-        BufferedImage original = ImageIO.read(new File("CapyCourses\\src\\main\\resources\\com\\img\\assinatura.png"));
-        BufferedImage processada = inverterImagem(original);
+        if ((Modo.getInstance().getModo())) {
+            BufferedImage original = ImageIO
+                    .read(new File("CapyCourses\\src\\main\\resources\\com\\img\\assinatura.png"));
+            BufferedImage processada = inverterImagem(original);
 
-        File tempFile = new File("assinatura_invertida.png");
-        ImageIO.write(processada, "png", tempFile);
+            File tempFile = new File("assinatura_invertida.png");
+            ImageIO.write(processada, "png", tempFile);
 
-        Image assinatura = Image.getInstance(tempFile.getAbsolutePath());
-        assinatura.scaleToFit(100, 50);
-        assinatura.setAlignment(Element.ALIGN_CENTER);
-        documento.add(assinatura);
+            Image assinatura = Image.getInstance(tempFile.getAbsolutePath());
+            assinatura.scaleToFit(100, 50);
+            assinatura.setAlignment(Element.ALIGN_CENTER);
+            documento.add(assinatura);
+            Paragraph nomeAssinatura = new Paragraph("Diretor CapyCourse", fonteRodape);
+            nomeAssinatura.setAlignment(Element.ALIGN_CENTER);
+            documento.add(nomeAssinatura);
+    
+            tempFile.delete();
+        } else {
+            Image assinatura = Image.getInstance("CapyCourses\\src\\main\\resources\\com\\img\\assinatura.png");
+            assinatura.scaleToFit(100, 50);
+            assinatura.setAlignment(Element.ALIGN_CENTER);
+            documento.add(assinatura);
+            Paragraph nomeAssinatura = new Paragraph("Diretor CapyCourse", fonteRodape);
+            nomeAssinatura.setAlignment(Element.ALIGN_CENTER);
+            documento.add(nomeAssinatura);
+    
+        }
 
-        Paragraph nomeAssinatura = new Paragraph("Diretor CapyCourse", fonteRodape);
-        nomeAssinatura.setAlignment(Element.ALIGN_CENTER);
-        documento.add(nomeAssinatura);
-
-        tempFile.delete();
     }
 
     private static void adicionarElementosSeguranca(Document documento, PdfWriter writer, Font fonteRodape)

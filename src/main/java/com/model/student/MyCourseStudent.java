@@ -1,6 +1,6 @@
 package com.model.student;
 
-import com.model.Course.Course;
+import com.Course.Course;
 import com.singleton.UserSession;
 
 import lombok.*;

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import lombok.*;
 
 @Getter
-public class paginaPrincipalDto {
+public class PaginaPrincipalDto {
     private String name;
     private String title;
     private String description;
