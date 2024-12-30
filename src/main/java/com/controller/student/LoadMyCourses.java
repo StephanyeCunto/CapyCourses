@@ -6,22 +6,22 @@ import com.singleton.UserSession;
 import com.Course.Course;
 import com.Course.CourseReader;
 import com.Course.CourseSettings;
-import com.dto.PaginaPrincipalDto;
+import com.dto.PaginaPrincipalDTO;
 
 import java.util.*;
 
 public class LoadMyCourses {
     private List<MyCourse> course;
-    private List<PaginaPrincipalDto> courses = new ArrayList<>();
+    private List<PaginaPrincipalDTO> courses = new ArrayList<>();
 
-    public List<PaginaPrincipalDto> loadMyCourses() {
+    public List<PaginaPrincipalDTO> loadMyCourses() {
         Student student = new Student(UserSession.getInstance().getUserEmail());
         course = student.getCourse();
         for (int i = 0; i < course.size(); i++) {
             MyCourse courseT = course.get(i);
             Course course = courseT.getCourse();
 
-            PaginaPrincipalDto dto = new PaginaPrincipalDto();
+            PaginaPrincipalDTO dto = new PaginaPrincipalDTO();
             dto.loadCourses(course.getName(), course.getTitle(), course.getDescription(), course.getCategoria(),
                     course.getNivel(), course.getRating());
 
@@ -34,14 +34,14 @@ public class LoadMyCourses {
         return courses;
     }
 
-    public List<PaginaPrincipalDto> loadMyCoursesStarted() {
+    public List<PaginaPrincipalDTO> loadMyCoursesStarted() {
         Student student = new Student(UserSession.getInstance().getUserEmail());
         course = student.getCourse();
         for (int i = 0; i < course.size(); i++) {
             MyCourse courseT = course.get(i);
             Course course = courseT.getCourse();
             if (courseT.getStatus().equals("started")) {
-                PaginaPrincipalDto dto = new PaginaPrincipalDto();
+                PaginaPrincipalDTO dto = new PaginaPrincipalDTO();
                 dto.loadCourses(course.getName(), course.getTitle(), course.getDescription(), course.getCategoria(),
                         course.getNivel(), course.getRating());
 
@@ -55,7 +55,7 @@ public class LoadMyCourses {
         return courses;
     }
 
-    public List<PaginaPrincipalDto> loadMyCoursesCompleted() {
+    public List<PaginaPrincipalDTO> loadMyCoursesCompleted() {
         Student student = new Student(UserSession.getInstance().getUserEmail());
         course = student.getCourse();
         for (int i = 0; i < course.size(); i++) {
@@ -63,7 +63,7 @@ public class LoadMyCourses {
             Course course = courseT.getCourse();
 
             if (courseT.getStatus().equals("completed")) {
-                PaginaPrincipalDto dto = new PaginaPrincipalDto();
+                PaginaPrincipalDTO dto = new PaginaPrincipalDTO();
                 dto.loadCourses(course.getName(), course.getTitle(), course.getDescription(), course.getCategoria(),
                         course.getNivel(), course.getRating());
 

@@ -17,7 +17,7 @@ import javafx.util.Duration;
 
 import com.Course.CourseReader;
 import com.Course.Module;
-import com.dto.PaginaPrincipalDto;
+import com.dto.PaginaPrincipalDTO;
 import com.view.Modo;
 
 public class CourseDetailsModal {
@@ -30,7 +30,7 @@ public class CourseDetailsModal {
         this.HEIGHT = HEIGHT;
     }
 
-    public CourseDetailsModal(Window owner, PaginaPrincipalDto course) {
+    public CourseDetailsModal(Window owner, PaginaPrincipalDTO course) {
         updateDimensions(owner.getWidth(), owner.getHeight());
         modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
@@ -40,7 +40,7 @@ public class CourseDetailsModal {
         setupCloseAnimation();
     }
 
-    private void loadValues(PaginaPrincipalDto course) {
+    private void loadValues(PaginaPrincipalDTO course) {
 
         showCourseDetails(
                 course.getTitle(),

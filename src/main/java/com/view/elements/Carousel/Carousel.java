@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.*;
 
 import com.controller.student.LoadCoursesController;
-import com.dto.PaginaPrincipalDto;
+import com.dto.PaginaPrincipalDTO;
 import com.view.Modo;
 import com.view.elements.Courses.CourseDetailsModal;
 
@@ -43,7 +43,7 @@ public class Carousel {
     private Timeline timeline;
 
     LoadCoursesController paginaPrincipalController = new LoadCoursesController();
-    List<PaginaPrincipalDto> courses = paginaPrincipalController.loadCourses();
+    List<PaginaPrincipalDTO> courses = paginaPrincipalController.loadCourses();
 
     @SuppressWarnings("unused")
     public void loadCarousel() {
@@ -284,7 +284,7 @@ public class Carousel {
         }
     }
 
-    private VBox createCourseBoxCarousel(PaginaPrincipalDto course) {
+    private VBox createCourseBoxCarousel(PaginaPrincipalDTO course) {
         VBox courseBox = new VBox();
         courseBox.getStyleClass().add("card");
         VBox.setVgrow(courseBox, Priority.ALWAYS);
@@ -417,7 +417,7 @@ public class Carousel {
     }
 
     @SuppressWarnings("unused")
-    private Button createDetailsButton(PaginaPrincipalDto course) {
+    private Button createDetailsButton(PaginaPrincipalDTO course) {
         Button button = new Button("Ver Detalhes");
         button.getStyleClass().add("outline-button");
         button.setStyle("-fx-border-radius: 20; -fx-background-radius: 20;");
@@ -437,7 +437,7 @@ public class Carousel {
         return button;
     }
 
-    private void modal(PaginaPrincipalDto course) {
+    private void modal(PaginaPrincipalDTO course) {
         try {
             if (rigthContainer != null && rigthContainer.getScene() != null) {
                 Platform.runLater(() -> {

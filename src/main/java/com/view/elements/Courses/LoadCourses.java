@@ -3,7 +3,7 @@ package com.view.elements.Courses;
 import java.io.File;
 import java.util.List;
 
-import com.dto.PaginaPrincipalDto;
+import com.dto.PaginaPrincipalDTO;
 import com.singleton.UserSession;
 import com.view.elements.Certificado.CertificateViewerModal;
 import com.view.elements.Certificado.GeradorCertificado;
@@ -25,11 +25,11 @@ public class LoadCourses {
     private VBox courseContainer;
 
     // LoadMyCourses paginaPrincipalController = new LoadMyCourses();
-    // private List<paginaPrincipalDto> courses =
+    // private List<PaginaPrincipalDTO> courses =
     // paginaPrincipalController.loadMyCourses();
 
     LoadCoursesController paginaPrincipalController = new LoadCoursesController();
-    List<PaginaPrincipalDto> courses = paginaPrincipalController.loadCourses();
+    List<PaginaPrincipalDTO> courses = paginaPrincipalController.loadCourses();
 
     private final GridPane courseGrid = new GridPane();
 
@@ -42,7 +42,7 @@ public class LoadCourses {
         // courses = loadListCourses("notStarted");
 
         int i = 0;
-        for (PaginaPrincipalDto course : courses) {
+        for (PaginaPrincipalDTO course : courses) {
             VBox courseBox = createCourseBox(course, "notStarted");
             courseGrid.add(courseBox, i % numColumns, i / numColumns);
             i++;
@@ -82,7 +82,7 @@ public class LoadCourses {
 
         int i = 0;
 
-        for (PaginaPrincipalDto course : courses) {
+        for (PaginaPrincipalDTO course : courses) {
             VBox courseBox = createCourseBox(course, "started");
             courseGrid.add(courseBox, i % numColumns, i / numColumns);
             i++;
@@ -107,7 +107,7 @@ public class LoadCourses {
         // courses = loadListCourses(status);
 
         int i = 0;
-        for (PaginaPrincipalDto course : courses) {
+        for (PaginaPrincipalDTO course : courses) {
             VBox courseBox = createCourseBox(course, status);
             courseGrid.add(courseBox, i % numColumns, i / numColumns);
             i++;
@@ -161,14 +161,14 @@ public class LoadCourses {
     private void reorganizeGrid(int numColumns, String status) {
         courseGrid.getChildren().clear();
         int i = 0;
-        for (PaginaPrincipalDto course : courses) {
+        for (PaginaPrincipalDTO course : courses) {
             VBox courseBox = createCourseBox(course, status);
             courseGrid.add(courseBox, i % numColumns, i / numColumns);
             i++;
         }
     }
 
-    private VBox createCourseBox(PaginaPrincipalDto course, String status) {
+    private VBox createCourseBox(PaginaPrincipalDTO course, String status) {
         VBox courseBox = new VBox();
         courseBox.getStyleClass().add("card");
         courseBox.setPrefWidth(500);
@@ -233,7 +233,7 @@ public class LoadCourses {
         return courseBox;
     }
 
-    private VBox createTag(PaginaPrincipalDto course) {
+    private VBox createTag(PaginaPrincipalDTO course) {
         VBox tag = new VBox();
         tag.setMaxWidth(Region.USE_PREF_SIZE);
         if (course.getPercentual() == 100) {
@@ -264,7 +264,7 @@ public class LoadCourses {
         return courseImage;
     }
 
-    private HBox createCourseInfo(PaginaPrincipalDto course) {
+    private HBox createCourseInfo(PaginaPrincipalDTO course) {
         HBox courseInfo = new HBox(15);
         courseInfo.setAlignment(Pos.CENTER_LEFT);
         courseInfo.getChildren().addAll(
@@ -291,7 +291,7 @@ public class LoadCourses {
         return descLabel;
     }
 
-    private HBox createStatusInfo(PaginaPrincipalDto course) {
+    private HBox createStatusInfo(PaginaPrincipalDTO course) {
         HBox statusInfo = new HBox(15);
         statusInfo.setAlignment(Pos.CENTER_LEFT);
 
@@ -309,7 +309,7 @@ public class LoadCourses {
         return statusInfo;
     }
 
-    private HBox createButtonContainer(PaginaPrincipalDto course, String status) {
+    private HBox createButtonContainer(PaginaPrincipalDTO course, String status) {
         HBox buttonContainer = new HBox(15);
         buttonContainer.setAlignment(Pos.CENTER_LEFT);
         buttonContainer.setPadding(new javafx.geometry.Insets(10, 0, 0, 0));
@@ -330,7 +330,7 @@ public class LoadCourses {
         return buttonContainer;
     }
 
-    private Button createCertificadoButton(PaginaPrincipalDto course) {
+    private Button createCertificadoButton(PaginaPrincipalDTO course) {
         Button button = new Button("Gerar Certificado");
         button.getStyleClass().add("simple-button");
         button.setOnMouseClicked(e -> {
@@ -350,7 +350,7 @@ public class LoadCourses {
         return button;
     }
 
-    private void loadCertificates(File selectedDirectory, PaginaPrincipalDto course) {
+    private void loadCertificates(File selectedDirectory, PaginaPrincipalDTO course) {
         CertificateViewerModal certificateViewer = new CertificateViewerModal(getDefaultWindow(), course,
                 selectedDirectory);
     }
@@ -361,7 +361,7 @@ public class LoadCourses {
         return label;
     }
 
-    private Button createContinueButton(PaginaPrincipalDto course, String status) {
+    private Button createContinueButton(PaginaPrincipalDTO course, String status) {
         if (course.getPercentual() != 100) {
             Button button = new Button("Continuar Curso");
             button.getStyleClass().add("outline-button");
@@ -380,7 +380,7 @@ public class LoadCourses {
     }
 
     @SuppressWarnings("unused")
-    private Button createDetailsButton(PaginaPrincipalDto course) {
+    private Button createDetailsButton(PaginaPrincipalDTO course) {
         Button button = new Button("Ver Detalhes");
 
         button.getStyleClass().add("outline-button");
@@ -408,7 +408,7 @@ public class LoadCourses {
         return label;
     }
 
-    private Button createStartButton(PaginaPrincipalDto course) {
+    private Button createStartButton(PaginaPrincipalDTO course) {
         Button button = new Button("Começar Curso");
         button.getStyleClass().add("simple-button");
         button.setOnMouseClicked(e -> {
