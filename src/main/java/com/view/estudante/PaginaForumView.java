@@ -59,7 +59,8 @@ public class PaginaForumView implements Initializable {
         Platform.runLater(() -> {
             LoadForumView loadForum = new LoadForumView();
             forumContainer.getChildren().clear();
-            forumContainer.getChildren().add(loadForum.loadForum());
+            forumContainer.getChildren().add(loadForum.loadForum("todos"));
+
             /*
              * Biblioteca biblioteca = new Biblioteca();
              * bibliotecaContainer.getChildren().clear();
@@ -88,6 +89,8 @@ public class PaginaForumView implements Initializable {
 
              selectionTodos.setOnMouseClicked(e -> {
                  loadClass("todos");
+                 forumContainer.getChildren().clear();
+                 forumContainer.getChildren().add(loadForum.loadForum("todos"));
                /*   LoadForumView loadForumTodos = new LoadForumView();
                  forumContainer.getChildren().clear();
                  forumContainer.getChildren().add(loadForumTodos.loadForum());*/
@@ -95,6 +98,8 @@ public class PaginaForumView implements Initializable {
 
              selectionParticipated.setOnMouseClicked(e -> {
                  loadClass("participated");
+                 forumContainer.getChildren().clear();
+                 forumContainer.getChildren().add(loadForum.loadForum("myForum"));
               /*    LoadForumView loadForumParticipated = new LoadForumView();
                  forumContainer.getChildren().clear();
                  forumContainer.getChildren().add(loadForumParticipated.loadForum());*/

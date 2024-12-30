@@ -12,5 +12,7 @@ public class ForumDTO {
     private String description;
     private String category;
     private String dateTime;
-    private int topics;
+    private int view;
+    private int like;
+    private int comments;
 }

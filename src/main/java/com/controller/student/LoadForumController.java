@@ -11,4 +11,10 @@ public class LoadForumController {
         List<ForumDTO> forum = loadForum.LoadForum();
         return forum;
     }
+
+    public List<ForumDTO> LoadMyForum() {
+        LoadForum loadForum = new LoadForum();
+        List<ForumDTO> myForum = loadForum.LoadMyForum();
+        return myForum;
+    }
 }
