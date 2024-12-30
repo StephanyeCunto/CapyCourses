@@ -77,6 +77,8 @@ Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos onl
   <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalBibliotecaDark.png" alt="Tela Biblioteca Estudante - Certificado - Modo Escuro" width="48%" />
   <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalBibliotecaLigth.png" alt="Tela Biblioteca Estudante - Certificado - Modo Claro" width="48%" />
 </p>
+
+### Tela Forum Estudante
 ---
 
 ## 🛠️ Tecnologias Utilizadas
