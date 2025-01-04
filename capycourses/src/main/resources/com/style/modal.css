@@ -1,0 +1,137 @@
+/* modal.css */
+
+/* Estilos gerais para o modal */
+.stackpane {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-container {
+    -fx-background-color: #2a2d3e;
+    -fx-background-radius: 15px;
+    -fx-padding: 20px;
+    -fx-spacing: 20px;
+}
+
+/* Título do modal */
+.label-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-padding: 10 0;
+}
+
+/* Estilos para detalhes (GridPane) */
+.details-grid {
+    -fx-hgap: 15px;
+    -fx-vgap: 10px;
+}
+
+.details-label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+/* Botão de fechar no rodapé */
+.button-close {
+    -fx-background-color: #ff4f5a;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.button-close:hover {
+    -fx-background-color: #ff7f88;
+}
+
+.button-close:pressed {
+    -fx-background-color: #e04a53;
+}
+
+/* Seções de conteúdo */
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-padding: 10 0;
+}
+
+.section-content {
+    -fx-spacing: 10px;
+    -fx-padding: 10 0;
+}
+
+/* Estilo dos TitledPane (Módulos) */
+.titled-pane {
+    -fx-background-color: #2a2d3e;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-color: #3c3f55;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.titled-pane .text {
+    -fx-fill: white;
+}
+
+.titled-pane:expanded .content {
+    -fx-background-color: #1f2133;
+    -fx-padding: 10px;
+}
+
+/* Lista de lições */
+.lesson-list {
+    -fx-spacing: 5px;
+}
+
+.lesson-item {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+/* Estilo do ScrollPane */
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 10px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar {
+    -fx-background-color: #2a2d3e;
+}
+
+.scroll-pane .thumb {
+    -fx-background-color: #3c3f55;
+    -fx-background-radius: 5px;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+    .modal-container {
+        -fx-padding: 15px;
+        -fx-spacing: 15px;
+    }
+
+    .label-title {
+        -fx-font-size: 18px;
+    }
+
+    .button-close {
+        -fx-font-size: 14px;
+        -fx-padding: 8 15;
+    }
+
+    .section-title {
+        -fx-font-size: 16px;
+    }
+
+    .details-label {
+        -fx-font-size: 12px;
+    }
+}
