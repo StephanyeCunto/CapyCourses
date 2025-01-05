@@ -28,6 +28,7 @@ module com {
     opens com.view.login_cadastro.elements to javafx.fxml;
     opens com.view.professor to javafx.fxml;
     opens com.view.estudante to javafx.fxml;
+    opens com.view.elements.Settings to javafx.fxml;
 
     exports com.singleton;
     exports com.view;

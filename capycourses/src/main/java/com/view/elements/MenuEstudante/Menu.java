@@ -66,6 +66,9 @@ public class Menu {
         Button button = new Button(text);
         button.setMaxWidth(Double.MAX_VALUE);
         fillMap();
+        if (currentPage != null && currentPage.endsWith(".fxml")) {
+            currentPage = currentPage.substring(0, currentPage.length() - 5);
+        }
         if (buttonMenu.get(currentPage) == text) {
             button.getStyleClass().add("outline-button");
         } else if (!text.equals("Sair")) {
@@ -87,7 +90,7 @@ public class Menu {
         buttonMenu.put("/com/estudante/certificados/paginaCertificados", "Certificados");
         buttonMenu.put("/com/estudante/biblioteca/paginaBiblioteca", "Biblioteca");
         buttonMenu.put("/com/estudante/forum/paginaForum", "Forum");
-        buttonMenu.put("/com/paginaPerfil", "Configurações");
+        buttonMenu.put("/com/elements/settings", "Configurações");
         buttonMenu.put("/com/login_cadastro/paginaLogin", "Sair");
     }
 

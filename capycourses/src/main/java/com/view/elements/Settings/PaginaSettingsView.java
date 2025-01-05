@@ -1,4 +1,4 @@
-package com.view.elements.Forum;
+package com.view.elements.Settings;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,7 +9,6 @@ import com.view.elements.MenuEstudante.Menu;
 
 import javafx.animation.FillTransition;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,7 +22,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.image.*;
 
-public class PaginaForumView implements Initializable {
+public class PaginaSettingsView implements Initializable {
     @FXML
     private VBox sideMenu;
     @FXML
@@ -44,19 +43,12 @@ public class PaginaForumView implements Initializable {
     private StackPane toggleButtonStackPane;
     @FXML
     private GridPane container;
-    @FXML
-    private VBox forumContainer;
-    @FXML
-    private Button selectionTodos;
-    @FXML
-    private Button selectionParticipated;
-    @FXML
-    private Button addButton;
-
+@FXML
+private VBox settingsBox;
     @SuppressWarnings("unused")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Platform.runLater(() -> {
+      /*   Platform.runLater(() -> {
             LoadForumView loadForum = new LoadForumView();
             forumContainer.getChildren().clear();
             forumContainer.getChildren().add(loadForum.loadForum("todos"));
@@ -72,31 +64,7 @@ public class PaginaForumView implements Initializable {
                 forumContainer.getChildren().clear();
                 forumContainer.getChildren().add(loadForum.loadForum("myForum"));
             });
-        });
-
-        addButton.setOnMouseEntered(event -> {
-            addButton.setText("Criar Forum");
-            addButton.getStyleClass().remove("add-button");
-            addButton.getStyleClass().add("button-add");
-
-            javafx.animation.Timeline timeline = new javafx.animation.Timeline(
-            new javafx.animation.KeyFrame(Duration.ZERO, new javafx.animation.KeyValue(addButton.prefWidthProperty(), 40)),
-            new javafx.animation.KeyFrame(Duration.millis(200), new javafx.animation.KeyValue(addButton.prefWidthProperty(), 120))
-            );
-            timeline.play();
-        });
-
-        addButton.setOnMouseExited(event -> {
-            addButton.setText("+");
-            addButton.getStyleClass().remove("button-add");
-            addButton.getStyleClass().add("add-button");
-
-            javafx.animation.Timeline timeline = new javafx.animation.Timeline(
-            new javafx.animation.KeyFrame(Duration.ZERO, new javafx.animation.KeyValue(addButton.prefWidthProperty(), 120)),
-            new javafx.animation.KeyFrame(Duration.millis(200), new javafx.animation.KeyValue(addButton.prefWidthProperty(), 40))
-            );
-            timeline.play();
-        });
+        });*/
 
         changeMode();
         toggleButtonStackPane.setOnMouseClicked(e -> toggle());
@@ -104,6 +72,8 @@ public class PaginaForumView implements Initializable {
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
         loadMenu();
+
+        settingsBox.getChildren().add(new LoadSettingsPerfil().settingsPerfil());
     }
 
     private void loadMenu() {
@@ -111,7 +81,7 @@ public class PaginaForumView implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/menu.fxml"));
             VBox menu = loader.load();
             Menu menuController = loader.getController();
-            menuController.setCurrentPage("/com/estudante/forum/paginaForum");
+            menuController.setCurrentPage("/com/elements/settings.fxml");
             menuController.configureMenu();
             sideMenu.getChildren().add(menu);
         } catch (IOException e) {
@@ -174,7 +144,7 @@ public class PaginaForumView implements Initializable {
     }
 
     private void loadClass(String selection) {
-        selectionTodos.getStyleClass().removeAll("outline-button-seletion", "outline-button-not-seletion");
+       /*  selectionTodos.getStyleClass().removeAll("outline-button-seletion", "outline-button-not-seletion");
         selectionParticipated.getStyleClass().removeAll("outline-button-seletion", "outline-button-not-seletion");
 
         if (selection.equals("todos")) {
@@ -187,11 +157,6 @@ public class PaginaForumView implements Initializable {
         } else {
             selectionParticipated.getStyleClass().add("outline-button-seletion");
             selectionTodos.getStyleClass().add("outline-button-not-seletion");
-        }
-    }
-
-    public void addForum() {
-        ModalAddForum modal = new ModalAddForum(container.getScene().getWindow());
-        modal.show();
+        }*/
     }
 }
