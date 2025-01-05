@@ -217,10 +217,14 @@ public class LoadForumView {
             CreateJsonForum createJsonForum = new CreateJsonForum();
             createJsonForum.saveForum(forum.getAuthor(), forum.getTitle(), forum.getDescription(), forum.getCategory(), forum.getDateTime(), forum.getView(), forum.getLike(), forum.getComments(),forum.getQuestion(), "capycourses/src/main/resources/com/json/forum.json"); 
             try {
+                Thread.sleep(500); 
                 FXMLLoader loader = new FXMLLoader(LoadForumView.class.getResource("/com/estudante/forum/paginaDoForum.fxml"));
                 Parent root = loader.load();  
                 Scene scene = button.getScene();
                 scene.setRoot(root);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                System.err.println("Thread was interrupted: " + ex.getMessage());
             } catch (IOException ex) {
                 System.err.println("Error loading forum page: " + ex.getMessage());
             }

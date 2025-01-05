@@ -15,12 +15,16 @@ import java.util.List;
 
 import com.controller.elements.LoadForumController;
 import com.dto.ForumComentarioDTO;
+import com.singleton.UserSession;
 
 public class ForumDetailView extends VBox {
     private static final double CONTENT_WIDTH = 1000;
     private static final double CONTENT_SPACING = 24;
     private static final String FONT_FAMILY = "Segoe UI";
     private static final String JSON_PATH = "capycourses/target/classes/com/json/forum.json";
+    LoadForumController controller = new LoadForumController();
+    private boolean liked = controller.curtiu(CreateJsonForum.getSavedTitle(JSON_PATH),
+            UserSession.getInstance().getUserName());
 
     private String author;
     private String title;
@@ -32,6 +36,7 @@ public class ForumDetailView extends VBox {
     private int comments;
     private String question;
     private List<ForumComentarioDTO> comentarios;
+    private VBox contentContainer;
 
     public ForumDetailView() {
         loadForumData();
@@ -60,15 +65,15 @@ public class ForumDetailView extends VBox {
         setAlignment(Pos.TOP_CENTER);
         setSpacing(CONTENT_SPACING);
         setPadding(new Insets(32, 16, 32, 16));
-        VBox contentContainer = createContentContainer();
-        
+        contentContainer = createContentContainer();
+
         contentContainer.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 showLikeAnimation(event.getX(), event.getY());
                 handleLike();
             }
         });
-        
+
         getChildren().add(contentContainer);
         addFadeInAnimation(this);
     }
@@ -86,39 +91,39 @@ public class ForumDetailView extends VBox {
         container.getStyleClass().add("card");
 
         container.getChildren().addAll(
-            createHeaderSection(),
-            createMainContentSection(),
-            createAuthorSection(),
-            createQuestionSection(),
-            createInteractionSection(),
-            createCommentsSection()
-        );
+                createHeaderSection(),
+                createMainContentSection(),
+                createAuthorSection(),
+                createQuestionSection(),
+                createInteractionSection(),
+                createCommentsSection());
 
         return container;
     }
 
     private VBox createQuestionSection() {
         VBox section = new VBox(24);
-    
+
         Label questionText = new Label(question);
         questionText.setFont(Font.font(FONT_FAMILY, FontWeight.NORMAL, 16));
         questionText.setWrapText(true);
-        
+
         section.getChildren().addAll(questionText);
         return section;
     }
 
     private VBox createCommentsSection() {
         VBox section = new VBox(24);
-        
+
         Label commentsTitle = new Label("Comentários");
         commentsTitle.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, 24));
-        
-         VBox commentsContainer = new VBox(16);
+
+        VBox commentsContainer = new VBox(16);
         commentsContainer.getStyleClass().add("comments-container");
-        
+
         if (comentarios != null && !comentarios.isEmpty()) {
-            for (ForumComentarioDTO comment : comentarios) {
+            for (int i = comentarios.size() - 1; i >= 0; i--) {
+                ForumComentarioDTO comment = comentarios.get(i);
                 commentsContainer.getChildren().add(createCommentBox(comment));
             }
         } else {
@@ -127,7 +132,7 @@ public class ForumDetailView extends VBox {
             noComments.setStyle("-fx-text-fill: #9ca3af;");
             commentsContainer.getChildren().add(noComments);
         }
-        
+
         section.getChildren().addAll(commentsTitle, commentsContainer);
         return section;
     }
@@ -157,6 +162,7 @@ public class ForumDetailView extends VBox {
 
         Label commentText = new Label(comment.getComentario());
         commentText.setWrapText(true);
+
         commentText.setFont(Font.font(FONT_FAMILY, 16));
         commentText.setStyle("-fx-text-fill: #9ca3af;");
 
@@ -171,10 +177,9 @@ public class ForumDetailView extends VBox {
         avatarCircle.setMinSize(48, 48);
         avatarCircle.setMaxSize(48, 48);
         avatarCircle.setStyle(
-            "-fx-background-color: #3b82f6; " +
-            "-fx-background-radius: 24;"
-        );
-        
+                "-fx-background-color: #3b82f6; " +
+                        "-fx-background-radius: 24;");
+
         Label nameInitial = new Label(getInitials(usuario));
         nameInitial.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, 20));
         nameInitial.setStyle("-fx-text-fill: white;");
@@ -220,7 +225,7 @@ public class ForumDetailView extends VBox {
         authorBox.setPadding(new Insets(0, 0, 20, 0));
 
         StackPane avatar = createAuthorAvatar();
-        
+
         VBox authorInfo = new VBox(4);
         Label authorLabel = new Label(author);
         authorLabel.setFont(Font.font(FONT_FAMILY, FontWeight.SEMI_BOLD, 16));
@@ -229,7 +234,7 @@ public class ForumDetailView extends VBox {
 
         authorInfo.getChildren().add(authorLabel);
         authorBox.getChildren().addAll(avatar, authorInfo);
-        
+
         return authorBox;
     }
 
@@ -238,29 +243,53 @@ public class ForumDetailView extends VBox {
         section.setPadding(new Insets(20, 0, 0, 0));
 
         HBox statsArea = createStatsArea();
-        
+
         TextArea commentInput = createFloatingCommentInput();
-        
+
         section.getChildren().addAll(statsArea, commentInput);
         return section;
+    }
+
+    private void loadLikeCount(Label likeCount) {
+        if (liked) {
+            likeCount.setText("♥️ " + like);
+            likeCount.setFont(Font.font(FONT_FAMILY, FontWeight.MEDIUM, 15));
+            likeCount.setStyle("-fx-text-fill: #ff4d6d;");
+        } else {
+            likeCount.setText("🤍" + like);
+            likeCount.setFont(Font.font(FONT_FAMILY, FontWeight.MEDIUM, 15));
+            likeCount.setStyle("-fx-text-fill: #9ca3af;");
+        }
     }
 
     private HBox createStatsArea() {
         HBox statsArea = new HBox(24);
         statsArea.setAlignment(Pos.CENTER_LEFT);
-        
-        Label likeCount = new Label("❤️ " + like);
-        likeCount.setFont(Font.font(FONT_FAMILY, FontWeight.MEDIUM, 15));
-        likeCount.setStyle("-fx-text-fill: #ff4d6d;");
-        
+        Label likeCount = new Label();
+        loadLikeCount(likeCount);
+
+        likeCount.setOnMouseClicked(event -> {
+            liked = !liked;
+            showLikeAnimation(event.getX(), event.getY());
+            if (!liked) {
+                like--;
+                controller.desCurtir(CreateJsonForum.getSavedTitle(JSON_PATH), UserSession.getInstance().getUserName());
+            } else {
+                like++;
+                controller.curtir(CreateJsonForum.getSavedTitle(JSON_PATH), UserSession.getInstance().getUserName());
+
+            }
+            loadLikeCount(likeCount);
+        });
+
         Label commentCount = new Label("💭 " + comments);
         commentCount.setFont(Font.font(FONT_FAMILY, FontWeight.MEDIUM, 15));
         commentCount.setStyle("-fx-text-fill: #9ca3af;");
-        
+
         Label viewCount = new Label("👁 " + view);
         viewCount.setFont(Font.font(FONT_FAMILY, FontWeight.MEDIUM, 15));
         viewCount.setStyle("-fx-text-fill: #9ca3af;");
-        
+
         statsArea.getChildren().addAll(likeCount, commentCount, viewCount);
         return statsArea;
     }
@@ -272,7 +301,7 @@ public class ForumDetailView extends VBox {
         commentInput.setWrapText(true);
         commentInput.getStyleClass().add("floating-input");
         commentInput.getStyleClass().add("custom-text-area");
-     
+
         commentInput.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 commentInput.setPrefRowCount(3);
@@ -287,6 +316,7 @@ public class ForumDetailView extends VBox {
                 String comment = commentInput.getText().trim();
                 if (!comment.isEmpty()) {
                     handleCommentSubmission(comment, commentInput);
+                    controller.addComentario(title, comment);
                 }
             }
         });
@@ -321,10 +351,9 @@ public class ForumDetailView extends VBox {
         avatarCircle.setMinSize(48, 48);
         avatarCircle.setMaxSize(48, 48);
         avatarCircle.setStyle(
-            "-fx-background-color: #3b82f6; " +
-            "-fx-background-radius: 24;"
-        );
-        
+                "-fx-background-color: #3b82f6; " +
+                        "-fx-background-radius: 24;");
+
         Label nameInitial = new Label(getInitials(author));
         nameInitial.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, 20));
         nameInitial.setStyle("-fx-text-fill: white;");
@@ -337,15 +366,14 @@ public class ForumDetailView extends VBox {
         Label heart = new Label("❤️");
         heart.setStyle("-fx-font-size: 48px;");
         heart.setMouseTransparent(true);
-        
+
         StackPane.setMargin(heart, new Insets(y - 24, 0, 0, x - 24));
         getChildren().add(heart);
-        
+
         ParallelTransition animation = new ParallelTransition(
-            createScaleTransition(heart),
-            createFadeTransition(heart)
-        );
-        
+                createScaleTransition(heart),
+                createFadeTransition(heart));
+
         animation.setOnFinished(e -> getChildren().remove(heart));
         animation.play();
     }
@@ -366,20 +394,30 @@ public class ForumDetailView extends VBox {
         return fade;
     }
 
-    private void handleLike() {
-        like++;
-        CreateJsonForum.saveForum(author, title, description, category, dateTime, view, like, comments, question, JSON_PATH);
-        updateLikeCount();
-    }
-
     private void handleCommentSubmission(String comment, TextArea commentInput) {
         comments++;
-        CreateJsonForum.saveForum(author, title, description, category, dateTime, view, like, comments, question, JSON_PATH);
+        CreateJsonForum.saveForum(author, title, description, category, dateTime, view, like, comments, question,
+                JSON_PATH);
+
+
+        PauseTransition pause = new PauseTransition(Duration.millis(200));
+        pause.setOnFinished(event -> {
+
+        loadForumData();
+            contentContainer.getChildren().clear();
+            contentContainer.getChildren().addAll(
+                createHeaderSection(),
+                createMainContentSection(),
+                createAuthorSection(),
+                createQuestionSection(),
+                createInteractionSection(),
+                createCommentsSection());
+            showCommentSuccessAnimation(commentInput);
+        });
+        pause.play();
         
-        showCommentSuccessAnimation(commentInput);
         commentInput.clear();
         commentInput.setPromptText("Comentário enviado! Pressione Enter para comentar novamente...");
-        
         updateCommentCount();
     }
 
@@ -392,18 +430,24 @@ public class ForumDetailView extends VBox {
         fadeOut.play();
     }
 
+    private void handleLike() {
+        CreateJsonForum.saveForum(author, title, description, category, dateTime, view, like, comments, question,
+                JSON_PATH);
+        updateLikeCount();
+    }
+
     private void updateLikeCount() {
         lookup(".label").getParent().lookupAll(".label").stream()
-            .filter(node -> node instanceof Label && ((Label) node).getText().contains("❤️"))
-            .findFirst()
-            .ifPresent(label -> ((Label) label).setText("❤️ " + like));
+                .filter(node -> node instanceof Label && ((Label) node).getText().contains("❤️"))
+                .findFirst()
+                .ifPresent(label -> ((Label) label).setText("❤️ " + like));
     }
 
     private void updateCommentCount() {
         lookup(".label").getParent().lookupAll(".label").stream()
-            .filter(node -> node instanceof Label && ((Label) node).getText().contains("💭"))
-            .findFirst()
-            .ifPresent(label -> ((Label) label).setText("💭 " + comments));
+                .filter(node -> node instanceof Label && ((Label) node).getText().contains("💭"))
+                .findFirst()
+                .ifPresent(label -> ((Label) label).setText("💭 " + comments));
     }
 
     private void addFadeInAnimation(Region node) {
@@ -414,7 +458,8 @@ public class ForumDetailView extends VBox {
     }
 
     private static String getInitials(String name) {
-        if (name == null || name.trim().isEmpty()) return "";
+        if (name == null || name.trim().isEmpty())
+            return "";
         String[] parts = name.split(" ");
         StringBuilder initials = new StringBuilder();
         for (int i = 0; i < Math.min(2, parts.length); i++) {
