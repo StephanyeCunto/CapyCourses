@@ -7,6 +7,7 @@ import com.controller.elements.LoadForumJson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CreateJsonForum {
+
     public static void saveForum(String author, String title, String description, String category, String dateTime,
     int view, int like, int comments,String question, String filePath) {
     {
@@ -126,4 +127,5 @@ public static String getSavedQuestion(String filePath) {
         return null;
     }
 }
+
 }

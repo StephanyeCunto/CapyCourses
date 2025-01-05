@@ -189,4 +189,13 @@ public class LoadForum {
             e.printStackTrace();
         }
     }
+
+    public void addForum(String title, String description, String category, String question) {
+        try (java.io.FileWriter fw = new java.io.FileWriter("capycourses/src/main/resources/com/bd/bd_forum.csv",
+                true)) {
+            fw.write(UserSession.getInstance().getUserName() + "," + title + "," + description + "," + category + "," + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "," + 0 + "," + 0 + "," + 0 + "," + question + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

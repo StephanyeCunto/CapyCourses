@@ -48,4 +48,9 @@ public class LoadForumController {
         LoadForum loadForum = new LoadForum();
         loadForum.addComentario(title, comentario);
     }
+
+    public void addForum(String title, String description, String category, String question){
+        LoadForum loadForum = new LoadForum();
+        loadForum.addForum(title, description, category, question);
+    }
 }

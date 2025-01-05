@@ -35,11 +35,14 @@
       <content>
         <VBox spacing="20" style="-fx-padding: 25;">
           <HBox>
-            <HBox fx:id="searchBar" maxWidth="400" maxHeight="20">
+            <HBox fx:id="searchBar" maxWidth="400" maxHeight="20" spacing="20">
               <TextField fx:id="searchField"
                 promptText="🔍 Pesquisar conteúdo..."
                 styleClass="custom-text-field"
                 HBox.hgrow="ALWAYS" />
+                <HBox minHeight="45">
+                <Button text="+" fx:id="addButton" onAction="#addForum" styleClass="add-button"></Button>
+                </HBox>
             </HBox>
 
             <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
@@ -58,11 +61,14 @@
               </StackPane>
             </HBox>
           </HBox>
-            <HBox spacing="20">
-            <Button text="Todos" styleClass="outline-button-seletion" fx:id="selectionTodos" prefWidth="100" prefHeight="30"></Button>
-            <Button text="Meus Fóruns" styleClass="outline-button-not-seletion" fx:id="selectionParticipated" prefWidth="140" prefHeight="30"></Button>
+          <HBox spacing="20">
+            <Button text="Todos" styleClass="outline-button-seletion" fx:id="selectionTodos"
+              prefWidth="100" prefHeight="30"></Button>
+            <Button text="Meus Fóruns" styleClass="outline-button-not-seletion"
+              fx:id="selectionParticipated" prefWidth="140" prefHeight="30"></Button>
           </HBox>
-            <VBox fx:id="forumContainer" spacing="20">
+          <VBox fx:id="forumContainer" spacing="20">
+
 
           </VBox>
         </VBox>

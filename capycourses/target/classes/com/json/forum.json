@@ -1,11 +1,11 @@
 {
-  "author" : "Julia Mendes",
-  "title" : "MongoDB Tips",
-  "description" : "Queries NoSQL eficientes",
-  "category" : "Banco de Dados",
-  "dateTime" : "2023-05-22",
-  "view" : 326,
-  "like" : 2,
-  "comments" : 12,
-  "question" : "Quais são as melhores práticas para otimizar queries NoSQL em grandes coleções do MongoDB?"
+  "author" : "ste cunto",
+  "title" : "forum",
+  "description" : "descricao",
+  "category" : "categoria",
+  "dateTime" : "2025-01-05",
+  "view" : 0,
+  "like" : 1,
+  "comments" : 1,
+  "question" : "Pergunta:"
 }
