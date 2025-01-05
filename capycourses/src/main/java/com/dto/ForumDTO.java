@@ -13,4 +13,5 @@ public class ForumDTO {
     private int view;
     private int like;
     private int comments;
+    private String question;
 }

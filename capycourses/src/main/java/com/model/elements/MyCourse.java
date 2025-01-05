@@ -1,7 +1,7 @@
-package com.model.student;
+package com.model.elements;
 
-import com.model.Course.Course;
-import com.model.Course.CourseReader;
+import com.model.elements.Course.Course;
+import com.model.elements.Course.CourseReader;
 
 import lombok.*;
 

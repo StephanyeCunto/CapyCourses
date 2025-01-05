@@ -1,4 +1,4 @@
-package com.model.student;
+package com.model.elements;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

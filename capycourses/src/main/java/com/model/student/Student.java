@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+import com.model.elements.MyCourse;
+
 import lombok.Getter;
 import lombok.Setter;
 

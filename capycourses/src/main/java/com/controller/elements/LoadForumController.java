@@ -2,8 +2,9 @@ package com.controller.elements;
 
 import java.util.List;
 
+import com.dto.ForumComentarioDTO;
 import com.dto.ForumDTO;
-import com.model.student.LoadForum;
+import com.model.elements.LoadForum;
 
 public class LoadForumController {
     public List<ForumDTO> LoadForum() {
@@ -16,5 +17,15 @@ public class LoadForumController {
         LoadForum loadForum = new LoadForum();
         List<ForumDTO> myForum = loadForum.LoadMyForum();
         return myForum;
+    }
+
+    public void addView(ForumDTO forumDTO) {
+        LoadForum loadForum = new LoadForum();
+        loadForum.addView(forumDTO);
+    }
+
+    public List<ForumComentarioDTO> loadComentario(String title){
+        LoadForum loadForum = new LoadForum();
+        return loadForum.LoadComentario(title);
     }
 }

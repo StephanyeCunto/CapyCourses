@@ -2,7 +2,7 @@ package com.controller.elements;
 
 import java.util.*;
 import com.dto.BibliotecaDTO;
-import com.model.student.LoadBiblioteca;
+import com.model.elements.LoadBiblioteca;
 
 public class BibliotecaController {
     public List<BibliotecaDTO> loadBiblioteca() {

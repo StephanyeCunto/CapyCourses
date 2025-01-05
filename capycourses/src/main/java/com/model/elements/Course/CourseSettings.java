@@ -1,4 +1,4 @@
-package com.model.Course;
+package com.model.elements.Course;
 
 import lombok.Getter;
 import lombok.Setter;

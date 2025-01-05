@@ -409,3 +409,26 @@
 .card-info {
     -fx-text-fill: rgba(255, 255, 255, 0.5);
 }
+
+.custom-text-area {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-radius: 12;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);
+    -fx-font-size: 14px;
+    -fx-padding: 12 16;
+    -fx-min-height: 100px; 
+    -fx-max-height: 100px; 
+}
+
+.custom-text-area .content {
+    -fx-background-color: transparent;
+}
+
+.custom-text-area:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: #6C8DFF;
+    -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.2), 10, 0, 0, 0);
+}

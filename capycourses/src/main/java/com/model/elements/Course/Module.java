@@ -1,4 +1,4 @@
-package com.model.Course;
+package com.model.elements.Course;
 
 import java.util.ArrayList;
 import java.util.List;

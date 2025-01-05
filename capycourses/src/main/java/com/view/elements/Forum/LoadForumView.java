@@ -47,7 +47,6 @@ public class LoadForumView {
         forumGrid.setPadding(new Insets(GRID_SPACING * 1.5));
         forumGrid.setAlignment(Pos.CENTER);
         
-        // Add smooth scroll behavior
         forumContainer.setAlignment(Pos.CENTER);
         forumContainer.getChildren().clear();
         forumContainer.getChildren().add(forumGrid);
@@ -62,7 +61,6 @@ public class LoadForumView {
             VBox forumBox = createForumBox(forumDTO);
             addFadeInAnimation(forumBox);
             
-            // Add hover effect
             forumBox.setStyle("-fx-transition: all 0.3s ease;");
             forumBox.setOnMouseEntered(e -> forumBox.setStyle("-fx-scale-x: 1.02; -fx-scale-y: 1.02;"));
             forumBox.setOnMouseExited(e -> forumBox.setStyle("-fx-scale-x: 1; -fx-scale-y: 1;"));
@@ -214,9 +212,10 @@ public class LoadForumView {
         button.getStyleClass().add("outline-button");
         button.setPrefWidth(150);
         button.setOnAction(e -> {
-            forum.setView(forum.getView() + 1);
+            LoadForumController forumController = new LoadForumController();
+            forumController.addView(forum);
             CreateJsonForum createJsonForum = new CreateJsonForum();
-            createJsonForum.saveForum(forum.getAuthor(), forum.getTitle(), forum.getDescription(), forum.getCategory(), forum.getDateTime(), forum.getView(), forum.getLike(), forum.getComments(), "capycourses/src/main/resources/com/json/forum.json");
+            createJsonForum.saveForum(forum.getAuthor(), forum.getTitle(), forum.getDescription(), forum.getCategory(), forum.getDateTime(), forum.getView(), forum.getLike(), forum.getComments(),forum.getQuestion(), "capycourses/src/main/resources/com/json/forum.json"); 
             try {
                 FXMLLoader loader = new FXMLLoader(LoadForumView.class.getResource("/com/estudante/forum/paginaDoForum.fxml"));
                 Parent root = loader.load();  

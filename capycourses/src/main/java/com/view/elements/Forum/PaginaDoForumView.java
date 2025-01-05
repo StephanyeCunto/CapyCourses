@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -36,6 +37,8 @@ public class PaginaDoForumView implements Initializable {
     private Rectangle background;
     @FXML
     private StackPane thumbContainer;
+    @FXML
+    private VBox forumContainer;
 
     public void initialize(URL location, ResourceBundle resources) {
         changeMode();
@@ -43,6 +46,9 @@ public class PaginaDoForumView implements Initializable {
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
+
+        ForumDetailView forumDetailView = new ForumDetailView();
+        forumContainer.getChildren().add(forumDetailView.getView());
     }
 
     private void changeMode() {
@@ -108,9 +114,5 @@ public class PaginaDoForumView implements Initializable {
         }catch (Exception e){
             System.err.println("Error loading forum page: " + e.getMessage());
         }
-    }
-
-    public void imprimir(String i) {
-        System.out.println(i);
     }
 }

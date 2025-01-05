@@ -124,27 +124,6 @@ public class LoadCourses {
         courseContainer.getChildren().add(courseGrid);
     }
 
-    /*
-     * private List loadListCourses(String status) {
-     * List<Course> coursesSelection = new ArrayList<>();
-     * 
-     * if (status.equals("notStarted")) {
-     * for (int i = 0; i < courses.size(); i++) {
-     * if (!myCourseStudent.searhCourse(courses.get(i).getTitle())) {
-     * coursesSelection.add(courses.get(i));
-     * }
-     * }
-     * } else {
-     * for (int i = 0; i < courses.size(); i++) {
-     * if (myCourseStudent.searhCourseFilter(courses.get(i).getTitle(), status)) {
-     * coursesSelection.add(courses.get(i));
-     * }
-     * }
-     * }
-     * return coursesSelection;
-     * }
-     */
-
     private void setupCourseGrid() {
         courseGrid.setHgap(20);
         courseGrid.setVgap(20);

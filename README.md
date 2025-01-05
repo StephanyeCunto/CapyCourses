@@ -84,6 +84,12 @@ Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos onl
 <img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaForumLigth.png" alt="Tela Forum - Modo Claro" width="48%">
 </p>
 
+### Tela Do Forum
+<p align="center">
+<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaDoForumDark.png" alt="Tela Do Forum - Modo Escuro" width="48%">
+<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaDoForumLigth.png" alt="Tela Do Forum - Modo Claro" width="48%">
+</p>
+
 ---
 
 ## 🛠️ Tecnologias Utilizadas

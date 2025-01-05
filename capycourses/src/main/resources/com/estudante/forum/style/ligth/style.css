@@ -394,26 +394,53 @@
     -fx-font-family: "Segoe UI";
 }
 
-.progress-label{
-    -fx-text-fill: #4a4a4a;
-    -fx-font-size: 14px;
-    -fx-font-family: "Segoe UI";
+.quick-tips {
+    -fx-background-color: linear-gradient(to right bottom,  #9aabc0,#adc7db);
+    -fx-background-radius: 16;
+    -fx-padding: 16;
 }
 
-.tag, .button-filter {
-    -fx-background-color: #4A90E2;
+.card {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
+    -fx-padding: 15;
+}
+
+.card-label {
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-text-fill: black;
+}
+
+.label {
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-text-fill: black;
+}
+
+.custom-text-area {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
     -fx-background-radius: 12;
-    -fx-text-fill: #FFFFFF;
+    -fx-border-color: rgba(0, 0, 0, 0.1);
+    -fx-border-radius: 12;
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.5);
     -fx-font-size: 14px;
-    -fx-font-family: "Segoe UI";
-    -fx-padding: 6 12;
-    -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.2), 8, 0, 0, 0);
-    -fx-cursor: hand;
+    -fx-padding: 12 16;
+    -fx-min-height: 100px; 
+    -fx-max-height: 100px; 
+    -fx-wrap-text: true;
 }
 
-.tag-label, .button-filter {
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 14px;
-    -fx-font-family: "Segoe UI Bold";
-    -fx-opacity: 0.9;
+.custom-text-field:focused,
+.custom-text-area:focused {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 10, 0, 0, 0);
+}
+
+
+.custom-text-area .content {
+    -fx-background-color: transparent;
 }

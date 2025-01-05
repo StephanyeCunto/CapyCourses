@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dto.PaginaPrincipalDTO;
-import com.model.Course.Course;
-import com.model.Course.CourseReader;
-import com.model.Course.CourseSettings;
-import com.model.student.MyCourse;
+import com.model.elements.MyCourse;
+import com.model.elements.Course.Course;
+import com.model.elements.Course.CourseReader;
+import com.model.elements.Course.CourseSettings;
 import com.model.student.Student;
 import com.singleton.UserSession;
 

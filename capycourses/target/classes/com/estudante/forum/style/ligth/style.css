@@ -418,3 +418,29 @@
     -fx-font-family: "Franklin Gothic Medium";
     -fx-text-fill: black;
 }
+
+.custom-text-area {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(0, 0, 0, 0.1);
+    -fx-border-radius: 12;
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.5);
+    -fx-font-size: 14px;
+    -fx-padding: 12 16;
+    -fx-min-height: 100px; 
+    -fx-max-height: 100px; 
+    -fx-wrap-text: true;
+}
+
+.custom-text-field:focused,
+.custom-text-area:focused {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 10, 0, 0, 0);
+}
+
+
+.custom-text-area .content {
+    -fx-background-color: transparent;
+}
