@@ -157,7 +157,7 @@ public class PaginaMeusCursosView implements Initializable {
 
     private void loadMenu() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/estudante/menu/menu.fxml"));
             VBox menu = loader.load();
             Menu menuController = loader.getController();
             menuController.setCurrentPage("/com/estudante/meusCursos/paginaMeusCursos");

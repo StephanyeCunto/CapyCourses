@@ -78,7 +78,7 @@ private VBox settingsBox;
 
     private void loadMenu() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/estudante/menu/menu.fxml"));
             VBox menu = loader.load();
             Menu menuController = loader.getController();
             menuController.setCurrentPage("/com/elements/settings.fxml");
@@ -135,11 +135,11 @@ private VBox settingsBox;
         if (!Modo.getInstance().getModo()) {
             background.getStyleClass().add("dark");
             container.getStylesheets()
-                    .add(getClass().getResource("/com/estudante/forum/style/ligth/style.css").toExternalForm());
+                    .add(getClass().getResource("/com/elements/forum/style/ligth/style.css").toExternalForm());
         } else {
             background.getStyleClass().remove("dark");
             container.getStylesheets()
-                    .add(getClass().getResource("/com/estudante/forum/style/dark/style.css").toExternalForm());
+                    .add(getClass().getResource("/com/elements/forum/style/dark/style.css").toExternalForm());
         }
     }
 

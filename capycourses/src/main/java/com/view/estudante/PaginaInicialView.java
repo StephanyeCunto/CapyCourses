@@ -88,7 +88,7 @@ public class PaginaInicialView implements Initializable {
 
     private void loadMenu() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/estudante/menu/menu.fxml"));
             VBox menu = loader.load();
             Menu menuController = loader.getController();
             menuController.setCurrentPage("/com/estudante/paginaInicial");
@@ -101,7 +101,7 @@ public class PaginaInicialView implements Initializable {
 
     private void loadCarousel() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/carousel.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/estudante/carousel/carousel.fxml"));
             VBox carouselBox = loader.load();
             Carousel carousel = loader.getController();
             carousel.loadCarousel();

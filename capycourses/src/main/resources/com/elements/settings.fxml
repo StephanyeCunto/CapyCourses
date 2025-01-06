@@ -71,7 +71,7 @@
                         <Button text="Preferências" styleClass="outline-button-not-seletion"
                             fx:id="selectionParticipated" prefWidth="140" prefHeight="30"></Button>
                     </HBox>
-                    <VBox fx:id="forumContainer" spacing="20">
+                    <VBox fx:id="settingsBox" spacing="20">
 
 
                     </VBox>

@@ -88,8 +88,8 @@ public class Menu {
         buttonMenu.put("/com/estudante/meusCursos/paginaMeusCursos", "Meus Cursos");
         buttonMenu.put("/com/paginaProgresso", "Progresso");
         buttonMenu.put("/com/estudante/certificados/paginaCertificados", "Certificados");
-        buttonMenu.put("/com/estudante/biblioteca/paginaBiblioteca", "Biblioteca");
-        buttonMenu.put("/com/estudante/forum/paginaForum", "Forum");
+        buttonMenu.put("/com/elements/biblioteca/paginaBiblioteca", "Biblioteca");
+        buttonMenu.put("/com/elements/forum/paginaForum", "Forum");
         buttonMenu.put("/com/elements/settings", "Configurações");
         buttonMenu.put("/com/login_cadastro/paginaLogin", "Sair");
     }
@@ -148,7 +148,7 @@ public class Menu {
         try {
             String pageNext = getNextPage(button);
             if (pageNext != null) {
-                
+
                 Stage stage = (Stage) sideMenu.getScene().getWindow();
                 if (pageNext.equals("/com/estudante/paginaInicial.fxml")) {
                     pageNext = "/com/estudante/paginaInicial/paginaInicial.fxml";
@@ -167,9 +167,10 @@ public class Menu {
             e.printStackTrace();
         }
     }
-private void animateSceneTransition(Scene currentScene, Scene newScene, Stage stage) {
- 
-}
+
+    private void animateSceneTransition(Scene currentScene, Scene newScene, Stage stage) {
+
+    }
 
     private String getNextPage(String button) {
         for (HashMap.Entry<String, String> entry : buttonMenu.entrySet()) {
