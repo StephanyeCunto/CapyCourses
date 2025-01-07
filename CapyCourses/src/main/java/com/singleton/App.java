@@ -10,7 +10,6 @@ import java.io.IOException;
 
 public class App extends Application {
     private static Scene scene;
-
     @Override
     public void start(@SuppressWarnings("exports") Stage stage) throws IOException {
         Image icon = new Image(getClass().getResourceAsStream("/capyCourses 012.png"));
