@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?> 
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.ToggleButton?>
+
+
+<GridPane fx:controller="com.view.elements.Forum.PaginaForumView"
+  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+  prefHeight="768.0" prefWidth="1366.0"
+  styleClass="container" fx:id="container"
+  xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="80.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="800.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+  <children>
+    <VBox fx:id="sideMenu" styleClass="sideMenu" spacing="15">
+    </VBox>
+    <ScrollPane fx:id="courseScrollPane" fitToWidth="true"
+      style="-fx-background: transparent; -fx-background-color: transparent;"
+      GridPane.columnIndex="1">
+      <content>
+        <VBox spacing="20" style="-fx-padding: 25;">
+          <HBox>
+            <HBox fx:id="searchBar" maxWidth="400" maxHeight="20" spacing="20">
+              <TextField fx:id="searchField"
+                promptText="🔍 Pesquisar conteúdo..."
+                styleClass="custom-text-field"
+                HBox.hgrow="ALWAYS" />
+                <HBox minHeight="45">
+                <Button text="+" fx:id="addButton" onAction="#addForum" styleClass="add-button"></Button>
+                </HBox>
+            </HBox>
+
+            <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
+              fx:id="toggleButtonHBox">
+              <StackPane alignment="CENTER" fx:id="toggleButtonStackPane"
+                styleClass="theme-toggle-switch" prefWidth="50" prefHeight="25">
+                <Rectangle fx:id="background" width="50" height="25" styleClass="toggle-background"
+                  arcWidth="25" arcHeight="25" />
+                <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+                  <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+                  <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15" visible="true" />
+                  <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15" visible="false" />
+                </StackPane>
+                <ToggleButton fx:id="toggleButton" mnemonicParsing="false"
+                  styleClass="toggle-button" />
+              </StackPane>
+            </HBox>
+          </HBox>
+          <HBox spacing="20">
+            <Button text="Todos" styleClass="outline-button-seletion" fx:id="selectionTodos"
+              prefWidth="100" prefHeight="30"></Button>
+            <Button text="Meus Fóruns" styleClass="outline-button-not-seletion"
+              fx:id="selectionParticipated" prefWidth="140" prefHeight="30"></Button>
+          </HBox>
+          <VBox fx:id="forumContainer" spacing="20">
+
+
+          </VBox>
+        </VBox>
+      </content>
+    </ScrollPane>
+  </children>
+</GridPane>
