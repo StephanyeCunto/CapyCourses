@@ -1,0 +1,164 @@
+/* Root styles */
+.root {
+    -fx-background-color: #1a1b1e;
+}
+
+/* Brand section styles */
+.brand-section {
+    -fx-background-color: #27282d;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
+}
+
+.platform-name {
+    -fx-text-fill: white;
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-padding: 20 0 0 0;
+}
+
+.tagline {
+    -fx-text-fill: #a0a0a0;
+    -fx-font-size: 16px;
+    -fx-padding: 10 0 0 0;
+}
+
+/* Form section styles */
+.form-section {
+    -fx-background-color: #1a1b1e;
+}
+
+.welcome-text {
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.subtitle-text {
+    -fx-text-fill: #a0a0a0;
+    -fx-font-size: 14px;
+}
+
+.field-label {
+    -fx-text-fill: #a0a0a0;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.custom-text-field, .custom-text-field:focused {
+    -fx-background-color: #27282d;
+    -fx-background-radius: 8;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #666666;
+    -fx-border-width: 0;
+    -fx-padding: 8 16;
+}
+
+/* Button styles */
+.modern-button {
+    -fx-background-color: linear-gradient(to right, #6c5dd3, #8a6bf2);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 16 24;
+    -fx-cursor: hand;
+}
+
+.modern-button:hover {
+    -fx-background-color: linear-gradient(to right, #7d6ee3, #9b7cf2);
+}
+
+.register-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #6c5dd3;
+    -fx-border-radius: 8;
+    -fx-text-fill: white;
+    -fx-padding: 12 24;
+    -fx-cursor: hand;
+}
+
+.register-button:hover {
+    -fx-background-color: rgba(108, 93, 211, 0.1);
+}
+
+.register-label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Checkbox styles */
+.custom-checkbox {
+    -fx-text-fill: #a0a0a0;
+}
+
+.custom-checkbox .box {
+    -fx-background-color: #27282d;
+    -fx-border-color: #6c5dd3;
+    -fx-border-radius: 4;
+}
+
+.custom-checkbox:selected .mark {
+    -fx-background-color: white;
+}
+
+.custom-checkbox:selected .box {
+    -fx-background-color: #6c5dd3;
+}
+
+/* Hyperlink styles */
+.forgot-password-link {
+    -fx-text-fill: #6c5dd3;
+    -fx-underline: false;
+    -fx-cursor: hand;
+}
+
+.forgot-password-link:hover {
+    -fx-underline: true;
+}
+
+/* Error label styles */
+.error-label {
+    -fx-text-fill: #ff4444;
+    -fx-font-size: 12px;
+}
+
+/* Register prompt styles */
+.register-prompt {
+    -fx-text-fill: #a0a0a0;
+}
+
+/* Theme toggle switch styles */
+.toggleButtonHBox {
+    -fx-padding: 20;
+}
+
+.theme-toggle-switch {
+    -fx-background-color: transparent;
+}
+
+.toggle-background {
+    -fx-fill: #27282d;
+    -fx-stroke: #6c5dd3;
+    -fx-stroke-width: 1;
+}
+
+.toggle-thumb {
+    -fx-fill: #6c5dd3;
+}
+
+.thumb-container {
+    -fx-translate-x: -12;
+}
+
+.toggle-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Logo container styles */
+.logo-container {
+    -fx-padding: 20;
+}
+
+.hidden-image {
+    -fx-opacity: 1;
+}

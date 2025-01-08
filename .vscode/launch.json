@@ -6,6 +6,16 @@
     "configurations": [
         {
             "type": "java",
+<<<<<<< HEAD
+            "name": "App",
+            "request": "launch",
+            "mainClass": "com/com.singleton.App",
+            "projectName": "demo"
+        },
+        {
+            "type": "java",
+=======
+>>>>>>> origin/main
             "name": "ForumMenu",
             "request": "launch",
             "mainClass": "com/com.singleton.ForumMenu",
