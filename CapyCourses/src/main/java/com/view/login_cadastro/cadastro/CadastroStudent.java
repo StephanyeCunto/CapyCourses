@@ -91,6 +91,7 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
     }
 
     public void createStudent() throws ParseException {
+        System.out.println(validator.validateFields());
         if(validator.validateFields()){
             try {
                 

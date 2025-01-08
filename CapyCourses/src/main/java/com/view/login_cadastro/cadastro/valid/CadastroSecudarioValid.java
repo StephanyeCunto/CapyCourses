@@ -53,7 +53,7 @@ public class CadastroSecudarioValid {
             }
         });
 
-        textFieldCPF.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+       textFieldCPF.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
             validationSupport.registerValidator(textFieldCPF, false,
                     Validator.createPredicateValidator(value -> {
                         if (value instanceof String) {

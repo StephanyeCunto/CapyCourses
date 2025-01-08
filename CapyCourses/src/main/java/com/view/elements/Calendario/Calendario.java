@@ -150,44 +150,6 @@ public class Calendario extends Region {
         return button;
     }
 
-    @SuppressWarnings("unused")
-    private Button createNavigationButton(String text) {
-        Button button = new Button(text);
-        button.setStyle(" -fx-background-color: transparent;"+
-                "-fx-text-fill: %s;"+
-                "-fx-font-size: 16px;"+
-                "-fx-cursor: hand;"+
-                "-fx-padding: 6;"+
-                "-fx-background-radius: 6;".formatted(accentColor));
-
-        button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
-                "-fx-background-color: " + hoverColor + ";"));
-        button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
-                "-fx-background-color: " + hoverColor + ";", "")));
-
-        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
-        if (text.equals("❮")) {
-            if (minDate != null) {
-                LocalDate firstOfPreviousMonth = firstOfMonth.minusMonths(1);
-                button.setDisable(firstOfPreviousMonth.isBefore(minDate.withDayOfMonth(1)));
-            }
-            button.setOnAction(e -> {
-                selectedDate = selectedDate.minusMonths(1);
-                updateCalendar();
-            });
-        } else {
-            if (maxDate != null) {
-                LocalDate firstOfNextMonth = firstOfMonth.plusMonths(1);
-                button.setDisable(firstOfNextMonth.isAfter(maxDate.withDayOfMonth(1)));
-            }
-            button.setOnAction(e -> {
-                selectedDate = selectedDate.plusMonths(1);
-                updateCalendar();
-            });
-        }
-        return button;
-    }
-
     public Calendario() {
         monthLabel = new Label();
         yearLabel = new Label();
@@ -297,21 +259,6 @@ public class Calendario extends Region {
 
     private void updateDateInput(TextField field) {
         field.setText(getDate());
-    }
-
-    @SuppressWarnings("unused")
-    private void showDatePopup() {
-        closeAllPopups();
-        Popup popup = new Popup();
-        VBox popupContent = createPopupContent();
-        popup.getContent().add(popupContent);
-        popup.setAutoHide(true);
-        popup.setOnHiding(e -> closeAllPopups());
-        double xOffset = dateInputField.localToScreen(0, 0).getX();
-        double yOffset = dateInputField.localToScreen(0, 0).getY() + dateInputField.getHeight() + 5;
-
-        popup.show(dateInputField.getScene().getWindow(), xOffset, yOffset);
-        activePopups.add(popup);
     }
 
     private void closeAllPopups() {
@@ -460,41 +407,6 @@ public class Calendario extends Region {
 
     int countyearGridStartYear = 0;
 
-    @SuppressWarnings("unused")
-    private HBox createYearNavigationHeader() {
-        HBox header = new HBox(10);
-        header.setAlignment(Pos.CENTER);
-        header.setPadding(new Insets(0, 0, 8, 0));
-
-        Button prevYear = createNavigationButton("❮");
-        Button nextYear = createNavigationButton("❯");
-
-        if (countyearGridStartYear == 0) {
-            yearGridStartYear = selectedDate.getYear() - 5;
-            countyearGridStartYear = 1;
-        }
-
-        Label yearRangeLabel = new Label(yearGridStartYear + " - " + (yearGridStartYear + 11));
-        yearRangeLabel.setStyle(String.format(
-                "-fx-font-weight: bold;" +
-                "-fx-font-size: 12px;" +
-                "-fx-text-fill: %s;",
-                textColor));
-
-        prevYear.setOnAction(e -> {
-            yearGridStartYear -= 12;
-            updateYearPopup();
-        });
-
-        nextYear.setOnAction(e -> {
-            yearGridStartYear += 12;
-            updateYearPopup();
-        });
-
-        header.getChildren().addAll(prevYear, yearRangeLabel, nextYear);
-        return header;
-    }
-
     private void updateYearPopup() {
         Popup currentPopup = activePopups.get(activePopups.size() - 1);
         VBox newContent = createSelectionPopupContent(false);
@@ -602,5 +514,132 @@ public class Calendario extends Region {
             header.add(dayLabel, i, 0);
         }
         return header;
+    }
+
+    private Button createNavigationButton(String text) {
+        Button button = new Button(text);
+        button.setStyle(String.format(
+            "-fx-background-color: transparent;" +
+            "-fx-text-fill: %s;" +
+            "-fx-font-size: 16px;" +
+            "-fx-cursor: hand;" +
+            "-fx-padding: 6;" +
+            "-fx-background-radius: 6;",
+            accentColor));
+
+        button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
+                "-fx-background-color: " + hoverColor + ";"));
+        button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
+                "-fx-background-color: " + hoverColor + ";", "")));
+
+        // Fixed navigation logic
+        button.setOnAction(e -> {
+            if (text.equals("❮")) {
+                selectedDate = selectedDate.minusMonths(1);
+            } else {
+                selectedDate = selectedDate.plusMonths(1);
+            }
+            updateCalendar();
+            updateNavigationButtonsState();
+        });
+
+        return button;
+    }
+
+    // Add new method to update navigation buttons state
+    private void updateNavigationButtonsState() {
+        for (Popup popup : activePopups) {
+            VBox popupContent = (VBox) popup.getContent().get(0);
+            HBox header = (HBox) popupContent.getChildren().get(0);
+            
+            Button prevButton = (Button) header.getChildren().get(0);
+            Button nextButton = (Button) header.getChildren().get(header.getChildren().size() - 1);
+
+            LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
+            
+            if (minDate != null) {
+                prevButton.setDisable(firstOfMonth.isBefore(minDate.withDayOfMonth(1)) || 
+                                    firstOfMonth.equals(minDate.withDayOfMonth(1)));
+            } else {
+                prevButton.setDisable(false);
+            }
+
+            if (maxDate != null) {
+                nextButton.setDisable(firstOfMonth.plusMonths(1).isAfter(maxDate.withDayOfMonth(1)));
+            } else {
+                nextButton.setDisable(false);
+            }
+        }
+    }
+
+    // Update createYearNavigationHeader method
+    private HBox createYearNavigationHeader() {
+        HBox header = new HBox(10);
+        header.setAlignment(Pos.CENTER);
+        header.setPadding(new Insets(0, 0, 8, 0));
+
+        Button prevYear = createYearNavigationButton("❮");
+        Button nextYear = createYearNavigationButton("❯");
+
+        if (countyearGridStartYear == 0) {
+            yearGridStartYear = selectedDate.getYear() - 5;
+            countyearGridStartYear = 1;
+        }
+
+        Label yearRangeLabel = new Label(yearGridStartYear + " - " + (yearGridStartYear + 11));
+        yearRangeLabel.setStyle(String.format(
+                "-fx-font-weight: bold;" +
+                "-fx-font-size: 12px;" +
+                "-fx-text-fill: %s;",
+                textColor));
+
+        prevYear.setOnAction(e -> {
+            yearGridStartYear -= 12;
+            updateYearPopup();
+        });
+
+        nextYear.setOnAction(e -> {
+            yearGridStartYear += 12;
+            updateYearPopup();
+        });
+
+        header.getChildren().addAll(prevYear, yearRangeLabel, nextYear);
+        return header;
+    }
+
+    // Add new method for year navigation buttons
+    private Button createYearNavigationButton(String text) {
+        Button button = new Button(text);
+        button.setStyle(String.format(
+            "-fx-background-color: transparent;" +
+            "-fx-text-fill: %s;" +
+            "-fx-font-size: 16px;" +
+            "-fx-cursor: hand;" +
+            "-fx-padding: 6;" +
+            "-fx-background-radius: 6;",
+            accentColor));
+
+        button.setOnMouseEntered(e -> button.setStyle(button.getStyle() +
+                "-fx-background-color: " + hoverColor + ";"));
+        button.setOnMouseExited(e -> button.setStyle(button.getStyle().replace(
+                "-fx-background-color: " + hoverColor + ";", "")));
+
+        return button;
+    }
+
+    // Update showDatePopup to initialize button states
+    private void showDatePopup() {
+        closeAllPopups();
+        Popup popup = new Popup();
+        VBox popupContent = createPopupContent();
+        popup.getContent().add(popupContent);
+        popup.setAutoHide(true);
+        popup.setOnHiding(e -> closeAllPopups());
+        double xOffset = dateInputField.localToScreen(0, 0).getX();
+        double yOffset = dateInputField.localToScreen(0, 0).getY() + dateInputField.getHeight() + 5;
+
+        popup.show(dateInputField.getScene().getWindow(), xOffset, yOffset);
+        activePopups.add(popup);
+        updateNavigationButtonsState();
     }
 }

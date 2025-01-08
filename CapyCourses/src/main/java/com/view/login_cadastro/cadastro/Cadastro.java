@@ -4,8 +4,6 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import org.controlsfx.validation.decoration.GraphicValidationDecoration;
-
 import com.controller.login_cadastro.CadastroController;
 import com.view.Modo;
 import com.view.login_cadastro.BaseLoginCadastro;
@@ -26,9 +24,6 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 import javafx.scene.image.*;
-
-import java.awt.Toolkit;
-
 import javafx.scene.control.Alert;
 
 public class Cadastro extends BaseLoginCadastro implements Initializable {
