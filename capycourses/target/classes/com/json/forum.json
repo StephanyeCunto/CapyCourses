@@ -6,6 +6,6 @@
   "dateTime" : "2023-05-22",
   "view" : 330,
   "like" : 2,
-  "comments" : 13,
+  "comments" : 12,
   "question" : "Quais são as melhores práticas para otimizar queries NoSQL em grandes coleções do MongoDB?"
 }
