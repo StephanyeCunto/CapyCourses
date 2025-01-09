@@ -69,20 +69,19 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
 
+        System.out.println("Estado da sessão na inicialização:");
+        System.out.println("Email: " + UserSession.getInstance().getUserEmail());
+        System.out.println("Register Incomplete: " + UserSession.getInstance().getRegisterIncomplet());
+
         super.loadComboBox();
         super.loadCalendar();
         super.setupInterestButtons();
 
-        validator.setupInitialState(comboBoxEducation,textFieldCPF, textFieldPhone,cpfErrorLabel,educationErrorLabel,phoneErrorLabel);
+        validator.setupInitialState(comboBoxEducation, textFieldCPF, textFieldPhone, 
+            cpfErrorLabel, educationErrorLabel, phoneErrorLabel);
 
-        toggleButtonStackPane.setOnMouseClicked(e -> toggle());
-        sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
-        moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
-        toggleInitialize();
-        if (UserSession.getInstance().getRegisterIncomplet() == "Student") {
+        if (UserSession.getInstance().getRegisterIncomplet().equals("Student")) {
             setupErrorNotification();
-            UserSession.getInstance().clearSession();
-            //UserSession.getInstance().clearSession();
         }
     }
 
@@ -91,10 +90,12 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         super.changeMode(true);
     }
 
-    public void createStudent() throws ParseException {
-        System.out.println(validator.validateFields());
-        if(validator.validateFields()){
+    @FXML
+    private void createStudent() throws ParseException {
+        if (validator.validateFields()) {
             try {
+                String email = UserSession.getInstance().getUserEmail();
+                System.out.println("Email na sessão: " + email);
                 
                 String interests = String.join(". ", super.getSelectedInterests());
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -102,7 +103,7 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
                 
                 CadastroStudentController controller = new CadastroStudentController();
                 boolean success = controller.cadastrarStudent(
-                    UserSession.getInstance().getUserEmail(), 
+                    email,
                     date,
                     textFieldCPF.getText(),
                     textFieldPhone.getText(),
@@ -111,11 +112,11 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
                 );
 
                 if (success) {
-                    UserSession.getInstance().setRegisterIncomplet("false");
+                    UserSession.getInstance().setRegisterIncomplet("complete");
                     super.redirectTo("/com/login_cadastro/paginaLogin.fxml", 
                         (Stage) leftSection.getScene().getWindow());
+                    UserSession.getInstance().clearSession();
                 } else {
-                    
                     showError();
                 }
             } catch (Exception e) {

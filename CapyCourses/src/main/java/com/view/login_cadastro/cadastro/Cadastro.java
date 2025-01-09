@@ -25,6 +25,8 @@ import javafx.scene.control.*;
 import javafx.util.Duration;
 import javafx.scene.image.*;
 import javafx.scene.control.Alert;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 
 public class Cadastro extends BaseLoginCadastro implements Initializable {
     @FXML
@@ -98,14 +100,13 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     }
 
     @FXML
-    public void register() {
-        if (validator.isValid(textFieldName, textFieldEmail, passwordFieldPassword,
-                passwordFieldPasswordConfirm)) {
-            try {
-                CadastroController cadastroController = new CadastroController();
+    private void createAccount() {
+        try {
+            if (validator.validateFields()) {
                 String userType = radioButtonStudent.isSelected() ? "STUDENT" : "TEACHER";
                 
-                boolean success = cadastroController.cadastrar(
+                CadastroController controller = new CadastroController();
+                String result = controller.cadastrar(
                     textFieldName.getText(),
                     textFieldEmail.getText(),
                     passwordFieldPassword.getText(),
@@ -113,21 +114,65 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
                     userType
                 );
 
-                if (success) {
-                    UserSession.getInstance().setUserEmail(textFieldEmail.getText());
-                    String nextPage = radioButtonStudent.isSelected() 
-                        ? "/com/login_cadastro/paginaCadastroStudent.fxml"
-                        : "/com/login_cadastro/paginaCadastroTeacher.fxml";
+                System.out.println("Resultado do cadastro: " + result);
+                Stage stage = (Stage) leftSection.getScene().getWindow();
+
+                switch (result) {
+                    case "incomplete student":
+                        URL studentUrl = getClass().getResource("/com/login_cadastro/paginaCadastroStudent.fxml");
+                        if (studentUrl == null) {
+                            System.err.println("FXML de estudante não encontrado!");
+                            showError();
+                            return;
+                        }
+                        super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);
+                        break;
                         
-                    redirectTo(nextPage, (Stage) leftSection.getScene().getWindow());
-                } else {
-                    
-                    showEmailExistsError();
+                    case "incomplete teacher":
+                        URL teacherUrl = getClass().getResource("/com/login_cadastro/paginaCadastroTeacher.fxml");
+                        if (teacherUrl == null) {
+                            System.err.println("FXML de professor não encontrado!");
+                            showError();
+                            return;
+                        }
+                        super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);
+                        break;
+                        
+                    case "email_exists":
+                        showEmailExistsError();
+                        break;
+                        
+                    case "error":
+                        showError();
+                        break;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                showError();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Erro durante o cadastro: " + e.getMessage());
+            showError();
+        }
+    }
+
+    private String getSelectedUserType() {
+        if (radioButtonStudent.isSelected()) {
+            return "STUDENT";
+        } else if (radioButtonTeacher.isSelected()) {
+            return "TEACHER";
+        }
+        return "";
+    }
+
+    @Override
+    public void redirectTo(String fxml, Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError();
         }
     }
 
@@ -182,16 +227,19 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     }
 
     private void showError() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro no Cadastro");
-        alert.setHeaderText(null);
-        alert.setContentText("Ocorreu um erro ao tentar realizar o cadastro. Por favor, tente novamente.");
-        alert.showAndWait();
+        // Implementar mensagem de erro genérica
+        System.out.println("Erro durante o cadastro");
     }
 
     private void showEmailExistsError() {
-        // Mostrar mensagem de erro específica para email já existente
-        textFieldEmail.setStyle("-fx-border-color: red;");
-        
+        userEmailErrorLabel.setText("Este email já está cadastrado");
+        userEmailErrorLabel.setVisible(true);
+        userEmailErrorLabel.setManaged(true);
+    }
+
+    @FXML
+    private void register() {
+        Stage stage = (Stage) leftSection.getScene().getWindow();
+        super.redirectTo("/com/login_cadastro/paginaCadastro.fxml", stage);
     }
 }

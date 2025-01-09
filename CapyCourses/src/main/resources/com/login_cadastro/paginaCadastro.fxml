@@ -142,7 +142,7 @@
         </VBox>
 
         <Button maxWidth="Infinity" styleClass="modern-button"
-          text="CRIAR CONTA" onAction="#register" />
+          text="CRIAR CONTA" onAction="#createAccount" />
 
         <HBox alignment="CENTER" spacing="4">
           <Label text="Já tem uma conta?" styleClass="register-prompt" />

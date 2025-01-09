@@ -15,32 +15,16 @@ public class StudentDAO implements IDao<Student> {
 
     @Override
     public void salvar(Student obj) {
-
         try {
             this.em.getTransaction().begin();
             this.em.persist(obj);
+            this.em.flush();
             this.em.getTransaction().commit();
         } catch (Exception e) {
             if (this.em.getTransaction().isActive()) {
                 this.em.getTransaction().rollback();
             }
             throw e;
-        }
-        EntityManager em = null;
-        try {
-            em = DatabaseJPA.getInstance().getEntityManager();
-            em.getTransaction().begin();
-            em.persist(obj);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em != null && em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw e;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -87,17 +71,9 @@ public class StudentDAO implements IDao<Student> {
     }
 
     public Student buscarPorUserId(Integer userId) {
-
         try {
             String jpql = "SELECT s FROM Student s WHERE s.user.id = :userId";
             return this.em.createQuery(jpql, Student.class)
-
-        EntityManager em = null;
-        try {
-            em = DatabaseJPA.getInstance().getEntityManager();
-            String jpql = "SELECT s FROM Student s WHERE s.user.id = :userId";
-            return em.createQuery(jpql, Student.class)
-
                     .setParameter("userId", userId)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -105,14 +81,6 @@ public class StudentDAO implements IDao<Student> {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
-
-        }
-    }
-
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 

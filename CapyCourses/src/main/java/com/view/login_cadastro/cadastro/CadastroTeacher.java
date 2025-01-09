@@ -79,18 +79,11 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
         super.loadCalendar();
         super.setupInterestButtons();
 
-        validator.setupInitialState(comboBoxEducation, textFieldCPF, textFieldPhone, cpfErrorLabel, educationErrorLabel,
-                phoneErrorLabel);
+        validator.setupInitialState(comboBoxEducation, textFieldCPF, textFieldPhone, 
+            cpfErrorLabel, educationErrorLabel, phoneErrorLabel);
 
-        toggleButtonStackPane.setOnMouseClicked(e -> toggle());
-        sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
-        moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
-        toggleInitialize();
-        if (UserSession.getInstance().getRegisterIncomplet() == "Teacher") {
+        if (UserSession.getInstance().getRegisterIncomplet().equals("Teacher")) {
             setupErrorNotification();
-            UserSession.getInstance().clearSession();
-
-            //UserSession.getInstance().clearSession();
         }
     }
 
@@ -112,7 +105,6 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
                 
                 CadastroTeacherController controller = new CadastroTeacherController();
                 boolean success = controller.cadastrarTeacher(
-                    UserSession.getInstance().getUserEmail(),
                     email,
                     date,
                     textFieldCPF.getText(),
@@ -122,9 +114,10 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
                 );
 
                 if (success) {
-                    UserSession.getInstance().setRegisterIncomplet("false");
+                    UserSession.getInstance().setRegisterIncomplet("complete");
                     super.redirectTo("/com/login_cadastro/paginaLogin.fxml", 
                         (Stage) leftSection.getScene().getWindow());
+                    UserSession.getInstance().clearSession();
                 } else {
                     showError();
                 }
