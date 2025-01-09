@@ -1,15 +1,15 @@
 package com.model.login_cadastro;
 
-<<<<<<< HEAD
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-=======
+
 import com.dao.UserDAO;
 import com.dao.StudentDAO;
 import com.dao.TeacherDAO;
->>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,10 +17,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
 public class Login {
     private String user;
     private String password;
-<<<<<<< HEAD
+
 
     public String isCheck() {
         try (BufferedReader br = new BufferedReader(
@@ -66,7 +67,7 @@ public class Login {
             }
         } catch (IOException e) {
             e.printStackTrace();
-=======
+
     private final UserDAO userDAO = new UserDAO();
     private final StudentDAO studentDAO = new StudentDAO();
     private final TeacherDAO teacherDAO = new TeacherDAO();
@@ -93,12 +94,11 @@ public class Login {
             return isCheckStudent(user.getId());
         } else if (user.getTypeUser().equalsIgnoreCase("TEACHER")) {
             return isCheckTeacher(user.getId());
->>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
+
         }
         return false;
     }
 
-<<<<<<< HEAD
     private boolean isCheckTeacher(String email) {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("capycourses/src/main/resources/com/bd/bd_teacher.csv"))) {
@@ -113,7 +113,6 @@ public class Login {
             e.printStackTrace();
         }
         return false;
-=======
     private boolean isCheckStudent(Integer userId) {
         try {
             return studentDAO.buscarPorUserId(userId) != null;
@@ -130,6 +129,6 @@ public class Login {
             e.printStackTrace();
             return false;
         }
->>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
+
     }
 }
