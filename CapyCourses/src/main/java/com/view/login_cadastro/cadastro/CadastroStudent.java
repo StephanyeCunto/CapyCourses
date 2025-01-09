@@ -81,7 +81,11 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         toggleInitialize();
         if (UserSession.getInstance().getRegisterIncomplet() == "Student") {
             setupErrorNotification();
+<<<<<<< HEAD
             UserSession.getInstance().clearSession();
+=======
+            //UserSession.getInstance().clearSession();
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
         }
     }
 

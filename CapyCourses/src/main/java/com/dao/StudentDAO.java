@@ -15,6 +15,7 @@ public class StudentDAO implements IDao<Student> {
 
     @Override
     public void salvar(Student obj) {
+<<<<<<< HEAD
         try {
             this.em.getTransaction().begin();
             this.em.persist(obj);
@@ -24,6 +25,23 @@ public class StudentDAO implements IDao<Student> {
                 this.em.getTransaction().rollback();
             }
             throw e;
+=======
+        EntityManager em = null;
+        try {
+            em = DatabaseJPA.getInstance().getEntityManager();
+            em.getTransaction().begin();
+            em.persist(obj);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
         }
     }
 
@@ -70,9 +88,17 @@ public class StudentDAO implements IDao<Student> {
     }
 
     public Student buscarPorUserId(Integer userId) {
+<<<<<<< HEAD
         try {
             String jpql = "SELECT s FROM Student s WHERE s.user.id = :userId";
             return this.em.createQuery(jpql, Student.class)
+=======
+        EntityManager em = null;
+        try {
+            em = DatabaseJPA.getInstance().getEntityManager();
+            String jpql = "SELECT s FROM Student s WHERE s.user.id = :userId";
+            return em.createQuery(jpql, Student.class)
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
                     .setParameter("userId", userId)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -80,6 +106,19 @@ public class StudentDAO implements IDao<Student> {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+<<<<<<< HEAD
         }
     }
+=======
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public EntityManager getEntityManager() {
+        return this.em;
+    }
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
 } 

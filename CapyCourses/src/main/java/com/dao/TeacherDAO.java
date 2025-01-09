@@ -10,11 +10,16 @@ public class TeacherDAO implements IDao<Teacher> {
     private EntityManager entityManager;
 
     public TeacherDAO() {
+<<<<<<< HEAD
         entityManager = DatabaseJPA.getInstance().getEntityManager();
+=======
+        this.entityManager = DatabaseJPA.getInstance().getEntityManager();
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
     }
 
     @Override
     public void salvar(Teacher obj) {
+<<<<<<< HEAD
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(obj);
@@ -24,6 +29,23 @@ public class TeacherDAO implements IDao<Teacher> {
                 entityManager.getTransaction().rollback();
             }
             throw e;
+=======
+        EntityManager em = null;
+        try {
+            em = DatabaseJPA.getInstance().getEntityManager();
+            em.getTransaction().begin();
+            em.persist(obj);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
         }
     }
 
@@ -78,9 +100,17 @@ public class TeacherDAO implements IDao<Teacher> {
     }
 
     public Teacher buscarPorUserId(Integer userId) {
+<<<<<<< HEAD
         try {
             String jpql = "SELECT t FROM Teacher t WHERE t.user.id = :userId";
             return entityManager.createQuery(jpql, Teacher.class)
+=======
+        EntityManager em = null;
+        try {
+            em = DatabaseJPA.getInstance().getEntityManager();
+            String jpql = "SELECT t FROM Teacher t WHERE t.user.id = :userId";
+            return em.createQuery(jpql, Teacher.class)
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
                     .setParameter("userId", userId)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -88,6 +118,19 @@ public class TeacherDAO implements IDao<Teacher> {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+<<<<<<< HEAD
         }
     }
+=======
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public EntityManager getEntityManager() {
+        return this.entityManager;
+    }
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
 } 

@@ -71,6 +71,13 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
 
+<<<<<<< HEAD
+=======
+        System.out.println("Estado da sessão na inicialização:");
+        System.out.println("Email: " + UserSession.getInstance().getUserEmail());
+        System.out.println("Register Incomplete: " + UserSession.getInstance().getRegisterIncomplet());
+
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
         super.loadComboBox();
         super.loadCalendar();
         super.setupInterestButtons();
@@ -84,7 +91,11 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
         toggleInitialize();
         if (UserSession.getInstance().getRegisterIncomplet() == "Teacher") {
             setupErrorNotification();
+<<<<<<< HEAD
             UserSession.getInstance().clearSession();
+=======
+            //UserSession.getInstance().clearSession();
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
         }
     }
 
@@ -97,13 +108,23 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
     private void createTeacher() throws ParseException {
         if (validator.validateFields()) {
             try {
+<<<<<<< HEAD
+=======
+                String email = UserSession.getInstance().getUserEmail();
+                System.out.println("Email na sessão: " + email);
+                
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
                 String interests = String.join(". ", super.getSelectedInterests());
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = format.parse(super.getDateInputPopup().getDate());
                 
                 CadastroTeacherController controller = new CadastroTeacherController();
                 boolean success = controller.cadastrarTeacher(
+<<<<<<< HEAD
                     UserSession.getInstance().getUserEmail(),
+=======
+                    email,
+>>>>>>> 4a68bd8 (Sprint 00 - Resolvido Bug Cadastro Incompleto)
                     date,
                     textFieldCPF.getText(),
                     textFieldPhone.getText(),
