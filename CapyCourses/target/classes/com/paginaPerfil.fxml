@@ -27,8 +27,8 @@
 
 <GridPane maxHeight="-Infinity"
     maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-    prefWidth="1280.0"
-    style="-fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);"
+    prefWidth="1280.0" stylesheets="@professor/style/dark/style.css"
+    styleClass="main-container"
     xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="220.0" />
@@ -38,17 +38,17 @@
         <RowConstraints minHeight="10.0" prefHeight="800.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <!-- Menu Lateral (mantido igual) -->
+        <!-- Menu Lateral -->
         <VBox fx:id="sideMenu" spacing="15"
-            style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-padding: 25; -fx-background-radius: 0 20 20 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);">
+            styleClass="side-menu">
         </VBox>
 
         <!-- Conteúdo Principal - Configurações Aprimoradas -->
         <ScrollPane fitToWidth="true"
-            style="-fx-background: transparent; -fx-background-color: transparent;"
+            styleClass="main-scroll"
             GridPane.columnIndex="1">
             <content>
-                <VBox spacing="30" style="-fx-padding: 25;">
+                <VBox spacing="30" styleClass="main-content">
                     <!-- Cabeçalho da Página -->
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <Circle fill="#6c63ff" radius="25">
@@ -57,235 +57,78 @@
                             </effect>
                         </Circle>
                         <VBox>
-                            <Label text="Configurações" textFill="WHITE">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="32.0" />
-                                </font>
-                            </Label>
-                            <Label text="Gerencie sua conta e preferências" textFill="#ffffff80">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="16.0" />
-                                </font>
-                            </Label>
+                            <Label text="Configurações" styleClass="page-title" />
+                            <Label text="Gerencie sua conta e preferências"
+                                styleClass="page-subtitle" />
                         </VBox>
                     </HBox>
 
                     <!-- Menu de Navegação Rápida -->
                     <HBox spacing="15" style="-fx-padding: 10 0;">
-                        <Button
-                            style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12;"
-                            text="Perfil">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="14.0" />
-                            </font>
-                        </Button>
-                        <Button
-                            style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;"
-                            text="Segurança">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="14.0" />
-                            </font>
-                        </Button>
-                        <Button
-                            style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;"
-                            text="Preferências">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="14.0" />
-                            </font>
-                        </Button>
-                        <Button
-                            style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;"
-                            text="Privacidade">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="14.0" />
-                            </font>
-                        </Button>
+                        <Button styleClass="modern-button" text="Perfil" />
+                        <Button styleClass="outline-button" text="Segurança" />
+                        <Button styleClass="outline-button" text="Preferências" />
+                        <Button styleClass="outline-button" text="Privacidade" />
                     </HBox>
 
                     <!-- Perfil Aprimorado -->
-                    <VBox spacing="25"
-                        style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 20; -fx-padding: 30; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 20;">
+                    <VBox spacing="25" styleClass="content-card">
                         <HBox alignment="CENTER_LEFT" spacing="20">
                             <StackPane>
                                 <Circle fill="#6c63ff" radius="50" />
-                                <Label text="JS" textFill="WHITE">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="24.0" />
-                                    </font>
-                                </Label>
+                                <Label text="JS" styleClass="card-title" />
                             </StackPane>
                             <VBox spacing="10">
                                 <HBox spacing="15">
-                                    <Button
-                                        style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12;"
-                                        text="Alterar Foto">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Button>
-                                    <Button
-                                        style="-fx-background-color: rgba(255,0,0,0.1); -fx-text-fill: #ff4d4d; -fx-background-radius: 12;"
-                                        text="Remover">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Button>
+                                    <Button styleClass="modern-button" text="Alterar Foto" />
+                                    <Button styleClass="outline-button" text="Remover" />
                                 </HBox>
                                 <Label text="Tamanho máximo: 5MB. Formatos: JPG, PNG"
-                                    textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="12.0" />
-                                    </font>
-                                </Label>
+                                    styleClass="card-subtitle" />
                             </VBox>
                         </HBox>
 
                         <!-- Informações Pessoais -->
                         <VBox spacing="20">
-                            <Label text="Informações Pessoais" textFill="WHITE">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                </font>
-                            </Label>
-                            <GridPane hgap="20" vgap="15">
-                                <columnConstraints>
-                                    <ColumnConstraints percentWidth="33" />
-                                    <ColumnConstraints percentWidth="33" />
-                                    <ColumnConstraints percentWidth="33" />
-                                </columnConstraints>
+                            <Label text="Informações Pessoais" styleClass="card-title" />
 
-                                <!-- Nome Completo -->
-                                <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                                    <Label text="Nome Completo" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField
-                                        style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12; -fx-border-color: rgba(255,255,255,0.1); -fx-border-radius: 12; -fx-padding: 12;"
-                                        text="João Silva">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </TextField>
-                                </VBox>
+<HBox spacing="20">
+    <!-- Nome Completo -->
+    <VBox fx:id="nomeVBox" HBox.hgrow="ALWAYS">
+        <Label text="Nome Completo" styleClass="field-label" />
+        <TextField styleClass="custom-text-field" text="João Silva" />
+    </VBox>
 
-                                <!-- Nome de Usuário -->
-                                <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                                    <Label text="Nome de Usuário" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField
-                                        style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12; -fx-border-color: rgba(255,255,255,0.1); -fx-border-radius: 12; -fx-padding: 12;"
-                                        text="joaosilva">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </TextField>
-                                </VBox>
+    <!-- Email -->
+    <VBox fx:id="emailVBox" HBox.hgrow="ALWAYS">
+        <Label text="Email" styleClass="field-label" />
+        <TextField styleClass="custom-text-field" text="joao.silva@email.com" />
+    </VBox>
 
-                                <!-- Email -->
-                                <VBox spacing="8" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                                    <Label text="Email" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField
-                                        style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12; -fx-border-color: rgba(255,255,255,0.1); -fx-border-radius: 12; -fx-padding: 12;"
-                                        text="joao.silva@email.com">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </TextField>
-                                </VBox>
-
-                                <!-- Telefone -->
-                                <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                                    <Label text="Telefone" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField
-                                        style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12; -fx-border-color: rgba(255,255,255,0.1); -fx-border-radius: 12; -fx-padding: 12;"
-                                        text="+55 (11) 99999-9999">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </TextField>
-                                </VBox>
-
-                                <!-- País -->
-                                <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                    <Label text="País" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <ComboBox prefHeight="33.0" prefWidth="295.0"
-                                        promptText="Brasil"
-                                        style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;" />
-                                </VBox>
-
-                                <!-- Fuso Horário -->
-                                <VBox spacing="8" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                    <Label text="Fuso Horário" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <ComboBox prefHeight="33.0" prefWidth="296.0"
-                                        promptText="Brasília (GMT-3)"
-                                        style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;" />
-                                </VBox>
-                                <rowConstraints>
-                                    <RowConstraints />
-                                    <RowConstraints />
-                                </rowConstraints>
-                            </GridPane>
+    <!-- Telefone -->
+    <VBox fx:id="telefoneVBox" HBox.hgrow="ALWAYS">
+        <Label text="Telefone" styleClass="field-label" />
+        <TextField styleClass="custom-text-field" text="+55 (11) 99999-9999" />
+    </VBox>
+</HBox>
                         </VBox>
+
 
                         <!-- Bio -->
                         <VBox spacing="8">
-                            <Label text="Biografia" textFill="#ffffff80">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="14.0" />
-                                </font>
-                            </Label>
-                            <TextArea prefRowCount="3"
-                                style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12; -fx-border-color: rgba(255,255,255,0.1); -fx-border-radius: 12;"
-                                wrapText="true">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="14.0" />
-                                </font>
-                            </TextArea>
-                            <Label text="Máximo de 200 caracteres" textFill="#ffffff80">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="12.0" />
-                                </font>
-                            </Label>
+                            <Label text="Biografia" styleClass="field-label" />
+                            <TextArea styleClass="custom-text-area" wrapText="true" />
+                            <Label text="Máximo de 200 caracteres" styleClass="card-subtitle" />
                         </VBox>
                     </VBox>
 
                     <!-- Segurança Aprimorada -->
-                    <VBox spacing="25"
-                        style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 20; -fx-padding: 30; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 20;">
-                        <Label text="Segurança" textFill="WHITE">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="22.0" />
-                            </font>
-                        </Label>
+                    <VBox spacing="25" styleClass="content-card">
+                        <Label text="Segurança" styleClass="card-title" />
 
                         <!-- Alteração de Senha -->
                         <VBox spacing="20">
-                            <Label text="Alterar Senha" textFill="WHITE">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                </font>
-                            </Label>
+                            <Label text="Alterar Senha" styleClass="card-title" />
                             <GridPane hgap="20" vgap="15">
                                 <columnConstraints>
                                     <ColumnConstraints percentWidth="33" />
@@ -294,44 +137,17 @@
                                 </columnConstraints>
 
                                 <VBox spacing="8" GridPane.columnIndex="0">
-                                    <Label text="Senha Atual" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <PasswordField
-                                        style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12; -fx-border-color: rgba(255,255,255,0.1); -fx-border-radius: 12; -fx-padding: 12;">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </PasswordField>
+                                    <Label text="Senha Atual" styleClass="field-label" />
+                                    <PasswordField styleClass="custom-text-field" />
                                 </VBox>
 
                                 <VBox spacing="8" GridPane.columnIndex="1">
-                                    <Label text="Nova Senha" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <PasswordField
-                                        style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12; -fx-border-color: rgba(255,255,255,0.1); -fx-border-radius: 12; -fx-padding: 12;">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </PasswordField>
+                                    <Label text="Nova Senha" styleClass="field-label" />
+                                    <PasswordField styleClass="custom-text-field" />
                                 </VBox>
                                 <VBox spacing="8" GridPane.columnIndex="2">
-                                    <Label text="Confirmar Nova Senha" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <PasswordField
-                                        style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12; -fx-border-color: rgba(255,255,255,0.1); -fx-border-radius: 12; -fx-padding: 12;">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </PasswordField>
+                                    <Label text="Confirmar Nova Senha" styleClass="field-label" />
+                                    <PasswordField styleClass="custom-text-field" />
                                 </VBox>
                                 <rowConstraints>
                                     <RowConstraints />
@@ -340,354 +156,100 @@
 
                             <!-- Requisitos de Senha -->
                             <VBox spacing="5" style="-fx-padding: 10 0;">
-                                <Label text="Requisitos de senha:" textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="12.0" />
-                                    </font>
-                                </Label>
-                                <Label text="• Mínimo de 8 caracteres" textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="12.0" />
-                                    </font>
-                                </Label>
-                                <Label text="• Pelo menos uma letra maiúscula" textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="12.0" />
-                                    </font>
-                                </Label>
-                                <Label text="• Pelo menos um número" textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="12.0" />
-                                    </font>
-                                </Label>
-                                <Label text="• Pelo menos um caractere especial"
-                                    textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="12.0" />
-                                    </font>
-                                </Label>
+                                <Label text="Requisitos de senha:" styleClass="card-subtitle" />
+                                <Label text="• Mínimo de 6 caracteres" styleClass="card-subtitle" />
+
                             </VBox>
                         </VBox>
 
-                        <!-- Autenticação de Dois Fatores -->
+                    </VBox>
+
+                    <!-- Preferências -->
+                    <VBox spacing="25" styleClass="content-card">
+                        <Label text="Preferências" styleClass="card-title" />
                         <VBox spacing="15">
-                            <Label text="Autenticação de Dois Fatores" textFill="WHITE">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                </font>
-                            </Label>
+                            <Label text="Tema" styleClass="card-title" />
+                            <HBox spacing="15">
+                                <ComboBox>
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="Claro" />
+                                            <String fx:value="Escuro" />
+                                            <String fx:value="Sistema" />
+                                        </FXCollections>
+                                    </items>
+                                    <value>
+                                        <String fx:value="Sistema" />
+                                    </value>
+                                </ComboBox>
+                            </HBox>
+                        </VBox>
+
+                        <VBox spacing="15">
+                            <Label text="Notificações" styleClass="card-title" />
                             <HBox alignment="CENTER_LEFT" spacing="15">
-                                <ToggleButton
-                                    style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12;"
-                                    text="Ativar Altentificação De Dois fatores">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </ToggleButton>
-                                <Label text="Recomendado para maior segurança" textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Label>
                             </HBox>
-                        </VBox>
-                    </VBox>
-
-                    <VBox spacing="25"
-                    style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 20; -fx-padding: 30; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 20;">
-                    <Label text="Preferências" textFill="WHITE">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="22.0" />
-                        </font>
-                    </Label>
-
-                    <VBox spacing="15">
-                        <Label text="Tema" textFill="WHITE">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="18.0" />
-                            </font>
-                        </Label>
-                        <HBox spacing="15">
-                            <ToggleButton text="Claro"
-                                style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;" />
-                            <ToggleButton text="Escuro"
-                                style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12;" />
-                            <ToggleButton text="Sistema"
-                                style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;" />
-                        </HBox>
-                    </VBox>
-
-                    <VBox spacing="15">
-                        <Label text="Notificações" textFill="WHITE">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="18.0" />
-                            </font>
-                        </Label>
-                        <HBox alignment="CENTER_LEFT" spacing="15">
-                            <ToggleButton
-                                style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12;"
-                                text="Ativar Notificações">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="14.0" />
-                                </font>
-                            </ToggleButton>
-                        </HBox>
-
-                        <VBox spacing="10" style="-fx-padding: 10 0;">
-                            <HBox spacing="10" alignment="CENTER_LEFT">
-                                <CheckBox textFill="#ffffff80" />
-                                <Label text="Notificações por Email" textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Label>
-                            </HBox>
-                            <HBox spacing="10" alignment="CENTER_LEFT">
-                                <CheckBox textFill="#ffffff80" />
-                                <Label text="Notificações por SMS" textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Label>
-                            </HBox>
-                            <HBox spacing="10" alignment="CENTER_LEFT">
-                                <CheckBox textFill="#ffffff80" />
-                                <Label text="Notificações Push" textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Label>
-                            </HBox>
-                        </VBox>
-                    </VBox>
-                    <VBox spacing="15">
-                        <Label text="Idioma" textFill="WHITE">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="18.0" />
-                            </font>
-                        </Label>
-                        <ComboBox prefHeight="33.0" prefWidth="100"
-                            promptText="Português (Brasil)"
-                            style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-background-radius: 12;">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="Português (Brasil)" />
-                                    <String fx:value="English (US)" />
-                                    <String fx:value="Español" />
-                                </FXCollections>
-                            </items>
-                        </ComboBox>
-                    </VBox>
-                </VBox>
-
-<VBox spacing="25"
-                        style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 20; -fx-padding: 30; -fx-border-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 20;">
-                        <Label text="Privacidade" textFill="WHITE">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="22.0" />
-                            </font>
-                        </Label>
-
-                        <!-- Visibilidade do Perfil -->
-                        <VBox spacing="15">
-                            <Label text="Visibilidade do Perfil" textFill="WHITE">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                </font>
-                            </Label>
-                            <VBox spacing="10">
-                                <Label text="Quem pode ver meu perfil" textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Label>
-                                <ComboBox prefHeight="33.0" prefWidth="300"
-                                    promptText="Todos"
-                                    style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-background-radius: 12;">
-                                    <items>
-                                        <FXCollections fx:factory="observableArrayList">
-                                            <String fx:value="Todos" />
-                                            <String fx:value="Somente Amigos" />
-                                            <String fx:value="Privado" />
-                                        </FXCollections>
-                                    </items>
-                                </ComboBox>
-                            </VBox>
-                        </VBox>
-
-                        <!-- Visibilidade da Biografia -->
-                        <VBox spacing="15">
-                            <Label text="Visibilidade da Biografia" textFill="WHITE">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                </font>
-                            </Label>
-                            <VBox spacing="10">
-                                <Label text="Quem pode ver minha biografia" textFill="#ffffff80">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Label>
-                                <ComboBox prefHeight="33.0" prefWidth="300"
-                                    promptText="Todos"
-                                    style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-background-radius: 12;">
-                                    <items>
-                                        <FXCollections fx:factory="observableArrayList">
-                                            <String fx:value="Todos" />
-                                            <String fx:value="Somente Amigos" />
-                                            <String fx:value="Privado" />
-                                        </FXCollections>
-                                    </items>
-                                </ComboBox>
-                            </VBox>
-                        </VBox>
-
-                        <!-- Configurações de Contato -->
-                        <VBox spacing="15">
-                            <Label text="Configurações de Contato" textFill="WHITE">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                </font>
-                            </Label>
                             <VBox spacing="10">
                                 <HBox spacing="10" alignment="CENTER_LEFT">
-                                    <CheckBox textFill="#ffffff80" />
-                                    <Label text="Permitir mensagens de desconhecidos" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
+                                    <CheckBox styleClass="custom-checkbox" />
+                                    <Label text="Notificações por Email" styleClass="card-subtitle" />
                                 </HBox>
                                 <HBox spacing="10" alignment="CENTER_LEFT">
-                                    <CheckBox textFill="#ffffff80" />
-                                    <Label text="Mostrar status online" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
+                                    <CheckBox styleClass="custom-checkbox" />
+                                    <Label text="Notificações Push" styleClass="card-subtitle" />
                                 </HBox>
                             </VBox>
                         </VBox>
+                    </VBox>
+
+                    <!-- Privacidade -->
+                    <VBox spacing="25" styleClass="content-card">
+                        <Label text="Privacidade" styleClass="card-title" />
+
 
                         <!-- Consentimento de Dados -->
                         <VBox spacing="15">
-                            <Label text="Consentimento de Dados" textFill="WHITE">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                </font>
-                            </Label>
+                            <Label text="Consentimento de Dados" styleClass="card-title" />
                             <VBox spacing="10">
                                 <HBox spacing="10" alignment="CENTER_LEFT">
-                                    <CheckBox textFill="#ffffff80" />
-                                    <Label text="Permitir coleta de dados analíticos" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
+                                    <CheckBox styleClass="custom-checkbox" />
+                                    <Label text="Permitir coleta de dados analíticos"
+                                        styleClass="card-subtitle" />
                                 </HBox>
                                 <HBox spacing="10" alignment="CENTER_LEFT">
-                                    <CheckBox textFill="#ffffff80" />
-                                    <Label text="Compartilhar dados para melhoria do serviço" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                </HBox>
-                            </VBox>
-                        </VBox>
-
-                        <!-- Controle de Privacidade -->
-                        <VBox spacing="15">
-                            <Label text="Controle de Privacidade" textFill="WHITE">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                </font>
-                            </Label>
-                            <VBox spacing="10">
-                                <HBox spacing="10" alignment="CENTER_LEFT">
-                                    <CheckBox textFill="#ffffff80" />
-                                    <Label text="Modo de Navegação Privada" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                </HBox>
-                                <HBox spacing="10" alignment="CENTER_LEFT">
-                                    <CheckBox textFill="#ffffff80" />
-                                    <Label text="Limpar histórico automaticamente" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
+                                    <CheckBox styleClass="custom-checkbox" />
+                                    <Label text="Compartilhar dados para melhoria do serviço"
+                                        styleClass="card-subtitle" />
                                 </HBox>
                             </VBox>
                         </VBox>
 
                         <!-- Gerenciamento de Dados Pessoais -->
                         <VBox spacing="15">
-                            <Label text="Gerenciamento de Dados" textFill="WHITE">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                </font>
-                            </Label>
+                            <Label text="Gerenciamento de Dados" styleClass="card-title" />
                             <HBox spacing="15">
-                                <Button text="Exportar Dados Pessoais"
-                                    style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Button>
-                                <Button text="Solicitar Exclusão de Conta"
-                                    style="-fx-background-color: rgba(255,0,0,0.1); -fx-text-fill: #ff4d4d; -fx-background-radius: 12;">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Button>
+                                <Button styleClass="outline-button"
+                                    text="Solicitar Exclusão de Conta" />
                             </HBox>
                         </VBox>
 
                         <!-- Informações de Privacidade -->
                         <VBox spacing="10">
-                            <Label text="Última atualização da política de privacidade: 15/12/2024" textFill="#ffffff80">
-                                <font>
-                                    <Font name="Franklin Gothic Medium" size="12.0" />
-                                </font>
-                            </Label>
+                            <Label text="Última atualização da política de privacidade: 15/12/2024"
+                                styleClass="card-subtitle" />
                             <HBox spacing="10" alignment="CENTER_LEFT">
-                                <Button text="Política de Privacidade"
-                                    style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="12.0" />
-                                    </font>
-                                </Button>
-                                <Button text="Termos de Uso"
-                                    style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="12.0" />
-                                    </font>
-                                </Button>
+                                <Button styleClass="outline-button" text="Política de Privacidade" />
+                                <Button styleClass="outline-button" text="Termos de Uso" />
                             </HBox>
                         </VBox>
                     </VBox>
 
-                               <!-- Botões de Ação -->
+                    <!-- Botões de Ação -->
                     <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 20 0;">
-                        <Button
-                            style="-fx-background-color: rgba(255,255,255,0.08); -fx-text-fill: white; -fx-background-radius: 12;"
-                            text="Cancelar">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="14.0" />
-                            </font>
-                        </Button>
-                        <Button
-                            style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 12;"
-                            text="Salvar Alterações">
-                            <font>
-                                <Font name="Franklin Gothic Medium" size="14.0" />
-                            </font>
-                        </Button>
+                        <Button styleClass="outline-button" text="Cancelar" />
+                        <Button styleClass="modern-button" text="Salvar Alterações" />
                     </HBox>
-                </VBox>    
+                </VBox>
             </content>
         </ScrollPane>
     </children>

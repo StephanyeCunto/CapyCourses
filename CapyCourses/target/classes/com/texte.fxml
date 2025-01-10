@@ -11,9 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0"
-    prefHeight="800.0" prefWidth="1280.0"
-    style="-fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);"
-    stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/17"
+    prefHeight="800.0" prefWidth="1280.0" stylesheets="@professor/style/dark/style.css"  styleClass="main-container" xmlns="http://javafx.com/javafx/17"
     xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" maxWidth="275.0" minWidth="200.0" prefWidth="230.0" />
@@ -25,31 +23,23 @@
     <children>
         <!-- Menu Lateral (Fixo) -->
         <VBox fx:id="sideMenu" maxWidth="275.0" minWidth="200.0" prefWidth="230.0" spacing="15"
-            style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-padding: 25; -fx-background-radius: 0 20 20 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);">
+            styleClass="side-menu">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="15">
                     <Button minHeight="38.0" minWidth="28.0" prefHeight="38.0" prefWidth="28.0"
-                        style="-fx-background-color: rgba(255,255,255,0.1); -fx-text-fill: white; -fx-background-radius: 50%; -fx-min-width: 40; -fx-min-height: 40; -fx-max-width: 40; -fx-max-height: 40;"
-                        text="←" />
+                        styleClass="simple-button" text="←" />
                     <Label prefHeight="16.0" maxWidth="150.0" text="Voltar para Meus Cursos"
-                        textFill="#ffffff80">
-                        <font>
-                            <Font name="Franklin Gothic Medium" size="12.0" />
-                        </font>
-                    </Label>
+                        styleClass="card-subtitle" />
                 </HBox>
             </children>
         </VBox>
 
         <!-- Conteúdo Principal (Scrollável) -->
-        <ScrollPane fitToWidth="true" GridPane.columnIndex="1"
-            style="-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0;"
-            VBox.vgrow="ALWAYS">
+        <ScrollPane fitToWidth="true" GridPane.columnIndex="1" styleClass="main-scroll">
             <content>
-                <VBox spacing="30" style="-fx-padding: 25;">
+                <VBox spacing="30" styleClass="main-content">
                     <!-- Banner do Curso -->
-                    <VBox
-                        style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);" />
+                    <VBox  />
 
                     <!-- Grid Principal -->
                     <GridPane hgap="30" vgap="20">
@@ -62,178 +52,72 @@
                         <VBox spacing="20" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS">
                             <!-- Conteúdo do curso (mesmo conteúdo anterior) -->
                             <!-- Título e Detalhes -->
-                            <VBox spacing="10"
-                                style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-padding: 20;">
-                                <Label text="Programação em Java" textFill="WHITE">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="32.0" />
-                                    </font>
-                                </Label>
+                            <VBox spacing="10" styleClass="content-card">
+                                <Label text="Programação em Java" styleClass="card-title" />
                                 <HBox spacing="8">
-                                    <Label text="⭐ 4.8" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <Label text="•" textFill="#ffffff80" />
-                                    <Label text="40 horas" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <Label text="•" textFill="#ffffff80" />
-                                    <Label text="Intermediário" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
+                                    <Label text="⭐ 4.8" styleClass="card-subtitle" />
+                                    <Label text="•" styleClass="card-subtitle" />
+                                    <Label text="40 horas" styleClass="card-subtitle" />
+                                    <Label text="•" styleClass="card-subtitle" />
+                                    <Label text="Intermediário" styleClass="card-subtitle" />
                                 </HBox>
                             </VBox>
 
                             <!-- Professor -->
-                            <VBox spacing="15"
-                                style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-padding: 20;">
-                                <Label text="Professor" textFill="WHITE">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="24.0" />
-                                    </font>
-                                </Label>
+                            <VBox spacing="15" styleClass="content-card">
+                                <Label text="Professor" styleClass="card-title" />
                                 <HBox alignment="CENTER_LEFT" spacing="15" minHeight="60">
                                     <Circle fill="#6c63ff" radius="30" />
                                     <VBox spacing="5" HBox.hgrow="ALWAYS">
-                                        <Label text="Dr. João Silva" textFill="WHITE">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="18.0" />
-                                            </font>
-                                        </Label>
+                                        <Label text="Dr. João Silva" styleClass="card-title" />
                                         <Label
                                             text="PhD em Ciência da Computação • 15 anos de experiência"
-                                            textFill="#ffffff80">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="14.0" />
-                                            </font>
-                                        </Label>
+                                            styleClass="card-subtitle" />
                                     </VBox>
-                                    <Button
-                                        style="-fx-background-color: rgba(108,99,255,0.2); -fx-text-fill: #6c63ff; -fx-background-radius: 10;"
-                                        text="Ver Perfil">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Button>
                                 </HBox>
                             </VBox>
 
                             <!-- Módulos do Curso -->
-                            <VBox spacing="15"
-                                style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-padding: 20;">
-                                <Label text="Módulos do Curso" textFill="WHITE">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="24.0" />
-                                    </font>
-                                </Label>
+                            <VBox spacing="15" styleClass="content-card">
+                                <Label text="Módulos do Curso" styleClass="card-title" />
                                 <!-- Módulo 1 -->
-                                <VBox spacing="10"
-                                    style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 15;">
+                                <VBox spacing="10" styleClass="module-card">
                                     <HBox alignment="CENTER_LEFT" spacing="15">
-                                        <Label
-                                            style="-fx-background-color: rgba(108,99,255,0.2); -fx-background-radius: 50%; -fx-padding: 5 10;"
-                                            text="1" textFill="#6c63ff">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="14.0" />
-                                            </font>
-                                        </Label>
+                                        <Label styleClass="module-number" text="1" />
                                         <VBox spacing="5" HBox.hgrow="ALWAYS">
-                                            <Label text="Introdução ao Java" textFill="WHITE">
-                                                <font>
-                                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                                </font>
-                                            </Label>
-                                            <Label text="4 aulas • 2 horas" textFill="#ffffff80">
-                                                <font>
-                                                    <Font name="Franklin Gothic Medium" size="14.0" />
-                                                </font>
-                                            </Label>
+                                            <Label text="Introdução ao Java" styleClass="card-title" />
+                                            <Label text="4 aulas • 2 horas" styleClass="card-subtitle" />
                                         </VBox>
-                                        <Button
-                                            style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 10;"
-                                            styleClass="modern-button" text="Continuar">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="14.0" />
-                                            </font>
-                                        </Button>
+                                        <Button styleClass="modern-button" text="Continuar" />
                                     </HBox>
                                 </VBox>
                                 <!-- Módulo 2 (mesmo padrão do módulo 1) -->
-                                <VBox spacing="10"
-                                    style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 15;">
+                                <VBox spacing="10" styleClass="module-card">
                                     <HBox alignment="CENTER_LEFT" spacing="15">
-                                        <Label
-                                            style="-fx-background-color: rgba(108,99,255,0.2); -fx-background-radius: 50%; -fx-padding: 5 10;"
-                                            text="2" textFill="#6c63ff">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="14.0" />
-                                            </font>
-                                        </Label>
+                                        <Label styleClass="module-number" text="2" />
                                         <VBox spacing="5" HBox.hgrow="ALWAYS">
-                                            <Label text="Orientação a Objetos" textFill="WHITE">
-                                                <font>
-                                                    <Font name="Franklin Gothic Medium" size="18.0" />
-                                                </font>
-                                            </Label>
-                                            <Label text="6 aulas • 4 horas" textFill="#ffffff80">
-                                                <font>
-                                                    <Font name="Franklin Gothic Medium" size="14.0" />
-                                                </font>
-                                            </Label>
+                                            <Label text="Orientação a Objetos" styleClass="card-title" />
+                                            <Label text="6 aulas • 4 horas" styleClass="card-subtitle" />
                                         </VBox>
-                                        <Button
-                                            style="-fx-background-color: rgba(255,255,255,0.1); -fx-text-fill: white; -fx-background-radius: 10;"
-                                            text="Começar">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="14.0" />
-                                            </font>
-                                        </Button>
+                                        <Button styleClass="simple-button" text="Começar" />
                                     </HBox>
                                 </VBox>
                             </VBox>
 
                             <!-- Avaliações -->
-                            <VBox spacing="15"
-                                style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-padding: 20;">
+                            <VBox spacing="15" styleClass="content-card">
                                 <HBox alignment="CENTER_LEFT" spacing="20">
-                                    <Label text="Avaliações do Curso" textFill="WHITE">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="24.0" />
-                                        </font>
-                                    </Label>
-                                    <Label text="⭐ 4.8" textFill="#6c63ff">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="18.0" />
-                                        </font>
-                                    </Label>
+                                    <Label text="Avaliações do Curso" styleClass="card-title" />
+                                    <Label text="⭐ 4.8" styleClass="card-subtitle" />
                                 </HBox>
                                 <!-- Comentários -->
-                                <VBox spacing="10"
-                                    style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 15;">
+                                <VBox spacing="10" styleClass="module-card">
                                     <Label
                                         text="Excelente curso, muito didático e com muitos exemplos práticos!"
-                                        textFill="WHITE">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="16.0" />
-                                        </font>
-                                    </Label>
+                                        styleClass="card-title" />
                                     <HBox alignment="CENTER_LEFT" spacing="10">
-                                        <Label text="⭐ 5.0" textFill="#6c63ff">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label text="• João" textFill="#ffffff80">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="14.0" />
-                                            </font>
-                                        </Label>
+                                        <Label text="⭐ 5.0" styleClass="card-subtitle" />
+                                        <Label text="• João" styleClass="card-subtitle" />
                                     </HBox>
                                 </VBox>
                             </VBox>
@@ -242,143 +126,56 @@
                         <!-- Coluna Lateral -->
                         <VBox spacing="20" GridPane.columnIndex="1" minWidth="200.0">
                             <!-- Detalhes do Curso -->
-                            <VBox spacing="15"
-                                style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-padding: 20;">
-                                <Label text="Detalhes do Curso" textFill="WHITE">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="24.0" />
-                                    </font>
-                                </Label>
+                            <VBox spacing="15" styleClass="content-card">
+                                <Label text="Detalhes do Curso" styleClass="card-title" />
                                 <VBox spacing="10">
-                                    <Label text="Nível: Intermediário" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <Label text="Certificado: Sim" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
-                                    <Label text="Duração: 40 horas" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
+                                    <Label text="Nível: Intermediário" styleClass="card-subtitle" />
+                                    <Label text="Certificado: Sim" styleClass="card-subtitle" />
+                                    <Label text="Duração: 40 horas" styleClass="card-subtitle" />
                                 </VBox>
                             </VBox>
 
-                            <!-- Botões -->
-                            <VBox spacing="15">
-                                <Button
-                                    style="-fx-background-color: #6c63ff; -fx-text-fill: white; -fx-background-radius: 15;"
-                                    text="Enviar Mensagem" maxWidth="Infinity">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Button>
-                                <Button
-                                    style="-fx-background-color: rgba(255,255,255,0.1); -fx-text-fill: white; -fx-background-radius: 15;"
-                                    text="Visualizar Certificado" maxWidth="Infinity">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                </Button>
-                            </VBox>
-
                             <!-- Progresso -->
-                            <VBox spacing="15"
-                                style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-padding: 20;">
-                                <Label text="Progresso do Curso" textFill="WHITE">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="24.0" />
-                                    </font>
-                                </Label>
+                            <VBox spacing="15" styleClass="content-card">
+                                <Label text="Progresso do Curso" styleClass="card-title" />
                                 <VBox spacing="10">
-                                    <Label text="Aulas Completadas:" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
+                                    <Label text="Aulas Completadas:" styleClass="card-subtitle" />
                                     <HBox alignment="CENTER_LEFT" spacing="10">
-                                        <Label text="2/10" textFill="#6c63ff">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <Label text="(20%)" textFill="#ffffff80">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="14.0" />
-                                            </font>
-                                        </Label>
+                                        <Label text="2/10" styleClass="card-subtitle" />
+                                        <Label text="(20%)" styleClass="card-subtitle" />
                                     </HBox>
                                     <!-- Barra de Progresso Customizada -->
-                                    <HBox
-                                        style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 10;"
-                                        minHeight="10.0" prefHeight="10.0">
-                                        <HBox
-                                            style="-fx-background-color: #6c63ff; -fx-background-radius: 10;"
-                                            minHeight="10.0" prefHeight="10.0" prefWidth="20.0" />
+                                    <HBox styleClass="progress-bar" minHeight="10.0" prefHeight="10.0">
+                                        <HBox styleClass="progress-bar .bar" minHeight="10.0" prefHeight="10.0" prefWidth="20.0" />
                                     </HBox>
                                 </VBox>
 
                                 <!-- Avaliações -->
                                 <VBox spacing="10" style="-fx-padding: 10 0 0 0;">
-                                    <Label text="Avaliações Concluídas:" textFill="#ffffff80">
-                                        <font>
-                                            <Font name="Franklin Gothic Medium" size="14.0" />
-                                        </font>
-                                    </Label>
+                                    <Label text="Avaliações Concluídas:" styleClass="card-subtitle" />
                                     <HBox alignment="CENTER_LEFT" spacing="10">
-                                        <Label text="0/3" textFill="#6c63ff">
-                                            <font>
-                                                <Font name="Franklin Gothic Medium" size="18.0" />
-                                            </font>
-                                        </Label>
+                                        <Label text="0/3" styleClass="card-subtitle" />
                                     </HBox>
                                 </VBox>
                             </VBox>
 
                             <!-- Próximas Atividades -->
-                            <VBox spacing="15"
-                                style="-fx-background-color: rgba(41, 47, 76, 0.7); -fx-background-radius: 15; -fx-padding: 20;">
-                                <Label text="Próximas Atividades" textFill="WHITE">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="24.0" />
-                                    </font>
-                                </Label>
+                            <VBox spacing="15" styleClass="content-card">
+                                <Label text="Próximas Atividades" styleClass="card-title" />
                                 <!-- Lista de Atividades -->
                                 <VBox spacing="10">
-                                    <HBox alignment="CENTER_LEFT" spacing="10"
-                                        style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 10;">
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="module-card">
                                         <Label text="📝" />
                                         <VBox spacing="5">
-                                            <Label text="Avaliação Módulo 1" textFill="WHITE">
-                                                <font>
-                                                    <Font name="Franklin Gothic Medium" size="14.0" />
-                                                </font>
-                                            </Label>
-                                            <Label text="Vence em 3 dias" textFill="#6c63ff">
-                                                <font>
-                                                    <Font name="Franklin Gothic Medium" size="12.0" />
-                                                </font>
-                                            </Label>
+                                            <Label text="Avaliação Módulo 1" styleClass="card-title" />
+                                            <Label text="Vence em 3 dias" styleClass="card-subtitle" />
                                         </VBox>
                                     </HBox>
-                                    <HBox alignment="CENTER_LEFT" spacing="10"
-                                        style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 10;">
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="module-card">
                                         <Label text="📚" />
                                         <VBox spacing="5">
-                                            <Label text="Aula 3 - Módulo 2" textFill="WHITE">
-                                                <font>
-                                                    <Font name="Franklin Gothic Medium" size="14.0" />
-                                                </font>
-                                            </Label>
-                                            <Label text="Próxima aula" textFill="#ffffff80">
-                                                <font>
-                                                    <Font name="Franklin Gothic Medium" size="12.0" />
-                                                </font>
-                                            </Label>
+                                            <Label text="Aula 3 - Módulo 2" styleClass="card-title" />
+                                            <Label text="Próxima aula" styleClass="card-subtitle" />
                                         </VBox>
                                     </HBox>
                                 </VBox>
