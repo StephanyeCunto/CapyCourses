@@ -28,22 +28,21 @@ public class Lessons {
     private Module module;
 
     private String title;
+    private String description;
     private String videoLink;
-    private String details;
     private String materials;
     private String duration;
-    private int moduleNumber;
-    private int numberOfLesson;
+    private Integer numberOfLesson;
+    private Integer moduleNumber;
 
     // Construtor usado atualmente
     public Lessons(String title, String videoLink, String details, String materials, 
             String duration, String moduleTitle, int moduleNumber, int numberOfLesson) {
         this.title = title;
         this.videoLink = videoLink;
-        this.details = details;
+        this.description = details;
         this.materials = materials;
         this.duration = duration;
-        this.moduleNumber = moduleNumber;
         this.numberOfLesson = numberOfLesson;
     }
 }

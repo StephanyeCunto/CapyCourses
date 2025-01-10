@@ -7,16 +7,19 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Questionaire {
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String title;
     private String number;
     private String score;
-    private String description;
+    private String text;
+    private String type;
+    private String answers;
+    private String correctAnswers;
+    private String area;
     
     @ManyToOne
-    private Module module;
-}
+    private Questionaire questionaire;
+} 

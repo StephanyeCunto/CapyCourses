@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import javax.persistence.OneToOne;
+import javax.persistence.CascadeType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
@@ -40,6 +42,9 @@ public class Course {
     
     @Column
     private double rating;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    private CourseSettings courseSettings;
 
     public Course(String title, String description, String instructor, String duration, String level, double rating) {
         this.title = title;
@@ -48,5 +53,13 @@ public class Course {
         this.categoria = duration;
         this.nivel = level;
         this.rating = rating;
+    }
+
+    public CourseSettings getCourseSettings() {
+        return courseSettings;
+    }
+
+    public void setCourseSettings(CourseSettings courseSettings) {
+        this.courseSettings = courseSettings;
     }
 }

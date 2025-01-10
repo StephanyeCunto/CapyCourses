@@ -7,11 +7,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javafx.util.Duration;
 
-import com.controller.professor.CadastroCursoController;
+import com.controller.elements.CadastroCursoController;
 import com.view.Modo;
 import com.view.elements.Calendario.Calendario;
 import com.view.professor.valid.*;
 import com.view.login_cadastro.elements.ErrorNotification;
+import com.dto.CadastroCursoDTO;
 
 import javafx.animation.*;
 import javafx.fxml.*;
@@ -25,6 +26,7 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
 
 public class CadastroCurso implements Initializable {
     @FXML
@@ -617,28 +619,49 @@ public class CadastroCurso implements Initializable {
         return titleCourse.getText().length();
     }
 
-    public void createCourse() {
-        boolean isBasics = validatorBasic.validateFields();
-        boolean isModule = validatorModules.validateFields();
-        boolean isAulas = validatorAulas.validateFields();
-        boolean isQuestionario = validatorQuestionario.validateFields(isGradeMiniun);
-        boolean isQuestion = validatorQuestoes.validateFields();
-        boolean isOptions = validatorOptions.validateFields();
-        boolean isSettings = validatorSettings.validateFields();
-
-        if (isBasics && isModule && isAulas && isQuestionario && isQuestion && isOptions && isSettings) {
-            ErrorNotification errorNotification = new ErrorNotification(
-                container,
-                "Curso salvo com sucesso");
-
-        errorNotification.show();  
-
-            new CadastroCursoController(titleCourse.getText(), descritionCourse.getText(), categoryCourse.getValue(),
-                    levelCourse.getValue(), String.join(". ", getSelectedInterests()), selectedFile,
-                    saveModulesAndContent(), dateInputPopupStart.getLocalDate(), dateInputPopupEnd.getLocalDate(),
-                    durationTotal.getText(), dateEnd.isSelected(), isCertificate.isSelected(),
-                    isGradeMiniun.isSelected(),
-                    ComboBoxVisibily.getValue());
+    @FXML
+    private void createCourse() {
+        try {
+            // Coleta os dados básicos
+            String title = titleCourse.getText();
+            String description = descritionCourse.getText();
+            String category = categoryCourse.getValue();
+            String level = levelCourse.getValue();
+            String tags = String.join(",", getSelectedInterests());
+            
+            // Coleta as configurações
+            LocalDate dateStart = dateInputPopupStart.getLocalDate();
+            LocalDate dateEnd = dateInputPopupEnd.getLocalDate();
+            String durationTotal = this.durationTotal.getText();
+            boolean isDateEnd = this.dateEnd.isSelected();
+            boolean isCertificate = this.isCertificate.isSelected();
+            boolean isGradeMiniun = this.isGradeMiniun.isSelected();
+            Object visibility = ComboBoxVisibily.getValue();
+            
+            // Salva os módulos e conteúdo
+            List<Map<String, Object>> modulesData = saveModulesAndContent();
+            
+            // Chama o controller com todos os dados
+            CadastroCursoController controller = new CadastroCursoController();
+            String resultado = controller.cadastrarCurso(
+                title, description, category, level, tags,
+                modulesData, dateStart, dateEnd, durationTotal,
+                isDateEnd, isCertificate, isGradeMiniun, visibility
+            );
+            
+            // Trata o resultado
+            switch (resultado) {
+                case "success":
+                    // TODO: Mostrar mensagem de sucesso
+                    break;
+                case "error":
+                    // TODO: Mostrar mensagem de erro
+                    break;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: Mostrar mensagem de erro
         }
     }
 
