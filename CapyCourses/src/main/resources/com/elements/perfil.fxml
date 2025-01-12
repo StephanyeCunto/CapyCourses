@@ -9,6 +9,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
+<?import javafx.scene.image.*?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
     prefHeight="768.0" prefWidth="1366.0" stylesheets="@stylePerfil/dark/style.css"
@@ -23,21 +24,7 @@
         <RowConstraints minHeight="10.0" prefHeight="800.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-      <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
-              fx:id="toggleButtonHBox">
-              <StackPane alignment="CENTER" fx:id="toggleButtonStackPane"
-                styleClass="theme-toggle-switch" prefWidth="50" prefHeight="25">
-                <Rectangle fx:id="background" width="50" height="25" styleClass="toggle-background"
-                  arcWidth="25" arcHeight="25" />
-                <StackPane fx:id="thumbContainer" styleClass="thumb-container">
-                  <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
-                  <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15" visible="true" />
-                  <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15" visible="false" />
-                </StackPane>
-                <ToggleButton fx:id="toggleButton" mnemonicParsing="false"
-                  styleClass="toggle-button" />
-              </StackPane>
-            </HBox>
+
         <VBox fx:id="sideMenu" styleClass="sideMenu" spacing="15">
         </VBox>
         <ScrollPane fitToWidth="true"
@@ -46,23 +33,47 @@
             GridPane.columnIndex="1">
             <content>
                 <VBox spacing="30" styleClass="main-content">
-                    <HBox alignment="CENTER_LEFT" spacing="20">
-                        <VBox>
-                            <Label text="Configurações" styleClass="page-title" />
-                            <Label text="Gerencie sua conta e preferências"
-                                styleClass="page-subtitle" />
-                        </VBox>
-                    </HBox>
-
+                    <Hbox>
+                        <HBox alignment="CENTER_LEFT" spacing="20">
+                            <VBox>
+                                <Label text="Configurações" styleClass="page-title" />
+                                <Label text="Gerencie sua conta e preferências"
+                                    styleClass="page-subtitle" />
+                            </VBox>
+                        </HBox>
+                        <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox"
+                            HBox.hgrow="ALWAYS"
+                            fx:id="toggleButtonHBox">
+                            <StackPane alignment="CENTER" fx:id="toggleButtonStackPane"
+                                styleClass="theme-toggle-switch" prefWidth="50" prefHeight="25">
+                                <Rectangle fx:id="background" width="50" height="25"
+                                    styleClass="toggle-background"
+                                    arcWidth="25" arcHeight="25" />
+                                <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+                                    <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+                                    <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15"
+                                        visible="true" />
+                                    <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15"
+                                        visible="false" />
+                                </StackPane>
+                                <ToggleButton fx:id="toggleButton" mnemonicParsing="false"
+                                    styleClass="toggle-button" />
+                            </StackPane>
+                        </HBox>
+                    </Hbox>
                     <HBox spacing="15" style="-fx-padding: 10 0;">
-                        <Button styleClass="modern-button" text="Perfil" />
-                        <Button styleClass="outline-button" text="Segurança" />
-                        <Button styleClass="outline-button" text="Preferências" />
-                        <Button styleClass="outline-button" text="Privacidade" />
+                        <Button styleClass="outline-button-selection" text="Perfil"
+                            fx:id="perfilBtn" />
+                        <Button styleClass="outline-button-not-selection" text="Segurança"
+                            fx:id="segurityBtn" />
+                        <Button styleClass="outline-button-not-selection" text="Preferências"
+                            fx:id="preferencesBtn" />
+                        <Button styleClass="outline-button-not-selection" text="Privacidade"
+                            fx:id="privacyBtn" />
                     </HBox>
 
                     <VBox fx:id="container"></VBox>
-             
+
                     <!-- Segurança Aprimorada -->
                     <VBox spacing="25" styleClass="content-card">
                         <Label text="Segurança" styleClass="card-title" />

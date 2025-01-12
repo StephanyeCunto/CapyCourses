@@ -47,6 +47,14 @@ public class PaginaPerfil implements Initializable {
     private StackPane toggleButtonStackPane;
     @FXML
     private GridPane content;
+    @FXML
+    private Button perfilBtn;
+    @FXML
+    private Button securityBtn;
+    @FXML
+    private Button preferencesBtn;
+    @FXML
+    private Button privacyBtn;
 
     public void initialize(URL location, ResourceBundle resources) {
         changeMode();
@@ -57,11 +65,17 @@ public class PaginaPerfil implements Initializable {
 
         loadMenu();
         ProfileCard profileCard = new ProfileCard();
+        container.getChildren().add(profileCard.createProfileCard());
+
+        perfilBtn.setOnAction(e -> {
+            securityBtn.getStyleClass().remove("selected");
+            container.getChildren().clear();
+            container.getChildren().add(profileCard.createProfileCard());
+        });
         SecuritySection securitySection = new SecuritySection();
         PreferencesSection preferencesSection = new PreferencesSection();
         PrivacySection privacySection = new PrivacySection();
-        container.getChildren().addAll(profileCard.createProfileCard(), securitySection.createSecuritySection(),
-                preferencesSection.createPreferencesSection(), privacySection.createPrivacySection());
+
     }
 
     private void loadMenu() {

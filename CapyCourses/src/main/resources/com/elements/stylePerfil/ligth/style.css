@@ -178,10 +178,21 @@
     -fx-scale-y: 0.98;
 }
 
-.outline-button {
+.outline-button{
     -fx-background-color: transparent;
-    -fx-text-fill: #4A90E2;
+    -fx-text-fill:#4A90E2;
     -fx-border-color: #4A90E2;
+    -fx-border-radius: 12;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 12 20;
+    -fx-cursor: hand;
+}
+
+.outline-button-seletion, .outline-button-not-seletion:hover{
+    -fx-background-color: transparent;
+    -fx-text-fill:#2d5786;
+    -fx-border-color: #2d5786;
     -fx-border-radius: 12;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
@@ -191,10 +202,27 @@
 
 .outline-button:hover {
     -fx-background-color: #4A90E2;
-    -fx-text-fill:  #1A1A1A;
+    -fx-text-fill: #1A1A1A;
     -fx-border-color: rgba(255, 255, 255, 0);
     -fx-border-radius: 12;
     -fx-background-radius: 12;
+}
+
+.outline-button:pressed , .outline-button-not-seletion:pressed{
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+.outline-button-not-seletion{
+    -fx-background-color: #4A90E2;
+    -fx-text-fill: #1A1A1A;
+    -fx-border-color: rgba(255, 255, 255, 0);
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 12 20;
+    -fx-cursor: hand;
 }
 
 .simple-button {
