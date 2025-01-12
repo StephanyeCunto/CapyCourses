@@ -62,13 +62,13 @@
                         </HBox>
                     </HBox>
                     <HBox spacing="15" style="-fx-padding: 10 0;">
-                        <Button styleClass="outline-button-selection" text="Perfil"
+                        <Button styleClass="outline-button-seletion" text="Perfil"
                             fx:id="perfilBtn" />
-                        <Button styleClass="outline-button-not-selection" text="Segurança"
+                        <Button styleClass="outline-button-not-seletion" text="Segurança"
                             fx:id="securityBtn" />
-                        <Button styleClass="outline-button-not-selection" text="Preferências"
+                        <Button styleClass="outline-button-not-seletion" text="Preferências"
                             fx:id="preferencesBtn" />
-                        <Button styleClass="outline-button-not-selection" text="Privacidade"
+                        <Button styleClass="outline-button-not-seletion" text="Privacidade"
                             fx:id="privacyBtn" />
                     </HBox>
 
@@ -77,8 +77,8 @@
 
                     <!-- Botões de Ação -->
                     <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 20 0;">
-                        <Button styleClass="outline-button" text="Cancelar" />
-                        <Button styleClass="modern-button" text="Salvar Alterações" />
+                        <Button styleClass="outline-button-seletion" text="Cancelar" />
+                        <Button styleClass="outline-button-not-seletion" text="Salvar Alterações" />
                     </HBox>
                 </VBox>
             </content>
