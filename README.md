@@ -1,313 +1,401 @@
 # 🦫 CapyCourses - A Jornada do Saber Começa Aqui! 📚
 
+> Transformando o aprendizado em uma experiência extraordinária com tecnologia e inovação.
 
-Bem-vindo ao **CapyCourses**, o seu novo melhor amigo no universo dos cursos online! 🚀 Criado com o coração pulsando **em JavaFX**, nosso sistema tem uma interface descolada, dinâmica e super responsiva, perfeita para você aprender com estilo e facilidade. Vamos nessa jornada de aprendizado, mas sem perder a vibe?
-
-![Java](https://img.shields.io/badge/Java-17%2B-brightgreen)
-![JavaFX](https://img.shields.io/badge/JavaFX-19%2B-blue)
-![MIT](https://img.shields.io/badge/License-MIT-green)
-<a href="https://wakatime.com/badge/github/StephanyeCunto/CapyCourses"><img src="https://wakatime.com/badge/github/StephanyeCunto/CapyCourses.svg" alt="wakatime"></a>
----
-
-## 🌟 Principais Funcionalidades
-
-✨ **CapyCourses** oferece uma variedade de funcionalidades para tornar sua experiência de aprendizado incrível:
-
-- 🎓 **Gerenciamento de Cursos**: Crie, edite e organize cursos como um expert!
-- 🌗 **Modo Escuro/Claro**: Porque seu mood merece ser personalizado!
-- 📱 **Interface Responsiva**: Aprenda onde quiser, em qualquer dispositivo, sem limites!
-- 🔒 **Cadastro de Usuários**: Proteja seus dados com a simplicidade que você merece.
-- 💾 **Salvar Configurações**: Suas preferências, salvas e prontas para o próximo login!
-- ⚙️ **Sistema de Permissões** (Vem por aí!): Controle total sobre quem vê o quê – perfeito para Administradores, Alunos e Professores.
+[![CI Status](https://github.com/StephanyeCunto/CapyCourses/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/StephanyeCunto/CapyCourses/actions/workflows/ci-cd.yml)
+[![Java](https://img.shields.io/badge/Java-17%2B-brightgreen)](https://www.oracle.com/java/)
+[![JavaFX](https://img.shields.io/badge/JavaFX-19%2B-blue)](https://openjfx.io/)
+[![MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Wakatime](https://wakatime.com/badge/github/StephanyeCunto/CapyCourses.svg)](https://wakatime.com/badge/github/StephanyeCunto/CapyCourses)
 
 ---
 
-## 🖼️ Screenshots do Sistema
+## 📋 Sumário
 
-### Tela de Login: Entre com estilo!
-<p align="center">
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaLoginDark.png" alt="Tela de Login - Modo Escuro" width="48%" />
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaLoginLigth.png" alt="Tela de Login - Modo Claro" width="48%" />
-</p>
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Funcionalidades](#-funcionalidades)
+- [Tecnologias](#-tecnologias)
+- [Começando](#-começando)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Metodologia](#-metodologia)
+- [Interface](#-interface)
+- [Contribuição](#-contribuição)
+- [Roadmap](#-roadmap)
+- [Licença](#-licença)
+- [FAQ](#-faq)
+- [Contribuições Futuras](#-contribuições-futuras)
+- [Segurança](#-segurança)
+- [Comunicação](#-comunicação)
+- [Feedback](#-feedback)
+- [Roadmap Detalhado](#-roadmap-detalhado)
+- [Licenciamento](#-licenciamento)
+- [Agradecimentos](#-agradecimentos)
+---
 
-### Tela de Cadastro de Curso
-<p align="center">
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCadastroCursoDark.png" alt="Tela de Cadastro Curso - Modo Escuro" width="48%" />
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCadastroCursoLigth.png" alt="Tela de Cadastro Curso - Modo Claro" width="48%" />
-</p>
+## 🎯 Sobre o Projeto
 
-### Tela Inicial Estudante
-<p align="center">
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaIncialDark.png" alt="Tela Inicial Estudante - Modo Escuro" width="48%" />
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaInicialLigth.png" alt="Tela Inicial Estudante - Modo Claro" width="48%" />
-</p>
+O **CapyCourses** é uma plataforma de ensino online desenvolvida em JavaFX, projetada para oferecer uma experiência de aprendizado moderna, intuitiva e envolvente. Nossa missão é democratizar o conhecimento através de uma interface amigável e recursos inovadores.
 
-### Tela Inicial Estudante - ver Detalhes
-<p align="center">
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalVerDetalhesDark.png" alt="Tela Inicial Estudante Ver Detalhes - Modo Escuro" width="48%" />
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalVerDetalhesLigth.png" alt="Tela Inicial Estudante Ver Detalhes - Modo Claro" width="48%" />
-</p>
+### 🦫 Por que CapyCourses?
 
-### Tela Meus Cursos Estudante
-<p align="center">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaMeusCursosDark.png" alt="Tela Meus Cursos Estudante - Modo Escuro" width="48%">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaMeusCursosLigth.png" alt="Tela Meus Cursos Estudante - Modo Claro" width="48%">
-</p>
-
-### Tela Certificados Estudante
-<p align="center">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCertificadosDark.png" alt="Tela Certificados Estudante - Modo Escuro" width="48%">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCertificadosLigth.png" alt="Tela Certificados Estudante - Modo Claro" width="48%">
-</p>
-
-### Tela Certificados Estudante - Certificado
-<p align="center">
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalCertificadoDark.png" alt="Tela Certificados Estudante - Certificado - Modo Escuro" width="48%" />
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalCertificadoLigth.png" alt="Tela Certificados Estudante - Certificado - Modo Claro" width="48%" />
-</p>
-
-### Tela Biblioteca Estudante
-<p align="center">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaBibliotecaDark.png" alt="Tela Biblioteca Estudante - Modo Escuro" width="48%">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaBibliotecaLigth.png" alt="Tela Biblioteca Estudante - Modo Claro" width="48%">
-</p> 
-
-### Tela Biblioteca Estudante - Visualizar
-<p align="center">
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalBibliotecaDark.png" alt="Tela Biblioteca Estudante - Certificado - Modo Escuro" width="48%" />
-  <img src="https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/modalBibliotecaLigth.png" alt="Tela Biblioteca Estudante - Certificado - Modo Claro" width="48%" />
-</p>
-
-### Tela Forum 
-<p align="center">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaForumDark.png" alt="Tela Forum - Modo Escuro" width="48%">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaForumLigth.png" alt="Tela Forum - Modo Claro" width="48%">
-</p>
-
-### Tela Do Forum
-<p align="center">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaDoForumDark.png" alt="Tela Do Forum - Modo Escuro" width="48%">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaDoForumLigth.png" alt="Tela Do Forum - Modo Claro" width="48%">
-</p>
-
-### Tela Criar Forum
-<p align="center">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCriarForumDark.png" alt="Tela Criar Forum - Modo Escuro" width="48%">
-<img src= "https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaCriarForumLigth.png" alt="Tela Criar Forum - Modo Claro" width="48%">
-</p>
+| Característica          | Descrição                                                                 |
+|-------------------------|---------------------------------------------------------------------------|
+| 🎨 *Design Moderno*      | Interface elegante com suporte a temas claro/escuro.                      |
+| 📱 *Responsividade*      | Adaptável a diferentes dispositivos e resoluções.                         |
+| 🔒 *Segurança*           | Sistema robusto de autenticação e permissões.                             |
+| 🚀 *Performance*         | Otimizado para máxima eficiência.                                         |
+| 🌟 *Experiência*         | Foco na usabilidade e satisfação do usuário.                              |
+| 🦫 *Comunidade*          | Ambiente colaborativo com fóruns e interação entre alunos e professores.  |
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## ✨ Funcionalidades
 
-Aqui no CapyCourses, a gente usa o que há de melhor no mercado para garantir uma experiência única:
+### 🎓 Gerenciamento de Cursos
+- Criação e edição de cursos.
+- Organização por categorias e níveis de dificuldade.
+- Sistema de avaliação e feedback.
+- Acompanhamento de progresso do aluno.
+- Emissão de certificados personalizados.
 
-- [**Java**](https://www.oracle.com/java/): Nosso combustível principal.
-- [**JavaFX**](https://openjfx.io/): O que faz a mágica acontecer na tela.
-- [**Lombok**](https://projectlombok.org/): Menos código repetido, mais produtividade!
-- [**ValidadorFX**](https://validadorfx.com/): Valide seus dados com estilo.
+### 👥 Perfis de Usuário
+- **Aluno**: Acesso a cursos, materiais e fóruns.
+- **Professor**: Criação e gerenciamento de cursos.
+- **Administrador**: Controle total da plataforma.
+
+### 📚 Recursos de Aprendizado
+- Biblioteca digital com materiais complementares.
+- Fórum de discussão para interação entre alunos e professores.
+- Vídeos, quizzes e materiais interativos.
+- Certificados personalizados ao concluir cursos.
+
+### ⚙️ Personalização
+- Modo escuro/claro.
+- Configurações de perfil personalizadas.
+- Preferências salvas.
+- Notificações personalizáveis.
+
+### 🛠️ Ferramentas Avançadas
+- Dashboard de desempenho com métricas detalhadas.
+- Relatórios de progresso e desempenho.
 
 ---
 
-## 🚀 Como Rodar o Projeto
+## 🛠️ Tecnologias 
 
-Fique tranquilo! Configurar o **CapyCourses** é moleza!
-Nada de complicação, aqui é tudo simplificado:
+### Core
+- [Java 17+](https://www.oracle.com/java/)
+- [JavaFX 19+](https://openjfx.io/)
+- [Maven](https://maven.apache.org/)
+
+### Dependências
+| Ferramenta           | Descrição                                      |
+|----------------------|------------------------------------------------|
+| [Lombok](https://projectlombok.org/)       | Redução de boilerplate.                        |
+| [ValidadorFX](https://validadorfx.com/)    | Validação de formulários.                      |
+| [Hibernate](https://hibernate.org/)        | Persistência de dados.                         |
+| [JUnit 5](https://junit.org/junit5/)       | Testes unitários.                              |
+
+### Ferramentas de Desenvolvimento
+- **VS Code**: IDE principal.
+- **Git**: Controle de versão.
+- **Scene Builder**: Design de interfaces JavaFX.
+
+---
+
+## 🚀 Começando
 
 ### Pré-requisitos
-- [Java 17+](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
-- [JavaFX 19+](https://openjfx.io/)
-- [Maven](https://maven.apache.org/) ou [Gradle](https://gradle.org/) (opcional)
-- Seu editor favorito (como [VS Code](https://code.visualstudio.com/) ou [IntelliJ IDEA](https://www.jetbrains.com/idea/))
-  
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/StephanyeCunto/CapyCourses.git
-   cd CapyCourses
-   ```
+Certifique-se de ter instalado:
+- Java 17+
+- JavaFX 19+
+- Maven 3.6+
 
-3. Se estiver utilizando **Maven**:
-   ```bash
-   mvn clean install
-   mvn javafx:run
-   ```
+```bash
+# Verifique as versões instaladas
+java -version
+mvn -version
+```
 
-4. Se estiver utilizando **Gradle**:
-   ```bash
-   gradle build
-   gradle run
-   ```
+## Instalação
 
-5. Quer rodar sem Maven/Gradle? Sem stress:
-   ```bash
-   javac -d out src/**/*.java
-   ```
+```bash
+# Clone o repositório
+git clone https://github.com/StephanyeCunto/CapyCourses.git
 
-6. Execute a aplicação:
-   ```bash
-   java -cp out Main
-   ```
-   
+# Entre no diretório
+cd CapyCourses
+
+# Instale as dependências
+mvn clean install
+
+# Execute o projeto
+mvn javafx:run
+```
 ---
-## 🎉 Próximos Passos?
+## 🔧 Integração Contínua (CI)
 
-Estamos só no começo e já temos várias novidades a caminho!
+O projeto utiliza **GitHub Actions** para garantir a qualidade do código. A cada push ou pull request, o pipeline de CI é executado para:
 
-- [x] **Interface Responsiva**  
-- [ ] **Banco de Dados Relacional** (MySQL, PostgreSQL ou SQLite)
-- [ ] **Sistema de Permissões**  
-  - Perfis: Administrador, Aluno e Professor  
-  - Controle de acesso mágico
-- [ ] **Fórum de Discussão**  
-  - O lugar perfeito para perguntas e respostas!
-- [ ] **Relatórios de Progresso**  
-  - Gráficos para monitorar seu sucesso!
-- [ ] **Geração de Certificados**  
-  - Certificados com seu nome brilhando no PDF!
-- [ ] **Biblioteca de Materiais Didáticos**  
-  - Onde os materiais de apoio estarão prontos para você!
-    
+- Compilar o projeto.
+- Executar testes automatizados.
+- Verificar a qualidade do código.
+
+[![CI Status](https://github.com/StephanyeCunto/CapyCourses/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/StephanyeCunto/CapyCourses/actions/workflows/ci-cd.yml)
+
+### Como Funciona?
+1. **Compilação**: O projeto é compilado usando o Maven (`mvn clean package`).
+2. **Testes**: Os testes automatizados são executados (`mvn test`).
+3. **Status**: O badge acima mostra o status atual do CI (✅ passando ou ❌ falhando).
+
+### Como Verificar?
+- Clique no badge **CI Status** para ver os detalhes da execução do pipeline na aba **Actions** do GitHub.
+
 ---
 
 ## 🗂️ Estrutura do Projeto
-
-Aqui está o que você vai encontrar dentro da mágica do **CapyCourses**:
-
-### **src/ - O coração do projeto, com a lógica do sistema!**
-
-```text
+```bash
 src/
 ├── com/
-│   ├── login_cadastro/
-│   │   ├── PaginaLogin.java        #  A mágica de login e cadastro
-│   ├── paginaInicial/
-│   │   ├── Main.java               # Onde tudo começa
-│   ├── model/
-│   │   ├── Curso.java              # Definindo como nossos cursos brilham
-│   ├── controller/
-│   │   ├── LoginController.java    # Controle para sua jornada de login
-│   └── ...
+│   ├── login_cadastro/     # Autenticação
+│   ├── paginaInicial/      # Páginas principais
+│   ├── model/              # Entidades
+│   └── controller/         # Controladores
+├── resources/
+│   ├── views/             # Arquivos FXML
+│   ├── css/               # Estilos
+│   └── images/            # Recursos visuais
 ```
-### **resources/ - Os arquivos visuais que tornam tudo bonito!**
+## 📈 Metodologia
 
-```text
-resources/
-├── views/                          # Aqui estão os arquivos FXML das telas
-│   ├── login.fxml                  # Tela de login
-│   ├── cadastroCurso.fxml          # Tela para adicionar seus cursos
-├── css/                            # Onde os estilos acontecem
-│   ├── dark/                       # O lado escuro da força
-│      └── styleDark.css            # Para quando o modo noturno te chamar
-│   ├── light/                      # O lado brilhante
-│      └── styleLight.css           # Para brilhar no modo claro
-├── images/                         # Porque até a tecnologia merece uma boa imagem
-│   ├── logo.png                    # O logo de CapyCourses
-└── icons/                          # Ícones fofos para representar o tema
-    ├── sun-icon.png                # Para os dias de sol (modo claro)
-    └── moon-icon.png               # Para as noites estreladas (modo escuro)
-```
+Utilizamos **Scrum** como framework ágil, com:
 
-### **documents/ - Documentação complementar que descreve o funcionamento do sistema.**
+- 🔄 Sprints de 2 semanas
+- 📊 Planejamento iterativo e priorização de tarefas.
+- 👥 Daily meetings para acompanhamento do progresso.
+- 📝 Retrospectivas para melhoria contínua.
 
-```text
-documents/
-├── caso de uso Curso Online.mdj   # Descrição dos casos de uso do sistema, com foco nos fluxos do curso online
-└── diagrama de classe.mdj         # Diagrama de classe detalhando a arquitetura do sistema 
-```
+### Padrões de Projeto
+
+- 🏗️ **MVC (Model-View-Controller)**: Separação de responsabilidades entre modelos, visualizações e controladores.
+- 🔒 **Singleton**: Garantia de que apenas uma instância de uma classe seja criada.
+- 🗃️ **DAO (Data Access Object)**: Abstração de acesso a dados para persistência.
+- 🧩 **Factory**: Criação de objetos de forma flexível e desacoplada.
+
+### Ferramentas de Gestão
+
+- **Trello**: Para gerenciamento de tarefas e acompanhamento de sprints.
+- **GitHub Projects**: Para organização de issues e pull requests.
+- **Discord**: Para comunicação diária e reuniões da equipe.
 
 ---
 
-## 📖 O Scrum como Método de Processo
+## 🖼️ Interface
 
-Adotamos o **Scrum**, um framework ágil, para gerenciar o desenvolvimento do **CapyCourse**.  
-Essa metodologia nos permitiu entregar valor de forma incremental e iterativa, adaptando-nos às mudanças e garantindo a qualidade do produto final.
+### Tela de Login (Modo Escuro)
+![Login Dark](https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaLoginDark.png)
 
----
+### Tela Inicial Aluno (Modo Claro)
+![Cadastro Light](https://raw.githubusercontent.com/StephanyeCunto/CapyCourses/main/img/telaInicialLigth.png)
 
-## 📐 Padrões de Projeto
-Com um design arrojado e flexível, garantimos a manutenibilidade, extensibilidade e escalabilidade do **CapyCourse**.
-
-### **MVC (Model-View-Controller):**
-Separamos as responsabilidades do sistema em três camadas distintas:
-- **Model**: Representa os dados do sistema (cursos, alunos, professores).
-- **Views**: Responsável pela interface do usuário, exibindo os dados do modelo.
-- **Controller**: Recebe as entradas do usuário, atualiza o modelo e escolhe qual vista será exibida.
-
-### **Singleton:**
-Garantimos que certas classes, como a conexão com o banco de dados, tenham apenas uma instância em todo o sistema, evitando problemas de concorrência e otimizando o uso de recursos.
-
-### **DAO (Data Access Object):**
-Abstraímos o acesso aos dados, centralizando a lógica de persistência e facilitando a troca de bancos de dados.
-
----
-## 🎯 Boas Práticas
-
-Para manter a qualidade do código e tornar nossa capivara feliz, seguimos algumas boas práticas divertidas e eficientes:
-
-### 🎨 Convenções de Código
-- Utilizamos o padrão de nomenclatura camelCase (como uma capivara pulando!)
-- Classes começam com letra maiúscula 
- - Exemplo: `LoginController`, `PaginaInicial`, `CapyCourse`
-- Métodos e variáveis começam com letra minúscula
- - Exemplo: `validarLogin()`, `nomeUsuario`, `cursosDisponiveis`
-- Usamos nomes significativos e em português
- - Prefira `cadastrarAluno()` em vez de `cadAluno()`
-
-### 📝 Commits
-- Commits devem ser concisos e descritivos (como uma capivara organizada!)
-- Use o prefixo: `Sprint 00 - `
-- O texto deve descrever claramente o que foi feito
-- Exemplos:
- - `Sprint 00 - adiciona sistema de notificações`
- - `Sprint 00 - corrige bug no login dark mode`
- - `Sprint 00 - atualiza documentação do CapyCourses`
-
-### 📋 Padrões de Código
-- Seguimos o padrão MVC para organização das classes
-- Utilizamos o JavaFX Scene Builder para as interfaces
-- Mantemos um código limpo e bem documentado
-- Aplicamos os princípios SOLID
-
-> 💡 **Dica da Capivara**: Mantenha seus commits pequenos e focados em uma única alteração. Isso facilita o review e o controle de versão! 🦫
+*Mais screenshots disponíveis na [galeria completa](https://github.com/StephanyeCunto/CapyCourses/tree/main/img)*
 
 ---
 
-## 👩‍💻 Contribuindo
+## 👥 Contribuição
 
-🎉 **Sua ajuda é bem-vinda!** Se você é apaixonado por tecnologia e quer fazer parte do **CapyCourses**, estamos prontos para te receber!
+1. Fork o projeto.
+2. Crie sua branch (`git checkout -b feature/AmazingFeature`).
+3. Commit suas mudanças (`git commit -m 'Add: nova funcionalidade'`).
+4. Push para a branch (`git push origin feature/AmazingFeature`).
+5. Abra um Pull Request.
 
-1.  🍴Faça um fork do repositório.
-   
-2. 🌿Crie um branch para a funcionalidade:
+### Diretrizes de Contribuição
 
-    ```bash
-   git checkout -b minha-funcionalidade
-3. ✅Commit suas alterações:  
-   ```bash
-   git commit -m 'Adiciona nova funcionalidade'
-   
-4. 🔝Faça o push:
-   
-   ```bash
-   git push origin minha-funcionalidade
+- 📝 **Documentação**: Mantenha a documentação atualizada.
+- 🧪 **Testes**: Adicione testes unitários e de integração para novas funcionalidades.
+- 🧹 **Clean Code**: Siga as boas práticas de codificação.
+- 🔄 **Revisão**: Submeta seu código para revisão antes de merge.
 
-5. 📤Crie um Pull Request:  
-   - Acesse o repositório original no GitHub.  
-   - Clique em **Pull Requests**.  
-   - Clique em **New Pull Request**.  
-   - Selecione o branch do seu fork e compare com o branch principal do repositório original.  
-   - Adicione um título e uma descrição explicando suas alterações.  
-   - Clique em **Create Pull Request** para enviar sua contribuição.
+### Boas Práticas
+
+- Use nomes descritivos para branches, commits e variáveis.
+- Documente novas funcionalidades no README ou em arquivos específicos.
+- Respeite o padrão de código definido no projeto.
 
 ---
 
-## 📜 Licença
+## 🗺 Roadmap
 
-Este projeto está sob a licença MIT, então sinta-se à vontade para usar, modificar e fazer o que quiser. Só não se esqueça de nos dar os créditos! Confira o arquivo LICENSE para mais detalhes.
+### Em Andamento
+- [x] Interface responsiva.
+- [ ] Integração com banco de dados.
+- [ ] Sistema de permissões avançado.
+
+### Próximas Etapas
+- [ ] Módulo de análise de desempenho.
+- [ ] API REST para integração com outras plataformas.
+- [ ] Suporte a múltiplos idiomas.
+
+### Futuro
+- [ ] Integração com serviços de pagamento.
+- [ ] Aplicativo móvel (Android/iOS).
+- [ ] Inteligência Artificial para recomendações personalizadas.
+
+---
+
+## 📄 Licença
+
+Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
+
+---
+
+## ❓ FAQ
+
+### Perguntas Frequentes
+
+#### 1. Como reportar um bug?
+- Abra uma **issue** no GitHub com a descrição do problema.
+- Inclua:
+  - Passos para reproduzir o bug.
+  - Capturas de tela ou vídeos, se aplicável.
+  - Informações sobre o ambiente (SO, versão do Java, etc.).
+
+#### 2. Como sugerir uma nova funcionalidade?
+- Crie uma **issue** com a label `enhancement`.
+- Descreva sua ideia de forma clara e detalhada.
+- Explique como a funcionalidade beneficiaria os usuários.
+
+#### 3. Como configurar o ambiente de desenvolvimento?
+- Siga o guia na seção [Configuração do Ambiente](#-configuração-do-ambiente).
+- Se encontrar problemas, consulte a [documentação oficial do JavaFX](https://openjfx.io/).
+
+#### 4. Onde posso encontrar mais screenshots da interface?
+- Acesse a [Galeria de Screenshots](#-galeria-de-screenshots) no README.
+- Ou visite o diretório `img/` no repositório.
+
+#### 5. Como contribuir para o projeto?
+- Siga as diretrizes na seção [Contribuição](#-contribuição).
+- Leia o [Código de Conduta](CODE_OF_CONDUCT.md) antes de começar.
+
+#### 6. Onde posso obter suporte?
+- Entre em contato conosco via:
+  - **Discord**: [Link do servidor](#)
+  - **E-mail**: support@capycourses.com
+
+---
+
+## 🔮 Contribuições Futuras
+
+### Lista de Desejos
+- [ ] Suporte a cursos offline.
+- [ ] Integração com Google Classroom.
+- [ ] Gamificação (badges e rankings).
+- [ ] Exportação de certificados em PDF.
+- [ ] Suporte a múltiplos idiomas.
+
+### Como Contribuir para Novas Funcionalidades
+1. Verifique o [Roadmap](#-roadmap) para ver se a funcionalidade já está planejada.
+2. Crie uma issue com a label `enhancement` para discutir a ideia.
+3. Após aprovação, siga as diretrizes de contribuição.
+
+---
+
+## 🔒 Segurança
+
+### Política de Segurança
+- **Reporte Vulnerabilidades**: Envie um e-mail para security@capycourses.com.
+- **Boas Práticas**:
+  - Nunca compartilhe credenciais de acesso.
+  - Use senhas fortes e autenticação de dois fatores (2FA).
+  - Mantenha suas dependências atualizadas.
+
+### Auditoria de Código
+- Realizamos auditorias periódicas para garantir a segurança do código.
+- Utilize ferramentas como [SonarQube](https://www.sonarqube.org/) para análise estática.
+
+---
+
+## 📢 Comunicação
+
+### Canais de Comunicação
+- **Discord**: [Link do servidor](#)
+  - Canais disponíveis:
+    - `#geral`: Discussões gerais.
+    - `#suporte`: Ajuda com problemas técnicos.
+    - `#sugestões`: Ideias para novas funcionalidades.
+- **Fórum**: [Link do fórum](#)
+  - Discussões técnicas e compartilhamento de conhecimento.
+
+### Reuniões da Comunidade
+- **Quando**: Toda quarta-feira às 20h (GMT-3).
+- **Onde**: Canal `#reuniões` no Discord.
+- **Agenda**:
+  - Apresentação de novas funcionalidades.
+  - Discussão de issues abertas.
+  - Planejamento de sprints.
+
+---
+
+## 📝 Feedback
+
+### Formulário de Feedback
+- [Link do formulário](#)
+  - Nos ajude a melhorar! Deixe seu feedback sobre:
+    - Usabilidade.
+    - Funcionalidades.
+    - Problemas encontrados.
+
+### Agradecimentos
+- Seu feedback é valioso para nós! Contribuidores que forneceram feedback significativo serão reconhecidos na seção [Agradecimentos](#-agradecimentos).
+
+---
+
+## 🗺 Roadmap Detalhado
+
+### Cronograma
+| Etapa                  | Status       | Prazo Estimado |
+|------------------------|--------------|----------------|
+| Interface responsiva   | Concluído    | Out/2023       |
+| Integração com banco   | Em andamento | Dez/2023       |
+| Sistema de permissões  | Planejado    | Jan/2024       |
+| API REST               | Planejado    | Mar/2024       |
+
+### Prioridades
+1. Finalizar integração com banco de dados.
+2. Implementar sistema de permissões avançado.
+3. Desenvolver módulo de análise de desempenho.
+
+---
+
+## 📜 Licenciamento
+
+### Licenças de Dependências
+| Dependência       | Licença       |
+|-------------------|---------------|
+| JavaFX            | GPL v2        |
+| Lombok            | MIT           |
+| Hibernate         | LGPL          |
+| JUnit 5           | EPL 2.0       |
+
+### Política de Uso
+- O projeto é distribuído sob a licença MIT.
+- Você pode usar, modificar e distribuir o código, desde que inclua a licença original.
+
+---
+
+## 🙏 Agradecimentos
+
+### Contribuidores
+- [Stephanye Cunto](https://github.com/StephanyeCunto)
+- [Julio Bossigia](https://github.com/juliobossigia)
+
+### Reconhecimentos Especiais
+- Agradecemos a todos que contribuíram com feedback, código e ideias para o projeto.
 
 ---
 
 <p align="center">
-  <i>Feito com 🧡 pela galera do CapyCourses!</i><br>
-  <small>Transformando o aprendizado em uma experiência visualmente extraordinária! 🦫✨</small>
+  <strong>CapyCourses</strong> - Desenvolvido com 🧡 pela equipe CapyCourses<br>
+  <sub>Transformando a educação, uma capivara de cada vez 🦫</sub>
 </p>

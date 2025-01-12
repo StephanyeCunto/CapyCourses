@@ -1,0 +1,74 @@
+name: CI/CD Pipeline for CapyCourses
+
+on:
+  push:
+    branches:
+      - main  # Executa o pipeline quando houver push na branch main
+  pull_request:
+    branches:
+      - main  # Executa o pipeline quando houver um pull request para a branch main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # Usa uma máquina virtual com Ubuntu
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Faz o checkout do código do repositório
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '23'  # Define a versão do JDK
+          distribution: 'temurin'  # Usa a distribuição Temurin do OpenJDK
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository  # Cache das dependências do Maven
+          key: maven-${{ runner.os }}-${{ hashFiles('CapyCourses/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}-
+
+      - name: Build with Maven
+        working-directory: ./CapyCourses  # Executa no diretório onde está o pom.xml
+        run: mvn clean package  # Compila o projeto e roda os testes
+
+      - name: Run tests
+        working-directory: ./CapyCourses  # Executa no diretório onde está o pom.xml
+        run: mvn test  # Executa os testes (opcional, já que `mvn package` já roda os testes)
+
+      - name: Check code formatting
+        working-directory: ./CapyCourses
+        run: mvn spotless:check  # Verifica a formatação do código
+
+      - name: Static code analysis
+        working-directory: ./CapyCourses
+        run: mvn sonar:sonar  # Executa análise estática do código com SonarQube
+
+      - name: Check for vulnerable dependencies
+        working-directory: ./CapyCourses
+        run: mvn org.owasp:dependency-check-maven:check  # Verifica dependências vulneráveis
+
+      - name: Build Docker image
+        working-directory: ./CapyCourses
+        run: |
+          docker build -t capycourses:latest .
+          echo "Docker image built successfully"
+
+      - name: Deploy to Kubernetes
+        if: github.ref == 'refs/heads/main'  # Apenas implanta se for a branch main
+        working-directory: ./CapyCourses
+        run: |
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          echo "Application deployed successfully"
+          
+      - name: Notify Slack
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: '#ci-cd'
+          SLACK_TITLE: 'CI/CD Pipeline Status'
+          SLACK_MESSAGE: 'Pipeline completed successfully!'
+          SLACK_COLOR: 'good'

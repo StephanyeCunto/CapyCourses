@@ -13,7 +13,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.control.ToggleButton?>
 
-
 <GridPane fx:controller="com.view.estudante.PaginaBibliotecaView"
   maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
   prefHeight="768.0" prefWidth="1366.0"

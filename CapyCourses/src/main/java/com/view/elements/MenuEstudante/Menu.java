@@ -46,12 +46,11 @@ public class Menu {
         Button certificadosBtn = createButton("Certificados");
         Button bibliotecaBtn = createButton("Biblioteca");
         Button forumBtn = createButton("Forum");
-        Button criarCursoBtn = createButton("Criar Curso");
         Button configuracoesBtn = createButton("Configurações");
         Button sairBtn = createButton("Sair");
 
         vbox.getChildren().addAll(cursosDisponiveisBtn, meusCursosBtn, progressoBtn,
-                certificadosBtn, bibliotecaBtn, forumBtn, criarCursoBtn, configuracoesBtn);
+                certificadosBtn, bibliotecaBtn, forumBtn, configuracoesBtn);
         Platform.runLater(() -> {
             Scene currentScene = sairBtn.getScene();
             double sceneHeight = currentScene.getHeight();
@@ -88,9 +87,8 @@ public class Menu {
         buttonMenu.put("/com/estudante/certificados/paginaCertificados", "Certificados");
         buttonMenu.put("/com/estudante/biblioteca/paginaBiblioteca", "Biblioteca");
         buttonMenu.put("/com/estudante/forum/paginaForum", "Forum");
-        buttonMenu.put("/com/paginaPerfil", "Configurações");
+        buttonMenu.put("/com/elements/perfil", "Configurações");
         buttonMenu.put("/com/login_cadastro/paginaLogin", "Sair");
-        buttonMenu.put("/com/professor/paginaCadastroCurso", "Criar Curso");
     }
 
     private VBox perfilMenu() {
