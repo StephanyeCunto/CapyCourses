@@ -68,13 +68,60 @@ public class PaginaPerfil implements Initializable {
         container.getChildren().add(profileCard.createProfileCard());
 
         perfilBtn.setOnAction(e -> {
-            securityBtn.getStyleClass().remove("selected");
+            securityBtn.getStyleClass().remove("outline-button-selection");
+            preferencesBtn.getStyleClass().remove("outline-button-selection");
+            privacyBtn.getStyleClass().remove("outline-button-selection");
+
+            perfilBtn.getStyleClass().add("outline-button-selection");
+            securityBtn.getStyleClass().add("outline-button-not-selection");
+            preferencesBtn.getStyleClass().add("outline-button-not-selection");
+            privacyBtn.getStyleClass().add("outline-button-not-selection");
+
             container.getChildren().clear();
             container.getChildren().add(profileCard.createProfileCard());
         });
-        SecuritySection securitySection = new SecuritySection();
-        PreferencesSection preferencesSection = new PreferencesSection();
-        PrivacySection privacySection = new PrivacySection();
+
+        securityBtn.setOnAction(e -> {
+            perfilBtn.getStyleClass().remove("outline-button-selection");
+            preferencesBtn.getStyleClass().remove("outline-button-selection");
+            privacyBtn.getStyleClass().remove("outline-button-selection");
+
+            securityBtn.getStyleClass().add("outline-button-selection");
+            perfilBtn.getStyleClass().add("outline-button-not-selection");
+            preferencesBtn.getStyleClass().add("outline-button-not-selection");
+            privacyBtn.getStyleClass().add("outline-button-not-selection");
+
+            container.getChildren().clear();
+            container.getChildren().add(new SecuritySection().createSecuritySection());
+        });
+
+        preferencesBtn.setOnAction(e -> {
+            securityBtn.getStyleClass().remove("outline-button-selection");
+            perfilBtn.getStyleClass().remove("outline-button-selection");
+            privacyBtn.getStyleClass().remove("outline-button-selection");
+
+            preferencesBtn.getStyleClass().add("outline-button-selection");
+            securityBtn.getStyleClass().add("outline-button-not-selection");
+            perfilBtn.getStyleClass().add("outline-button-not-selection");
+            privacyBtn.getStyleClass().add("outline-button-not-selection");
+
+            container.getChildren().clear();
+            container.getChildren().add(new PreferencesSection().createPreferencesSection());
+        });
+
+        privacyBtn.setOnAction(e -> {
+            securityBtn.getStyleClass().remove("outline-button-selection");
+            preferencesBtn.getStyleClass().remove("outline-button-selection");
+            perfilBtn.getStyleClass().remove("outline-button-selection");
+
+            privacyBtn.getStyleClass().add("outline-button-selection");
+            securityBtn.getStyleClass().add("outline-button-not-selection");
+            preferencesBtn.getStyleClass().add("outline-button-not-selection");
+            perfilBtn.getStyleClass().add("outline-button-not-selection");
+
+            container.getChildren().clear();
+            container.getChildren().add(new PrivacySection().createPrivacySection());
+        });
 
     }
 
