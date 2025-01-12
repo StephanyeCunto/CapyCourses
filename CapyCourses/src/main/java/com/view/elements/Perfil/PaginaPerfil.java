@@ -57,8 +57,11 @@ public class PaginaPerfil implements Initializable {
 
         loadMenu();
         ProfileCard profileCard = new ProfileCard();
-        container.getChildren().add(profileCard.createProfileCard());
-
+        SecuritySection securitySection = new SecuritySection();
+        PreferencesSection preferencesSection = new PreferencesSection();
+        PrivacySection privacySection = new PrivacySection();
+        container.getChildren().addAll(profileCard.createProfileCard(), securitySection.createSecuritySection(),
+                preferencesSection.createPreferencesSection(), privacySection.createPrivacySection());
     }
 
     private void loadMenu() {

@@ -2,6 +2,7 @@ package com.view.elements.Perfil;
 
 import com.singleton.UserSession;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -9,14 +10,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.scene.paint.Color;
+
+
 public class ProfileCard {
 
     public VBox createProfileCard() {
-        VBox vbox = new VBox(20); // Reduzi o espaçamento para 20
+        VBox vbox = new VBox(20);
         vbox.getStyleClass().add("content-card");
+        vbox.setPadding(new Insets(20));
 
         HBox hboxTop = new HBox(20);
         hboxTop.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
@@ -25,10 +27,11 @@ public class ProfileCard {
 
         VBox vboxButtons = new VBox(10);
         HBox hboxButtons = new HBox(15);
+        hboxButtons.setAlignment(javafx.geometry.Pos.CENTER);
         Button btnChangePhoto = new Button("Alterar Foto");
-        btnChangePhoto.getStyleClass().add("modern-button");
+        btnChangePhoto.getStyleClass().add("outline-button-not-seletion");
         Button btnRemove = new Button("Remover");
-        btnRemove.getStyleClass().add("outline-button");
+        btnRemove.getStyleClass().add("outline-button-seletion");
 
         hboxButtons.getChildren().addAll(btnChangePhoto, btnRemove);
 
@@ -39,15 +42,13 @@ public class ProfileCard {
 
         hboxTop.getChildren().addAll(stackPane, vboxButtons);
 
-        // Cria o VBox para as informações pessoais
-        VBox vboxPersonalInfo = new VBox(15); // Reduzi o espaçamento para 15
+        VBox vboxPersonalInfo = new VBox(15);
         Label labelPersonalInfo = new Label("Informações Pessoais");
         labelPersonalInfo.getStyleClass().add("card-title");
 
-        HBox hboxFields = new HBox(15); // Reduzi o espaçamento para 15
+        HBox hboxFields = new HBox(15);
 
-        // Nome Completo
-        VBox vboxNome = new VBox(5); // Adicionei espaçamento entre o label e o campo de texto
+        VBox vboxNome = new VBox(5);
         vboxNome.setId("nomeVBox");
         HBox.setHgrow(vboxNome, javafx.scene.layout.Priority.ALWAYS);
         Label labelNome = new Label("Nome Completo");
@@ -56,8 +57,7 @@ public class ProfileCard {
         textFieldNome.getStyleClass().add("custom-text-field");
         vboxNome.getChildren().addAll(labelNome, textFieldNome);
 
-        // Email
-        VBox vboxEmail = new VBox(5); // Adicionei espaçamento entre o label e o campo de texto
+        VBox vboxEmail = new VBox(5);
         vboxEmail.setId("emailVBox");
         HBox.setHgrow(vboxEmail, javafx.scene.layout.Priority.ALWAYS);
         Label labelEmail = new Label("Email");
@@ -66,8 +66,7 @@ public class ProfileCard {
         textFieldEmail.getStyleClass().add("custom-text-field");
         vboxEmail.getChildren().addAll(labelEmail, textFieldEmail);
 
-        // Telefone
-        VBox vboxTelefone = new VBox(5); // Adicionei espaçamento entre o label e o campo de texto
+        VBox vboxTelefone = new VBox(5);
         vboxTelefone.setId("telefoneVBox");
         HBox.setHgrow(vboxTelefone, javafx.scene.layout.Priority.ALWAYS);
         Label labelTelefone = new Label("Telefone");
@@ -79,18 +78,18 @@ public class ProfileCard {
         hboxFields.getChildren().addAll(vboxNome, vboxEmail, vboxTelefone);
         vboxPersonalInfo.getChildren().addAll(labelPersonalInfo, hboxFields);
 
-        // Cria o VBox para a biografia
-        VBox vboxBio = new VBox(8);
+        VBox vboxBio = new VBox(10);
         Label labelBio = new Label("Biografia");
         labelBio.getStyleClass().add("field-label");
         TextArea textAreaBio = new TextArea();
         textAreaBio.setWrapText(true);
         textAreaBio.getStyleClass().add("custom-text-area");
+        textAreaBio.setMinHeight(100);
+        textAreaBio.setMaxHeight(100);
         Label labelBioInfo = new Label("Máximo de 200 caracteres");
         labelBioInfo.getStyleClass().add("section-title");
         vboxBio.getChildren().addAll(labelBio, textAreaBio, labelBioInfo);
 
-        // Adiciona todos os componentes ao VBox principal
         vbox.getChildren().addAll(hboxTop, vboxPersonalInfo, vboxBio);
 
         return vbox;
@@ -98,12 +97,12 @@ public class ProfileCard {
 
     private StackPane circleName() {
         StackPane avatarCircle = new StackPane();
-        avatarCircle.setMinSize(100, 100); // Aumentei o tamanho do círculo
-        avatarCircle.setMaxSize(100, 100); // Aumentei o tamanho do círculo
+        avatarCircle.setMinSize(100, 100);
+        avatarCircle.setMaxSize(100, 100);
         avatarCircle.getStyleClass().add("avatar-circle");
 
         Label nameInitial = new Label(initialName());
-        nameInitial.setFont(Font.font("Franklin Gothic Medium", 32)); // Aumentei o tamanho da fonte
+        nameInitial.setFont(Font.font("Franklin Gothic Medium", 32));
         nameInitial.setStyle("-fx-text-fill: white;");
 
         StackPane stackPane = new StackPane();
