@@ -7,6 +7,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class PaginaPrincipalDTO {
      private String name;
     private String title;

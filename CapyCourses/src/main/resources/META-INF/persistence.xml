@@ -8,10 +8,12 @@
     <class>com.model.login_cadastro.User</class>
     <class>com.model.login_cadastro.Student</class>
     <class>com.model.login_cadastro.Teacher</class>
-    <class>com.model.elements.Course</class>
-    <class>com.model.elements.Module</class>
-    <class>com.model.elements.Lessons</class>
-    
+    <class>com.model.elements.Course.Course</class>
+    <class>com.model.elements.Course.CourseSettings</class>
+    <class>com.model.elements.Course.Module</class>
+    <class>com.model.elements.Course.Lessons</class>
+    <class>com.model.elements.Course.Questionaire</class>
+    <class>com.model.elements.Course.Question</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:capycourses.db"/>
       <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>

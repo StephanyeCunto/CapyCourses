@@ -4,6 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ForumDTO {
     private String author;
     private String title;

@@ -3,46 +3,67 @@ package com.model.elements.Course;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import lombok.NoArgsConstructor;
+
 
 @Entity
 @Table(name = "lessons")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Lessons {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "module_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "module_id", nullable = false)
     private Module module;
 
+    @Column(nullable = false)
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "video_link")
     private String videoLink;
+
+    @Column(name = "materials")
     private String materials;
+
     private String duration;
+
+    @Column(name = "numberOfLesson", nullable = false)
     private Integer numberOfLesson;
+
+    @Column(name = "moduleNumber", nullable = false)
     private Integer moduleNumber;
 
-    // Construtor usado atualmente
-    public Lessons(String title, String videoLink, String details, String materials, 
-            String duration, String moduleTitle, int moduleNumber, int numberOfLesson) {
+    // Construtor para dados básicos
+    public Lessons(String title, String videoLink, String description, String materials, 
+            String duration, int moduleNumber, int numberOfLesson) {
         this.title = title;
         this.videoLink = videoLink;
-        this.description = details;
+        this.description = description;
         this.materials = materials;
         this.duration = duration;
+        this.moduleNumber = moduleNumber;
         this.numberOfLesson = numberOfLesson;
+    }
+
+    // Método helper melhorado para relacionamento bidirecional
+    public void setModule(Module module) {
+        if (this.module != module) {
+            Module oldModule = this.module;
+            this.module = module;
+            if (oldModule != null && oldModule.getLessons().contains(this)) {
+                oldModule.getLessons().remove(this);
+            }
+            if (module != null && !module.getLessons().contains(this)) {
+                module.getLessons().add(this);
+            }
+        }
     }
 }

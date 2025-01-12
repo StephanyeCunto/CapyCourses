@@ -740,45 +740,40 @@ public class CadastroCurso implements Initializable {
     private int k = 0;
 
     private Map<String, Object> saveLessonData(VBox lessonCard, int cont, int moduleNumber) {
-        try {
-            Map<String, Object> lessonData = new HashMap<>();
-            cont++;
-            lessonData.put("cont" + k, cont);
-            HBox lessonHeader = (HBox) lessonCard.getChildren().get(0);
-            Label lessonNumber = (Label) ((StackPane) lessonHeader.getChildren().get(0)).getChildren().get(0);
+        Map<String, Object> lessonData = new HashMap<>();
+        cont++;
+        lessonData.put("cont" + k, cont);
+        HBox lessonHeader = (HBox) lessonCard.getChildren().get(0);
+        Label lessonNumber = (Label) ((StackPane) lessonHeader.getChildren().get(0)).getChildren().get(0);
 
-            lessonData.put("type", "lesson");
-            lessonData.put("moduleNumber", moduleNumber);
-            lessonData.put("lessonNumber" + k, Integer.parseInt(lessonNumber.getText()));
+        lessonData.put("type", "lesson");
+        lessonData.put("moduleNumber", moduleNumber);
+        lessonData.put("lessonNumber" + k, Integer.parseInt(lessonNumber.getText()));
 
-            VBox lessonContent = (VBox) lessonCard.getChildren().get(1);
+        VBox lessonContent = (VBox) lessonCard.getChildren().get(1);
 
-            VBox titleContainer = (VBox) lessonContent.getChildren().get(0);
-            TextField titleField = (TextField) titleContainer.getChildren().get(1);
-            lessonData.put("lessonTitle" + k, titleField.getText());
+        VBox titleContainer = (VBox) lessonContent.getChildren().get(0);
+        TextField titleField = (TextField) titleContainer.getChildren().get(1);
+        lessonData.put("lessonTitle" + k, titleField.getText());
 
-            VBox videoContainer = (VBox) lessonContent.getChildren().get(2);
-            TextField videoField = (TextField) videoContainer.getChildren().get(1);
-            lessonData.put("lessonVideoLink" + k, videoField.getText());
+        VBox videoContainer = (VBox) lessonContent.getChildren().get(2);
+        TextField videoField = (TextField) videoContainer.getChildren().get(1);
+        lessonData.put("lessonVideoLink" + k, videoField.getText());
 
-            VBox detailsContainer = (VBox) lessonContent.getChildren().get(4);
-            TextArea detailsArea = (TextArea) detailsContainer.getChildren().get(1);
-            lessonData.put("lessonDetails" + k, detailsArea.getText());
+        VBox detailsContainer = (VBox) lessonContent.getChildren().get(4);
+        TextArea detailsArea = (TextArea) detailsContainer.getChildren().get(1);
+        lessonData.put("lessonDetails" + k, detailsArea.getText());
 
-            VBox materialsContainer = (VBox) lessonContent.getChildren().get(6);
-            TextArea materialsArea = (TextArea) materialsContainer.getChildren().get(1);
-            lessonData.put("lessonMaterials" + k, materialsArea.getText());
+        VBox materialsContainer = (VBox) lessonContent.getChildren().get(6);
+        TextArea materialsArea = (TextArea) materialsContainer.getChildren().get(1);
+        lessonData.put("lessonMaterials" + k, materialsArea.getText());
 
-            VBox durationContainer = (VBox) lessonContent.getChildren().get(8);
-            TextField durationField = (TextField) durationContainer.getChildren().get(1);
-            lessonData.put("lessonDuration" + k, durationField.getText());
+        VBox durationContainer = (VBox) lessonContent.getChildren().get(8);
+        TextField durationField = (TextField) durationContainer.getChildren().get(1);
+        lessonData.put("lessonDuration" + k, durationField.getText());
 
-            k++;
-            return lessonData;
-        } catch (Exception e) {
-            System.out.println("Erro ao processar dados da lição: " + e.getMessage());
-            return null;
-        }
+        k++;
+        return lessonData;
     }
 
     private int j = 0;

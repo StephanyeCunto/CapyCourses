@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.dao.CourseDAO;
 import com.singleton.UserSession;
@@ -42,9 +43,11 @@ public class CourseReader {
                     isGradeMiniun = Boolean.parseBoolean(values[6]);
                     ComboBoxVisibily = values[7];
 
+                    boolean visibility = "public".equalsIgnoreCase(values[7]) || "true".equalsIgnoreCase(values[7]);
+
                     CourseSettings courseSetting = new CourseSettings(title, dateStart, dateEnd, durationTotal,
                             isDateEnd,
-                            isCertificate, isGradeMiniun, ComboBoxVisibily);
+                            isCertificate, isGradeMiniun, visibility);
                     return courseSetting;
                 }
             }
@@ -164,5 +167,15 @@ public class CourseReader {
             e.printStackTrace();
         }
         return status;
+    }
+
+    public static Questionaire questionaireSettings(Map<String, Object> questionaireData) {
+        Questionaire questionaire = new Questionaire();
+        questionaire.setTitle((String) questionaireData.get("questionaireTitle0"));
+        questionaire.setNumber((String) questionaireData.get("questionaireNumber0"));
+        questionaire.setScore((String) questionaireData.get("questionaireScore0"));
+        questionaire.setDescription((String) questionaireData.get("questionaireDescription0"));
+        
+        return questionaire;
     }
 }

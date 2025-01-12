@@ -2,6 +2,7 @@ package com.controller.elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 import com.dto.PaginaPrincipalDTO;
 import com.model.elements.MyCourse;
@@ -29,9 +30,12 @@ public class LoadCoursesController {
 
                 CourseReader courseReader = new CourseReader();
                 CourseSettings courseSettings = courseReader.courseSettings(coursesTotais.get(i).getTitle());
-                dto.loadCoursesSettings(courseSettings.getDateEnd(),
-                        courseSettings.getDurationTotal(), courseSettings.isDateEnd(),
-                        courseSettings.isCertificate(), "notStarted", 0);
+                if (courseSettings != null) {
+                    LocalDate dateEnd = courseSettings.getDateEnd();
+                    dto.loadCoursesSettings(courseSettings.getDateEnd(),
+                            courseSettings.getDurationTotal(), courseSettings.isDateEnd(),
+                            courseSettings.isCertificate(), "notStarted", 0);
+                }
                 courses.add(dto);
             }
         }

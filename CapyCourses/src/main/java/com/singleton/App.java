@@ -15,7 +15,7 @@ public class App extends Application {
         Image icon = new Image(getClass().getResourceAsStream("/capyCourses 012.png"));
         stage.getIcons().add(icon);
         stage.setTitle("CapyCourses");
-        scene = new Scene(loadFXML("/com/professor/paginaCadastroCurso"));
+        scene = new Scene(loadFXML("login_cadastro/paginaLogin"));
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
@@ -26,7 +26,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 

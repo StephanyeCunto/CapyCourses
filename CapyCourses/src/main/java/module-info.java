@@ -40,6 +40,9 @@ module com {
     opens com.model.elements.Course to org.hibernate.orm.core;
     opens com.util to org.hibernate.orm.core;
     opens com.factory to org.hibernate.orm.core;
+    opens com.controller.login_cadastro to org.hibernate.orm.core;
+    opens com.controller.elements to org.hibernate.orm.core;
+    
 
     exports com.singleton;
     exports com.view;
@@ -59,5 +62,6 @@ module com {
     exports com.controller.login_cadastro to com.fasterxml.jackson.databind;
     exports com.controller.elements to com.fasterxml.jackson.databind;
     exports com.util to org.hibernate.orm.core;
+    
 }
 
