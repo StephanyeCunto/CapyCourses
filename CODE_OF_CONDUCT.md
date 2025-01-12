@@ -1,94 +1,90 @@
-# Citizen Code of Conduct
+# Código de Conduta do Cidadão
 
-## 1. Purpose
+## 1. Propósito
 
-A primary goal of Capy Courses is to be inclusive to the largest number of contributors, with the most varied and diverse backgrounds possible. As such, we are committed to providing a friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, ability, ethnicity, socioeconomic status, and religion (or lack thereof).
+Um dos principais objetivos do **Capy Courses** é ser inclusivo para o maior número de colaboradores, com os mais variados e diversos backgrounds possíveis. Por isso, estamos comprometidos em fornecer um ambiente amigável, seguro e acolhedor para todos, independentemente de gênero, orientação sexual, capacidade, etnia, status socioeconômico e religião (ou falta dela).
 
-This code of conduct outlines our expectations for all those who participate in our community, as well as the consequences for unacceptable behavior.
+Este código de conduta descreve nossas expectativas para todos que participam de nossa comunidade, bem como as consequências para comportamentos inaceitáveis.
 
-We invite all those who participate in Capy Courses to help us create safe and positive experiences for everyone.
+Convidamos todos que participam do **Capy Courses** a nos ajudar a criar experiências seguras e positivas para todos.
 
-## 2. Open [Source/Culture/Tech] Citizenship
+## 2. Cidadania Aberta [em Código/Cultura/Tecnologia]
 
-A supplemental goal of this Code of Conduct is to increase open [source/culture/tech] citizenship by encouraging participants to recognize and strengthen the relationships between our actions and their effects on our community.
+Um objetivo adicional deste Código de Conduta é aumentar a cidadania aberta [em código/cultura/tecnologia], incentivando os participantes a reconhecer e fortalecer as relações entre nossas ações e seus efeitos em nossa comunidade.
 
-Communities mirror the societies in which they exist and positive action is essential to counteract the many forms of inequality and abuses of power that exist in society.
+As comunidades refletem as sociedades em que existem, e ações positivas são essenciais para combater as muitas formas de desigualdade e abusos de poder que existem na sociedade.
 
-If you see someone who is making an extra effort to ensure our community is welcoming, friendly, and encourages all participants to contribute to the fullest extent, we want to know.
+Se você vir alguém fazendo um esforço extra para garantir que nossa comunidade seja acolhedora, amigável e incentive todos os participantes a contribuir da melhor forma possível, queremos saber.
 
-## 3. Expected Behavior
+## 3. Comportamento Esperado
 
-The following behaviors are expected and requested of all community members:
+Os seguintes comportamentos são esperados e solicitados de todos os membros da comunidade:
 
- * Participate in an authentic and active way. In doing so, you contribute to the health and longevity of this community.
- * Exercise consideration and respect in your speech and actions.
- * Attempt collaboration before conflict.
- * Refrain from demeaning, discriminatory, or harassing behavior and speech.
- * Be mindful of your surroundings and of your fellow participants. Alert community leaders if you notice a dangerous situation, someone in distress, or violations of this Code of Conduct, even if they seem inconsequential.
- * Remember that community event venues may be shared with members of the public; please be respectful to all patrons of these locations.
+- Participe de forma autêntica e ativa. Ao fazer isso, você contribui para a saúde e longevidade desta comunidade.
+- Demonstre consideração e respeito em suas palavras e ações.
+- Tente colaborar antes de entrar em conflito.
+- Evite comportamentos e discursos degradantes, discriminatórios ou de assédio.
+- Esteja atento ao seu entorno e aos seus colegas participantes. Alerte os líderes da comunidade se você perceber uma situação perigosa, alguém em dificuldade ou violações deste Código de Conduta, mesmo que pareçam insignificantes.
+- Lembre-se de que os locais de eventos da comunidade podem ser compartilhados com o público; seja respeitoso com todos os frequentadores desses locais.
 
-## 4. Unacceptable Behavior
+## 4. Comportamento Inaceitável
 
-The following behaviors are considered harassment and are unacceptable within our community:
+Os seguintes comportamentos são considerados assédio e são inaceitáveis em nossa comunidade:
 
- * Violence, threats of violence or violent language directed against another person.
- * Sexist, racist, homophobic, transphobic, ableist or otherwise discriminatory jokes and language.
- * Posting or displaying sexually explicit or violent material.
- * Posting or threatening to post other people's personally identifying information ("doxing").
- * Personal insults, particularly those related to gender, sexual orientation, race, religion, or disability.
- * Inappropriate photography or recording.
- * Inappropriate physical contact. You should have someone's consent before touching them.
- * Unwelcome sexual attention. This includes, sexualized comments or jokes; inappropriate touching, groping, and unwelcomed sexual advances.
- * Deliberate intimidation, stalking or following (online or in person).
- * Advocating for, or encouraging, any of the above behavior.
- * Sustained disruption of community events, including talks and presentations.
+- Violência, ameaças de violência ou linguagem violenta direcionada a outra pessoa.
+- Piadas e linguagem sexista, racista, homofóbica, transfóbica, capacitista ou discriminatória de qualquer forma.
+- Publicação ou exibição de material sexualmente explícito ou violento.
+- Publicação ou ameaça de publicar informações pessoais de outras pessoas ("doxing").
+- Insultos pessoais, especialmente relacionados a gênero, orientação sexual, raça, religião ou deficiência.
+- Fotografias ou gravações inadequadas.
+- Contato físico inadequado. Você deve ter o consentimento de alguém antes de tocá-lo.
+- Atenção sexual indesejada. Isso inclui comentários ou piadas sexualizadas, toques inadequados, agarramentos e avanços sexuais não desejados.
+- Intimidação deliberada, perseguição ou seguimento (online ou pessoalmente).
+- Defesa ou incentivo a qualquer um dos comportamentos acima.
+- Perturbação prolongada de eventos da comunidade, incluindo palestras e apresentações.
 
-## 5. Weapons Policy
+## 5. Política de Armas
 
-No weapons will be allowed at Capy Courses events, community spaces, or in other spaces covered by the scope of this Code of Conduct. Weapons include but are not limited to guns, explosives (including fireworks), and large knives such as those used for hunting or display, as well as any other item used for the purpose of causing injury or harm to others. Anyone seen in possession of one of these items will be asked to leave immediately, and will only be allowed to return without the weapon. Community members are further expected to comply with all state and local laws on this matter.
+Nenhuma arma será permitida em eventos do **Capy Courses**, espaços comunitários ou outros espaços cobertos por este Código de Conduta. Armas incluem, mas não se limitam a, armas de fogo, explosivos (incluindo fogos de artifício) e facas grandes, como as usadas para caça ou exibição, bem como qualquer outro item usado com o propósito de causar lesão ou dano a outros. Qualquer pessoa vista com um desses itens será solicitada a sair imediatamente e só poderá retornar sem a arma. Espera-se ainda que os membros da comunidade cumpram todas as leis estaduais e locais sobre o assunto.
 
-## 6. Consequences of Unacceptable Behavior
+## 6. Consequências do Comportamento Inaceitável
 
-Unacceptable behavior from any community member, including sponsors and those with decision-making authority, will not be tolerated.
+Comportamentos inaceitáveis de qualquer membro da comunidade, incluindo patrocinadores e aqueles com autoridade de decisão, não serão tolerados.
 
-Anyone asked to stop unacceptable behavior is expected to comply immediately.
+Qualquer pessoa solicitada a interromper um comportamento inaceitável deve cumprir imediatamente.
 
-If a community member engages in unacceptable behavior, the community organizers may take any action they deem appropriate, up to and including a temporary ban or permanent expulsion from the community without warning (and without refund in the case of a paid event).
+Se um membro da comunidade se envolver em comportamento inaceitável, os organizadores da comunidade podem tomar qualquer ação que considerem apropriada, incluindo banimento temporário ou expulsão permanente da comunidade sem aviso prévio (e sem reembolso no caso de um evento pago).
 
-## 7. Reporting Guidelines
+## 7. Diretrizes para Denúncias
 
-If you are subject to or witness unacceptable behavior, or have any other concerns, please notify a community organizer as soon as possible. .
+Se você for vítima ou testemunhar um comportamento inaceitável, ou tiver outras preocupações, notifique um organizador da comunidade o mais rápido possível.
 
+Além disso, os organizadores da comunidade estão disponíveis para ajudar os membros a entrar em contato com a aplicação da lei local ou para ajudar aqueles que estão passando por comportamentos inaceitáveis a se sentirem seguros. No contexto de eventos presenciais, os organizadores também fornecerão acompanhantes, se desejado pela pessoa em situação de desconforto.
 
+## 8. Resolução de Reclamações
 
-Additionally, community organizers are available to help community members engage with local law enforcement or to otherwise help those experiencing unacceptable behavior feel safe. In the context of in-person events, organizers will also provide escorts as desired by the person experiencing distress.
+Se você sentir que foi falsamente ou injustamente acusado de violar este Código de Conduta, notifique com uma descrição concisa de sua reclamação. Sua reclamação será tratada de acordo com nossas políticas de governança existentes.
 
-## 8. Addressing Grievances
+## 9. Escopo
 
-If you feel you have been falsely or unfairly accused of violating this Code of Conduct, you should notify  with a concise description of your grievance. Your grievance will be handled in accordance with our existing governing policies. 
+Esperamos que todos os participantes da comunidade (colaboradores, pagos ou não; patrocinadores; e outros convidados) sigam este Código de Conduta em todos os espaços da comunidade – online e presencial –, bem como em todas as comunicações individuais relacionadas a assuntos da comunidade.
 
+Este código de conduta e seus procedimentos relacionados também se aplicam a comportamentos inaceitáveis que ocorram fora do escopo das atividades da comunidade, quando tais comportamentos têm o potencial de afetar adversamente a segurança e o bem-estar dos membros da comunidade.
 
+## 10. Informações de Contato
 
-## 9. Scope
+[Inserir informações de contato aqui]
 
-We expect all community participants (contributors, paid or otherwise; sponsors; and other guests) to abide by this Code of Conduct in all community venues--online and in-person--as well as in all one-on-one communications pertaining to community business.
+## 11. Licença e Atribuição
 
-This code of conduct and its related procedures also applies to unacceptable behavior occurring outside the scope of community activities when such behavior has the potential to adversely affect the safety and well-being of community members.
+O **Código de Conduta do Cidadão** é distribuído pela [Stumptown Syndicate](http://stumptownsyndicate.org) sob uma [licença Creative Commons Attribution-ShareAlike](http://creativecommons.org/licenses/by-sa/3.0/).
 
-## 10. Contact info
+Partes do texto foram derivadas do [Código de Conduta do Django](https://www.djangoproject.com/conduct/) e da [Política Antiassédio do Geek Feminism](http://geekfeminism.wikia.com/wiki/Conference_anti-harassment/Policy).
 
+_Revisão 2.3. Publicada em 6 de março de 2017._
 
+_Revisão 2.2. Publicada em 4 de fevereiro de 2016._
 
-## 11. License and attribution
+_Revisão 2.1. Publicada em 23 de junho de 2014._
 
-The Citizen Code of Conduct is distributed by [Stumptown Syndicate](http://stumptownsyndicate.org) under a [Creative Commons Attribution-ShareAlike license](http://creativecommons.org/licenses/by-sa/3.0/). 
-
-Portions of text derived from the [Django Code of Conduct](https://www.djangoproject.com/conduct/) and the [Geek Feminism Anti-Harassment Policy](http://geekfeminism.wikia.com/wiki/Conference_anti-harassment/Policy).
-
-_Revision 2.3. Posted 6 March 2017._
-
-_Revision 2.2. Posted 4 February 2016._
-
-_Revision 2.1. Posted 23 June 2014._
-
-_Revision 2.0, adopted by the [Stumptown Syndicate](http://stumptownsyndicate.org) board on 10 January 2013. Posted 17 March 2013._
+_Revisão 2.0, adotada pelo conselho da [Stumptown Syndicate](http://stumptownsyndicate.org) em 10 de janeiro de 2013. Publicada em 17 de março de 2013._
