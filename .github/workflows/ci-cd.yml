@@ -63,7 +63,7 @@ jobs:
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
           echo "Application deployed successfully"
-
+          
       - name: Notify Slack
         uses: rtCamp/action-slack-notify@v2
         env:
