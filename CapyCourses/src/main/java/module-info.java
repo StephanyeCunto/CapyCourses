@@ -35,7 +35,7 @@ module com {
     opens com.view.professor to javafx.fxml;
     opens com.view.estudante to javafx.fxml;
     opens com.view.elements.Perfil to javafx.fxml;
-
+    
     opens com.model.login_cadastro to org.hibernate.orm.core;
     opens com.model.elements to org.hibernate.orm.core;
     opens com.model.elements.Course to org.hibernate.orm.core;

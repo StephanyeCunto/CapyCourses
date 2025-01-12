@@ -1,11 +1,11 @@
 {
-  "author" : "Julia Mendes",
-  "title" : "MongoDB Tips",
-  "description" : "Queries NoSQL eficientes",
-  "category" : "Banco de Dados",
-  "dateTime" : "2023-05-22",
-  "view" : 329,
-  "like" : 3,
-  "comments" : 12,
-  "question" : "Quais são as melhores práticas para otimizar queries NoSQL em grandes coleções do MongoDB?"
+  "author" : "Ana Silva",
+  "title" : "Git Help",
+  "description" : "Como resolver conflitos no merge?",
+  "category" : "DevOps",
+  "dateTime" : "2023-05-18",
+  "view" : 175,
+  "like" : 1,
+  "comments" : 5,
+  "question" : "Como resolver conflitos complexos de merge no Git quando trabalho em equipe com múltiplas branches e features simultâneas?"
 }

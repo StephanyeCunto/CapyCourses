@@ -73,8 +73,8 @@ public class CourseReader {
                     String description = values[4];
 
                     List<Lessons> lessons = courseLessons(titleCourse, moduleNumber);
-                    Module moduleCourse = new Module(moduleNumber, title, description, duration, lessons);
-                    modules.add(moduleCourse);
+                   // Module moduleCourse = new Module(moduleNumber, title, description, duration, lessons);
+                    // modules.add(moduleCourse);
                 }
             }
         } catch (IOException e) {
@@ -102,9 +102,9 @@ public class CourseReader {
                     String materials = values[7];
                     String duration = values[8];
 
-                    Lessons lesson = new Lessons(title, videoLink, details, materials, duration, module,
-                            moduleNumber, numberOfLesson);
-                    lessons.add(lesson);
+                //   Lessons lesson = new Lessons(title, videoLink, details, materials, duration, module,
+                 //           moduleNumber, numberOfLesson);
+                 //   lessons.add(lesson);
                 }
             }
         } catch (IOException e) {

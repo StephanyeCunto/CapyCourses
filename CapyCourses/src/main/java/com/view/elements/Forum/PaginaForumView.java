@@ -50,6 +50,8 @@ public class PaginaForumView implements Initializable {
     private Button selectionTodos;
     @FXML
     private Button selectionParticipated;
+    @FXML
+    private Button addButton;
 
     @SuppressWarnings("unused")
     @Override
@@ -59,17 +61,41 @@ public class PaginaForumView implements Initializable {
             forumContainer.getChildren().clear();
             forumContainer.getChildren().add(loadForum.loadForum("todos"));
 
-             selectionTodos.setOnMouseClicked(e -> {
-                 loadClass("todos");
-                 forumContainer.getChildren().clear();
-                 forumContainer.getChildren().add(loadForum.loadForum("todos"));
-             });
+            selectionTodos.setOnMouseClicked(e -> {
+                loadClass("todos");
+                forumContainer.getChildren().clear();
+                forumContainer.getChildren().add(loadForum.loadForum("todos"));
+            });
 
-             selectionParticipated.setOnMouseClicked(e -> {
-                 loadClass("participated");
-                 forumContainer.getChildren().clear();
-                 forumContainer.getChildren().add(loadForum.loadForum("myForum"));
-             });
+            selectionParticipated.setOnMouseClicked(e -> {
+                loadClass("participated");
+                forumContainer.getChildren().clear();
+                forumContainer.getChildren().add(loadForum.loadForum("myForum"));
+            });
+        });
+
+        addButton.setOnMouseEntered(event -> {
+            addButton.setText("Criar Forum");
+            addButton.getStyleClass().remove("add-button");
+            addButton.getStyleClass().add("button-add");
+
+            javafx.animation.Timeline timeline = new javafx.animation.Timeline(
+            new javafx.animation.KeyFrame(Duration.ZERO, new javafx.animation.KeyValue(addButton.prefWidthProperty(), 40)),
+            new javafx.animation.KeyFrame(Duration.millis(200), new javafx.animation.KeyValue(addButton.prefWidthProperty(), 120))
+            );
+            timeline.play();
+        });
+
+        addButton.setOnMouseExited(event -> {
+            addButton.setText("+");
+            addButton.getStyleClass().remove("button-add");
+            addButton.getStyleClass().add("add-button");
+
+            javafx.animation.Timeline timeline = new javafx.animation.Timeline(
+            new javafx.animation.KeyFrame(Duration.ZERO, new javafx.animation.KeyValue(addButton.prefWidthProperty(), 120)),
+            new javafx.animation.KeyFrame(Duration.millis(200), new javafx.animation.KeyValue(addButton.prefWidthProperty(), 40))
+            );
+            timeline.play();
         });
 
         changeMode();
@@ -162,5 +188,10 @@ public class PaginaForumView implements Initializable {
             selectionParticipated.getStyleClass().add("outline-button-seletion");
             selectionTodos.getStyleClass().add("outline-button-not-seletion");
         }
+    }
+
+    public void addForum() {
+        ModalAddForum modal = new ModalAddForum(container.getScene().getWindow());
+        modal.show();
     }
 }
