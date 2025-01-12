@@ -26,11 +26,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository  # Cache das dependências do Maven
-          key: maven-${{ runner.os }}-${{ hashFiles('CapyCourses/pom.xml') }}  <!-- Ajuste o caminho do pom.xml -->
+          key: maven-${{ runner.os }}-${{ hashFiles('CapyCourses/pom.xml') }}
           restore-keys: |
             maven-${{ runner.os }}-
 
-       - name: Build with Maven
+      - name: Build with Maven
         working-directory: ./CapyCourses  # Executa no diretório onde está o pom.xml
         run: mvn clean package  # Compila o projeto e roda os testes
 
