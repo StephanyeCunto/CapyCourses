@@ -2,6 +2,7 @@
 
 > Transformando o aprendizado em uma experiência extraordinária com tecnologia e inovação.
 
+[![CI Status](https://github.com/StephanyeCunto/CapyCourses/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/StephanyeCunto/CapyCourses/actions/workflows/ci-cd.yml)
 [![Java](https://img.shields.io/badge/Java-17%2B-brightgreen)](https://www.oracle.com/java/)
 [![JavaFX](https://img.shields.io/badge/JavaFX-19%2B-blue)](https://openjfx.io/)
 [![MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
@@ -131,6 +132,26 @@ mvn clean install
 # Execute o projeto
 mvn javafx:run
 ```
+---
+## 🔧 Integração Contínua (CI)
+
+O projeto utiliza **GitHub Actions** para garantir a qualidade do código. A cada push ou pull request, o pipeline de CI é executado para:
+
+- Compilar o projeto.
+- Executar testes automatizados.
+- Verificar a qualidade do código.
+
+[![CI Status](https://github.com/StephanyeCunto/CapyCourses/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/StephanyeCunto/CapyCourses/actions/workflows/ci-cd.yml)
+
+### Como Funciona?
+1. **Compilação**: O projeto é compilado usando o Maven (`mvn clean package`).
+2. **Testes**: Os testes automatizados são executados (`mvn test`).
+3. **Status**: O badge acima mostra o status atual do CI (✅ passando ou ❌ falhando).
+
+### Como Verificar?
+- Clique no badge **CI Status** para ver os detalhes da execução do pipeline na aba **Actions** do GitHub.
+
+---
 
 ## 🗂️ Estrutura do Projeto
 ```bash
