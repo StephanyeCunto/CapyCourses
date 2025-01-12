@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -20,7 +19,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import com.dto.BibliotecaDTO;
-import com.dto.PaginaPrincipalDTO;
 import com.view.Modo;
 
 import java.awt.print.PageFormat;

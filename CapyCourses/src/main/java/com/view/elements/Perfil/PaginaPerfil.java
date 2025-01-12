@@ -68,57 +68,66 @@ public class PaginaPerfil implements Initializable {
         container.getChildren().add(profileCard.createProfileCard());
 
         perfilBtn.setOnAction(e -> {
-            securityBtn.getStyleClass().remove("outline-button-seletion");
-            preferencesBtn.getStyleClass().remove("outline-button-seletion");
-            privacyBtn.getStyleClass().remove("outline-button-seletion");
+            securityBtn.getStyleClass().clear();
+            preferencesBtn.getStyleClass().clear();
+            privacyBtn.getStyleClass().clear();
 
-            perfilBtn.getStyleClass().add("outline-button-seletion");
             securityBtn.getStyleClass().add("outline-button-not-seletion");
             preferencesBtn.getStyleClass().add("outline-button-not-seletion");
             privacyBtn.getStyleClass().add("outline-button-not-seletion");
+
+            perfilBtn.getStyleClass().clear();
+            perfilBtn.getStyleClass().add("outline-button-seletion");
 
             container.getChildren().clear();
             container.getChildren().add(profileCard.createProfileCard());
         });
 
         securityBtn.setOnAction(e -> {
-            perfilBtn.getStyleClass().remove("outline-button-seletion");
-            preferencesBtn.getStyleClass().remove("outline-button-seletion");
-            privacyBtn.getStyleClass().remove("outline-button-seletion");
+            perfilBtn.getStyleClass().clear();
+            preferencesBtn.getStyleClass().clear();
+            privacyBtn.getStyleClass().clear();
 
-            securityBtn.getStyleClass().add("outline-button-seletion");
             perfilBtn.getStyleClass().add("outline-button-not-seletion");
             preferencesBtn.getStyleClass().add("outline-button-not-seletion");
             privacyBtn.getStyleClass().add("outline-button-not-seletion");
+
+            securityBtn.getStyleClass().clear();
+            securityBtn.getStyleClass().add("outline-button-seletion");
 
             container.getChildren().clear();
             container.getChildren().add(new SecuritySection().createSecuritySection());
         });
 
         preferencesBtn.setOnAction(e -> {
-            securityBtn.getStyleClass().remove("outline-button-seletion");
-            perfilBtn.getStyleClass().remove("outline-button-seletion");
-            privacyBtn.getStyleClass().remove("outline-button-seletion");
+            securityBtn.getStyleClass().clear();
+            perfilBtn.getStyleClass().clear();
+            privacyBtn.getStyleClass().clear();
 
-            preferencesBtn.getStyleClass().add("outline-button-seletion");
             securityBtn.getStyleClass().add("outline-button-not-seletion");
             perfilBtn.getStyleClass().add("outline-button-not-seletion");
             privacyBtn.getStyleClass().add("outline-button-not-seletion");
+
+            preferencesBtn.getStyleClass().clear();
+            preferencesBtn.getStyleClass().add("outline-button-seletion");
 
             container.getChildren().clear();
             container.getChildren().add(new PreferencesSection().createPreferencesSection());
         });
 
         privacyBtn.setOnAction(e -> {
-            securityBtn.getStyleClass().remove("outline-button-seletion");
-            preferencesBtn.getStyleClass().remove("outline-button-seletion");
-            perfilBtn.getStyleClass().remove("outline-button-seletion");
+            securityBtn.getStyleClass().clear();
+            preferencesBtn.getStyleClass().clear();
+            perfilBtn.getStyleClass().clear();
 
-            privacyBtn.getStyleClass().add("outline-button-seletion");
             securityBtn.getStyleClass().add("outline-button-not-seletion");
             preferencesBtn.getStyleClass().add("outline-button-not-seletion");
             perfilBtn.getStyleClass().add("outline-button-not-seletion");
 
+            privacyBtn.getStyleClass().clear();
+            privacyBtn.getStyleClass().add("outline-button-seletion");
+
+            System.out.println("Privacy "+privacyBtn.getStyleClass());
             container.getChildren().clear();
             container.getChildren().add(new PrivacySection().createPrivacySection());
         });
