@@ -135,7 +135,7 @@ public class PaginaPerfil implements Initializable {
 
             System.out.println("Privacy "+privacyBtn.getStyleClass());
             container.getChildren().clear();
-          //  container.getChildren().add(new PrivacySection());
+            container.getChildren().add(new PrivacySection().createPrivacySection());
         });
 
     }

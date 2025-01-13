@@ -74,10 +74,12 @@ public class PaginaForumView implements Initializable {
             });
         });
 
+        addButton.getStyleClass().add("outline-button-not-seletion");
+
         addButton.setOnMouseEntered(event -> {
             addButton.setText("Criar Forum");
-            addButton.getStyleClass().remove("add-button");
-            addButton.getStyleClass().add("button-add");
+            addButton.getStyleClass().clear();
+            addButton.getStyleClass().add("outline-button-not-seletion");
 
             javafx.animation.Timeline timeline = new javafx.animation.Timeline(
             new javafx.animation.KeyFrame(Duration.ZERO, new javafx.animation.KeyValue(addButton.prefWidthProperty(), 40)),
@@ -85,11 +87,11 @@ public class PaginaForumView implements Initializable {
             );
             timeline.play();
         });
-
+        
         addButton.setOnMouseExited(event -> {
+            addButton.getStyleClass().clear();
             addButton.setText("+");
-            addButton.getStyleClass().remove("button-add");
-            addButton.getStyleClass().add("add-button");
+            addButton.getStyleClass().add("outline-button-not-seletion");
 
             javafx.animation.Timeline timeline = new javafx.animation.Timeline(
             new javafx.animation.KeyFrame(Duration.ZERO, new javafx.animation.KeyValue(addButton.prefWidthProperty(), 120)),
@@ -97,6 +99,8 @@ public class PaginaForumView implements Initializable {
             );
             timeline.play();
         });
+
+        addButton.setOnMouseClicked(event->addForum() );
 
         changeMode();
         toggleButtonStackPane.setOnMouseClicked(e -> toggle());
