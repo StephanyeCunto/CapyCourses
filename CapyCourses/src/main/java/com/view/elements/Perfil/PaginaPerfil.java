@@ -50,7 +50,7 @@ public class PaginaPerfil implements Initializable {
     @FXML
     private Button perfilBtn;
     @FXML
-    private Button securityBtn;
+    private Button segurityBtn;
     @FXML
     private Button preferencesBtn;
     @FXML
@@ -68,17 +68,17 @@ public class PaginaPerfil implements Initializable {
         container.getChildren().add(profileCard.createProfileCard());
 
 
-        securityBtn.getStyleClass().add("outline-button-not-seletion");
+        segurityBtn.getStyleClass().add("outline-button-not-seletion");
         preferencesBtn.getStyleClass().add("outline-button-not-seletion");
         privacyBtn.getStyleClass().add("outline-button-not-seletion");
         perfilBtn.getStyleClass().add("outline-button-seletion");
 
         perfilBtn.setOnAction(e -> {
-            securityBtn.getStyleClass().clear();
+            segurityBtn.getStyleClass().clear();
             preferencesBtn.getStyleClass().clear();
             privacyBtn.getStyleClass().clear();
 
-            securityBtn.getStyleClass().add("outline-button-not-seletion");
+            segurityBtn.getStyleClass().add("outline-button-not-seletion");
             preferencesBtn.getStyleClass().add("outline-button-not-seletion");
             privacyBtn.getStyleClass().add("outline-button-not-seletion");
 
@@ -89,7 +89,7 @@ public class PaginaPerfil implements Initializable {
             container.getChildren().add(profileCard.createProfileCard());
         });
 
-        securityBtn.setOnAction(e -> {
+        segurityBtn.setOnAction(e -> {
             perfilBtn.getStyleClass().clear();
             preferencesBtn.getStyleClass().clear();
             privacyBtn.getStyleClass().clear();
@@ -98,19 +98,19 @@ public class PaginaPerfil implements Initializable {
             preferencesBtn.getStyleClass().add("outline-button-not-seletion");
             privacyBtn.getStyleClass().add("outline-button-not-seletion");
 
-            securityBtn.getStyleClass().clear();
-            securityBtn.getStyleClass().add("outline-button-seletion");
+            segurityBtn.getStyleClass().clear();
+            segurityBtn.getStyleClass().add("outline-button-seletion");
 
             container.getChildren().clear();
             container.getChildren().add(new SecuritySection().createSecuritySection());
         });
 
         preferencesBtn.setOnAction(e -> {
-            securityBtn.getStyleClass().clear();
+            segurityBtn.getStyleClass().clear();
             perfilBtn.getStyleClass().clear();
             privacyBtn.getStyleClass().clear();
 
-            securityBtn.getStyleClass().add("outline-button-not-seletion");
+            segurityBtn.getStyleClass().add("outline-button-not-seletion");
             perfilBtn.getStyleClass().add("outline-button-not-seletion");
             privacyBtn.getStyleClass().add("outline-button-not-seletion");
 
@@ -122,11 +122,11 @@ public class PaginaPerfil implements Initializable {
         });
 
         privacyBtn.setOnAction(e -> {
-            securityBtn.getStyleClass().clear();
+            segurityBtn.getStyleClass().clear();
             preferencesBtn.getStyleClass().clear();
             perfilBtn.getStyleClass().clear();
 
-            securityBtn.getStyleClass().add("outline-button-not-seletion");
+            segurityBtn.getStyleClass().add("outline-button-not-seletion");
             preferencesBtn.getStyleClass().add("outline-button-not-seletion");
             perfilBtn.getStyleClass().add("outline-button-not-seletion");
 
