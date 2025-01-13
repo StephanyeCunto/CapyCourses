@@ -299,7 +299,6 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 - [ ] Suporte a cursos offline.
 - [ ] Integração com Google Classroom.
 - [ ] Gamificação (badges e rankings).
-- [ ] Exportação de certificados em PDF.
 - [ ] Suporte a múltiplos idiomas.
 
 ### Como Contribuir para Novas Funcionalidades
