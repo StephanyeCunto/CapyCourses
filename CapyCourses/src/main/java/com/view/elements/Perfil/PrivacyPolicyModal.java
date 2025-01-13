@@ -1,7 +1,6 @@
 package com.view.elements.Perfil;
 
 import com.view.Modo;
-
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -97,39 +96,39 @@ public class PrivacyPolicyModal {
 
         // Texto da Política de Privacidade
         String privacyPolicyText = 
-        "**Política de Privacidade do CapyCourses**\n\n" +
-        "**Última atualização:** [Insira a data]\n\n" +
-        "Bem-vindo ao **CapyCourses**! Esta Política de Privacidade explica como coletamos, usamos, compartilhamos e protegemos as informações dos usuários do site **https://github.com/StephanyeCunto/CapyCourses** (doravante referido como \"Site\" ou \"Serviço\"). Ao utilizar nosso Site, você concorda com as práticas descritas nesta política.\n\n" +
-        "**1. Informações que Coletamos**\n" +
-        "- **Dados de cadastro:** Nome, endereço de e-mail, nome de usuário e senha.\n" +
-        "- **Informações de perfil:** Foto, biografia e outras informações que você optar por compartilhar.\n" +
-        "- **Conteúdo gerado pelo usuário:** Cursos, comentários, avaliações e outras contribuições.\n\n" +
-        "**2. Como Usamos Suas Informações**\n" +
-        "Utilizamos as informações coletadas para:\n" +
-        "- Fornecer, operar e melhorar o Site.\n" +
-        "- Personalizar sua experiência no CapyCourses.\n" +
-        "- Comunicar-nos com você, respondendo a solicitações e enviando atualizações.\n" +
-        "- Analisar o uso do Site e realizar pesquisas.\n" +
-        "- Cumprir obrigações legais e proteger nossos direitos.\n\n" +
-        "**3. Compartilhamento de Informações**\n" +
-        "Não vendemos suas informações pessoais. Podemos compartilhar dados com:\n" +
-        "- **Prestadores de serviços:** Parceiros que nos auxiliam na operação do Site (como hospedagem e análise de dados).\n" +
-        "- **Autoridades legais:** Quando necessário para cumprir leis, regulamentos ou processos legais.\n" +
-        "- **Com seu consentimento:** Em situações onde você autoriza o compartilhamento.\n\n" +
-        "**4. Segurança das Informações**\n" +
-        "Implementamos medidas de segurança para proteger suas informações contra acesso não autorizado, alteração, divulgação ou destruição. No entanto, nenhum sistema é 100% seguro, e não podemos garantir segurança absoluta.\n\n" +
-        "**5. Seus Direitos**\n" +
-        "Dependendo da sua localização, você pode ter os seguintes direitos:\n" +
-        "- **Acesso:** Solicitar uma cópia das informações que temos sobre você.\n" +
-        "- **Correção:** Solicitar a correção de dados incorretos ou incompletos.\n" +
-        "- **Exclusão:** Solicitar a exclusão de suas informações pessoais.\n" +
-        "- **Revogação de consentimento:** Retirar o consentimento para o uso de seus dados.\n\n" +
-        "**6. Links para Terceiros**\n" +
-        "O Site pode conter links para outros sites. Esta Política de Privacidade não se aplica a sites de terceiros, e recomendamos que você revise as políticas de privacidade desses sites.\n\n" +
-        "**7. Alterações nesta Política**\n" +
-        "Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos você sobre mudanças significativas através do Site ou por e-mail. O uso contínuo do Site após as alterações constitui aceitação da nova política.\n\n" +
-        "**8. Contato**\n" +
-        "Se tiver dúvidas ou preocupações sobre esta Política de Privacidade, entre em contato conosco através do e-mail: [inserir e-mail de contato].";
+            "**Política de Privacidade do CapyCourses**\n\n" +
+            "**Última atualização:** [Insira a data]\n\n" +
+            "Bem-vindo ao **CapyCourses**! Esta Política de Privacidade explica como coletamos, usamos, compartilhamos e protegemos as informações dos usuários do site **https://github.com/StephanyeCunto/CapyCourses** (doravante referido como \"Site\" ou \"Serviço\"). Ao utilizar nosso Site, você concorda com as práticas descritas nesta política.\n\n" +
+            "**1. Informações que Coletamos**\n" +
+            "- **Dados de cadastro:** Nome, endereço de e-mail, nome de usuário e senha.\n" +
+            "- **Informações de perfil:** Foto, biografia e outras informações que você optar por compartilhar.\n" +
+            "- **Conteúdo gerado pelo usuário:** Cursos, comentários, avaliações e outras contribuições.\n\n" +
+            "**2. Como Usamos Suas Informações**\n" +
+            "Utilizamos as informações coletadas para:\n" +
+            "- Fornecer, operar e melhorar o Site.\n" +
+            "- Personalizar sua experiência no CapyCourses.\n" +
+            "- Comunicar-nos com você, respondendo a solicitações e enviando atualizações.\n" +
+            "- Analisar o uso do Site e realizar pesquisas.\n" +
+            "- Cumprir obrigações legais e proteger nossos direitos.\n\n" +
+            "**3. Compartilhamento de Informações**\n" +
+            "Não vendemos suas informações pessoais. Podemos compartilhar dados com:\n" +
+            "- **Prestadores de serviços:** Parceiros que nos auxiliam na operação do Site (como hospedagem e análise de dados).\n" +
+            "- **Autoridades legais:** Quando necessário para cumprir leis, regulamentos ou processos legais.\n" +
+            "- **Com seu consentimento:** Em situações onde você autoriza o compartilhamento.\n\n" +
+            "**4. Segurança das Informações**\n" +
+            "Implementamos medidas de segurança para proteger suas informações contra acesso não autorizado, alteração, divulgação ou destruição. No entanto, nenhum sistema é 100% seguro, e não podemos garantir segurança absoluta.\n\n" +
+            "**5. Seus Direitos**\n" +
+            "Dependendo da sua localização, você pode ter os seguintes direitos:\n" +
+            "- **Acesso:** Solicitar uma cópia das informações que temos sobre você.\n" +
+            "- **Correção:** Solicitar a correção de dados incorretos ou incompletos.\n" +
+            "- **Exclusão:** Solicitar a exclusão de suas informações pessoais.\n" +
+            "- **Revogação de consentimento:** Retirar o consentimento para o uso de seus dados.\n\n" +
+            "**6. Links para Terceiros**\n" +
+            "O Site pode conter links para outros sites. Esta Política de Privacidade não se aplica a sites de terceiros, e recomendamos que você revise as políticas de privacidade desses sites.\n\n" +
+            "**7. Alterações nesta Política**\n" +
+            "Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos você sobre mudanças significativas através do Site ou por e-mail. O uso contínuo do Site após as alterações constitui aceitação da nova política.\n\n" +
+            "**8. Contato**\n" +
+            "Se tiver dúvidas ou preocupações sobre esta Política de Privacidade, entre em contato conosco através do e-mail: [inserir e-mail de contato].";
 
         Label policyTextLabel = new Label(privacyPolicyText);
         policyTextLabel.setWrapText(true);

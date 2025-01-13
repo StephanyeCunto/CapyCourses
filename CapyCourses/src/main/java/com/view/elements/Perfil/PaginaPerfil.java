@@ -67,6 +67,12 @@ public class PaginaPerfil implements Initializable {
         ProfileCard profileCard = new ProfileCard();
         container.getChildren().add(profileCard.createProfileCard());
 
+
+        securityBtn.getStyleClass().add("outline-button-not-seletion");
+        preferencesBtn.getStyleClass().add("outline-button-not-seletion");
+        privacyBtn.getStyleClass().add("outline-button-not-seletion");
+        perfilBtn.getStyleClass().add("outline-button-seletion");
+
         perfilBtn.setOnAction(e -> {
             securityBtn.getStyleClass().clear();
             preferencesBtn.getStyleClass().clear();
@@ -129,7 +135,7 @@ public class PaginaPerfil implements Initializable {
 
             System.out.println("Privacy "+privacyBtn.getStyleClass());
             container.getChildren().clear();
-            container.getChildren().add(new PrivacySection().createPrivacySection());
+          //  container.getChildren().add(new PrivacySection());
         });
 
     }
