@@ -18,7 +18,6 @@ module com {
     requires org.hibernate.orm.core;
     requires java.sql;
     requires java.naming;
-    
 
     opens com.singleton to javafx.fxml;
     opens com.view to javafx.fxml;
@@ -43,7 +42,6 @@ module com {
     opens com.factory to org.hibernate.orm.core;
     opens com.controller.login_cadastro to org.hibernate.orm.core;
     opens com.controller.elements to org.hibernate.orm.core;
-    
 
     exports com.singleton;
     exports com.view;
