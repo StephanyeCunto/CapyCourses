@@ -33,7 +33,7 @@
             GridPane.columnIndex="1">
             <content>
                 <VBox spacing="30" styleClass="main-content">
-                    <Hbox>
+                    <HBox>
                         <HBox alignment="CENTER_LEFT" spacing="20">
                             <VBox>
                                 <Label text="Configurações" styleClass="page-title" />
@@ -60,7 +60,7 @@
                                     styleClass="toggle-button" />
                             </StackPane>
                         </HBox>
-                    </Hbox>
+                    </HBox>
                     <HBox spacing="15" style="-fx-padding: 10 0;">
                         <Button styleClass="outline-button-selection" text="Perfil"
                             fx:id="perfilBtn" />
