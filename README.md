@@ -84,17 +84,23 @@ O **CapyCourses** é uma plataforma de ensino online desenvolvida em JavaFX, pro
 ## 🛠️ Tecnologias 
 
 ### Core
-- [Java 17+](https://www.oracle.com/java/)
-- [JavaFX 19+](https://openjfx.io/)
-- [Maven](https://maven.apache.org/)
+
+| Tecnologia | Versão | Descrição |
+|:----------:|:------:|:---------:|
+| ![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white) | 17+ | Backend e lógica principal |
+| ![JavaFX](https://img.shields.io/badge/JavaFX-4B4B77?style=for-the-badge&logo=java&logoColor=white) | 19+ | Interface gráfica |
+| ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white) | 3.6+ | Gestão de dependências |
 
 ### Dependências
-| Ferramenta           | Descrição                                      |
-|----------------------|------------------------------------------------|
-| [Lombok](https://projectlombok.org/)       | Redução de boilerplate.                        |
-| [ValidadorFX](https://validadorfx.com/)    | Validação de formulários.                      |
-| [Hibernate](https://hibernate.org/)        | Persistência de dados.                         |
-| [JUnit 5](https://junit.org/junit5/)       | Testes unitários.                              |
+
+| Tecnologia | Versão | Descrição |
+|:----------:|:------:|:---------:|
+| ![Lombok](https://img.shields.io/badge/Lombok-BC4520?style=for-the-badge&logo=lombok&logoColor=white) | 1.18+ | Redução de boilerplate |
+| ![ValidadorFX](https://img.shields.io/badge/ValidadorFX-4B9C3D?style=for-the-badge&logo=java&logoColor=white) | 2.0+ | Validação de formulários |
+| ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white) | 6.0+ | Persistência de dados |
+| ![JUnit](https://img.shields.io/badge/JUnit-25A162?style=for-the-badge&logo=junit5&logoColor=white) | 5.0+ | Testes unitários |
+
+---
 
 ### Ferramentas de Desenvolvimento
 - **VS Code**: IDE principal.
