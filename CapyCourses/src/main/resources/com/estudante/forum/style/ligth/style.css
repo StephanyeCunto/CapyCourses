@@ -261,7 +261,7 @@
 .author {
     -fx-text-fill: #66666b;
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 16px;
+    -fx-font-size: 14px;
 }
 
 .title {
@@ -467,4 +467,36 @@
 .error-field {
     fx-border-color: #FF6F61;
     -fx-border-width: 1.5px;
+}
+
+.description{
+    font-size: 16px;
+}
+
+.authorAvatar{
+    -fx-text-fill: #374151;
+    -fx-font-size:18px;
+}
+
+.commentDate{
+    -fx-text-fill: #374151;
+    -fx-font-size:16px;
+}
+
+.nameInitial{
+    -fx-text-fill: white;
+    -fx-font-size:20px;
+}
+
+.likeCount{
+    -fx-font-size:15px;
+}
+
+.commentsTitle{
+    -fx-font-size: 26px;
+}
+
+.date{
+    -fx-font-size:16px;
+    -fx-text-fill: #9ca3af;
 }

@@ -4,8 +4,8 @@
   "description" : "Queries NoSQL eficientes",
   "category" : "Banco de Dados",
   "dateTime" : "2023-05-22",
-  "view" : 352,
+  "view" : 361,
   "like" : 3,
-  "comments" : 12,
+  "comments" : 13,
   "question" : "Quais são as melhores práticas para otimizar queries NoSQL em grandes coleções do MongoDB?"
 }
