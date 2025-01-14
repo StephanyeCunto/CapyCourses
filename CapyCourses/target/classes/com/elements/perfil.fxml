@@ -33,7 +33,7 @@
             GridPane.columnIndex="1">
             <content>
                 <VBox spacing="30" styleClass="main-content">
-                    <HBox>
+                    <Hbox>
                         <HBox alignment="CENTER_LEFT" spacing="20">
                             <VBox>
                                 <Label text="Configurações" styleClass="page-title" />
@@ -60,12 +60,12 @@
                                     styleClass="toggle-button" />
                             </StackPane>
                         </HBox>
-                    </HBox>
+                    </Hbox>
                     <HBox spacing="15" style="-fx-padding: 10 0;">
                         <Button styleClass="outline-button-selection" text="Perfil"
                             fx:id="perfilBtn" />
                         <Button styleClass="outline-button-not-selection" text="Segurança"
-                            fx:id="securityBtn" />
+                            fx:id="segurityBtn" />
                         <Button styleClass="outline-button-not-selection" text="Preferências"
                             fx:id="preferencesBtn" />
                         <Button styleClass="outline-button-not-selection" text="Privacidade"
@@ -73,7 +73,129 @@
                     </HBox>
 
                     <VBox fx:id="container"></VBox>
-                       
+
+                    <!-- Segurança Aprimorada -->
+                    <VBox spacing="25" styleClass="content-card">
+                        <Label text="Segurança" styleClass="card-title" />
+
+                        <!-- Alteração de Senha -->
+                        <VBox spacing="20">
+                            <Label text="Alterar Senha" styleClass="card-title" />
+                            <GridPane hgap="20" vgap="15">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="33" />
+                                    <ColumnConstraints percentWidth="33" />
+                                    <ColumnConstraints percentWidth="33" />
+                                </columnConstraints>
+
+                                <VBox spacing="8" GridPane.columnIndex="0">
+                                    <Label text="Senha Atual" styleClass="field-label" />
+                                    <PasswordField styleClass="custom-text-field" />
+                                </VBox>
+
+                                <VBox spacing="8" GridPane.columnIndex="1">
+                                    <Label text="Nova Senha" styleClass="field-label" />
+                                    <PasswordField styleClass="custom-text-field" />
+                                </VBox>
+                                <VBox spacing="8" GridPane.columnIndex="2">
+                                    <Label text="Confirmar Nova Senha" styleClass="field-label" />
+                                    <PasswordField styleClass="custom-text-field" />
+                                </VBox>
+                                <rowConstraints>
+                                    <RowConstraints />
+                                </rowConstraints>
+                            </GridPane>
+
+                            <!-- Requisitos de Senha -->
+                            <VBox spacing="5" style="-fx-padding: 10 0;">
+                                <Label text="Requisitos de senha:" styleClass="card-subtitle" />
+                                <Label text="• Mínimo de 6 caracteres" styleClass="card-subtitle" />
+
+                            </VBox>
+                        </VBox>
+
+                    </VBox>
+
+                    <!-- Preferências -->
+                    <VBox spacing="25" styleClass="content-card">
+                        <Label text="Preferências" styleClass="card-title" />
+                        <VBox spacing="15">
+                            <Label text="Tema" styleClass="card-title" />
+                            <HBox spacing="15">
+                                <ComboBox>
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="Claro" />
+                                            <String fx:value="Escuro" />
+                                            <String fx:value="Sistema" />
+                                        </FXCollections>
+                                    </items>
+                                    <value>
+                                        <String fx:value="Sistema" />
+                                    </value>
+                                </ComboBox>
+                            </HBox>
+                        </VBox>
+
+                        <VBox spacing="15">
+                            <Label text="Notificações" styleClass="card-title" />
+                            <HBox alignment="CENTER_LEFT" spacing="15">
+                            </HBox>
+                            <VBox spacing="10">
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <CheckBox styleClass="custom-checkbox" />
+                                    <Label text="Notificações por Email" styleClass="card-subtitle" />
+                                </HBox>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <CheckBox styleClass="custom-checkbox" />
+                                    <Label text="Notificações Push" styleClass="card-subtitle" />
+                                </HBox>
+                            </VBox>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Privacidade -->
+                    <VBox spacing="25" styleClass="content-card">
+                        <Label text="Privacidade" styleClass="card-title" />
+
+
+                        <!-- Consentimento de Dados -->
+                        <VBox spacing="15">
+                            <Label text="Consentimento de Dados" styleClass="card-title" />
+                            <VBox spacing="10">
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <CheckBox styleClass="custom-checkbox" />
+                                    <Label text="Permitir coleta de dados analíticos"
+                                        styleClass="card-subtitle" />
+                                </HBox>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <CheckBox styleClass="custom-checkbox" />
+                                    <Label text="Compartilhar dados para melhoria do serviço"
+                                        styleClass="card-subtitle" />
+                                </HBox>
+                            </VBox>
+                        </VBox>
+
+                        <!-- Gerenciamento de Dados Pessoais -->
+                        <VBox spacing="15">
+                            <Label text="Gerenciamento de Dados" styleClass="card-title" />
+                            <HBox spacing="15">
+                                <Button styleClass="outline-button"
+                                    text="Solicitar Exclusão de Conta" />
+                            </HBox>
+                        </VBox>
+
+                        <!-- Informações de Privacidade -->
+                        <VBox spacing="10">
+                            <Label text="Última atualização da política de privacidade: 15/12/2024"
+                                styleClass="card-subtitle" />
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Button styleClass="outline-button" text="Política de Privacidade" />
+                                <Button styleClass="outline-button" text="Termos de Uso" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+
                     <!-- Botões de Ação -->
                     <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 20 0;">
                         <Button styleClass="outline-button" text="Cancelar" />
