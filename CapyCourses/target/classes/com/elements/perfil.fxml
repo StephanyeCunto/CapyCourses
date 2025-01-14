@@ -73,6 +73,7 @@
                     </HBox>
 
                     <VBox fx:id="container"></VBox>
+
                     <!-- Botões de Ação -->
                     <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 20 0;">
                         <Button styleClass="outline-button" text="Cancelar" />

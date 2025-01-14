@@ -1,5 +1,6 @@
 package com.view.elements.Perfil;
 
+import com.dto.BibliotecaDTO;
 import com.view.Modo;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
@@ -21,18 +22,18 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
-public class PrivacyPolicyModal {
+public class TermsOfUseModal {
     private final Stage modalStage;
     private double WIDTH;
     private double HEIGHT;
 
-    public PrivacyPolicyModal(Window owner) {
+    public TermsOfUseModal(Window owner) {
         updateDimensions(owner.getWidth(), owner.getHeight());
         modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
         modalStage.initStyle(StageStyle.TRANSPARENT);
         modalStage.initOwner(owner);
-        showPrivacyPolicy();
+        showTermsOfUse();
         setupCloseAnimation();
     }
 
@@ -44,7 +45,7 @@ public class PrivacyPolicyModal {
         boolean isModoClaro = !Modo.getInstance().getModo();
         String corTexto = isModoClaro ? "#333333" : "#FFFFFF";
 
-        Label titleLabel = new Label("Política de Privacidade do CapyCourses");
+        Label titleLabel = new Label("Termos de Uso do CapyCourses");
         titleLabel.setFont(Font.font("Segoe UI Bold", 30));
         titleLabel.setStyle("-fx-text-fill: #2E86C1; -fx-font-weight: bold;");
 
@@ -53,93 +54,79 @@ public class PrivacyPolicyModal {
         updateLabel.setStyle("-fx-text-fill: " + corTexto + ";");
 
         Label introLabel = new Label(
-                "Bem-vindo ao CapyCourses! Esta Política de Privacidade explica como coletamos, usamos, compartilhamos e protegemos as informações dos usuários do sistema https://github.com/StephanyeCunto/CapyCourses (doravante referido como \"sistema\" ou \"Serviço\"). Ao utilizar nosso sistema, você concorda com as práticas descritas nesta política.");
+            "Bem-vindo ao CapyCourses! Estes Termos de Uso regem o uso do sistema https://github.com/StephanyeCunto/CapyCourses (doravante referido como \"Sistema\" ou \"Serviço\"). Ao utilizar nosso Sistema, você concorda com estes termos."
+        );
         introLabel.setFont(Font.font("Segoe UI", 16));
         introLabel.setWrapText(true);
         introLabel.setStyle("-fx-text-fill: " + corTexto + ";");
 
-        Label subtitle1 = new Label("1. Informações que Coletamos");
+        Label subtitle1 = new Label("1. Aceitação dos Termos");
         subtitle1.setFont(Font.font("Segoe UI Bold", 22));
         subtitle1.setStyle("-fx-text-fill: #2E86C1; -fx-font-weight: bold;");
 
         Label text1 = new Label(
-                "- Dados de cadastro: Nome, endereço de e-mail, nome de usuário e senha.\n" +
-                        "- Informações de perfil: Foto, biografia e outras informações que você optar por compartilhar.\n"
-                        +
-                        "- Conteúdo gerado pelo usuário: Cursos, comentários, avaliações e outras contribuições.\n" +
-                        "- Dados de uso: Informações sobre como você interage com o sistema, como páginas visitadas e tempo gasto.\n"
-                        +
-                        "- Dados técnicos: Endereço IP, tipo de navegador, versão do sistema operacional e outros dados técnicos.");
+            "Ao acessar ou usar o Sistema, você concorda com estes Termos de Uso e com nossa Política de Privacidade. Se você não concordar com estes termos, não use o Sistema."
+        );
         text1.setFont(Font.font("Segoe UI", 16));
         text1.setWrapText(true);
         text1.setStyle("-fx-text-fill: " + corTexto + ";");
 
-        Label subtitle2 = new Label("2. Como Usamos Suas Informações");
+        Label subtitle2 = new Label("2. Uso do Sistema");
         subtitle2.setFont(Font.font("Segoe UI Bold", 22));
         subtitle2.setStyle("-fx-text-fill: #2E86C1; -fx-font-weight: bold;");
 
         Label text2 = new Label(
-                "Utilizamos as informações coletadas para:\n" +
-                        "- Fornecer, operar e melhorar o sistema.\n" +
-                        "- Personalizar sua experiência no CapyCourses.\n" +
-                        "- Comunicar-nos com você, respondendo a solicitações e enviando atualizações.\n" +
-                        "- Analisar o uso do sistema e realizar pesquisas.\n" +
-                        "- Cumprir obrigações legais e proteger nossos direitos.\n" +
-                        "- Enviar comunicações promocionais, com sua permissão.");
+            "Você concorda em usar o Sistema apenas para fins legais e de acordo com estes Termos de Uso. Você não pode:\n" +
+            "- Violar qualquer lei ou regulamento aplicável.\n" +
+            "- Infringir os direitos de propriedade intelectual de terceiros.\n" +
+            "- Enviar conteúdo ofensivo, difamatório ou prejudicial.\n" +
+            "- Interferir na operação do Sistema ou em sua segurança."
+        );
         text2.setFont(Font.font("Segoe UI", 16));
         text2.setWrapText(true);
         text2.setStyle("-fx-text-fill: " + corTexto + ";");
 
-        Label subtitle3 = new Label("3. Compartilhamento de Informações");
+        Label subtitle3 = new Label("3. Conta do Usuário");
         subtitle3.setFont(Font.font("Segoe UI Bold", 22));
         subtitle3.setStyle("-fx-text-fill: #2E86C1; -fx-font-weight: bold;");
 
         Label text3 = new Label(
-                "Suas informações podem ser compartilhadas com:\n" +
-                        "- Parceiros de negócios: Para fornecer serviços conjuntos ou promoções.\n" +
-                        "- Provedores de serviços: Empresas que nos ajudam a operar o sistema, como hospedagem e análise de dados.\n"
-                        +
-                        "- Autoridades legais: Quando exigido por lei ou para proteger nossos direitos.\n" +
-                        "- Terceiros em caso de fusão ou aquisição: Se o CapyCourses for adquirido, suas informações podem ser transferidas.");
+            "Para acessar certas funcionalidades do Sistema, você pode precisar criar uma conta. Você é responsável por manter a confidencialidade de suas credenciais e por todas as atividades que ocorrerem em sua conta."
+        );
         text3.setFont(Font.font("Segoe UI", 16));
         text3.setWrapText(true);
         text3.setStyle("-fx-text-fill: " + corTexto + ";");
 
-        Label subtitle4 = new Label("4. Segurança dos Dados");
+        Label subtitle4 = new Label("4. Propriedade Intelectual");
         subtitle4.setFont(Font.font("Segoe UI Bold", 22));
         subtitle4.setStyle("-fx-text-fill: #2E86C1; -fx-font-weight: bold;");
 
         Label text4 = new Label(
-                "Implementamos medidas de segurança para proteger suas informações, incluindo:\n" +
-                        "- Criptografia de dados durante a transmissão e armazenamento.\n" +
-                        "- Controles de acesso para limitar quem pode acessar suas informações.\n" +
-                        "- Monitoramento contínuo para detectar e prevenir violações de segurança.");
+            "Todo o conteúdo do Sistema, incluindo textos, gráficos, logos e software, é propriedade do CapyCourses ou de seus licenciadores e está protegido por leis de propriedade intelectual."
+        );
         text4.setFont(Font.font("Segoe UI", 16));
         text4.setWrapText(true);
         text4.setStyle("-fx-text-fill: " + corTexto + ";");
 
-        Label subtitle5 = new Label("5. Seus Direitos");
+        Label subtitle5 = new Label("5. Limitação de Responsabilidade");
         subtitle5.setFont(Font.font("Segoe UI Bold", 22));
         subtitle5.setStyle("-fx-text-fill: #2E86C1; -fx-font-weight: bold;");
 
         Label text5 = new Label(
-                "Você tem o direito de:\n" +
-                        "- Acessar e corrigir suas informações pessoais.\n" +
-                        "- Solicitar a exclusão de seus dados.\n" +
-                        "- Revogar consentimentos fornecidos anteriormente.\n" +
-                        "- Obter uma cópia de suas informações em formato legível.\n" +
-                        "- Opor-se ao processamento de seus dados em determinadas circunstâncias.");
+            "O CapyCourses não será responsável por quaisquer danos diretos, indiretos, incidentais ou consequenciais resultantes do uso ou da incapacidade de usar o Sistema."
+        );
         text5.setFont(Font.font("Segoe UI", 16));
         text5.setWrapText(true);
         text5.setStyle("-fx-text-fill: " + corTexto + ";");
 
         content.getChildren().addAll(
-                titleLabel, updateLabel, introLabel,
-                subtitle1, text1,
-                subtitle2, text2,
-                subtitle3, text3,
-                subtitle4, text4,
-                subtitle5, text5);
+            titleLabel, updateLabel, introLabel,
+            subtitle1, text1,
+            subtitle2, text2,
+            subtitle3, text3,
+            subtitle4, text4,
+            subtitle5, text5
+        );
 
         ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.setFitToWidth(true);
@@ -151,7 +138,7 @@ public class PrivacyPolicyModal {
         return container;
     }
 
-    private void showPrivacyPolicy() {
+    private void showTermsOfUse() {
         StackPane backdrop = createBackdrop();
         VBox modalContainer = createModalContainer();
 
@@ -186,7 +173,7 @@ public class PrivacyPolicyModal {
         VBox content = new VBox(15);
         content.setPadding(new Insets(20, 20, 0, 20));
 
-        Label titleLabel = new Label("Política de Privacidade");
+        Label titleLabel = new Label("Termos de Uso");
         titleLabel.setFont(Font.font("Segoe UI Bold", 28));
         titleLabel.getStyleClass().add("title");
 

@@ -62,6 +62,7 @@ public class PrivacySection {
 
         Button termsOfUseButton = new Button("Termos de Uso");
         termsOfUseButton.getStyleClass().add("outline-button");
+        termsOfUseButton.setOnAction(e -> new TermsOfUseModal(termsOfUseButton.getScene().getWindow()));
 
         HBox privacyButtonsHBox = new HBox(10);
         privacyButtonsHBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
