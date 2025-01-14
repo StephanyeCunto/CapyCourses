@@ -41,7 +41,10 @@
                 styleClass="custom-text-field"
                 HBox.hgrow="ALWAYS" />
             </HBox>
-
+            <HBox spacing="20" style="-fx-padding: 0 0 0 25;">
+                <Button fx:id="addButton" text="+">
+                </Button>
+            </HBox>
             <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
               fx:id="toggleButtonHBox">
               <StackPane alignment="CENTER" fx:id="toggleButtonStackPane"
@@ -58,11 +61,13 @@
               </StackPane>
             </HBox>
           </HBox>
-            <HBox spacing="20">
-            <Button text="Todos" styleClass="outline-button-seletion" fx:id="selectionTodos" prefWidth="100" prefHeight="30"></Button>
-            <Button text="Meus Fóruns" styleClass="outline-button-not-seletion" fx:id="selectionParticipated" prefWidth="140" prefHeight="30"></Button>
+          <HBox spacing="20">
+            <Button text="Todos" styleClass="outline-button-seletion" fx:id="selectionTodos"
+              prefWidth="100" prefHeight="30"></Button>
+            <Button text="Meus Fóruns" styleClass="outline-button-not-seletion"
+              fx:id="selectionParticipated" prefWidth="140" prefHeight="30"></Button>
           </HBox>
-            <VBox fx:id="forumContainer" spacing="20">
+          <VBox fx:id="forumContainer" spacing="20">
 
           </VBox>
         </VBox>

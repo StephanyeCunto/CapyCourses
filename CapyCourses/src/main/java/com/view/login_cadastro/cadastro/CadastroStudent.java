@@ -6,12 +6,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.controller.login_cadastro.CadastroStudentController;
 import com.singleton.UserSession;
 import com.view.Modo;
 import com.view.login_cadastro.BaseLoginCadastro;
 import com.view.login_cadastro.cadastro.valid.CadastroSecudarioValid;
 import com.view.login_cadastro.elements.ErrorNotification;
+import com.controller.*;
+import com.controller.login_cadastro.CadastroTeacherController;
 
 import javafx.animation.FillTransition;
 import javafx.animation.TranslateTransition;
@@ -69,19 +70,20 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
 
-        System.out.println("Estado da sessão na inicialização:");
-        System.out.println("Email: " + UserSession.getInstance().getUserEmail());
-        System.out.println("Register Incomplete: " + UserSession.getInstance().getRegisterIncomplet());
-
         super.loadComboBox();
         super.loadCalendar();
         super.setupInterestButtons();
 
-        validator.setupInitialState(comboBoxEducation, textFieldCPF, textFieldPhone, 
-            cpfErrorLabel, educationErrorLabel, phoneErrorLabel);
+        validator.setupInitialState(comboBoxEducation, textFieldCPF, textFieldPhone, cpfErrorLabel, educationErrorLabel,
+                phoneErrorLabel);
 
-        if (UserSession.getInstance().getRegisterIncomplet().equals("Student")) {
+        toggleButtonStackPane.setOnMouseClicked(e -> toggle());
+        sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
+        moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
+        toggleInitialize();
+        if (UserSession.getInstance().getRegisterIncomplet() == "Student") {
             setupErrorNotification();
+            UserSession.getInstance().clearSession();
         }
     }
 
@@ -90,37 +92,28 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         super.changeMode(true);
     }
 
-    @FXML
-    private void createStudent() throws ParseException {
+    public void createStudent() throws ParseException {
         if (validator.validateFields()) {
-            try {
-                String email = UserSession.getInstance().getUserEmail();
-                System.out.println("Email na sessão: " + email);
-                
-                String interests = String.join(". ", super.getSelectedInterests());
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                Date date = format.parse(super.getDateInputPopup().getDate());
-                
-                CadastroStudentController controller = new CadastroStudentController();
-                boolean success = controller.cadastrarStudent(
+            String email = UserSession.getInstance().getUserEmail();
+            String interests = String.join(". ", super.getSelectedInterests());
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = format.parse(super.getDateInputPopup().getDate());
+
+            CadastroTeacherController controller = new CadastroTeacherController();
+            boolean success = controller.cadastrarTeacher(
                     email,
                     date,
                     textFieldCPF.getText(),
                     textFieldPhone.getText(),
                     comboBoxEducation.getValue(),
-                    interests
-                );
+                    interests);
 
-                if (success) {
-                    UserSession.getInstance().setRegisterIncomplet("complete");
-                    super.redirectTo("/com/login_cadastro/paginaLogin.fxml", 
+            if (success) {
+                UserSession.getInstance().setRegisterIncomplet("false");
+                super.redirectTo("/com/login_cadastro/paginaLogin.fxml",
                         (Stage) leftSection.getScene().getWindow());
-                    UserSession.getInstance().clearSession();
-                } else {
-                    showError();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+                UserSession.getInstance().clearSession();
+            } else {
                 showError();
             }
         }

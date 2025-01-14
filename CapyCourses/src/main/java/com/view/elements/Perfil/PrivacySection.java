@@ -5,7 +5,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class PrivacySection {
 
@@ -59,11 +58,11 @@ public class PrivacySection {
 
         Button privacyPolicyButton = new Button("Política de Privacidade");
         privacyPolicyButton.getStyleClass().add("outline-button");
-        Stage ownerStage = (Stage) privacyPolicyButton.getScene().getWindow();
-        privacyPolicyButton.setOnAction(e -> new PrivacyPolicyModal(ownerStage));
+        privacyPolicyButton.setOnAction(e -> new PrivacyPolicyModal(privacyPolicyButton.getScene().getWindow()));
 
         Button termsOfUseButton = new Button("Termos de Uso");
         termsOfUseButton.getStyleClass().add("outline-button");
+        termsOfUseButton.setOnAction(e -> new TermsOfUseModal(termsOfUseButton.getScene().getWindow()));
 
         HBox privacyButtonsHBox = new HBox(10);
         privacyButtonsHBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);

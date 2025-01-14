@@ -8,7 +8,6 @@ import com.controller.login_cadastro.CadastroController;
 import com.view.Modo;
 import com.view.login_cadastro.BaseLoginCadastro;
 import com.view.login_cadastro.cadastro.valid.CadastroValid;
-import com.singleton.UserSession;
 
 import javafx.animation.FillTransition;
 import javafx.animation.TranslateTransition;
@@ -24,7 +23,6 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 import javafx.scene.image.*;
-import javafx.scene.control.Alert;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 

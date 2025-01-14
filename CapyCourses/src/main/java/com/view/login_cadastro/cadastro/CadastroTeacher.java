@@ -71,10 +71,6 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
         super.initializeCommon();
 
-        System.out.println("Estado da sessão na inicialização:");
-        System.out.println("Email: " + UserSession.getInstance().getUserEmail());
-        System.out.println("Register Incomplete: " + UserSession.getInstance().getRegisterIncomplet());
-
         super.loadComboBox();
         super.loadCalendar();
         super.setupInterestButtons();
@@ -85,7 +81,11 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
         if (UserSession.getInstance().getRegisterIncomplet().equals("Teacher")) {
             setupErrorNotification();
         }
-    }
+
+        toggleButtonStackPane.setOnMouseClicked(e -> toggle());
+        sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
+        moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
+        toggleInitialize();    }
 
     @FXML
     private void changeModeStyle() {
@@ -96,9 +96,7 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
     private void createTeacher() throws ParseException {
         if (validator.validateFields()) {
             try {
-                String email = UserSession.getInstance().getUserEmail();
-                System.out.println("Email na sessão: " + email);
-                
+                String email = UserSession.getInstance().getUserEmail();                
                 String interests = String.join(". ", super.getSelectedInterests());
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = format.parse(super.getDateInputPopup().getDate());
@@ -114,7 +112,7 @@ public class CadastroTeacher extends BaseLoginCadastro implements Initializable 
                 );
 
                 if (success) {
-                    UserSession.getInstance().setRegisterIncomplet("complete");
+                    UserSession.getInstance().setRegisterIncomplet("false");
                     super.redirectTo("/com/login_cadastro/paginaLogin.fxml", 
                         (Stage) leftSection.getScene().getWindow());
                     UserSession.getInstance().clearSession();

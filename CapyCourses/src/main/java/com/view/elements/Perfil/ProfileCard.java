@@ -55,6 +55,7 @@ public class ProfileCard {
         labelNome.getStyleClass().add("field-label");
         TextField textFieldNome = new TextField("João Silva");
         textFieldNome.getStyleClass().add("custom-text-field");
+      //  Label labelNomeError
         vboxNome.getChildren().addAll(labelNome, textFieldNome);
 
         VBox vboxEmail = new VBox(5);

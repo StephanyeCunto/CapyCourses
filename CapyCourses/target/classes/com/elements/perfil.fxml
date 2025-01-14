@@ -66,6 +66,7 @@
                             fx:id="perfilBtn" />
                         <Button styleClass="outline-button-not-selection" text="Segurança"
                             fx:id="segurityBtn" />
+                            fx:id="segurityBtn" />
                         <Button styleClass="outline-button-not-selection" text="Preferências"
                             fx:id="preferencesBtn" />
                         <Button styleClass="outline-button-not-selection" text="Privacidade"
@@ -73,6 +74,7 @@
                     </HBox>
 
                     <VBox fx:id="container"></VBox>
+
 
                     <!-- Segurança Aprimorada -->
                     <VBox spacing="25" styleClass="content-card">

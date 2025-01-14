@@ -84,17 +84,23 @@ O **CapyCourses** é uma plataforma de ensino online desenvolvida em JavaFX, pro
 ## 🛠️ Tecnologias 
 
 ### Core
-- [Java 17+](https://www.oracle.com/java/)
-- [JavaFX 19+](https://openjfx.io/)
-- [Maven](https://maven.apache.org/)
+
+| Tecnologia | Versão | Descrição |
+|:----------:|:------:|:---------:|
+| ![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white) | 17+ | Backend e lógica principal |
+| ![JavaFX](https://img.shields.io/badge/JavaFX-4B4B77?style=for-the-badge&logo=java&logoColor=white) | 19+ | Interface gráfica |
+| ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white) | 3.6+ | Gestão de dependências |
 
 ### Dependências
-| Ferramenta           | Descrição                                      |
-|----------------------|------------------------------------------------|
-| [Lombok](https://projectlombok.org/)       | Redução de boilerplate.                        |
-| [ValidadorFX](https://validadorfx.com/)    | Validação de formulários.                      |
-| [Hibernate](https://hibernate.org/)        | Persistência de dados.                         |
-| [JUnit 5](https://junit.org/junit5/)       | Testes unitários.                              |
+
+| Tecnologia | Versão | Descrição |
+|:----------:|:------:|:---------:|
+| ![Lombok](https://img.shields.io/badge/Lombok-BC4520?style=for-the-badge&logo=lombok&logoColor=white) | 1.18+ | Redução de boilerplate |
+| ![ValidadorFX](https://img.shields.io/badge/ValidadorFX-4B9C3D?style=for-the-badge&logo=java&logoColor=white) | 2.0+ | Validação de formulários |
+| ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white) | 6.0+ | Persistência de dados |
+| ![JUnit](https://img.shields.io/badge/JUnit-25A162?style=for-the-badge&logo=junit5&logoColor=white) | 5.0+ | Testes unitários |
+
+---
 
 ### Ferramentas de Desenvolvimento
 - **VS Code**: IDE principal.
@@ -146,7 +152,9 @@ O projeto utiliza **GitHub Actions** para garantir a qualidade do código. A cad
 ### Como Funciona?
 1. **Compilação**: O projeto é compilado usando o Maven (`mvn clean package`).
 2. **Testes**: Os testes automatizados são executados (`mvn test`).
-3. **Status**: O badge acima mostra o status atual do CI (✅ passando ou ❌ falhando).
+3. Análise Estática: O código é verificado com o PMD (`mvn pmd:check`).
+4. Verificação de Dependências: As dependências são analisadas com OWASP Dependency-Check (`mvn org.owasp:dependency-check-maven:check`).
+5. **Status**: O badge acima mostra o status atual do CI (✅ passando ou ❌ falhando).
 
 ### Como Verificar?
 - Clique no badge **CI Status** para ver os detalhes da execução do pipeline na aba **Actions** do GitHub.
@@ -291,7 +299,6 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 - [ ] Suporte a cursos offline.
 - [ ] Integração com Google Classroom.
 - [ ] Gamificação (badges e rankings).
-- [ ] Exportação de certificados em PDF.
 - [ ] Suporte a múltiplos idiomas.
 
 ### Como Contribuir para Novas Funcionalidades
@@ -312,7 +319,66 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 
 ### Auditoria de Código
 - Realizamos auditorias periódicas para garantir a segurança do código.
-- Utilize ferramentas como [SonarQube](https://www.sonarqube.org/) para análise estática.
+- Utilizamos ferramentas como [PMD](https://pmd.github.io) para análise estática.
+
+---
+
+## 🔍 Análise Estática com PMD
+
+O **PMD** é uma ferramenta de análise estática de código que ajuda a identificar problemas comuns, más práticas e potenciais vulnerabilidades no código-fonte. Ele é amplamente utilizado para garantir que o código siga boas práticas de desenvolvimento e mantenha um alto padrão de qualidade.
+
+### Por que Usamos o PMD?
+- **Identificação de Code Smells**: Detecta padrões de código que podem indicar más práticas ou complexidade desnecessária, como métodos muito longos, classes excessivamente grandes ou duplicação de código.
+- **Prevenção de Bugs**: Identifica problemas antes que eles se tornem bugs em produção.
+- **Padronização**: Garante que o código siga boas práticas e padrões consistentes.
+- **Gratuito e Open-Source**: Totalmente gratuito e com suporte da comunidade.
+
+### Como o PMD é Integrado ao CapyCourses?
+O PMD é executado automaticamente em cada push ou pull request através do **GitHub Actions**. Ele verifica o código em busca de problemas e gera relatórios que são usados para corrigir e melhorar o código.
+
+#### Configuração do PMD no Projeto
+O PMD está configurado no arquivo `pom.xml` do projeto, utilizando o plugin Maven:
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-pmd-plugin</artifactId>
+    <version>3.20.0</version>
+    <configuration>
+        <rulesets>
+            <ruleset>category/java/bestpractices.xml</ruleset>
+            <ruleset>category/java/errorprone.xml</ruleset>
+            <ruleset>category/java/design.xml</ruleset>
+        </rulesets>
+        <failOnViolation>false</failOnViolation>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>check</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+#### Regras Utilizadas
+- **Best Practices**: Verifica boas práticas de codificação.
+- **Error Prone**: Detecta erros comuns que podem levar a bugs.
+- **Design**: Identifica problemas de design, como classes com muitas responsabilidades.
+
+#### Como Executar o PMD Localmente
+Para executar o PMD localmente e verificar o código, use o seguinte comando Maven:
+
+```bash
+mvn pmd:check
+```
+Os relatórios serão gerados em `target/pmd.xml` e `target/pmd.html`.
+
+
+### Benefícios do PMD para o CapyCourses
+- **Melhoria da Qualidade do Código**: Identifica e corrige problemas antes que se tornem bugs.
+- **Padronização**: Garante que o código siga boas práticas e padrões consistentes.
+- **Prevenção de Vulnerabilidades**: Detecta potenciais problemas de segurança.
 
 ---
 
