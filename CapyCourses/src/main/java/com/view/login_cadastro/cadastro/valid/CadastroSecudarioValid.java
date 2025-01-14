@@ -48,12 +48,12 @@ public class CadastroSecudarioValid {
         });
 
         textFieldCPF.setOnKeyReleased(event -> {
-            if(sizePhone()>13){
+            if(sizeCPF()>13){
                 checkSizeCPF(event);
             }
         });
 
-       textFieldCPF.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+        textFieldCPF.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
             validationSupport.registerValidator(textFieldCPF, false,
                     Validator.createPredicateValidator(value -> {
                         if (value instanceof String) {
@@ -77,7 +77,12 @@ public class CadastroSecudarioValid {
 
         textFieldPhone.textProperty().addListener((obs, old, newText) -> {
             String formatted = formatPhone(newText);
-            textFieldPhone.setText(formatted);
+            textFieldPhone.setText(formatted);        
+            if (sizePhone() == 14) {
+                updateErrorDisplay(textFieldPhone, phoneErrorLabel, false, null); 
+            } else {
+                updateErrorDisplay(textFieldPhone, phoneErrorLabel, true, "Por favor, insira um telefone válido"); // Mostra o erro
+            }
         });
 
         textFieldPhone.setOnKeyReleased(event -> {
@@ -115,16 +120,20 @@ public class CadastroSecudarioValid {
 
     private boolean isValidCPF(String cpf) {
         cpf = cpf.replaceAll("\\D", "");
-
+    
+        if (cpf.length() != 11) {
+            return false;
+        }
+    
         if (cpf.matches("(\\d)\\1{10}")) {
             return false;
         }
-
+    
         int primeiroDigitoVerificador = calcularDigitoVerificador(cpf.substring(0, 9), 10);
         if (primeiroDigitoVerificador != (cpf.charAt(9) - '0')) {
             return false;
         }
-
+    
         int segundoDigitoVerificador = calcularDigitoVerificador(cpf.substring(0, 10), 11);
         return segundoDigitoVerificador == (cpf.charAt(10) - '0');
     }
@@ -206,14 +215,14 @@ public class CadastroSecudarioValid {
         }
     }
 
-    public boolean validateFields(){
+    public boolean validateFields() {
         boolean isValid = true;
-
-        if(textFieldCPF.getText().isEmpty() | !isValidCPF(textFieldCPF.getText())){
-            updateErrorDisplay(textFieldCPF, cpfErrorLabel, true, "Por favor, insira um cpf válido");
+    
+        if (textFieldCPF.getText().isEmpty() || !isValidCPF(textFieldCPF.getText())) {
+            updateErrorDisplay(textFieldCPF, cpfErrorLabel, true, "Por favor, insira um CPF válido");
             isValid = false;
         }
-        if (textFieldPhone.getText().length() < 14) {
+        if (sizePhone() < 14) { 
             updateErrorDisplay(textFieldPhone, phoneErrorLabel, true, "Por favor, insira um telefone válido");
             isValid = false;
         }
@@ -221,7 +230,7 @@ public class CadastroSecudarioValid {
             updateErrorDisplay(comboBoxEducation, educationErrorLabel, true, "Por favor, selecione uma opção válida");
             isValid = false;
         }
-        
+    
         return isValid;
     }
 }

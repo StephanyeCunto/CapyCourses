@@ -56,6 +56,8 @@ public class PaginaPerfil implements Initializable {
     @FXML
     private Button privacyBtn;
 
+    private String tela;
+
     public void initialize(URL location, ResourceBundle resources) {
         changeMode();
         toggleButtonStackPane.setOnMouseClicked(e -> toggle());
@@ -73,6 +75,8 @@ public class PaginaPerfil implements Initializable {
         privacyBtn.getStyleClass().add("outline-button-not-seletion");
         perfilBtn.getStyleClass().add("outline-button-seletion");
 
+        tela = "perfil";
+
         perfilBtn.setOnAction(e -> {
             segurityBtn.getStyleClass().clear();
             preferencesBtn.getStyleClass().clear();
@@ -87,6 +91,7 @@ public class PaginaPerfil implements Initializable {
 
             container.getChildren().clear();
             container.getChildren().add(profileCard.createProfileCard());
+            tela = "perfil";
         });
 
         segurityBtn.setOnAction(e -> {
@@ -103,6 +108,7 @@ public class PaginaPerfil implements Initializable {
 
             container.getChildren().clear();
             container.getChildren().add(new SecuritySection().createSecuritySection());
+            tela = "segurança";
         });
 
         preferencesBtn.setOnAction(e -> {
@@ -119,6 +125,7 @@ public class PaginaPerfil implements Initializable {
 
             container.getChildren().clear();
             container.getChildren().add(new PreferencesSection().createPreferencesSection());
+            tela = "preferências";
         });
 
         privacyBtn.setOnAction(e -> {
@@ -136,6 +143,7 @@ public class PaginaPerfil implements Initializable {
             System.out.println("Privacy "+privacyBtn.getStyleClass());
             container.getChildren().clear();
             container.getChildren().add(new PrivacySection().createPrivacySection());
+            tela = "privacidade";
         });
 
     }
