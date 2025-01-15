@@ -247,7 +247,7 @@
 .author {
     -fx-text-fill: #A4A6B3;
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 16px;
+    -fx-font-size: 14px;
 }
 
 .category {
@@ -424,11 +424,67 @@
 }
 
 .custom-text-area .content {
-    -fx-background-color: transparent;
+    -fx-background-color: rgb(32,35,46);
+    -fx-border-color: rgb(32,35,46);
 }
 
 .custom-text-area:focused {
     -fx-background-color: rgba(255, 255, 255, 0.1);
     -fx-border-color: #6C8DFF;
     -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.2), 10, 0, 0, 0);
+}
+
+.custom-text-area:focused .content {
+    -fx-background-color: #282D3A;
+    fx-border-color: transparent;
+    -fx-effect: none;
+}
+
+.custom-text-field:error,
+.custom-text-area:error {
+    -fx-border-color: #FF5D73;
+    -fx-border-width: 1.5px;
+}
+
+.error-label {
+    -fx-text-fill: #FF5D73;
+    -fx-font-size: 12px;
+    -fx-padding: 4 0 0 8;
+}
+
+.error-field {
+    fx-border-color: #FF6F61;
+    -fx-border-width: 1.5px;
+}
+
+.description{
+    -fx-font-size: 16px;
+}
+
+.authorAvatar{
+    -fx-text-fill: #374151;
+    -fx-font-size:18px;
+}
+
+.commentDate{
+    -fx-text-fill: #374151;
+    -fx-font-size:14px;
+}
+
+.nameInitial{
+    -fx-text-fill: white;
+    -fx-font-size:20px;
+}
+
+.likeCount{
+    -fx-font-size:15px;
+}
+
+.commentsTitle{
+    -fx-font-size: 24px;
+}
+
+.date{
+    -fx-font-size:14px;
+    -fx-text-fill: #9ca3af;
 }

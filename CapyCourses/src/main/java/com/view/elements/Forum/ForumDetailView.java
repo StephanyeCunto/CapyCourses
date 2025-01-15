@@ -81,7 +81,6 @@ public class ForumDetailView extends VBox {
     private VBox createContentContainer() {
         VBox container = new VBox(CONTENT_SPACING);
         container.setMaxWidth(CONTENT_WIDTH);
-        container.getStyleClass().add("card");
         container.setPadding(new Insets(40));
 
         Tooltip tooltip = new Tooltip("Dê um duplo clique para curtir");
@@ -105,8 +104,8 @@ public class ForumDetailView extends VBox {
         VBox section = new VBox(24);
 
         Label questionText = new Label(question);
-        questionText.setFont(Font.font(FONT_FAMILY, FontWeight.NORMAL, 16));
         questionText.setWrapText(true);
+        questionText.getStyleClass().add("description");
 
         section.getChildren().addAll(questionText);
         return section;
@@ -116,7 +115,8 @@ public class ForumDetailView extends VBox {
         VBox section = new VBox(24);
 
         Label commentsTitle = new Label("Comentários");
-        commentsTitle.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, 24));
+        commentsTitle.getStyleClass().add("commentsTitle");
+
 
         VBox commentsContainer = new VBox(16);
         commentsContainer.getStyleClass().add("comments-container");
@@ -128,8 +128,8 @@ public class ForumDetailView extends VBox {
             }
         } else {
             Label noComments = new Label("Ainda não há comentários. Seja o primeiro a comentar!");
-            noComments.setFont(Font.font(FONT_FAMILY, FontWeight.NORMAL, 16));
             noComments.setStyle("-fx-text-fill: #9ca3af;");
+            noComments.getStyleClass().add("description");
             commentsContainer.getChildren().add(noComments);
         }
 
@@ -149,22 +149,21 @@ public class ForumDetailView extends VBox {
         StackPane avatar = createCommentAvatar(comment.getUsuario());
 
         Label authorName = new Label(comment.getUsuario());
-        authorName.setFont(Font.font(FONT_FAMILY, FontWeight.SEMI_BOLD, 18));
-        authorName.setStyle("-fx-text-fill: #374151;");
+        authorName.getStyleClass().add("authorAvatar");
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         Label commentDate = new Label(comment.getData());
-        commentDate.setFont(Font.font(FONT_FAMILY, FontWeight.NORMAL, 14));
         commentDate.setWrapText(true);
-        commentDate.setStyle("-fx-text-fill: #374151;");
+        commentDate.getStyleClass().add("commentDate");
+
 
         Label commentText = new Label(comment.getComentario());
         commentText.setWrapText(true);
 
-        commentText.setFont(Font.font(FONT_FAMILY, 16));
         commentText.setStyle("-fx-text-fill: #9ca3af;");
+        commentText.getStyleClass().add("description");
 
         authorBox.getChildren().addAll(avatar, authorName, spacer, commentText);
 
@@ -181,8 +180,8 @@ public class ForumDetailView extends VBox {
                         "-fx-background-radius: 24;");
 
         Label nameInitial = new Label(getInitials(usuario));
-        nameInitial.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, 20));
-        nameInitial.setStyle("-fx-text-fill: white;");
+        nameInitial.getStyleClass().add("nameInitial");
+
 
         avatarCircle.getChildren().add(nameInitial);
         return avatarCircle;
@@ -211,7 +210,6 @@ public class ForumDetailView extends VBox {
         VBox content = new VBox(24);
 
         Label descriptionLabel = new Label(description);
-        descriptionLabel.setFont(Font.font(FONT_FAMILY, FontWeight.NORMAL, 16));
         descriptionLabel.setWrapText(true);
         descriptionLabel.getStyleClass().add("description");
 
@@ -228,8 +226,6 @@ public class ForumDetailView extends VBox {
 
         VBox authorInfo = new VBox(4);
         Label authorLabel = new Label(author);
-        authorLabel.setFont(Font.font(FONT_FAMILY, FontWeight.SEMI_BOLD, 16));
-        authorLabel.getStyleClass().add("author");
         authorLabel.getStyleClass().add("author");
 
         authorInfo.getChildren().add(authorLabel);
@@ -253,12 +249,13 @@ public class ForumDetailView extends VBox {
     private void loadLikeCount(Label likeCount) {
         if (liked) {
             likeCount.setText("♥️ " + like);
-            likeCount.setFont(Font.font(FONT_FAMILY, FontWeight.MEDIUM, 15));
             likeCount.setStyle("-fx-text-fill: #ff4d6d;");
+            likeCount.getStyleClass().add("likeCount");
         } else {
             likeCount.setText("🤍" + like);
-            likeCount.setFont(Font.font(FONT_FAMILY, FontWeight.MEDIUM, 15));
             likeCount.setStyle("-fx-text-fill: #9ca3af;");
+            likeCount.getStyleClass().add("likeCount");
+
         }
     }
 
@@ -283,12 +280,12 @@ public class ForumDetailView extends VBox {
         });
 
         Label commentCount = new Label("💭 " + comments);
-        commentCount.setFont(Font.font(FONT_FAMILY, FontWeight.MEDIUM, 15));
         commentCount.setStyle("-fx-text-fill: #9ca3af;");
+        commentCount.getStyleClass().add("likeCount");
 
         Label viewCount = new Label("👁 " + view);
-        viewCount.setFont(Font.font(FONT_FAMILY, FontWeight.MEDIUM, 15));
         viewCount.setStyle("-fx-text-fill: #9ca3af;");
+        commentCount.getStyleClass().add("likeCount");
 
         statsArea.getChildren().addAll(likeCount, commentCount, viewCount);
         return statsArea;
@@ -326,14 +323,12 @@ public class ForumDetailView extends VBox {
 
     private Label createCategoryLabel() {
         Label categoryLabel = new Label(category.toUpperCase());
-        categoryLabel.setFont(Font.font(FONT_FAMILY, FontWeight.SEMI_BOLD, 14));
         categoryLabel.getStyleClass().add("author");
         return categoryLabel;
     }
 
     private Label createTitle() {
         Label titleLabel = new Label(title);
-        titleLabel.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, 36));
         titleLabel.setWrapText(true);
         titleLabel.getStyleClass().add("title");
         return titleLabel;
@@ -341,8 +336,8 @@ public class ForumDetailView extends VBox {
 
     private Label createDateLabel() {
         Label date = new Label(dateTime);
-        date.setFont(Font.font(FONT_FAMILY, 14));
-        date.setStyle("-fx-text-fill: #9ca3af;");
+        date.getStyleClass().add("date");
+
         return date;
     }
 
@@ -355,8 +350,8 @@ public class ForumDetailView extends VBox {
                         "-fx-background-radius: 24;");
 
         Label nameInitial = new Label(getInitials(author));
-        nameInitial.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, 20));
-        nameInitial.setStyle("-fx-text-fill: white;");
+        nameInitial.getStyleClass().add("nameInitial");
+
 
         avatarCircle.getChildren().add(nameInitial);
         return avatarCircle;
