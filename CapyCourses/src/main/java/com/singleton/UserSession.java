@@ -6,6 +6,7 @@ public class UserSession {
     private String registerIncomplet;
     private boolean started = false;
     private String userName;
+    private String userType;
 
     private UserSession() {}
 
@@ -63,5 +64,17 @@ public class UserSession {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserType() {
+
+        return userType;
+
+    }
+
+    public void setUserType(String userType) {
+
+        this.userType = userType;
+
     }
 }

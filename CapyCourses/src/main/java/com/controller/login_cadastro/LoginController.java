@@ -25,6 +25,8 @@ public class LoginController {
             session.setUserEmail(email);
             session.setUserName(user.getName());
 
+            
+
             if (user.getTypeUser().equalsIgnoreCase("STUDENT")) {
                 Student student = studentDAO.buscarPorUserId(user.getId());
                 if (student == null) {
@@ -45,6 +47,19 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
             return "false";
+        }
+    }
+
+    public String getUserType(String email) {
+        try {
+            User user = userDAO.buscarPorEmail(email);
+            if (user != null) {
+                return user.getTypeUser();
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

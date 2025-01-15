@@ -106,8 +106,11 @@ public class Login extends BaseLoginCadastro implements Initializable {
         String isCheck = plc.isCheck(user.getText(), password.getText());
         Stage stage = (Stage) leftSection.getScene().getWindow();
 
+        
+
         if (isCheck.equals("true")) {
             CreateJson json = new CreateJson();
+         
             if (lembrar.isSelected()) {
                 json.saveLoginData(user.getText(), password.getText(),
                         "capycourses/src/main/resources/com/json/login.json");
@@ -115,12 +118,29 @@ public class Login extends BaseLoginCadastro implements Initializable {
                 json.verifyAndDeleteLoginData(user.getText(), password.getText(),
                         "capycourses/src/main/resources/com/json/login.json");
             }
-            super.redirectTo("/com/estudante/paginaInicial/paginaInicial.fxml", stage);
+        
+            String userType = plc.getUserType(user.getText());
+            UserSession.getInstance().setUserType(userType);
+        
+            // Redirecionar baseado no tipo
+            switch(userType.toUpperCase()) {
+                case "STUDENT":
+                    super.redirectTo("/com/estudante/paginaInicial/paginaInicial.fxml", stage);
+                    break;
+                case "TEACHER":
+                    super.redirectTo("/com/professor/paginaCadastroCurso.fxml", stage);
+                    break;
+                default:
+                    showError();
+                    break;
+            }
         } else if (isCheck.equals("incomplete student")) {
             UserSession.getInstance().setRegisterIncomplet("Student");
+            UserSession.getInstance().setUserType("STUDENT");
             super.redirectTo("/com/login_cadastro/paginaCadastroStudent.fxml", stage);
         } else if (isCheck.equals("incomplete teacher")) {
-            UserSession.getInstance().setRegisterIncomplet("Teacher");
+            UserSession.getInstance().setRegisterIncomplet("Teacher"); 
+            UserSession.getInstance().setUserType("TEACHER");
             super.redirectTo("/com/login_cadastro/paginaCadastroTeacher.fxml", stage);
         } else {
             UserSession.getInstance().clearSession();
@@ -129,7 +149,6 @@ public class Login extends BaseLoginCadastro implements Initializable {
             user.requestFocus();
         }
     }
-
     private void createJson() {
         if (lembrar.isSelected()) {
             CreateJson.saveLoginData(user.getText(), password.getText(),
