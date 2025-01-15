@@ -4,5 +4,6 @@ docs/
 # Ignore Javadoc HTML files
 CapyCourses/target/site/apidocs/
 CapyCourses/build/docs/javadoc/
+CapyCourses/target/site/
 *.html
 
