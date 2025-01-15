@@ -2,7 +2,7 @@
 docs/
 *.html
 # Ignore Javadoc HTML files
-target/site/apidocs/
-build/docs/javadoc/
+CapyCourses/target/site/apidocs/
+CapyCourses/build/docs/javadoc/
 *.html
 
