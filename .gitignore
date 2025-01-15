@@ -1,3 +1,8 @@
 # Ignore Javadoc HTML files
 docs/
 *.html
+# Ignore Javadoc HTML files
+target/site/apidocs/
+build/docs/javadoc/
+*.html
+
