@@ -1,6 +1,7 @@
 package com.view.elements.Perfil;
 
 import com.view.Modo;
+
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

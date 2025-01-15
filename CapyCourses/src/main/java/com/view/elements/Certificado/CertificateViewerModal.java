@@ -17,9 +17,11 @@ import javafx.util.Duration;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.rendering.PDFRenderer;
+
 import com.singleton.UserSession;
-import com.dto.PaginaPrincipalDTO;
 import com.view.Modo;
+import com.dto.PaginaPrincipalDTO;
+
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 

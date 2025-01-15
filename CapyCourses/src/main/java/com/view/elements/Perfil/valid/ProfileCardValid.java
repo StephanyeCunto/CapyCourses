@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 public class ProfileCardValid {
-      private static final ValidationSupport validationSupport = new ValidationSupport();
+    private static final ValidationSupport validationSupport = new ValidationSupport();
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
     @FXML

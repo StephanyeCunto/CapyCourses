@@ -14,7 +14,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
-<GridPane fx:controller="com.teste" stylesheets="@style/style.css" maxHeight="-Infinity"
+<GridPane stylesheets="@style/style.css" maxHeight="-Infinity"
   maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
   prefWidth="1280.0"
   style="-fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);"
