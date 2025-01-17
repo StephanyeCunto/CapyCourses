@@ -64,100 +64,125 @@ public class CadastroCursoController {
     private ModuloDTO mapModuleData(Map<String, Object> moduleData) {
         ModuloDTO dto = new ModuloDTO();
         
-        dto.setNumeroModulo((Integer) moduleData.get("moduleNumber"));
-        dto.setTitulo((String) moduleData.get("moduleTitle"));
-        dto.setDuracao((String) moduleData.get("moduleDuration"));
-        dto.setDescricao((String) moduleData.get("moduleDescription"));
-        
-        // Mapeia aulas
-        @SuppressWarnings("unchecked")
-        List<Map<String, Object>> lessonsData = (List<Map<String, Object>>) moduleData.get("contentLesson");
-        if (lessonsData != null) {
-            dto.setAulas(mapLessonsData(lessonsData));
-        }
-        
-        // Mapeia questionários
-        @SuppressWarnings("unchecked")
-        List<Map<String, Object>> questionairesData = (List<Map<String, Object>>) moduleData.get("contentQuestionaire");
-        if (questionairesData != null) {
-            dto.setQuestionarios(mapQuestionairesData(questionairesData));
-        }
-        
-        return dto;
-    }
-
-    private List<AulaDTO> mapLessonsData(List<Map<String, Object>> lessonsData) {
-        List<AulaDTO> aulas = new ArrayList<>();
-        
-        for (Map<String, Object> lessonData : lessonsData) {
-            AulaDTO aulaDTO = new AulaDTO();
+        try {
+            dto.setNumeroModulo((Integer) moduleData.get("moduleNumber"));
+            dto.setTitulo((String) moduleData.get("moduleTitle"));
+            dto.setDuracao((String) moduleData.get("moduleDuration"));
+            dto.setDescricao((String) moduleData.get("moduleDescription"));
             
-            aulaDTO.setModuleNumber((Integer) lessonData.get("moduleNumber"));
-            aulaDTO.setNumeroAula((Integer) lessonData.get("lessonNumber0"));
-            aulaDTO.setTitulo((String) lessonData.get("lessonTitle0"));
-            aulaDTO.setDescricao((String) lessonData.get("lessonDetails0"));
-            aulaDTO.setMateriais((String) lessonData.get("lessonMaterials0"));
-            aulaDTO.setVideoLink((String) lessonData.get("lessonVideoLink0"));
-            aulaDTO.setDuracao((String) lessonData.get("lessonDuration0"));
+            // Debug
+            System.out.println("Dados do módulo recebidos: " + moduleData);
             
-            aulas.add(aulaDTO);
-        }
-        
-        return aulas;
-    }
-
-    private List<QuestionarioDTO> mapQuestionairesData(List<Map<String, Object>> questionairesData) {
-        List<QuestionarioDTO> questionarios = new ArrayList<>();
-        
-        for (Map<String, Object> questionaireData : questionairesData) {
-            QuestionarioDTO questionarioDTO = new QuestionarioDTO();
+            // Mapeia aulas
+            Object lessonsObj = moduleData.get("contentLesson");
+            List<AulaDTO> aulas = new ArrayList<>();
             
-            questionarioDTO.setTitulo((String) questionaireData.get("questionaireTitle0"));
-            questionarioDTO.setDescricao((String) questionaireData.get("questionaireDescription0"));
-            questionarioDTO.setNotaMinima(Double.parseDouble(questionaireData.get("questionaireScore0").toString()));
-            
-            @SuppressWarnings("unchecked")
-            Map<String, Object> questionsData = (Map<String, Object>) questionaireData.get("questions0");
-            if (questionsData != null) {
-                questionarioDTO.setQuestoes(mapQuestionsData(questionsData));
-            }
-            
-            questionarios.add(questionarioDTO);
-        }
-        
-        return questionarios;
-    }
-
-    private List<QuestaoDTO> mapQuestionsData(Map<String, Object> questionsData) {
-        List<QuestaoDTO> questoes = new ArrayList<>();
-        
-        QuestaoDTO questaoDTO = new QuestaoDTO();
-        questaoDTO.setPergunta((String) questionsData.get("questionText0"));
-        
-        // Processa as alternativas
-        @SuppressWarnings("unchecked")
-        Map<String, Object> responseData = (Map<String, Object>) questionsData.get("response0");
-        if (responseData != null) {
-            List<String> alternativas = new ArrayList<>();
-            int alternativaCorreta = -1;
-            
-            // Processa cada resposta
-            for (int i = 0; responseData.containsKey("responseField" + i); i++) {
-                String alternativa = (String) responseData.get("responseField" + i);
-                alternativas.add(alternativa);
+            if (lessonsObj instanceof List<?>) {
+                List<?> lessonsList = (List<?>) lessonsObj;
                 
-                // Verifica se é a alternativa correta
-                Boolean isCorrect = (Boolean) responseData.get("responseIsTrue" + i);
-                if (isCorrect != null && isCorrect) {
-                    alternativaCorreta = i;
+                for (Object lessonObj : lessonsList) {
+                    if (lessonObj instanceof Map) {
+                        @SuppressWarnings("unchecked")
+                        Map<String, Object> lessonData = (Map<String, Object>) lessonObj;
+                        
+                        AulaDTO aulaDTO = new AulaDTO();
+                        aulaDTO.setModuleNumber(dto.getNumeroModulo());
+                        aulaDTO.setNumeroAula((Integer) lessonData.get("lessonNumber"));
+                        aulaDTO.setTitulo((String) lessonData.get("lessonTitle"));
+                        aulaDTO.setDescricao((String) lessonData.get("lessonDetails"));
+                        aulaDTO.setMateriais((String) lessonData.get("lessonMaterials"));
+                        aulaDTO.setVideoLink((String) lessonData.get("lessonVideoLink"));
+                        aulaDTO.setDuracao((String) lessonData.get("lessonDuration"));
+                        
+                        aulas.add(aulaDTO);
+                    }
                 }
             }
+            dto.setAulas(aulas);
             
-            questaoDTO.setAlternativas(alternativas);
-            questaoDTO.setAlternativaCorreta(alternativaCorreta);
+            // Mapeia questionários
+            Object questionairesObj = moduleData.get("contentQuestionaire");
+            List<QuestionarioDTO> questionarios = new ArrayList<>();
+            
+            if (questionairesObj instanceof List<?>) {
+                List<?> questionairesList = (List<?>) questionairesObj;
+                
+                for (Object questionaireObj : questionairesList) {
+                    if (questionaireObj instanceof Map) {
+                        @SuppressWarnings("unchecked")
+                        Map<String, Object> questionaireData = (Map<String, Object>) questionaireObj;
+                        
+                        QuestionarioDTO questionarioDTO = new QuestionarioDTO();
+                        questionarioDTO.setTitulo((String) questionaireData.get("questionaireTitle"));
+                        questionarioDTO.setDescricao((String) questionaireData.get("questionaireDescription"));
+                        
+                        try {
+                            String scoreStr = (String) questionaireData.get("questionaireScore");
+                            double score = Double.parseDouble(scoreStr);
+                            questionarioDTO.setNotaMinima(score);
+                        } catch (Exception e) {
+                            System.err.println("Erro ao converter nota: " + e.getMessage());
+                            questionarioDTO.setNotaMinima(0.0);
+                        }
+                        
+                        // Processa questões
+                        Object questionsObj = questionaireData.get("questions");
+                        if (questionsObj instanceof List) {
+                            @SuppressWarnings("unchecked")
+                            List<Map<String, Object>> questionsList = (List<Map<String, Object>>) questionsObj;
+                            List<QuestaoDTO> questoes = new ArrayList<>();
+                            
+                            for (Map<String, Object> questionData : questionsList) {
+                                QuestaoDTO questaoDTO = new QuestaoDTO();
+                                questaoDTO.setPergunta((String) questionData.get("questionText"));
+                                questaoDTO.setScore((String) questionData.get("questionScore"));
+                                questaoDTO.setTipo((String) questionData.get("type"));
+                                
+                                // Processar opções
+                                @SuppressWarnings("unchecked")
+                                List<Map<String, Object>> optionsList = (List<Map<String, Object>>) questionData.get("options");
+                                
+                                if (optionsList != null && !optionsList.isEmpty()) {
+                                    List<String> alternativas = new ArrayList<>();
+                                    int correctIndex = -1;
+                                    
+                                    for (int i = 0; i < optionsList.size(); i++) {
+                                        Map<String, Object> option = optionsList.get(i);
+                                        String text = (String) option.get("optionText");
+                                        Boolean isSelected = (Boolean) option.get("isSelected");
+                                        
+                                        if (text != null && !text.trim().isEmpty()) {
+                                            alternativas.add(text);
+                                            if (Boolean.TRUE.equals(isSelected)) {
+                                                correctIndex = i;
+                                            }
+                                        }
+                                    }
+                                    
+                                    questaoDTO.setAlternativas(alternativas);
+                                    questaoDTO.setAlternativaCorreta(correctIndex);
+                                    questaoDTO.setOptions(optionsList);
+                                }
+                                
+                                questoes.add(questaoDTO);
+                                System.out.println("Questão processada: " + questaoDTO); // Debug
+                            }
+                            
+                            questionarioDTO.setQuestoes(questoes);
+                        }
+                        
+                        questionarios.add(questionarioDTO);
+                    }
+                }
+            }
+            dto.setQuestionarios(questionarios);
+            
+            return dto;
+            
+        } catch (Exception e) {
+            System.err.println("Erro ao mapear dados do módulo: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao processar dados do módulo", e);
         }
-        
-        questoes.add(questaoDTO);
-        return questoes;
     }
 } 

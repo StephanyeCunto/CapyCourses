@@ -742,37 +742,36 @@ public class CadastroCurso implements Initializable {
     private Map<String, Object> saveLessonData(VBox lessonCard, int cont, int moduleNumber) {
         Map<String, Object> lessonData = new HashMap<>();
         cont++;
-        lessonData.put("cont" + k, cont);
+        lessonData.put("cont", cont);
         HBox lessonHeader = (HBox) lessonCard.getChildren().get(0);
         Label lessonNumber = (Label) ((StackPane) lessonHeader.getChildren().get(0)).getChildren().get(0);
 
         lessonData.put("type", "lesson");
         lessonData.put("moduleNumber", moduleNumber);
-        lessonData.put("lessonNumber" + k, Integer.parseInt(lessonNumber.getText()));
+        lessonData.put("lessonNumber", Integer.parseInt(lessonNumber.getText()));
 
         VBox lessonContent = (VBox) lessonCard.getChildren().get(1);
 
         VBox titleContainer = (VBox) lessonContent.getChildren().get(0);
         TextField titleField = (TextField) titleContainer.getChildren().get(1);
-        lessonData.put("lessonTitle" + k, titleField.getText());
+        lessonData.put("lessonTitle", titleField.getText());
 
         VBox videoContainer = (VBox) lessonContent.getChildren().get(2);
         TextField videoField = (TextField) videoContainer.getChildren().get(1);
-        lessonData.put("lessonVideoLink" + k, videoField.getText());
+        lessonData.put("lessonVideoLink", videoField.getText());
 
         VBox detailsContainer = (VBox) lessonContent.getChildren().get(4);
         TextArea detailsArea = (TextArea) detailsContainer.getChildren().get(1);
-        lessonData.put("lessonDetails" + k, detailsArea.getText());
+        lessonData.put("lessonDetails", detailsArea.getText());
 
         VBox materialsContainer = (VBox) lessonContent.getChildren().get(6);
         TextArea materialsArea = (TextArea) materialsContainer.getChildren().get(1);
-        lessonData.put("lessonMaterials" + k, materialsArea.getText());
+        lessonData.put("lessonMaterials", materialsArea.getText());
 
         VBox durationContainer = (VBox) lessonContent.getChildren().get(8);
         TextField durationField = (TextField) durationContainer.getChildren().get(1);
-        lessonData.put("lessonDuration" + k, durationField.getText());
+        lessonData.put("lessonDuration", durationField.getText());
 
-        k++;
         return lessonData;
     }
 
@@ -782,107 +781,123 @@ public class CadastroCurso implements Initializable {
         try {
             Map<String, Object> questionaireData = new HashMap<>();
             cont++;
-            questionaireData.put("cont" + j, cont);
-            HBox questionaireHeader = (HBox) questionaireCard.getChildren().get(0);
-            Label questionaireNumber = (Label) ((StackPane) questionaireHeader.getChildren().get(0)).getChildren().get(0);
-
-            questionaireData.put("type", "questionaire");
-            questionaireData.put("questionaireNumber" + j, questionaireNumber.getText());
-
+            questionaireData.put("cont", cont);
+            
+            // Dados do questionário
             VBox container = (VBox) questionaireCard.getChildren().get(1);
-
-            VBox titleContainer = (VBox) container.getChildren().get(0); 
-            TextField titleField = (TextField) titleContainer.getChildren().get(1);
-            questionaireData.put("questionaireTitle" + j, titleField.getText());
-
-            VBox descriptionContainer = (VBox) container.getChildren().get(2);
-            TextArea descriptionArea = (TextArea) descriptionContainer.getChildren().get(1);
-            questionaireData.put("questionaireDescription" + j, descriptionArea.getText());
-
-            VBox scoreContainer = (VBox) container.getChildren().get(4);
-            TextField scoreField = (TextField) scoreContainer.getChildren().get(1);
-            questionaireData.put("questionaireScore" + j, scoreField.getText());
-
+            
+            TextField titleField = (TextField) ((VBox) container.getChildren().get(0)).getChildren().get(1);
+            TextArea descriptionArea = (TextArea) ((VBox) container.getChildren().get(2)).getChildren().get(1);
+            TextField scoreField = (TextField) ((VBox) container.getChildren().get(4)).getChildren().get(1);
+            
+            questionaireData.put("questionaireTitle", titleField.getText());
+            questionaireData.put("questionaireDescription", descriptionArea.getText());
+            questionaireData.put("questionaireScore", scoreField.getText());
+            
+            // Processa as questões
             VBox questionsContainer = (VBox) container.getChildren().get(6);
-           Map<String, Object> questionData = new HashMap<>();
-
-            for (int i = 0; i < questionsContainer.getChildren().size(); i++) {
-                VBox questionContainer = (VBox) questionsContainer.getChildren().get(i);
-                questionaireData.put("questions" + j, saveQuestionData(questionContainer, questionData, cont));
+            List<Map<String, Object>> questions = new ArrayList<>();
+            
+            for (Node node : questionsContainer.getChildren()) {
+                if (node instanceof VBox) {
+                    Map<String, Object> questionData = saveQuestionData((VBox)node, new HashMap<>(), cont);
+                    if (questionData != null) {
+                        questions.add(questionData);
+                    }
+                }
             }
-            j++;
+            
+            questionaireData.put("questions", questions);
             return questionaireData;
+            
         } catch (Exception e) {
-            System.out.println("Erro ao processar dados do questionário: " + e.getMessage());
+            System.err.println("Erro ao processar questionário: " + e.getMessage());
+            e.printStackTrace();
             return null;
-        }  
+        }
     }
 
-    private int z = 0;
-
     private Map<String, Object> saveQuestionData(VBox questionCard, Map<String, Object> questionData, int k) {
-        HBox questionHeader = (HBox) questionCard.getChildren().get(0);
-        StackPane numberContainer = (StackPane) questionHeader.getChildren().get(0);
-        Label questionNumber = (Label) numberContainer.getChildren().get(0);
-        questionData.put("questionNumber" + z, questionNumber.getText());
-
-        VBox questionContent = (VBox) questionCard.getChildren().get(1);
-       HBox scoreBox = (HBox) questionContent.getChildren().get(0);
-        TextField scoreField = (TextField) scoreBox.getChildren().get(1);
-        questionData.put("questionScore" + z, scoreField.getText());
-
-        TextArea questionText = (TextArea) questionContent.getChildren().get(2);
-        questionData.put("questionText" + z, questionText.getText());
-
-        Node node = questionContent.getChildren().get(4);
-
-        Labeled labeled = (Labeled) node;
-
-        int h = 0;
-        Map<String, Object> responseData = new HashMap<>();
-        if (labeled.getText().equals("Opções (selecione a correta)")) {
-            questionData.put("type" + z, "SINGLE_CHOICE");
-            VBox optionsContainer = (VBox) questionContent.getChildren().get(5);
-            for (int e = 0; e < optionsContainer.getChildren().size(); e++) {
-                HBox response = (HBox) optionsContainer.getChildren().get(e);
-                RadioButton radioField = (RadioButton) response.getChildren().get(0);
-                TextField responseField = (TextField) response.getChildren().get(1);
-                responseData.put("responseField" + h, responseField.getText());
-                if (radioField.isSelected()) {
-                    responseData.put("responseIsTrue" + h, true);
-                } else {
-                    responseData.put("responseIsTrue" + h, false);
+        try {
+            VBox questionContent = (VBox) questionCard.getChildren().get(1);
+            
+            TextArea questionText = (TextArea) questionContent.getChildren().get(2);
+            TextField scoreField = (TextField) ((HBox) questionContent.getChildren().get(0)).getChildren().get(1);
+            
+            // Encontrar o container de opções
+            VBox optionsContainer = null;
+            for (Node node : questionContent.getChildren()) {
+                if (node instanceof VBox) {
+                    optionsContainer = (VBox) node;
+                    break;
                 }
-                h++;
             }
-        } else if (labeled.getText().equals("Opções (selecione as corretas)")) {
-            VBox optionsContainer = (VBox) questionContent.getChildren().get(5);
-            questionData.put("type" + z, "MULTIPLE_CHOICE");
-            for (int e = 0; e < optionsContainer.getChildren().size(); e++) {
-                HBox response = (HBox) optionsContainer.getChildren().get(e);
-                CheckBox checkBox = (CheckBox) response.getChildren().get(0);
-                TextField responseField = (TextField) response.getChildren().get(1);
-                responseData.put("responseField" + h, responseField.getText());
-                if (checkBox.isSelected()) {
-                    responseData.put("responseIsTrue" + h, true);
-                } else {
-                    responseData.put("responseIsTrue" + h, false);
-                }
-                h++;
+            
+            questionData.put("questionScore", scoreField.getText());
+            questionData.put("questionText", questionText.getText());
+            questionData.put("questionNumber", k);
+            questionData.put("type", "SINGLE_CHOICE");
+            
+            if (optionsContainer != null) {
+                List<Map<String, Object>> options = collectOptionsData(optionsContainer);
+                questionData.put("options", options);
+                System.out.println("Total de opções salvas: " + options.size());
             }
-
-        } else if (labeled.getText().equals("Resposta Esperada (opcional)")) {
-            questionData.put("type" + z, "DISCURSIVE");
-            TextArea responseField = (TextArea) questionContent.getChildren().get(5);
-            TextArea responseField2 = (TextArea) questionContent.getChildren().get(7);
-            responseData.put("responseField" + h, responseField.getText());
-            responseData.put("responseField2" + h, responseField2.getText());
-            h++;
+            
+            return questionData;
+        } catch (Exception e) {
+            System.err.println("Erro ao processar questão: " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
-        questionData.put("response" + z, responseData);
-        z++;
+    }
 
-        return questionData;
+    private List<Map<String, Object>> collectOptionsData(VBox optionsContainer) {
+        List<Map<String, Object>> options = new ArrayList<>();
+        
+        for (Node node : optionsContainer.getChildren()) {
+            if (node instanceof HBox && "single_choice_option".equals(node.getUserData())) {
+                HBox optionBox = (HBox) node;
+                RadioButton radio = (RadioButton) optionBox.getChildren().get(0);
+                TextField textField = (TextField) optionBox.getChildren().get(1);
+                
+                Map<String, Object> option = new HashMap<>();
+                option.put("optionText", textField.getText());
+                option.put("isSelected", radio.isSelected());
+                options.add(option);
+                
+                System.out.println("Opção coletada: " + textField.getText() + " (Selecionada: " + radio.isSelected() + ")");
+            }
+        }
+        
+        return options;
+    }
+
+    private void processOptions(VBox optionsContainer, List<Map<String, Object>> responses, boolean isSingleChoice) {
+        for (Node node : optionsContainer.getChildren()) {
+            if (node instanceof HBox) {
+                HBox optionBox = (HBox) node;
+                Map<String, Object> response = new HashMap<>();
+                
+                Node selectionControl = optionBox.getChildren().get(0);
+                TextField textField = (TextField) optionBox.getChildren().get(1);
+                
+                String text = textField.getText();
+                boolean isSelected = isSingleChoice ? 
+                    ((RadioButton)selectionControl).isSelected() : 
+                    ((CheckBox)selectionControl).isSelected();
+                
+                // Só adiciona se o texto não estiver vazio
+                if (text != null && !text.trim().isEmpty()) {
+                    response.put("text", text);
+                    response.put("isCorrect", isSelected);
+                    responses.add(response);
+                    
+                    // Debug
+                    System.out.println("Added option: " + text + " (Correct: " + isSelected + ")");
+                }
+            }
+        }
     }
 
     @SuppressWarnings("unused")
@@ -1527,6 +1542,7 @@ public class CadastroCurso implements Initializable {
                 break;
             case "SINGLE_CHOICE":
                 addSingleChoiceFields(questionContent,moduleNumber);
+                questionContent.setUserData("SINGLE_CHOICE");
                 break;
             case "MULTIPLE_CHOICE":
                 addMultipleChoiceFields(questionContent,moduleNumber);
@@ -1676,10 +1692,10 @@ public class CadastroCurso implements Initializable {
             RadioButton radio = new RadioButton();
             radio.setToggleGroup(toggleGroup);
             selectionControl = radio;
-            selectionControl.getStyleClass().add("radio-button");
+            // Adicionando identificador para facilitar a busca depois
+            optionBox.setUserData("single_choice_option");
         } else {
             selectionControl = new CheckBox();
-            selectionControl.getStyleClass().add("custom-checkbox");
         }
 
         TextField optionText = new TextField();
@@ -1695,38 +1711,14 @@ public class CadastroCurso implements Initializable {
         Button removeOption = new Button("X");
         removeOption.getStyleClass().add("simple-button");
         removeOption.setOnAction(e -> {
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(300), optionBox);
-            fadeOut.setFromValue(1);
-            fadeOut.setToValue(0);
-            fadeOut.setOnFinished(event -> {
-                container.getChildren().removeAll(optionBox, optionErrorLabel);
-                validatorOptions.setupInitialStateOptions(container, singleChoice,moduleNumber);
-                validatorOptions.setupInitialStateOptions(container, !singleChoice,moduleNumber);
-            });
-            fadeOut.play();
+            container.getChildren().remove(optionBox);
         });
 
         optionBox.getChildren().addAll(selectionControl, optionText, removeOption);
+        optionsContainer.getChildren().add(optionBox);
 
-        optionBox.setOpacity(0);
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), optionBox);
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
-        fadeIn.play();
-
-        int positionOpcion = 0;
-        for (int i = 0; i < container.getChildren().size(); i++) {
-            if (container.getChildren().get(i) instanceof Button) {
-                break;
-            } else {
-                positionOpcion = i;
-            }
-        }
-
-        container.getChildren().add(positionOpcion + 1, optionBox);
-        container.getChildren().add(positionOpcion + 2, optionErrorLabel);
-
-        validatorOptions.setupInitialStateOptions(container, false,moduleNumber);
+        // Removendo chamada ao validator
+        // validatorOptions.setupInitialStateOptions(container, false, moduleNumber);
     }
 
     protected void addDateInputField() {

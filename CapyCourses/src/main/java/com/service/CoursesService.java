@@ -9,8 +9,14 @@ import com.model.elements.Course.Questionaire;
 import com.model.elements.Course.Question;
 import com.model.elements.Course.CourseSettings;
 import com.singleton.UserSession;
+import com.util.JPAUtil;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 public class CoursesService {
     private final CourseDAO courseDAO;
@@ -28,7 +34,13 @@ public class CoursesService {
     }
 
     public Course createCourse(CadastroCursoDTO dto) {
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction tx = null;
+        
         try {
+            tx = em.getTransaction();
+            tx.begin();
+            
             // Criar e configurar o curso
             Course course = new Course();
             course.setTitle(dto.getTitulo());
@@ -53,27 +65,39 @@ public class CoursesService {
             // Estabelecer relacionamento bidirecional
             course.setCourseSettings(settings);
             settings.setCourse(course);
+            
+            // Persistir o curso primeiro
+            em.persist(course);
+            em.flush();
 
             // Processar módulos
             if (dto.getModulos() != null) {
                 for (ModuloDTO moduloDTO : dto.getModulos()) {
                     Module module = createModuleFromDTO(moduloDTO);
-                    course.addModule(module);
+                    module.setCourse(course);
+                    em.persist(module);
+                    em.flush();
                     
                     // Processar aulas do módulo
-                    processLessons(moduloDTO, module);
+                    processLessons(moduloDTO, module, em);
                     
                     // Processar questionários do módulo
-                    processQuestionaires(moduloDTO, module);
+                    processQuestionairesAndQuestions(moduloDTO, module, em);
                 }
             }
 
-            // Salvar o curso (cascade deve propagar para todas as entidades relacionadas)
-            courseDAO.save(course);
-            
+            tx.commit();
             return course;
+            
         } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
             throw new RuntimeException("Erro ao criar curso: " + e.getMessage(), e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
     }
 
@@ -86,7 +110,7 @@ public class CoursesService {
         return module;
     }
 
-    private void processLessons(ModuloDTO moduloDTO, Module module) {
+    private void processLessons(ModuloDTO moduloDTO, Module module, EntityManager em) {
         if (moduloDTO.getAulas() != null) {
             for (AulaDTO aulaDTO : moduloDTO.getAulas()) {
                 Lessons lesson = new Lessons(
@@ -103,36 +127,78 @@ public class CoursesService {
         }
     }
 
-    private void processQuestionaires(ModuloDTO moduloDTO, Module module) {
+    private void processQuestionairesAndQuestions(ModuloDTO moduloDTO, Module module, EntityManager em) {
         if (moduloDTO.getQuestionarios() != null) {
+            System.out.println("Módulo tem " + moduloDTO.getQuestionarios().size() + " questionários");
             for (QuestionarioDTO questionarioDTO : moduloDTO.getQuestionarios()) {
+                System.out.println("Detalhes do questionário: " + questionarioDTO.toString());
+                
                 Questionaire questionaire = new Questionaire();
+                questionaire.setModule(module);
                 questionaire.setTitle(questionarioDTO.getTitulo());
                 questionaire.setDescription(questionarioDTO.getDescricao());
                 questionaire.setNumber(String.valueOf(module.getModuleNumber()));
                 questionaire.setScore(String.valueOf(questionarioDTO.getNotaMinima()));
-                module.addQuestionaire(questionaire);
-
-                // Processar questões
-                processQuestions(questionarioDTO, questionaire);
-            }
-        }
-    }
-
-    private void processQuestions(QuestionarioDTO questionarioDTO, Questionaire questionaire) {
-        if (questionarioDTO.getQuestoes() != null) {
-            for (QuestaoDTO questaoDTO : questionarioDTO.getQuestoes()) {
-                Question question = new Question();
-                question.setText(questaoDTO.getPergunta());
-                question.setType("multiple_choice"); // Pode ser parametrizado se necessário
-                question.setAnswers(String.join(";", questaoDTO.getAlternativas()));
-                question.setCorrectAnswers(String.valueOf(questaoDTO.getAlternativaCorreta()));
-                question.setNumber(String.valueOf(questionaire.getQuestions().size() + 1));
-                question.setScore("1.0"); // Pode ser parametrizado se necessário
-                question.setArea("general"); // Pode ser parametrizado se necessário
                 
-                questionaire.addQuestion(question);
+                em.persist(questionaire);
+                em.flush();
+                
+                System.out.println("Questionário persistido com ID: " + questionaire.getId());
+                
+                if (questionarioDTO.getQuestoes() != null) {
+                    System.out.println("Questionário tem " + questionarioDTO.getQuestoes().size() + " questões");
+                    
+                    for (QuestaoDTO questaoDTO : questionarioDTO.getQuestoes()) {
+                        System.out.println("Processando questão: " + questaoDTO.getPergunta());
+                        
+                        try {
+                            Question question = new Question();
+                            question.setQuestionaire(questionaire);
+                            question.setText(questaoDTO.getPergunta());
+                            question.setType("SINGLE_CHOICE");
+                            question.setScore(questaoDTO.getScore());
+                            
+                            // Processar opções
+                            if (questaoDTO.getOptions() != null && !questaoDTO.getOptions().isEmpty()) {
+                                List<String> alternativas = new ArrayList<>();
+                                String respostaCorreta = null;
+                                
+                                System.out.println("Processando " + questaoDTO.getOptions().size() + " opções");
+                                
+                                for (Map<String, Object> option : questaoDTO.getOptions()) {
+                                    String texto = (String) option.get("optionText");
+                                    boolean selecionada = (boolean) option.get("isSelected");
+                                    
+                                    alternativas.add(texto);
+                                    if (selecionada) {
+                                        respostaCorreta = texto;
+                                    }
+                                    
+                                    System.out.println("Opção: " + texto + " (Selecionada: " + selecionada + ")");
+                                }
+                                
+                                question.setAnswers(String.join("|", alternativas));
+                                question.setCorrectAnswers(respostaCorreta);
+                                
+                                System.out.println("Tentando persistir questão...");
+                                em.persist(question);
+                                em.flush();
+                                System.out.println("Questão persistida com ID: " + question.getId());
+                                
+                            } else {
+                                System.out.println("Nenhuma opção encontrada para a questão");
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Erro ao processar questão: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    System.out.println("Nenhuma questão encontrada no questionário");
+                }
             }
+        } else {
+            System.out.println("Nenhum questionário encontrado no módulo");
         }
     }
 
@@ -176,5 +242,25 @@ public class CoursesService {
         question.setAnswers(String.join(";", dto.getAlternativas()));
         question.setCorrectAnswers(String.valueOf(dto.getAlternativaCorreta()));
         return question;
+    }
+
+    // Método auxiliar para mapear os dados do questionário
+    private List<QuestaoDTO> mapQuestionsFromData(List<Map<String, Object>> questionsData) {
+        List<QuestaoDTO> questoes = new ArrayList<>();
+        
+        for (Map<String, Object> questionData : questionsData) {
+            QuestaoDTO questaoDTO = new QuestaoDTO();
+            questaoDTO.setPergunta((String) questionData.get("questionText"));
+            
+            @SuppressWarnings("unchecked")
+            List<String> alternativas = (List<String>) questionData.get("responses");
+            if (alternativas != null) {
+                questaoDTO.setAlternativas(alternativas);
+            }
+            
+            questoes.add(questaoDTO);
+        }
+        
+        return questoes;
     }
 }

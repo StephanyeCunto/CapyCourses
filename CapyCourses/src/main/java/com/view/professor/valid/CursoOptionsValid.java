@@ -208,4 +208,44 @@ public class CursoOptionsValid {
                 })
                 .count();
     }
+
+    public List<Map<String, Object>> getOptionsData(VBox container) {
+        List<Map<String, Object>> options = new ArrayList<>();
+        
+        VBox optionsContainer = null;
+        for (Node node : container.getChildren()) {
+            if (node instanceof Label && ((Label) node).getText().contains("Opções")) {
+                int index = container.getChildren().indexOf(node);
+                if (index + 1 < container.getChildren().size() && 
+                    container.getChildren().get(index + 1) instanceof VBox) {
+                    optionsContainer = (VBox) container.getChildren().get(index + 1);
+                    break;
+                }
+            }
+        }
+        
+        if (optionsContainer != null) {
+            for (Node node : optionsContainer.getChildren()) {
+                if (node instanceof HBox) {
+                    HBox optionBox = (HBox) node;
+                    Node control = optionBox.getChildren().get(0);
+                    TextField textField = (TextField) optionBox.getChildren().get(1);
+                    
+                    if (control instanceof RadioButton && textField != null) {
+                        RadioButton radio = (RadioButton) control;
+                        String text = textField.getText();
+                        
+                        if (text != null && !text.trim().isEmpty()) {
+                            Map<String, Object> option = new HashMap<>();
+                            option.put("optionText", text);
+                            option.put("isSelected", radio.isSelected());
+                            options.add(option);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return options;
+    }
 }
