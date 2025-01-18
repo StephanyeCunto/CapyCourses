@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+
+<VBox   xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1"
+    stylesheets="@style/dark/style.css" spacing="20" styleClass="main-container">
+
+    <!-- Cabeçalho -->
+    <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header-container">
+        <padding>
+            <Insets top="20" right="30" bottom="20" left="30" />
+        </padding>
+
+        <Label text="Progresso do Aluno" styleClass="header-title" />
+        <Region HBox.hgrow="ALWAYS" />
+        <ComboBox fx:id="courseSelector" promptText="Selecione o curso" />
+    </HBox>
+
+    <!-- Cards de Estatísticas -->
+    <HBox spacing="20" alignment="CENTER">
+        <padding>
+            <Insets left="30" right="30" />
+        </padding>
+
+        <VBox styleClass="stat-card-container" HBox.hgrow="ALWAYS">
+            <Label text="Progresso Geral" />
+            <Text fx:id="progressPercentage" text="75%" />
+        </VBox>
+
+        <VBox styleClass="stat-card-container" HBox.hgrow="ALWAYS">
+            <Label text="Módulos Completados" />
+            <Text fx:id="completedModules" text="6/8" />
+        </VBox>
+
+        <VBox styleClass="stat-card-container" HBox.hgrow="ALWAYS">
+            <Label text="Tempo Total de Estudo" />
+            <Text fx:id="totalStudyTime" text="32h" />
+        </VBox>
+    </HBox>
+
+    <!-- Gráficos -->
+    <HBox spacing="20" alignment="CENTER">
+        <padding>
+            <Insets left="30" right="30" />
+        </padding>
+
+        <!-- Gráfico de Pizza - Distribuição de Atividades -->
+        <PieChart fx:id="activityDistribution" title="Distribuição de Atividades"
+            legendVisible="true" labelsVisible="true" HBox.hgrow="ALWAYS" />
+
+        <!-- Gráfico de Barras - Progresso por Módulo -->
+        <BarChart fx:id="moduleProgress" title="Progresso por Módulo" HBox.hgrow="ALWAYS">
+            <xAxis>
+                <CategoryAxis label="Módulos" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Progresso (%)" />
+            </yAxis>
+        </BarChart>
+    </HBox>
+
+    <!-- Lista de Atividades Recentes -->
+    <VBox spacing="10">
+        <padding>
+            <Insets left="30" right="30" bottom="30" />
+        </padding>
+
+        <Label text="Atividades Recentes" styleClass="activities-title" />
+        <TableView fx:id="recentActivities" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn text="Data" fx:id="dateColumn" />
+                <TableColumn text="Atividade" fx:id="activityColumn" />
+                <TableColumn text="Módulo" fx:id="moduleColumn" />
+                <TableColumn text="Status" fx:id="statusColumn" />
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

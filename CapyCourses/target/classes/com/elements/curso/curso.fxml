@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0"
+    prefHeight="800.0" prefWidth="1280.0" fx:id="container"
+    styleClass="main-container" xmlns="http://javafx.com/javafx/23"
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.elements.Courses.Courses">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="240.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1040.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="600.0" vgrow="ALWAYS" />
+    </rowConstraints>
+    <children>
+        <VBox styleClass="side-menu" fx:id="sideMenu" spacing="15">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Button styleClass="outline-button" text="← Voltar" />
+                </HBox>
+                <VBox spacing="10" styleClass="quick-tips">
+                    <Label styleClass="section-title" text="Navegação" />
+                    <Label styleClass="tip-text" text="• Acompanhe seu progresso no curso"
+                        wrapText="true" />
+                    <Label styleClass="tip-text" text="• Visualize os próximos módulos"
+                        wrapText="true" />
+                    <Label styleClass="tip-text" text="• Faça download dos materiais"
+                        wrapText="true" />
+                </VBox>
+
+                <VBox spacing="10" styleClass="quick-tips">
+                    <Label styleClass="section-title" text="Dicas de Estudo" />
+                    <Label styleClass="tip-text" text="• Complete os exercícios"
+                        wrapText="true" />
+                    <Label styleClass="tip-text" text="• Faça anotações durante as aulas"
+                        wrapText="true" />
+                    <Label styleClass="tip-text" text="• Mantenha uma rotina de estudos"
+                        wrapText="true" />
+                </VBox>
+            </children>
+        </VBox>
+
+        <ScrollPane fitToWidth="true" GridPane.columnIndex="1" styleClass="main-scroll">
+            <content>
+
+                <VBox spacing="30" styleClass="main-content">
+                    <GridPane hgap="30" vgap="20">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="70" minWidth="300.0" />
+                            <ColumnConstraints percentWidth="30" minWidth="200.0" />
+                        </columnConstraints>
+                        <VBox spacing="20" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS"
+                            fx:id="mainVBox">
+
+                        </VBox>
+                        <VBox spacing="20" GridPane.columnIndex="1" minWidth="200.0">
+
+                            <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox"
+                                HBox.hgrow="ALWAYS"
+                                fx:id="toggleButtonHBox">
+                                <StackPane alignment="CENTER" fx:id="toggleButtonStackPane"
+                                    styleClass="theme-toggle-switch" prefWidth="50" prefHeight="25">
+                                    <Rectangle fx:id="background" width="50" height="25"
+                                        styleClass="toggle-background"
+                                        arcWidth="25" arcHeight="25" />
+                                    <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+                                        <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+                                        <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15"
+                                            visible="true" />
+                                        <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15"
+                                            visible="false" />
+                                    </StackPane>
+                                    <ToggleButton fx:id="toggleButton" mnemonicParsing="false"
+                                        styleClass="toggle-button" />
+                                </StackPane>
+                            </HBox>
+
+                            <VBox fx:id="content"></VBox>
+                        </VBox>
+                    </GridPane>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</GridPane>
