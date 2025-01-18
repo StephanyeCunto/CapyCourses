@@ -11,9 +11,12 @@ public class QuestaoDTO {
     private String pergunta;
     private List<String> alternativas;
     private int alternativaCorreta;
+    private List<Integer> alternativasCorretas;
     private String tipo;
     private String score;
     private List<Map<String, Object>> options;
+    private String respostaEsperada;
+    private String criteriosAvaliacao;
 
     public QuestaoDTO() {
     }

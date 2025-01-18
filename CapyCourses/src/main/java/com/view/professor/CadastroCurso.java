@@ -824,25 +824,51 @@ public class CadastroCurso implements Initializable {
             TextArea questionText = (TextArea) questionContent.getChildren().get(2);
             TextField scoreField = (TextField) ((HBox) questionContent.getChildren().get(0)).getChildren().get(1);
             
-            // Encontrar o container de opções
-            VBox optionsContainer = null;
-            for (Node node : questionContent.getChildren()) {
-                if (node instanceof VBox) {
-                    optionsContainer = (VBox) node;
-                    break;
-                }
-            }
-            
             questionData.put("questionScore", scoreField.getText());
             questionData.put("questionText", questionText.getText());
             questionData.put("questionNumber", k);
-            questionData.put("type", "SINGLE_CHOICE");
             
-            if (optionsContainer != null) {
-                List<Map<String, Object>> options = collectOptionsData(optionsContainer);
-                questionData.put("options", options);
-                System.out.println("Total de opções salvas: " + options.size());
+            // Pega o tipo da questão do userData do questionContent
+            String questionType = (String) questionContent.getUserData();
+            questionData.put("type", questionType);
+            
+            // Processa dados específicos baseado no tipo
+            switch (questionType) {
+                case "DISCURSIVE":
+                    // Procura os campos específicos de questão discursiva
+                    for (Node node : questionContent.getChildren()) {
+                        if (node instanceof TextArea) {
+                            TextArea textArea = (TextArea) node;
+                            if ("expectedAnswer".equals(textArea.getId())) {
+                                questionData.put("expectedAnswer", textArea.getText());
+                            } else if ("evaluationCriteria".equals(textArea.getId())) {
+                                questionData.put("evaluationCriteria", textArea.getText());
+                            }
+                        }
+                    }
+                    break;
+                    
+                case "SINGLE_CHOICE":
+                case "MULTIPLE_CHOICE":
+                    // Processa opções para questões de escolha
+                    VBox optionsContainer = null;
+                    for (Node node : questionContent.getChildren()) {
+                        if (node instanceof VBox) {
+                            optionsContainer = (VBox) node;
+                            break;
+                        }
+                    }
+                    
+                    if (optionsContainer != null) {
+                        List<Map<String, Object>> options = collectOptionsData(optionsContainer);
+                        questionData.put("options", options);
+                        System.out.println("Total de opções salvas: " + options.size());
+                    }
+                    break;
             }
+            
+            System.out.println("Tipo de questão sendo salva: " + questionType);
+            System.out.println("Dados da questão: " + questionData);
             
             return questionData;
         } catch (Exception e) {
@@ -856,17 +882,22 @@ public class CadastroCurso implements Initializable {
         List<Map<String, Object>> options = new ArrayList<>();
         
         for (Node node : optionsContainer.getChildren()) {
-            if (node instanceof HBox && "single_choice_option".equals(node.getUserData())) {
+            if (node instanceof HBox) {
                 HBox optionBox = (HBox) node;
-                RadioButton radio = (RadioButton) optionBox.getChildren().get(0);
+                Node selectionControl = optionBox.getChildren().get(0);
                 TextField textField = (TextField) optionBox.getChildren().get(1);
                 
                 Map<String, Object> option = new HashMap<>();
                 option.put("optionText", textField.getText());
-                option.put("isSelected", radio.isSelected());
-                options.add(option);
                 
-                System.out.println("Opção coletada: " + textField.getText() + " (Selecionada: " + radio.isSelected() + ")");
+                if (selectionControl instanceof RadioButton) {
+                    option.put("isSelected", ((RadioButton) selectionControl).isSelected());
+                } else if (selectionControl instanceof CheckBox) {
+                    option.put("isSelected", ((CheckBox) selectionControl).isSelected());
+                }
+                
+                options.add(option);
+                System.out.println("Opção coletada: " + textField.getText() + " (Selecionada: " + option.get("isSelected") + ")");
             }
         }
         
@@ -1506,6 +1537,8 @@ public class CadastroCurso implements Initializable {
         questionHeader.getChildren().addAll(numberContainer, spacer, removeButton);
 
         VBox questionContent = new VBox(10);
+        questionContent.setUserData(type);
+
         TextArea questionText = new TextArea();
         questionText.setPromptText("Digite a pergunta da questão...");
         questionText.setPrefRowCount(3);
@@ -1542,7 +1575,6 @@ public class CadastroCurso implements Initializable {
                 break;
             case "SINGLE_CHOICE":
                 addSingleChoiceFields(questionContent,moduleNumber);
-                questionContent.setUserData("SINGLE_CHOICE");
                 break;
             case "MULTIPLE_CHOICE":
                 addMultipleChoiceFields(questionContent,moduleNumber);
@@ -1612,6 +1644,7 @@ public class CadastroCurso implements Initializable {
         expectedAnswer.setPromptText("Resposta esperada (opcional)...");
         expectedAnswer.setPrefRowCount(2);
         expectedAnswer.getStyleClass().add("custom-text-area");
+        expectedAnswer.setId("expectedAnswer");
         Label expectedAnswerLabel = new Label("Resposta Esperada (opcional)");
         expectedAnswerLabel.getStyleClass().add("field-label");
 
@@ -1619,6 +1652,7 @@ public class CadastroCurso implements Initializable {
         evaluationCriteria.setPromptText("Critérios de avaliação...");
         evaluationCriteria.setPrefRowCount(2);
         evaluationCriteria.getStyleClass().add("custom-text-area");
+        evaluationCriteria.setId("evaluationCriteria");
         Label evolutionCriteriaLabel = new Label("Critérios de Avaliação");
         evolutionCriteriaLabel.getStyleClass().add("field-label");
         Label evaluationCriteriaErrorLabel = new Label(
@@ -1627,11 +1661,14 @@ public class CadastroCurso implements Initializable {
         evaluationCriteriaErrorLabel.setVisible(false);
         evaluationCriteriaErrorLabel.setManaged(false);
 
+        container.setUserData("DISCURSIVE");
+
         container.getChildren().addAll(
                 expectedAnswerLabel,
                 expectedAnswer,
                 evolutionCriteriaLabel,
-                evaluationCriteria, evaluationCriteriaErrorLabel);
+                evaluationCriteria, 
+                evaluationCriteriaErrorLabel);
     }
 
     private void addSingleChoiceFields(VBox container, int moduleNumber) {
@@ -1846,5 +1883,11 @@ public class CadastroCurso implements Initializable {
             sunIcon.setVisible(Modo.getInstance().getModo());
             moonIcon.setVisible(!Modo.getInstance().getModo());
         }
+    }
+
+    private Node findNodeById(VBox container, String id) {
+        return container.lookupAll("#" + id).stream()
+                .findFirst()
+                .orElse(null);
     }
 }

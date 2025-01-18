@@ -12,7 +12,7 @@ import com.view.login_cadastro.BaseLoginCadastro;
 import com.view.login_cadastro.cadastro.valid.CadastroSecudarioValid;
 import com.view.login_cadastro.elements.ErrorNotification;
 import com.controller.*;
-import com.controller.login_cadastro.CadastroTeacherController;
+import com.controller.login_cadastro.CadastroStudentController;
 
 import javafx.animation.FillTransition;
 import javafx.animation.TranslateTransition;
@@ -83,7 +83,7 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
         toggleInitialize();
         if (UserSession.getInstance().getRegisterIncomplet() == "Student") {
             setupErrorNotification();
-            UserSession.getInstance().clearSession();
+          //  UserSession.getInstance().clearSession();
         }
     }
 
@@ -99,8 +99,8 @@ public class CadastroStudent extends BaseLoginCadastro implements Initializable 
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             Date date = format.parse(super.getDateInputPopup().getDate());
 
-            CadastroTeacherController controller = new CadastroTeacherController();
-            boolean success = controller.cadastrarTeacher(
+            CadastroStudentController controller = new CadastroStudentController();
+            boolean success = controller.cadastrarStudent(
                     email,
                     date,
                     textFieldCPF.getText(),

@@ -138,34 +138,17 @@ public class CadastroCursoController {
                                 questaoDTO.setScore((String) questionData.get("questionScore"));
                                 questaoDTO.setTipo((String) questionData.get("type"));
                                 
-                                // Processar opções
-                                @SuppressWarnings("unchecked")
-                                List<Map<String, Object>> optionsList = (List<Map<String, Object>>) questionData.get("options");
-                                
-                                if (optionsList != null && !optionsList.isEmpty()) {
-                                    List<String> alternativas = new ArrayList<>();
-                                    int correctIndex = -1;
-                                    
-                                    for (int i = 0; i < optionsList.size(); i++) {
-                                        Map<String, Object> option = optionsList.get(i);
-                                        String text = (String) option.get("optionText");
-                                        Boolean isSelected = (Boolean) option.get("isSelected");
-                                        
-                                        if (text != null && !text.trim().isEmpty()) {
-                                            alternativas.add(text);
-                                            if (Boolean.TRUE.equals(isSelected)) {
-                                                correctIndex = i;
-                                            }
-                                        }
-                                    }
-                                    
-                                    questaoDTO.setAlternativas(alternativas);
-                                    questaoDTO.setAlternativaCorreta(correctIndex);
-                                    questaoDTO.setOptions(optionsList);
+                                if ("DISCURSIVE".equals(questionData.get("type"))) {
+                                    questaoDTO.setRespostaEsperada((String) questionData.get("expectedAnswer"));
+                                    questaoDTO.setCriteriosAvaliacao((String) questionData.get("evaluationCriteria"));
+                                } else {
+                                    // Processa opções para questões de escolha
+                                    processChoiceOptions(questionData, questaoDTO, 
+                                        "SINGLE_CHOICE".equals(questionData.get("type")));
                                 }
                                 
                                 questoes.add(questaoDTO);
-                                System.out.println("Questão processada: " + questaoDTO); // Debug
+                                System.out.println("Questão processada: " + questaoDTO);
                             }
                             
                             questionarioDTO.setQuestoes(questoes);
@@ -183,6 +166,74 @@ public class CadastroCursoController {
             System.err.println("Erro ao mapear dados do módulo: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException("Erro ao processar dados do módulo", e);
+        }
+    }
+
+    private List<QuestaoDTO> processQuestions(Map<String, Object> questionsData) {
+        List<QuestaoDTO> questoes = new ArrayList<>();
+        
+        try {
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> questionsList = (List<Map<String, Object>>) questionsData;
+            
+            if (questionsList != null) {
+                for (Map<String, Object> questionData : questionsList) {
+                    QuestaoDTO questaoDTO = new QuestaoDTO();
+                    questaoDTO.setPergunta((String) questionData.get("questionText"));
+                    questaoDTO.setScore((String) questionData.get("questionScore"));
+                    questaoDTO.setTipo((String) questionData.get("type"));
+                    
+                    if ("DISCURSIVE".equals(questionData.get("type"))) {
+                        questaoDTO.setRespostaEsperada((String) questionData.get("expectedAnswer"));
+                        questaoDTO.setCriteriosAvaliacao((String) questionData.get("evaluationCriteria"));
+                    } else {
+                        // Processa opções para questões de escolha
+                        processChoiceOptions(questionData, questaoDTO, 
+                            "SINGLE_CHOICE".equals(questionData.get("type")));
+                    }
+                    
+                    questoes.add(questaoDTO);
+                    System.out.println("Questão processada: " + questaoDTO);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao processar questões: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        return questoes;
+    }
+
+    private void processChoiceOptions(Map<String, Object> questionData, QuestaoDTO questaoDTO, boolean isSingleChoice) {
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> optionsList = (List<Map<String, Object>>) questionData.get("options");
+        
+        if (optionsList != null && !optionsList.isEmpty()) {
+            List<String> alternativas = new ArrayList<>();
+            List<Integer> correctIndexes = new ArrayList<>();
+            
+            for (int i = 0; i < optionsList.size(); i++) {
+                Map<String, Object> option = optionsList.get(i);
+                String text = (String) option.get("optionText");
+                Boolean isSelected = (Boolean) option.get("isSelected");
+                
+                if (text != null && !text.trim().isEmpty()) {
+                    alternativas.add(text);
+                    if (Boolean.TRUE.equals(isSelected)) {
+                        if (isSingleChoice) {
+                            questaoDTO.setAlternativaCorreta(i);
+                        } else {
+                            correctIndexes.add(i);
+                        }
+                    }
+                }
+            }
+            
+            questaoDTO.setAlternativas(alternativas);
+            if (!isSingleChoice) {
+                questaoDTO.setAlternativasCorretas(correctIndexes);
+            }
+            questaoDTO.setOptions(optionsList);
         }
     }
 } 

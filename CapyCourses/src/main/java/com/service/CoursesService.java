@@ -155,50 +155,68 @@ public class CoursesService {
                             Question question = new Question();
                             question.setQuestionaire(questionaire);
                             question.setText(questaoDTO.getPergunta());
-                            question.setType("SINGLE_CHOICE");
+                            question.setType(questaoDTO.getTipo());
                             question.setScore(questaoDTO.getScore());
                             
-                            // Processar opções
-                            if (questaoDTO.getOptions() != null && !questaoDTO.getOptions().isEmpty()) {
-                                List<String> alternativas = new ArrayList<>();
-                                String respostaCorreta = null;
-                                
-                                System.out.println("Processando " + questaoDTO.getOptions().size() + " opções");
-                                
-                                for (Map<String, Object> option : questaoDTO.getOptions()) {
-                                    String texto = (String) option.get("optionText");
-                                    boolean selecionada = (boolean) option.get("isSelected");
+                            switch (questaoDTO.getTipo()) {
+                                case "DISCURSIVE":
+                                    question.setExpectedAnswer(questaoDTO.getRespostaEsperada());
+                                    question.setEvaluationCriteria(questaoDTO.getCriteriosAvaliacao());
+                                    break;
                                     
-                                    alternativas.add(texto);
-                                    if (selecionada) {
-                                        respostaCorreta = texto;
+                                case "SINGLE_CHOICE":
+                                    if (questaoDTO.getOptions() != null) {
+                                        List<String> alternativas = new ArrayList<>();
+                                        String respostaCorreta = null;
+                                        
+                                        for (Map<String, Object> option : questaoDTO.getOptions()) {
+                                            String texto = (String) option.get("optionText");
+                                            boolean selecionada = (boolean) option.get("isSelected");
+                                            
+                                            alternativas.add(texto);
+                                            if (selecionada) {
+                                                respostaCorreta = texto;
+                                            }
+                                        }
+                                        
+                                        question.setAnswers(String.join("|", alternativas));
+                                        question.setCorrectAnswers(respostaCorreta);
                                     }
+                                    break;
                                     
-                                    System.out.println("Opção: " + texto + " (Selecionada: " + selecionada + ")");
-                                }
-                                
-                                question.setAnswers(String.join("|", alternativas));
-                                question.setCorrectAnswers(respostaCorreta);
-                                
-                                System.out.println("Tentando persistir questão...");
-                                em.persist(question);
-                                em.flush();
-                                System.out.println("Questão persistida com ID: " + question.getId());
-                                
-                            } else {
-                                System.out.println("Nenhuma opção encontrada para a questão");
+                                case "MULTIPLE_CHOICE":
+                                    if (questaoDTO.getOptions() != null) {
+                                        List<String> alternativas = new ArrayList<>();
+                                        List<String> respostasCorretas = new ArrayList<>();
+                                        
+                                        for (Map<String, Object> option : questaoDTO.getOptions()) {
+                                            String texto = (String) option.get("optionText");
+                                            boolean selecionada = (boolean) option.get("isSelected");
+                                            
+                                            alternativas.add(texto);
+                                            if (selecionada) {
+                                                respostasCorretas.add(texto);
+                                            }
+                                        }
+                                        
+                                        question.setAnswers(String.join("|", alternativas));
+                                        question.setMultipleCorrectAnswers(String.join("|", respostasCorretas));
+                                    }
+                                    break;
                             }
+                            
+                            System.out.println("Tentando persistir questão...");
+                            em.persist(question);
+                            em.flush();
+                            System.out.println("Questão persistida com ID: " + question.getId());
+                            
                         } catch (Exception e) {
                             System.err.println("Erro ao processar questão: " + e.getMessage());
                             e.printStackTrace();
                         }
                     }
-                } else {
-                    System.out.println("Nenhuma questão encontrada no questionário");
                 }
             }
-        } else {
-            System.out.println("Nenhum questionário encontrado no módulo");
         }
     }
 

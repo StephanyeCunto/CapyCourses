@@ -33,6 +33,15 @@ public class Question {
     @JoinColumn(name = "questionaire_id", nullable = false)
     private Questionaire questionaire;
 
+    @Column(name = "expected_answer")
+    private String expectedAnswer;
+
+    @Column(name = "evaluation_criteria")
+    private String evaluationCriteria;
+
+    @Column(name = "multiple_correct_answers")
+    private String multipleCorrectAnswers;
+
     // Adicionar construtor vazio
     public Question() {}
 
