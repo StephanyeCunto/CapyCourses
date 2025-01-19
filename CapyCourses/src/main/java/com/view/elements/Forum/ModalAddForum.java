@@ -18,11 +18,16 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.time.LocalDateTime;
 
 import com.controller.elements.LoadForumController;
 import com.singleton.UserSession;
 import com.view.Modo;
 import com.view.elements.Forum.valid.CreateForumValid;
+import com.model.entity.Forum;
+import com.model.ForumDatabase;
+import com.dto.ForumDTO;
+
 
 
 public class ModalAddForum {
@@ -32,6 +37,7 @@ public class ModalAddForum {
     CreateForumValid createForumValid = new CreateForumValid();
     LoadForumController controller = new LoadForumController();
     CreateJsonForum createJsonForum = new CreateJsonForum();
+    ForumDatabase forumDatabase = new ForumDatabase();
 
     public void updateDimensions(double WIDTH, double HEIGHT) {
         this.WIDTH = WIDTH;
@@ -121,7 +127,7 @@ public class ModalAddForum {
             if(createForumValid.isValid()){
           //  controller.addForum(forumTitleField.getText(), forumDescriptionField.getText(), categoryTextField.getText(), questionTextArea.getText());
             modalStage.close();
-            createJsonForum.saveForum(UserSession.getInstance().getUserName(), forumTitleField.getText(), forumDescriptionField.getText(), categoryTextField.getText(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()),0,0,0,questionLabel.getText(),"capycourses/src/main/resources/com/json/forum.json");
+            handleSave(forumTitleField.getText(), forumDescriptionField.getText(), categoryTextField.getText(), questionTextArea.getText());
               try {
                 Thread.sleep(500); 
                 FXMLLoader loader = new FXMLLoader(LoadForumView.class.getResource("/com/estudante/forum/paginaDoForum.fxml"));
@@ -241,5 +247,20 @@ public class ModalAddForum {
 
     public void show() {
         modalStage.show();
+    }
+
+    private void handleSave(String title, String description, String category, String question) {
+        ForumDTO newForum = new ForumDTO(
+            UserSession.getInstance().getUserName(),
+            title,
+            description,
+            category,
+            LocalDateTime.now().toString(),
+            0, 0, 0,
+            question
+        );
+        
+        forumDatabase.createForum(newForum);
+        modalStage.close();
     }
 }

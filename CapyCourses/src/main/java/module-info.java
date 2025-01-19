@@ -34,6 +34,9 @@ module com {
     opens com.view.professor to javafx.fxml;
     opens com.view.estudante to javafx.fxml;
     opens com.view.elements.Perfil to javafx.fxml;
+
+   
+    
     
     opens com.model.login_cadastro to org.hibernate.orm.core;
     opens com.model.elements to org.hibernate.orm.core;
@@ -42,6 +45,10 @@ module com {
     opens com.factory to org.hibernate.orm.core;
     opens com.controller.login_cadastro to org.hibernate.orm.core;
     opens com.controller.elements to org.hibernate.orm.core;
+    opens com.model.student to org.hibernate.orm.core;
+
+    opens com.model.entity to org.hibernate.orm.core;
+    opens com.dto to org.hibernate.orm.core;
 
     exports com.singleton;
     exports com.view;

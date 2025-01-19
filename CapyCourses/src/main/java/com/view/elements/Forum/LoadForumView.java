@@ -13,9 +13,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.*;
+import java.net.URL;
 
 import com.controller.elements.LoadForumController;
 import com.dto.ForumDTO;
+import com.model.ForumDatabase;
+import com.singleton.UserSession;
+import com.view.elements.Forum.CreateJsonForum;
 
 public class LoadForumView {
     private static final double CARD_WIDTH = 1000; 
@@ -23,14 +27,15 @@ public class LoadForumView {
     private static final double CONTENT_SPACING = 20; 
     private static final String FONT_FAMILY = "Segoe UI"; 
 
-    private static List<ForumDTO> forum = new LoadForumController().LoadForum();
+    private static ForumDatabase forumDatabase = new ForumDatabase();
+    private static List<ForumDTO> forum;
     private static final GridPane forumGrid = new GridPane();
     private static final VBox forumContainer = new VBox();
 
     public static VBox loadForum(String status) {
         forum = status.equals("todos") ? 
-                new LoadForumController().LoadForum() : 
-                new LoadForumController().LoadMyForum();
+                forumDatabase.getAllForums() : 
+                forumDatabase.getForumsByAuthor(UserSession.getInstance().getUserName());
                 
         initializeGrid();
         displayForums();
@@ -212,21 +217,29 @@ public class LoadForumView {
         button.getStyleClass().add("outline-button");
         button.setPrefWidth(150);
         button.setOnAction(e -> {
-            LoadForumController forumController = new LoadForumController();
-            forumController.addView(forum);
-            CreateJsonForum createJsonForum = new CreateJsonForum();
-            createJsonForum.saveForum(forum.getAuthor(), forum.getTitle(), forum.getDescription(), forum.getCategory(), forum.getDateTime(), forum.getView(), forum.getLike(), forum.getComments(),forum.getQuestion(), "capycourses/src/main/resources/com/json/forum.json"); 
+            forumDatabase.incrementViewCount(forum.getTitle());
             try {
-                Thread.sleep(500); 
-                FXMLLoader loader = new FXMLLoader(LoadForumView.class.getResource("/com/estudante/forum/paginaDoForum.fxml"));
-                Parent root = loader.load();  
+                String fxmlPath = "/com/estudante/forum/paginaDoForum.fxml";
+                URL resource = LoadForumView.class.getResource(fxmlPath);
+                
+                if (resource == null) {
+                    System.err.println("FXML não encontrado: " + fxmlPath);
+                    return;
+                }
+                
+                FXMLLoader loader = new FXMLLoader(resource);
+                Parent root = loader.load();
+                
+                PaginaDoForumView controller = loader.getController();
+                if (controller != null) {
+                    controller.setForumData(forum);
+                }
+                
                 Scene scene = button.getScene();
                 scene.setRoot(root);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-                System.err.println("Thread was interrupted: " + ex.getMessage());
             } catch (IOException ex) {
-                System.err.println("Error loading forum page: " + ex.getMessage());
+                System.err.println("Erro ao carregar página do fórum: " + ex.getMessage());
+                ex.printStackTrace();
             }
         });
 

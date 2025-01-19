@@ -5,6 +5,7 @@ import java.util.List;
 import com.dto.ForumComentarioDTO;
 import com.dto.ForumDTO;
 import com.model.elements.LoadForum;
+import com.dao.ForumDAO;
 
 public class LoadForumController {
     public List<ForumDTO> LoadForum() {
@@ -47,5 +48,15 @@ public class LoadForumController {
     public void addComentario(String title, String comentario){
         LoadForum loadForum = new LoadForum();
         loadForum.addComentario(title, comentario);
+    }
+
+    public void updateForumLikes(String title, int likes) {
+        ForumDAO forumDAO = new ForumDAO();
+        forumDAO.updateLikes(title, likes);
+    }
+
+    public void updateForumComments(String title, int comments) {
+        ForumDAO forumDAO = new ForumDAO();
+        forumDAO.updateComments(title, comments);
     }
 }

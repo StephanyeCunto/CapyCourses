@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.view.Modo;
+import com.dto.ForumDTO;
 
 import javafx.animation.FillTransition;
 import javafx.animation.TranslateTransition;
@@ -46,9 +47,6 @@ public class PaginaDoForumView implements Initializable {
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
-
-        ForumDetailView forumDetailView = new ForumDetailView();
-        forumContainer.getChildren().add(forumDetailView.getView());
     }
 
     private void changeMode() {
@@ -113,6 +111,17 @@ public class PaginaDoForumView implements Initializable {
         scene.setRoot(root);
         }catch (Exception e){
             System.err.println("Error loading forum page: " + e.getMessage());
+        }
+    }
+
+    public void setForumData(ForumDTO forum) {
+        try {
+            ForumDetailView forumDetailView = new ForumDetailView(forum);
+            forumContainer.getChildren().clear();
+            forumContainer.getChildren().add(forumDetailView.getView());
+        } catch (Exception e) {
+            System.err.println("Erro ao criar ForumDetailView: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

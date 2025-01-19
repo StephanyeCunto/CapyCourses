@@ -12,53 +12,37 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 import java.util.List;
+import java.time.LocalDateTime;
 
 import com.controller.elements.LoadForumController;
 import com.dto.ForumComentarioDTO;
 import com.singleton.UserSession;
+import com.model.ForumDatabase;
+import com.dto.ForumDTO;
+import javax.persistence.EntityManager;
+import com.util.JPAUtil;
+import com.model.entity.Forum;
 
 public class ForumDetailView extends VBox {
     private static final double CONTENT_WIDTH = 1000;
     private static final double CONTENT_SPACING = 24;
     private static final String FONT_FAMILY = "Segoe UI";
-    private static final String JSON_PATH = "capycourses/target/classes/com/json/forum.json";
-    LoadForumController controller = new LoadForumController();
-    private boolean liked = controller.curtiu(CreateJsonForum.getSavedTitle(JSON_PATH),
-            UserSession.getInstance().getUserName());
+    
+    private ForumDatabase forumDatabase = new ForumDatabase();
+    private LoadForumController controller = new LoadForumController();
+    private ForumDTO forumData;
+    private boolean liked;
 
-    private String author;
-    private String title;
-    private String description;
-    private String category;
-    private String dateTime;
-    private int view;
-    private int like;
-    private int comments;
-    private String question;
-    private List<ForumComentarioDTO> comentarios;
     private VBox contentContainer;
 
-    public ForumDetailView() {
-        loadForumData();
+    public ForumDetailView(ForumDTO forum) {
+        this.forumData = forum;
+        this.liked = controller.curtiu(forum.getTitle(), UserSession.getInstance().getUserName());
         initialize();
     }
 
     public VBox getView() {
         return this;
-    }
-
-    private void loadForumData() {
-        author = CreateJsonForum.getSavedAuthor(JSON_PATH);
-        title = CreateJsonForum.getSavedTitle(JSON_PATH);
-        description = CreateJsonForum.getSavedDescription(JSON_PATH);
-        category = CreateJsonForum.getSavedCategory(JSON_PATH);
-        dateTime = CreateJsonForum.getSavedDateTime(JSON_PATH);
-        view = CreateJsonForum.getSavedView(JSON_PATH);
-        like = CreateJsonForum.getSavedLike(JSON_PATH);
-        comments = CreateJsonForum.getSavedComments(JSON_PATH);
-        question = CreateJsonForum.getSavedQuestion(JSON_PATH);
-
-        comentarios = new LoadForumController().loadComentario(title);
     }
 
     private void initialize() {
@@ -103,7 +87,7 @@ public class ForumDetailView extends VBox {
     private VBox createQuestionSection() {
         VBox section = new VBox(24);
 
-        Label questionText = new Label(question);
+        Label questionText = new Label(forumData.getQuestion());
         questionText.setWrapText(true);
         questionText.getStyleClass().add("description");
 
@@ -117,13 +101,13 @@ public class ForumDetailView extends VBox {
         Label commentsTitle = new Label("Comentários");
         commentsTitle.getStyleClass().add("commentsTitle");
 
-
         VBox commentsContainer = new VBox(16);
         commentsContainer.getStyleClass().add("comments-container");
 
+        List<ForumComentarioDTO> comentarios = forumDatabase.getComments(forumData.getTitle());
+
         if (comentarios != null && !comentarios.isEmpty()) {
-            for (int i = comentarios.size() - 1; i >= 0; i--) {
-                ForumComentarioDTO comment = comentarios.get(i);
+            for (ForumComentarioDTO comment : comentarios) {
                 commentsContainer.getChildren().add(createCommentBox(comment));
             }
         } else {
@@ -209,7 +193,7 @@ public class ForumDetailView extends VBox {
     private VBox createMainContentSection() {
         VBox content = new VBox(24);
 
-        Label descriptionLabel = new Label(description);
+        Label descriptionLabel = new Label(forumData.getDescription());
         descriptionLabel.setWrapText(true);
         descriptionLabel.getStyleClass().add("description");
 
@@ -225,7 +209,7 @@ public class ForumDetailView extends VBox {
         StackPane avatar = createAuthorAvatar();
 
         VBox authorInfo = new VBox(4);
-        Label authorLabel = new Label(author);
+        Label authorLabel = new Label(forumData.getAuthor());
         authorLabel.getStyleClass().add("author");
 
         authorInfo.getChildren().add(authorLabel);
@@ -248,14 +232,13 @@ public class ForumDetailView extends VBox {
 
     private void loadLikeCount(Label likeCount) {
         if (liked) {
-            likeCount.setText("♥️ " + like);
+            likeCount.setText("♥️ " + forumData.getLike());
             likeCount.setStyle("-fx-text-fill: #ff4d6d;");
             likeCount.getStyleClass().add("likeCount");
         } else {
-            likeCount.setText("🤍" + like);
+            likeCount.setText("🤍 " + forumData.getLike());
             likeCount.setStyle("-fx-text-fill: #9ca3af;");
             likeCount.getStyleClass().add("likeCount");
-
         }
     }
 
@@ -266,24 +249,14 @@ public class ForumDetailView extends VBox {
         loadLikeCount(likeCount);
 
         likeCount.setOnMouseClicked(event -> {
-            liked = !liked;
-            showLikeAnimation(event.getX(), event.getY());
-            if (!liked) {
-                like--;
-                controller.desCurtir(CreateJsonForum.getSavedTitle(JSON_PATH), UserSession.getInstance().getUserName());
-            } else {
-                like++;
-                controller.curtir(CreateJsonForum.getSavedTitle(JSON_PATH), UserSession.getInstance().getUserName());
-
-            }
-            loadLikeCount(likeCount);
+            handleLike();
         });
 
-        Label commentCount = new Label("💭 " + comments);
+        Label commentCount = new Label("💭 " + forumData.getComments());
         commentCount.setStyle("-fx-text-fill: #9ca3af;");
         commentCount.getStyleClass().add("likeCount");
 
-        Label viewCount = new Label("👁 " + view);
+        Label viewCount = new Label("👁 " + forumData.getView());
         viewCount.setStyle("-fx-text-fill: #9ca3af;");
         commentCount.getStyleClass().add("likeCount");
 
@@ -313,7 +286,6 @@ public class ForumDetailView extends VBox {
                 String comment = commentInput.getText().trim();
                 if (!comment.isEmpty()) {
                     handleCommentSubmission(comment, commentInput);
-                    controller.addComentario(title, comment);
                 }
             }
         });
@@ -322,20 +294,20 @@ public class ForumDetailView extends VBox {
     }
 
     private Label createCategoryLabel() {
-        Label categoryLabel = new Label(category.toUpperCase());
+        Label categoryLabel = new Label(forumData.getCategory().toUpperCase());
         categoryLabel.getStyleClass().add("author");
         return categoryLabel;
     }
 
     private Label createTitle() {
-        Label titleLabel = new Label(title);
+        Label titleLabel = new Label(forumData.getTitle());
         titleLabel.setWrapText(true);
         titleLabel.getStyleClass().add("title");
         return titleLabel;
     }
 
     private Label createDateLabel() {
-        Label date = new Label(dateTime);
+        Label date = new Label(forumData.getDateTime());
         date.getStyleClass().add("date");
 
         return date;
@@ -349,7 +321,7 @@ public class ForumDetailView extends VBox {
                 "-fx-background-color: #3b82f6; " +
                         "-fx-background-radius: 24;");
 
-        Label nameInitial = new Label(getInitials(author));
+        Label nameInitial = new Label(getInitials(forumData.getAuthor()));
         nameInitial.getStyleClass().add("nameInitial");
 
 
@@ -390,15 +362,19 @@ public class ForumDetailView extends VBox {
     }
 
     private void handleCommentSubmission(String comment, TextArea commentInput) {
-        comments++;
-        CreateJsonForum.saveForum(author, title, description, category, dateTime, view, like, comments, question,
-                JSON_PATH);
-
+        ForumComentarioDTO commentDTO = new ForumComentarioDTO(
+            LocalDateTime.now().toString(),
+            UserSession.getInstance().getUserName(),
+            comment
+        );
+        
+        forumDatabase.addComment(forumData.getTitle(), commentDTO);
+        
+        // Atualiza a contagem de comentários no DTO
+        forumData.setComments(forumData.getComments() + 1);
 
         PauseTransition pause = new PauseTransition(Duration.millis(200));
         pause.setOnFinished(event -> {
-
-        loadForumData();
             contentContainer.getChildren().clear();
             contentContainer.getChildren().addAll(
                 createHeaderSection(),
@@ -426,23 +402,46 @@ public class ForumDetailView extends VBox {
     }
 
     private void handleLike() {
-        CreateJsonForum.saveForum(author, title, description, category, dateTime, view, like, comments, question,
-                JSON_PATH);
-        updateLikeCount();
+        liked = !liked;
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Forum forum = forumDatabase.getForumByTitle(forumData.getTitle());
+            if (liked) {
+                forum.setLikeCount(forum.getLikeCount() + 1);
+                forumData.setLike(forumData.getLike() + 1);
+                controller.curtir(forumData.getTitle(), UserSession.getInstance().getUserName());
+            } else {
+                forum.setLikeCount(forum.getLikeCount() - 1);
+                forumData.setLike(forumData.getLike() - 1);
+                controller.desCurtir(forumData.getTitle(), UserSession.getInstance().getUserName());
+            }
+            em.merge(forum);
+            em.getTransaction().commit();
+            
+            loadLikeCount((Label) contentContainer.lookup(".likeCount"));
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     private void updateLikeCount() {
         lookup(".label").getParent().lookupAll(".label").stream()
                 .filter(node -> node instanceof Label && ((Label) node).getText().contains("❤️"))
                 .findFirst()
-                .ifPresent(label -> ((Label) label).setText("❤️ " + like));
+                .ifPresent(label -> ((Label) label).setText("❤️ " + forumData.getLike()));
     }
 
     private void updateCommentCount() {
         lookup(".label").getParent().lookupAll(".label").stream()
                 .filter(node -> node instanceof Label && ((Label) node).getText().contains("💭"))
                 .findFirst()
-                .ifPresent(label -> ((Label) label).setText("💭 " + comments));
+                .ifPresent(label -> ((Label) label).setText("💭 " + forumData.getComments()));
     }
 
     private void addFadeInAnimation(Region node) {

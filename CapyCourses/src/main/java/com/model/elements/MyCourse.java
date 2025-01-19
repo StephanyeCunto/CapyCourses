@@ -1,7 +1,10 @@
 package com.model.elements;
 
 import com.model.elements.Course.Course;
-import com.model.elements.Course.CourseReader;
+import com.dao.CourseDAO;
+import com.dao.ModuleDAO;
+import com.dao.LessonsDAO;
+import com.dao.QuestionaireDAO;
 
 import lombok.*;
 
@@ -21,21 +24,32 @@ public class MyCourse {
     private String status;
     private int percentual;
     
-    public MyCourse(String title){
+    public MyCourse(String title) {
         this.courseTitle = title;
-        CourseReader courseReader = new CourseReader();
-        this.course = courseReader.course(title);
-        this.moduleTotal = courseReader.courseModule(title).size();
-        for(int i=0; i<this.moduleTotal; i++){
-            this.lessonTotal =+ courseReader.courseLessons(title,i).size();
-            this.questionaireTotal =+ courseReader.courseQuestionaire(title,i).size();
-        }
-        this.moduleCompleted = 0;
-        this.lessonCompleted = 0;
-        this.questionaireCompleted = 0;
+        CourseDAO courseDAO = new CourseDAO();
+        this.course = courseDAO.findByTitle(title);
+        
+        if (this.course != null && this.course.getCourseSettings() != null) {
+            ModuleDAO moduleDAO = new ModuleDAO();
+            LessonsDAO lessonDAO = new LessonsDAO();
+            QuestionaireDAO questionaireDAO = new QuestionaireDAO();
+            
+            this.moduleTotal = course.getModules().size();
+            this.lessonTotal = course.getModules().stream()
+                .mapToInt(module -> module.getLessons().size())
+                .sum();
+            this.questionaireTotal = course.getModules().stream()
+                .mapToInt(module -> module.getQuestionaires().size())
+                .sum();
+            
+            this.moduleCompleted = 0;
+            this.lessonCompleted = 0;
+            this.questionaireCompleted = 0;
 
-        this.courseTotal = this.moduleTotal + this.lessonTotal + this.questionaireTotal;
-        this.percentual = courseReader.percentual(this.courseTitle);
-        this.status = courseReader.status(title);
+            this.courseTotal = this.moduleTotal + this.lessonTotal + this.questionaireTotal;
+            // TODO: Atualizar para usar StudentCourseDAO para obter progresso e status
+            this.percentual = 0;
+            this.status = "started";
+        }
     }
 }

@@ -8,8 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import lombok.Data;
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+import com.model.student.StudentCourse;
 
 @Entity
 @Table(name = "students")
@@ -37,4 +41,7 @@ public class Student {
 
     @Column
     private String areaOfInterest;
+
+    @OneToMany(mappedBy = "student")
+    private List<StudentCourse> courses = new ArrayList<>();
 } 

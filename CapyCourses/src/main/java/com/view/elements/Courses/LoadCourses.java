@@ -9,6 +9,7 @@ import com.dto.PaginaPrincipalDTO;
 import com.singleton.UserSession;
 import com.view.elements.Certificado.CertificateViewerModal;
 import com.view.elements.Certificado.GeradorCertificado;
+import com.service.StudentCourseService;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -392,8 +393,29 @@ public class LoadCourses {
         button.getStyleClass().add("simple-button");
         button.setOnMouseClicked(e -> {
             try {
-                // myCourseStudent.addCourse(course);
+                StudentCourseService service = new StudentCourseService();
+                boolean inscrito = service.inscreverEmCurso(course.getTitle());
+                
+                if (inscrito) {
+                    // Atualizar a interface
+                    courseContainer.getChildren().clear();
+                    loadCoursesNotStarted();
+                    
+                    // Mostrar mensagem de sucesso
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Sucesso");
+                    alert.setHeaderText("Inscrição realizada");
+                    alert.setContentText("Você foi inscrito no curso com sucesso!");
+                    alert.showAndWait();
+                } else {
+                    throw new Exception("Não foi possível realizar a inscrição");
+                }
             } catch (Exception ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erro");
+                alert.setHeaderText("Erro na inscrição");
+                alert.setContentText("Não foi possível se inscrever no curso: " + ex.getMessage());
+                alert.showAndWait();
             }
         });
         button.setPrefHeight(35);

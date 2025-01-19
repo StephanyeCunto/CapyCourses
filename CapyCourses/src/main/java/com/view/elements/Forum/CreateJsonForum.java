@@ -7,123 +7,72 @@ import com.controller.elements.LoadForumJson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CreateJsonForum {
-    public static void saveForum(String author, String title, String description, String category, String dateTime,
-    int view, int like, int comments,String question, String filePath) {
-    {
-    ObjectMapper mapper = new ObjectMapper();
-    File file = new File(filePath);
+    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final String JSON_PATH = "capycourses/src/main/resources/com/json/forum.json";
 
-    // Verifica se o arquivo existe e deleta
-    if (file.exists()) {
-        file.delete();
-    }
-
-    LoadForumJson loginJsonController = new LoadForumJson(author, title, description, category, dateTime, view,
-        like, comments, question);
-    try {
-        mapper.writerWithDefaultPrettyPrinter().writeValue(file, loginJsonController);
-    } catch (IOException e) {
-        System.out.println(e);
-    }
-    }
-}
-
-
-    public static String getSavedAuthor(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
+    public static void saveForum(String author, String title, String description, String category, 
+            String dateTime, int view, int like, int comments, String question, String filePath) {
         try {
-            LoadForumJson savedForum = mapper.readValue(new File(filePath), LoadForumJson.class);
-            return savedForum.getAuthor();
+            File file = new File(filePath);
+            LoadForumJson forumData = new LoadForumJson(author, title, description, category, 
+                    dateTime, view, like, comments, question);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, forumData);
         } catch (IOException e) {
-            System.out.println("erro" + e);
+            System.err.println("Erro ao salvar fórum: " + e.getMessage());
+        }
+    }
+
+    private static LoadForumJson loadForumData(String filePath) {
+        try {
+            return mapper.readValue(new File(filePath), LoadForumJson.class);
+        } catch (IOException e) {
+            System.err.println("Erro ao carregar fórum: " + e.getMessage());
             return null;
         }
+    }
+
+    public static String getSavedAuthor(String filePath) {
+        LoadForumJson forum = loadForumData(filePath);
+        return forum != null ? forum.getAuthor() : null;
     }
 
     public static String getSavedTitle(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            LoadForumJson savedForum = mapper.readValue(new File(filePath), LoadForumJson.class);
-            return savedForum.getTitle();
-        } catch (IOException e) {
-            System.out.println("erro" + e);
-            return null;
-        }
+        LoadForumJson forum = loadForumData(filePath);
+        return forum != null ? forum.getTitle() : null;
     }
 
     public static String getSavedDescription(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            LoadForumJson savedForum = mapper.readValue(new File(filePath), LoadForumJson.class);
-            return savedForum.getDescription();
-        } catch (IOException e) {
-            System.out.println("erro" + e);
-            return null;
-        }
+        LoadForumJson forum = loadForumData(filePath);
+        return forum != null ? forum.getDescription() : null;
     }
 
     public static String getSavedCategory(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            LoadForumJson savedForum = mapper.readValue(new File(filePath), LoadForumJson.class);
-            return savedForum.getCategory();
-        } catch (IOException e) {
-            System.out.println("erro" + e);
-            return null;
-        }
+        LoadForumJson forum = loadForumData(filePath);
+        return forum != null ? forum.getCategory() : null;
     }
 
     public static String getSavedDateTime(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            LoadForumJson savedForum = mapper.readValue(new File(filePath), LoadForumJson.class);
-            return savedForum.getDateTime();
-        } catch (IOException e) {
-            System.out.println("erro" + e);
-            return null;
-        }
+        LoadForumJson forum = loadForumData(filePath);
+        return forum != null ? forum.getDateTime() : null;
     }
 
     public static int getSavedView(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            LoadForumJson savedForum = mapper.readValue(new File(filePath), LoadForumJson.class);
-            return savedForum.getView();
-        } catch (IOException e) {
-            System.out.println("erro" + e);
-            return -1;
-        }
+        LoadForumJson forum = loadForumData(filePath);
+        return forum != null ? forum.getView() : -1;
     }
 
     public static int getSavedLike(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            LoadForumJson savedForum = mapper.readValue(new File(filePath), LoadForumJson.class);
-            return savedForum.getLike();
-        } catch (IOException e) {
-            System.out.println("erro" + e);
-            return -1;
-        }
+        LoadForumJson forum = loadForumData(filePath);
+        return forum != null ? forum.getLike() : -1;
     }
 
     public static int getSavedComments(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            LoadForumJson savedForum = mapper.readValue(new File(filePath), LoadForumJson.class);
-            return savedForum.getComments();
-        } catch (IOException e) {
-            System.out.println("erro" + e);
-            return -1;
-        }
+        LoadForumJson forum = loadForumData(filePath);
+        return forum != null ? forum.getComments() : -1;
     }
-public static String getSavedQuestion(String filePath) {
-    ObjectMapper mapper = new ObjectMapper();
-    try {
-        LoadForumJson savedForum = mapper.readValue(new File(filePath), LoadForumJson.class);
-        return savedForum.getQuestion();
-    } catch (IOException e) {
-        System.out.println("erro" + e);
-        return null;
+
+    public static String getSavedQuestion(String filePath) {
+        LoadForumJson forum = loadForumData(filePath);
+        return forum != null ? forum.getQuestion() : null;
     }
-}
 }

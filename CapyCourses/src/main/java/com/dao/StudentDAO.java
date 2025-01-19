@@ -84,6 +84,17 @@ public class StudentDAO implements IDao<Student> {
         }
     }
 
+    public Student buscarPorEmail(String email) {
+        try {
+            String jpql = "SELECT s FROM Student s JOIN s.user u WHERE u.email = :email";
+            return this.em.createQuery(jpql, Student.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
     public EntityManager getEntityManager() {
         return this.em;
     }
