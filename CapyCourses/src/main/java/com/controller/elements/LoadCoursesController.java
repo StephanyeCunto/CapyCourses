@@ -2,10 +2,8 @@ package com.controller.elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 
 import com.dto.PaginaPrincipalDTO;
-import com.model.elements.MyCourse;
 import com.model.elements.Course.Course;
 import com.model.elements.Course.CourseReader;
 import com.model.elements.Course.CourseSettings;
@@ -45,9 +43,7 @@ public class LoadCoursesController {
 
                 if (settings != null) {
                     dto.loadCoursesSettings(
-                        settings.getDateEnd(),
                         settings.getDurationTotal(),
-                        settings.isDateEnd(),
                         settings.isCertificate(),
                         "notStarted",
                         0

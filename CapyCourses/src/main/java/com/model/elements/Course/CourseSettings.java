@@ -23,9 +23,7 @@ public class CourseSettings {
 
     private String title;
     private LocalDate dateStart;
-    private LocalDate dateEnd;
     private String durationTotal;
-    private boolean isDateEnd;
     private boolean isCertificate;
     private boolean isGradeMiniun;
     private boolean visibility;
@@ -35,21 +33,14 @@ public class CourseSettings {
 
     public CourseSettings() {}
 
-    public CourseSettings(String title, LocalDate dateStart, LocalDate dateEnd, 
-            String durationTotal, boolean isCertificate, 
-            boolean isDateEnd, boolean isGradeMiniun, boolean visibility) {
+    public CourseSettings(String title, LocalDate dateStart, 
+            String durationTotal, boolean isCertificate,  boolean isGradeMiniun, boolean visibility) {
         this.title = title;
         this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
         this.durationTotal = durationTotal;
         this.isCertificate = isCertificate;
-        this.isDateEnd = isDateEnd;
         this.isGradeMiniun = isGradeMiniun;
         this.visibility = visibility;
-    }
-
-    public boolean isDateEnd() {
-        return isDateEnd;
     }
 
     public void setCourse(Course course) {

@@ -1,6 +1,5 @@
 package com.controller.elements;
 
-import com.model.elements.MyCourse;
 import com.model.elements.Course.Course;
 import com.model.elements.Course.CourseReader;
 import com.model.elements.Course.CourseSettings;
@@ -32,9 +31,7 @@ public class LoadMyCourses {
 
             CourseSettings courseSettings = course.getCourseSettings();
             dto.loadCoursesSettings(
-                courseSettings != null ? courseSettings.getDateEnd() : null,
                 courseSettings != null ? courseSettings.getDurationTotal() : "",
-                courseSettings != null ? courseSettings.isDateEnd() : false,
                 courseSettings != null ? courseSettings.isCertificate() : false,
                 courseT.getStatus(),
                 courseT.getProgress()
@@ -58,8 +55,7 @@ public class LoadMyCourses {
 
                 CourseReader courseReader = new CourseReader();
                 CourseSettings courseSettings = courseReader.courseSettings(course.getTitle());
-                dto.loadCoursesSettings(courseSettings.getDateEnd(), courseSettings.getDurationTotal(),
-                        courseSettings.isDateEnd(), courseSettings.isCertificate(), courseT.getStatus(),courseT.getProgress());
+                dto.loadCoursesSettings( courseSettings.getDurationTotal(), courseSettings.isCertificate(), courseT.getStatus(),courseT.getProgress());
                 courses.add(dto);
             }
         }
@@ -81,8 +77,7 @@ public class LoadMyCourses {
 
                 CourseReader courseReader = new CourseReader();
                 CourseSettings courseSettings = courseReader.courseSettings(course.getTitle());
-                dto.loadCoursesSettings(courseSettings.getDateEnd(), courseSettings.getDurationTotal(),
-                        courseSettings.isDateEnd(), courseSettings.isCertificate(), courseT.getStatus(),100);
+                dto.loadCoursesSettings(courseSettings.getDurationTotal(), courseSettings.isCertificate(), courseT.getStatus(),100);
                 courses.add(dto);
             }
         }

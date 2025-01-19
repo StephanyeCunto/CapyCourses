@@ -54,10 +54,8 @@ public class CoursesService {
             CourseSettings settings = new CourseSettings(
                 dto.getTitulo(),
                 dto.getDataInicio(),
-                dto.getDataFim(),
                 dto.getDuracaoTotal(),
                 dto.isEmitirCertificado(),
-                dto.isSemDataFinal(),
                 dto.isExigirNotaMinima(),
                 "public".equalsIgnoreCase(dto.getVisibilidade())
             );

@@ -22,8 +22,6 @@ public class CadastroCursoDTO {
     // Configurações
     private String duracaoTotal;
     private LocalDate dataInicio;
-    private LocalDate dataFim;
-    private boolean semDataFinal;
     private boolean emitirCertificado;
     private boolean exigirNotaMinima;
     private String visibilidade;

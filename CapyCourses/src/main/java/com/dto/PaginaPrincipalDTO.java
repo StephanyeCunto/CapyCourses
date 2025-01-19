@@ -31,10 +31,8 @@ public class PaginaPrincipalDTO {
         this.rating = rating;
     }
 
-    public void loadCoursesSettings(LocalDate dateEnd, String durationTotal, boolean isDateEnd, boolean isCertificate, String status, int percentual) {
-        this.dateEnd = dateEnd;
+    public void loadCoursesSettings(String durationTotal, boolean isCertificate, String status, int percentual) {
         this.durationTotal = durationTotal;
-        this.isDateEnd = isDateEnd;
         this.isCertificate = isCertificate;
         this.status = status;
         this.percentual = percentual;

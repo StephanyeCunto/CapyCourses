@@ -364,7 +364,7 @@ public class Courses implements Initializable {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Button detailsButton = createDetailsButton(title,"questionaire");
+        Button detailsButton = createDetailsButton(title, "questionaire");
         detailsButton.setStyle(
                 " -fx-max-height: 30px; -fx-min-height:30px; -fx-max-width: 110px; -fx-min-width: 110px; -fx-padding: 0 10px; -fx-font-size: 13px;");
 
@@ -384,7 +384,7 @@ public class Courses implements Initializable {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Button detailsButton = createDetailsButton(title,"lessons");
+        Button detailsButton = createDetailsButton(title, "lessons");
         detailsButton.setStyle(
                 " -fx-max-height: 30px; -fx-min-height:30px; -fx-max-width: 110px; -fx-min-width: 110px; -fx-padding: 0 10px; -fx-font-size: 13px;");
 
@@ -432,6 +432,10 @@ public class Courses implements Initializable {
         if (type.equals("lessons")) {
             detailsButton.setOnAction(event -> {
                 LessonModal modal = new LessonModal(detailsButton.getScene().getWindow());
+            });
+        } else {
+            detailsButton.setOnAction(event -> {
+                QuestionaireModal modal = new QuestionaireModal(detailsButton.getScene().getWindow());
             });
         }
 

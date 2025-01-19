@@ -1,25 +1,28 @@
 package com.view.elements.Courses;
 
+import com.view.Modo;
+
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.awt.Desktop;
-
-import com.view.Modo;
-
-public class LessonModal {
+public class QuestionaireModal {
     private final Stage modalStage;
     private double WIDTH;
     private double HEIGHT;
@@ -32,7 +35,7 @@ public class LessonModal {
         this.HEIGHT = HEIGHT;
     }
 
-    public LessonModal(Window owner) {
+    public QuestionaireModal(Window owner) {
         updateDimensions(owner.getWidth(), owner.getHeight());
         modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
@@ -90,17 +93,7 @@ public class LessonModal {
         );
         descriptionLabel.getStyleClass().add("initials-label");
 
-        Label videoAulaLabel = createVideoAulaLabel(
-            "https://www.youtube.com/watch?v=Hl-zzrqQoSE",
-            "Video Aula"
-        );
-        videoAulaLabel.getStyleClass().add("page-title");
-
-        Label complementoLabel = createVideoAulaLabel(
-            "https://www.youtube.com/watch?v=Hl-zzrqQoSE",
-            "Material Complementar"
-        );
-        complementoLabel.getStyleClass().add("page-title");
+     
 
         Button completeButton = new Button("Marca Como Concluída");
         completeButton.getStyleClass().add("simple-button");
@@ -111,9 +104,7 @@ public class LessonModal {
         content.getChildren().addAll(
             descriptionLabel,
             createSpacer(15),
-            videoAulaLabel,
             createSpacer(10),
-            complementoLabel,
             spacer,
             completeButton
         );
@@ -125,30 +116,6 @@ public class LessonModal {
         Region spacer = new Region();
         spacer.setMinHeight(height);
         return spacer;
-    }
-
-    private Label createVideoAulaLabel(String videoUrl, String title) {
-        Label videoAula = new Label(title);
-        
-        videoAula.setOnMouseEntered(e -> {
-            videoAula.getStyleClass().remove("page-title");
-            videoAula.getStyleClass().add("page");
-        });
-        
-        videoAula.setOnMouseExited(e -> {
-            videoAula.getStyleClass().remove("page");
-            videoAula.getStyleClass().add("page-title");
-        });
-        
-        videoAula.setOnMouseClicked(e -> {
-            try {
-                Desktop.getDesktop().browse(new URI(videoUrl));
-            } catch (IOException | URISyntaxException ex) {
-                System.err.println("Erro ao abrir o link: " + ex.getMessage());
-            }
-        });
-
-        return videoAula;
     }
 
     private VBox createHeader() {

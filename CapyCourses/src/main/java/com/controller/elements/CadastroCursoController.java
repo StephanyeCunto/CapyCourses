@@ -21,8 +21,7 @@ public class CadastroCursoController {
     
     public String cadastrarCurso(String title, String description, String category, 
             String level, String tags, List<Map<String, Object>> modulesData,
-            LocalDate dateStart, LocalDate dateEnd, String durationTotal,
-            boolean isDateEnd, boolean isCertificate, boolean isGradeMiniun, Object visibility) {
+            LocalDate dateStart, String durationTotal, boolean isCertificate, boolean isGradeMiniun, Object visibility) {
         
         try {
             CadastroCursoDTO dto = new CadastroCursoDTO();
@@ -36,9 +35,7 @@ public class CadastroCursoController {
             
             // Configurações
             dto.setDataInicio(dateStart);
-            dto.setDataFim(dateEnd);
             dto.setDuracaoTotal(durationTotal);
-            dto.setSemDataFinal(isDateEnd);
             dto.setEmitirCertificado(isCertificate);
             dto.setExigirNotaMinima(isGradeMiniun);
             dto.setVisibilidade(visibility.toString());

@@ -216,8 +216,6 @@
 
                                         </HBox>
                                     </VBox>
-                                    <CheckBox fx:id="dateEnd" styleClass="custom-checkbox"
-                                        text="Sem data final" />
 
                                     <VBox spacing="15">
                                         <Label styleClass="field-label" text="Certificação" />

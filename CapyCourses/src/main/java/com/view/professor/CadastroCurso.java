@@ -12,7 +12,6 @@ import com.view.Modo;
 import com.view.elements.Calendario.Calendario;
 import com.view.professor.valid.*;
 import com.view.login_cadastro.elements.ErrorNotification;
-import com.dto.CadastroCursoDTO;
 
 import javafx.animation.*;
 import javafx.fxml.*;
@@ -108,12 +107,10 @@ public class CadastroCurso implements Initializable {
     private File selectedFile;
 
     private Calendario dateInputPopupStart = new Calendario();
-    private Calendario dateInputPopupEnd = new Calendario();
 
     private static final String DEFAULT_MODULE_TITLE = "Novo Módulo";
 
     private VBox dateContainerStart = new VBox(5);
-    private VBox dateContainerEnd = new VBox(5);
 
     private String valueComBox = "Visível";
     private LocalDate dateCurrent = dateInputPopupStart.getLocalDate();
@@ -155,19 +152,6 @@ public class CadastroCurso implements Initializable {
         questionaireList.setSpacing(10);
         questionaireList.getStyleClass().add("lessons-list");
         modulesList.setSpacing(20);
-
-        dateEnd.setOnAction(event -> {
-            if (dateEnd.isSelected()) {
-                dateContainerEnd.setMouseTransparent(true);
-                ColorAdjust colorAdjust = new ColorAdjust();
-                colorAdjust.setSaturation(-0.5);
-                colorAdjust.setBrightness(-0.1);
-                dateContainerEnd.setEffect(colorAdjust);
-            } else {
-                dateContainerEnd.setMouseTransparent(false);
-                dateContainerEnd.setEffect(null);
-            }
-        });
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
             dateChange();
@@ -471,8 +455,6 @@ public class CadastroCurso implements Initializable {
                 loadComBoxVisibily(valueComBox);
             }
             dateCurrent = dateInputPopupStart.getLocalDate();
-            dateInputPopupEnd.setMinDate(dateCurrent.plusDays(1));
-            dateInputPopupEnd.setselectedDate(dateCurrent.plusDays(1));
         }
     }
 
@@ -631,9 +613,7 @@ public class CadastroCurso implements Initializable {
             
             // Coleta as configurações
             LocalDate dateStart = dateInputPopupStart.getLocalDate();
-            LocalDate dateEnd = dateInputPopupEnd.getLocalDate();
             String durationTotal = this.durationTotal.getText();
-            boolean isDateEnd = this.dateEnd.isSelected();
             boolean isCertificate = this.isCertificate.isSelected();
             boolean isGradeMiniun = this.isGradeMiniun.isSelected();
             Object visibility = ComboBoxVisibily.getValue();
@@ -645,8 +625,7 @@ public class CadastroCurso implements Initializable {
             CadastroCursoController controller = new CadastroCursoController();
             String resultado = controller.cadastrarCurso(
                 title, description, category, level, tags,
-                modulesData, dateStart, dateEnd, durationTotal,
-                isDateEnd, isCertificate, isGradeMiniun, visibility
+                modulesData, dateStart, durationTotal, isCertificate, isGradeMiniun, visibility
             );
             
             // Trata o resultado
@@ -1760,25 +1739,19 @@ public class CadastroCurso implements Initializable {
 
     protected void addDateInputField() {
         Label dateStart = new Label();
-        Label dateEnd = new Label();
         if (!Modo.getInstance().getModo()) {
             dateStart.setStyle("-fx-text-fill: black;");
-            dateEnd.setStyle("-fx-text-fill: black;");
         }
 
         dateStart.setText("Data de início");
         dateInputPopupStart.setMinDate(LocalDate.now());
-        dateEnd.setText("Data do fim");
-        dateInputPopupEnd.setMinDate(LocalDate.now().plusDays(1));
 
         dateContainerStart.getChildren().clear();
-        dateContainerEnd.getChildren().clear();
         date.getChildren().clear();
 
         dateContainerStart.getChildren().add(dateInputPopupStart.getDateInputField());
-        dateContainerEnd.getChildren().add(dateInputPopupEnd.getDateInputField());
 
-        date.getChildren().addAll(dateStart, dateContainerStart, dateEnd, dateContainerEnd);
+        date.getChildren().addAll(dateStart, dateContainerStart);
     }
 
     @FXML
@@ -1807,13 +1780,6 @@ public class CadastroCurso implements Initializable {
             dateInputPopupStart.setDisabledTextColor("#A9A9A9");
             dateInputPopupStart.setIconColor("#3498db");
 
-            dateInputPopupEnd.setBackgroundColor("#FFFFFF");
-            dateInputPopupEnd.setAccentColor("#3498db");
-            dateInputPopupEnd.setHoverColor("#6896c4");
-            dateInputPopupEnd.setTextColor("#000000");
-            dateInputPopupEnd.setBorderColor("#808080");
-            dateInputPopupEnd.setDisabledTextColor("#A9A9A9");
-            dateInputPopupEnd.setIconColor("#3498db");
             addDateInputField();
         } else {
             dateInputPopupStart.setBackgroundColor("#1A1F2F");
@@ -1824,13 +1790,6 @@ public class CadastroCurso implements Initializable {
             dateInputPopupStart.setDisabledTextColor("#A9A9A9");
             dateInputPopupStart.setIconColor("#728CFF");
 
-            dateInputPopupEnd.setBackgroundColor("#1A1F2F");
-            dateInputPopupEnd.setAccentColor("#748BFF");
-            dateInputPopupEnd.setHoverColor("#8C87FF");
-            dateInputPopupEnd.setTextColor("#FFFFFF");
-            dateInputPopupEnd.setBorderColor("#808080");
-            dateInputPopupEnd.setDisabledTextColor("#A9A9A9");
-            dateInputPopupEnd.setIconColor("#728CFF");
             addDateInputField();
         }
     }

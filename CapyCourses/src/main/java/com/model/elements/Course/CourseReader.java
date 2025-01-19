@@ -45,9 +45,7 @@ public class CourseReader {
 
                     boolean visibility = "public".equalsIgnoreCase(values[7]) || "true".equalsIgnoreCase(values[7]);
 
-                    CourseSettings courseSetting = new CourseSettings(title, dateStart, dateEnd, durationTotal,
-                            isDateEnd,
-                            isCertificate, isGradeMiniun, visibility);
+                    CourseSettings courseSetting = new CourseSettings(title, dateStart, durationTotal, isCertificate, isGradeMiniun, visibility);
                     return courseSetting;
                 }
             }
