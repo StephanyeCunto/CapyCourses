@@ -164,6 +164,7 @@ public class Menu {
             e.printStackTrace();
         }
     }
+    
 private void animateSceneTransition(Scene currentScene, Scene newScene, Stage stage) {
  
 }

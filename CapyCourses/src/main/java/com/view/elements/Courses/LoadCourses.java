@@ -12,7 +12,10 @@ import com.view.elements.Certificado.GeradorCertificado;
 import com.service.StudentCourseService;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
@@ -161,7 +164,8 @@ public class LoadCourses {
 
         ImageView courseImage = createCourseImage();
 
-        if (status.equals("started") || status.equals("completed") || status.equals("todos") || status.equals("todosProgress")
+        if (status.equals("started") || status.equals("completed") || status.equals("todos")
+                || status.equals("todosProgress")
                 || status.equals("completedCertificado")) {
             HBox tagContainer = new HBox();
             tagContainer.setAlignment(Pos.CENTER_RIGHT);
@@ -188,11 +192,12 @@ public class LoadCourses {
             HBox buttonContainer = createButtonContainer(course, status);
             content.getChildren().addAll(courseImage, categoryLabel, titleLabel, authorLabel, courseInfo, descLabel,
                     statusInfo, buttonContainer);
-        } else if (status.equals("started") || status.equals("completed") || status.equals("todos") || status.equals("todosProgress")) {
+        } else if (status.equals("started") || status.equals("completed") || status.equals("todos")
+                || status.equals("todosProgress")) {
             HBox buttonContainer = new HBox();
-            if(status.equals("todosProgress")){
-                buttonContainer = createButtonContainer(course,"todosProgress");
-            }else{
+            if (status.equals("todosProgress")) {
+                buttonContainer = createButtonContainer(course, "todosProgress");
+            } else {
                 buttonContainer = createButtonContainer(course, "started");
             }
             ProgressBar progressBarCourse = new ProgressBar();
@@ -313,7 +318,7 @@ public class LoadCourses {
             }
             Button continueButton = createContinueButton(course, status);
             buttonContainer.getChildren().addAll(continueButton);
-        }else if (status.equals("todosProgress")){
+        } else if (status.equals("todosProgress")) {
             Button progressButton = createButtonProgress();
             buttonContainer.getChildren().add(progressButton);
         }
@@ -321,11 +326,30 @@ public class LoadCourses {
         return buttonContainer;
     }
 
-    private Button createButtonProgress(){
+    private Button createButtonProgress() {
         Button button = new Button("Ver Progresso");
         button.getStyleClass().add("simple-button");
-
+        button.setOnMouseClicked(e -> {
+            redirectTo(button);
+        });
         return button;
+    }
+
+    private void redirectTo(Button button) {
+        try {
+            Stage stage = (Stage) button.getScene().getWindow();
+            String pageNext = "/com/estudante/progresso/paginaProgressoCurso.fxml";
+
+            Parent root = FXMLLoader.load(getClass().getResource(pageNext));
+            Scene currentScene = stage.getScene();
+            Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
+
+            stage.setScene(newScene);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private Button createCertificadoButton(PaginaPrincipalDTO course) {
@@ -413,12 +437,12 @@ public class LoadCourses {
             try {
                 StudentCourseService service = new StudentCourseService();
                 boolean inscrito = service.inscreverEmCurso(course.getTitle());
-                
+
                 if (inscrito) {
                     // Atualizar a interface
                     courseContainer.getChildren().clear();
                     loadCoursesNotStarted();
-                    
+
                     // Mostrar mensagem de sucesso
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Sucesso");
