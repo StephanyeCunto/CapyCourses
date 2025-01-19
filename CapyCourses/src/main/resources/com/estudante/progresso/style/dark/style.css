@@ -128,3 +128,80 @@
     -fx-text-fill: white;
 }
 
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 0 2;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgba(163, 194, 219, 0.7);
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
+    -fx-min-width: 12px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(163, 194, 219, 0.9);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0, 0, 0);
+}
+
+.scroll-bar .thumb:pressed {
+    -fx-background-color: #A3C2DB;
+}
+
+.scroll-bar .track {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-opacity: 0;
+}
+
+.scroll-bar:vertical {
+    -fx-pref-width: 12px;
+}
+
+.scroll-bar:horizontal {
+    -fx-pref-height: 12px;
+}
+
+
+.theme-toggle-switch {
+    -fx-padding: 5;
+    -fx-min-width: 50;
+    -fx-min-height: 25;
+    -fx-max-width: 50;
+    -fx-max-height: 25;
+}
+
+.toggle-background {
+    -fx-fill: #FFA500;
+    -fx-stroke: transparent;
+}
+
+.toggle-background.dark {
+    -fx-fill: #4169E1;
+}
+
+.toggle-thumb {
+    -fx-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
+}
+
+.toggle-button {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
+}
+
+.theme-toggle-switch:hover .toggle-background {
+    -fx-opacity: 0.9;
+}
+
+.theme-toggle-switch:hover .toggle-thumb {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0, 0, 2);
+}

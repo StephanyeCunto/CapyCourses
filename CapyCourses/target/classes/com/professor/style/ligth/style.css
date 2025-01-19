@@ -352,7 +352,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0, 0, 2);
 }
 
-
 .radio-button {
     -fx-text-fill: rgba(0, 0, 0, 0.8);
     -fx-font-size: 14px;
