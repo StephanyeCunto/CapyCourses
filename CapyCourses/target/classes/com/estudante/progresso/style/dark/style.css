@@ -1,0 +1,130 @@
+.main-container {
+    -fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);
+}
+
+.header-container {
+    -fx-background-color: rgba(21, 25, 40, 0.7);
+    -fx-background-radius: 20;
+    -fx-border-color: #242942;
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
+}
+
+.header-title {
+    -fx-font-family: "Segoe UI Bold";
+    -fx-text-fill: white;
+    -fx-font-size: 25px;
+}
+
+.stat-card-container {
+    -fx-background-color: rgba(21, 25, 40, 0.7);
+    -fx-background-radius: 20;
+    -fx-border-color: #242942;
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
+    -fx-padding: 20;
+}
+
+.stat-card-label {
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-text-fill: white;
+}
+
+.stat-card-info {
+    -fx-text-fill: rgba(255, 255, 255, 0.5);
+}
+
+.stat-card-container-text{
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+.stat-card-container-static{
+    -fx-text-fill: rgb(62, 99, 71);
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.custom-text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-radius: 12;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);
+    -fx-font-size: 14px;
+    -fx-padding: 12 16;
+}
+
+.custom-text-field:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: #6C8DFF;
+    -fx-effect: dropshadow(gaussian, rgba(108, 141, 255, 0.2), 10, 0, 0, 0);
+}
+
+.activities-title {
+    -fx-font-family: "Segoe UI Bold";
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+.sideMenu {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 0 20 20 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
+    -fx-padding: 32 24
+}
+
+.table-view-custom {
+    -fx-background-color: rgba(21, 25, 40, 0.7);
+    -fx-border-color: #242942; 
+    -fx-border-radius: 15; 
+    -fx-background-radius: 15; 
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 3); 
+}
+
+.table-view-custom .column-header {
+    -fx-background-color: rgba(36, 41, 66, 0.9); 
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI Bold"; 
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold; 
+    -fx-alignment: CENTER; 
+    -fx-border-color: #242942; 
+}
+
+.table-view-custom .table-row-cell:hover {
+    -fx-background-color: rgba(36, 41, 66, 0.9);
+}
+
+.table-view-custom {
+    -fx-background-color: rgba(21, 25, 40, 0.7);
+    -fx-border-color: #242942;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 3);
+}
+
+.table-view-custom .table-cell {
+    -fx-padding: 10 20; 
+    -fx-font-size: 14px; 
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-alignment: CENTER; 
+}
+
+.table-view-custom .table-row-cell:odd {
+    -fx-background-color: rgba(36, 41, 66, 0.6);
+}
+
+.table-view-custom .table-row-cell:even {
+    -fx-background-color: rgba(21, 25, 40, 0.6);
+}
+
+.table-view-custom .table-row-cell:selected .table-cell {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
+}
+
