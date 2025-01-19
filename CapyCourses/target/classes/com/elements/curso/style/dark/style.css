@@ -629,3 +629,20 @@
     -fx-background-color: #28a745;
     -fx-text-fill: white;
 }
+
+.custom-checkbox{
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-font-size: 13px;
+}
+
+.custom-checkbox .box {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-border-radius: 4;
+}
+
+.custom-checkbox:selected .box {
+    -fx-background-color: #6C8DFF;
+    -fx-border-color: #6C8DFF;
+}

@@ -359,7 +359,11 @@ public class Courses implements Initializable {
     private HBox createQuestionaireItem(String title) {
         Label questionaireTitle = createStyledLabel(title, "page-subtitle");
 
+        HBox buttonHBox = new HBox();
+        buttonHBox.setMargin(buttonHBox, new Insets(20, 0, 0, 0));
+
         Button checkButton = createCheckButton(title, questionaireTitle);
+        buttonHBox.getChildren().add(checkButton);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -368,7 +372,7 @@ public class Courses implements Initializable {
         detailsButton.setStyle(
                 " -fx-max-height: 30px; -fx-min-height:30px; -fx-max-width: 110px; -fx-min-width: 110px; -fx-padding: 0 10px; -fx-font-size: 13px;");
 
-        HBox questionaireItem = new HBox(10, checkButton, questionaireTitle, spacer, detailsButton);
+        HBox questionaireItem = new HBox(10, buttonHBox, questionaireTitle, spacer, detailsButton);
         questionaireItem.setMargin(questionaireTitle, new Insets(20, 0, 0, 0));
         questionaireItem.getStyleClass().add("lesson-item");
         questionaireItem.setAlignment(Pos.CENTER_LEFT);
@@ -378,8 +382,11 @@ public class Courses implements Initializable {
 
     private HBox createLessonItem(String title) {
         Label lessonTitle = createStyledLabel(title, "page-subtitle");
+        HBox buttonHBox = new HBox();
+        buttonHBox.setMargin(buttonHBox, new Insets(20, 0, 0, 0));
 
         Button checkButton = createCheckButton(title, lessonTitle);
+        buttonHBox.getChildren().add(checkButton);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -388,7 +395,7 @@ public class Courses implements Initializable {
         detailsButton.setStyle(
                 " -fx-max-height: 30px; -fx-min-height:30px; -fx-max-width: 110px; -fx-min-width: 110px; -fx-padding: 0 10px; -fx-font-size: 13px;");
 
-        HBox lessonItem = new HBox(10, checkButton, lessonTitle, spacer, detailsButton);
+        HBox lessonItem = new HBox(10, buttonHBox, lessonTitle, spacer, detailsButton);
         lessonItem.setMargin(lessonTitle, new Insets(20, 0, 0, 0));
         lessonItem.getStyleClass().add("lesson-item");
         lessonItem.setAlignment(Pos.CENTER_LEFT);
@@ -491,7 +498,7 @@ public class Courses implements Initializable {
 
         VBox activitiesList = new VBox(10);
         activitiesList.getChildren().addAll(
-                createActivityHBox("📝", "Avaliação Módulo 1", "Vence em 3 dias"),
+                createActivityHBox("📝", "Avaliação Módulo 1", "Próxima atividade do modulo"),
                 createActivityHBox("📚", "Aula 3 - Módulo 2", "Próxima aula"));
 
         activitiesVBox.getChildren().addAll(activitiesTitle, activitiesList);
