@@ -488,3 +488,18 @@
     -fx-font-size:14px;
     -fx-text-fill: #9ca3af;
 }
+
+.page-title {
+    -fx-font-family: 'Plus Jakarta Sans';
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+.page {
+    -fx-font-family: 'Plus Jakarta Sans';
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(23, 59, 188);
+    -fx-font-size: 20px;
+    -fx-cursor: pointer;
+}

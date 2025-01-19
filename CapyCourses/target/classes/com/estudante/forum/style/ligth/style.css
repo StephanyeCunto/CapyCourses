@@ -500,3 +500,18 @@
     -fx-font-size:16px;
     -fx-text-fill: #9ca3af;
 }
+
+.page-title {
+    -fx-font-family: 'Plus Jakarta Sans';
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgba(0, 0, 0, 0.808);
+}
+
+.page {
+    -fx-font-family: 'Plus Jakarta Sans';
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(23, 59, 188);
+    -fx-font-size: 20px;
+    -fx-cursor: pointer;
+}

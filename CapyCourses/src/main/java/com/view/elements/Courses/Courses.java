@@ -19,6 +19,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -46,8 +48,7 @@ public class Courses implements Initializable {
     @FXML
     private StackPane toggleButtonStackPane;
     @FXML
-    private GridPane container;
-;
+    private GridPane container;;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -160,8 +161,10 @@ public class Courses implements Initializable {
         Label modulesTitle = new Label("Módulos do Curso");
         modulesTitle.getStyleClass().add("card-title");
 
-        VBox module1 = createModuleCard("1", "Introdução ao Java", "4 aulas • 2 horas", "Continuar", "modern-button");
-        VBox module2 = createModuleCard("2", "Orientação a Objetos", "6 aulas • 4 horas", "Começar", "simple-button");
+        VBox module1 = createModuleCard("1", "Introdução ao Java", "O que é Java?", "4 aulas • 2 horas", "Continuar",
+                "modern-button");
+        VBox module2 = createModuleCard("2", "Orientação a Objetos", "Como funciona OO em java?", "x6 aulas • 4 horas",
+                "Começar", "simple-button");
 
         modulesCard.getChildren().addAll(modulesTitle, module1, module2);
 
@@ -180,30 +183,36 @@ public class Courses implements Initializable {
 
             star.setOnMouseEntered(e -> {
                 for (int j = 0; j < rating; j++) {
-                    ((Label) ratingBox.getChildren().get(j)).setText("★");
+                    Label currentStar = (Label) ratingBox.getChildren().get(j);
+                    currentStar.setText("★");
                 }
             });
 
             star.setOnMouseExited(e -> {
-                ratingBox.getChildren().forEach(node -> {
-                    if (node instanceof Label) {
-                        ((Label) node).setText("☆");
+                for (int j = 0; j < ratingBox.getChildren().size(); j++) {
+                    Label currentStar = (Label) ratingBox.getChildren().get(j);
+                    if (!currentStar.getUserData().equals("selected")) {
+                        currentStar.setText("☆");
                     }
-                });
+                }
             });
 
             star.setOnMouseClicked(e -> {
                 ratingBox.getChildren().forEach(node -> {
-                    if (node instanceof Label) {
-                        ((Label) node).setText("☆");
-                    }
+                    node.setUserData(null);
+                    ((Label) node).setText("☆");
                 });
+
                 for (int j = 0; j < rating; j++) {
-                    ((Label) ratingBox.getChildren().get(j)).setText("★");
+                    Label currentStar = (Label) ratingBox.getChildren().get(j);
+                    currentStar.setText("★");
+                    currentStar.setUserData("selected");
                 }
             });
+            star.setUserData(null);
             ratingBox.getChildren().add(star);
         }
+
         TextArea reviewInput = new TextArea();
         reviewInput.setPromptText("Aperte enter para enviar sua avaliação...");
         reviewInput.setPrefRowCount(2);
@@ -261,7 +270,8 @@ public class Courses implements Initializable {
         return label;
     }
 
-    private VBox createModuleCard(String moduleNumber, String moduleTitle, String moduleDetails, String buttonText,
+    private VBox createModuleCard(String moduleNumber, String moduleTitle, String moduleDescription,
+            String moduleDetails, String buttonText,
             String buttonStyleClass) {
         VBox moduleCard = new VBox(10);
         moduleCard.getStyleClass().add("module-card");
@@ -274,6 +284,7 @@ public class Courses implements Initializable {
         VBox moduleDetailsBox = new VBox(5);
         moduleDetailsBox.getChildren().addAll(
                 createStyledLabel(moduleTitle, "card-title"),
+                createStyledLabel(moduleDescription, "card-subtitle"),
                 createStyledLabel(moduleDetails, "card-subtitle"));
 
         Button actionButton = new Button(buttonText);
@@ -282,13 +293,152 @@ public class Courses implements Initializable {
         javafx.scene.layout.Region spacer = new javafx.scene.layout.Region();
         HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
 
-        moduleInfo.getChildren().addAll(moduleNumberLabel, moduleDetailsBox, spacer, actionButton);
-        moduleCard.getChildren().add(moduleInfo);
+        HBox moduleHeader = new HBox(10);
+        moduleHeader.setPadding(new Insets(15, 0, 0, 0));
+
+        ImageView arrowIcon = new ImageView(
+                new Image(getClass().getResourceAsStream("/com/icons/seta-baixo-dark.png")));
+        arrowIcon.setFitWidth(20);
+        arrowIcon.setFitHeight(20);
+        arrowIcon.setRotate(180);
+
+        Label arrowIndicator = new Label("");
+        arrowIndicator.setGraphic(arrowIcon);
+
+        moduleHeader.getChildren().add(arrowIndicator);
+
+        VBox moduleContent = new VBox(10);
+        moduleContent.setVisible(false);
+        moduleContent.managedProperty().bind(moduleContent.visibleProperty());
+
+        moduleContent.getChildren().addAll(
+                createLessonItem("Aula 1 - Introdução ao Java"),
+                createLessonItem("Aula 2 - Variáveis e Tipos de Dados"),
+                createLessonItem("Aula 3 - Operadores e Expressões"),
+                createLessonItem("Aula 4 - Estruturas de Controle"),
+                createQuestionaireItem("Questionário 1- Introdução ao Java"));
+
+        moduleHeader.setOnMouseClicked(event -> {
+            boolean isCurrentlyVisible = moduleContent.isVisible();
+            moduleContent.setVisible(!isCurrentlyVisible);
+
+            arrowIcon.setRotate(isCurrentlyVisible ? 180 : 0);
+            arrowIndicator.getStyleClass().removeAll("collapsed", "expanded");
+            arrowIndicator.getStyleClass().add(isCurrentlyVisible ? "collapsed" : "expanded");
+
+            moduleHeader.setStyle(isCurrentlyVisible ? "-fx-border-width: 1px;" : "-fx-border-width: 1px 1px 0 1px;");
+        });
+
+        actionButton.setOnMouseClicked(event -> {
+            boolean isCurrentlyVisible = moduleContent.isVisible();
+            moduleContent.setVisible(!isCurrentlyVisible);
+
+            arrowIcon.setRotate(isCurrentlyVisible ? 180 : 0);
+            arrowIndicator.getStyleClass().removeAll("collapsed", "expanded");
+            arrowIndicator.getStyleClass().add(isCurrentlyVisible ? "collapsed" : "expanded");
+
+            moduleHeader.setStyle(isCurrentlyVisible ? "-fx-border-width: 1px;" : "-fx-border-width: 1px 1px 0 1px;");
+        });
+
+        moduleInfo.getChildren().addAll(moduleHeader, moduleNumberLabel, moduleDetailsBox, spacer, actionButton);
+        moduleCard.getChildren().addAll(moduleInfo, moduleContent);
 
         return moduleCard;
     }
 
-    public VBox createCourseDetailsVBox() {
+    private String strikeThroughText(String text) {
+        StringBuilder strikedText = new StringBuilder();
+        strikedText.append(" ");
+        for (char c : text.toCharArray()) {
+            strikedText.append(c).append('\u0336');
+        }
+        strikedText.append(" ");
+        return strikedText.toString();
+    }
+
+    private HBox createQuestionaireItem(String title) {
+        Label questionaireTitle = createStyledLabel(title, "page-subtitle");
+
+        Button checkButton = createCheckButton(title, questionaireTitle);
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Button detailsButton = createDetailsButton(title,"questionaire");
+        detailsButton.setStyle(
+                " -fx-max-height: 30px; -fx-min-height:30px; -fx-max-width: 110px; -fx-min-width: 110px; -fx-padding: 0 10px; -fx-font-size: 13px;");
+
+        HBox questionaireItem = new HBox(10, checkButton, questionaireTitle, spacer, detailsButton);
+        questionaireItem.setMargin(questionaireTitle, new Insets(20, 0, 0, 0));
+        questionaireItem.getStyleClass().add("lesson-item");
+        questionaireItem.setAlignment(Pos.CENTER_LEFT);
+
+        return questionaireItem;
+    }
+
+    private HBox createLessonItem(String title) {
+        Label lessonTitle = createStyledLabel(title, "page-subtitle");
+
+        Button checkButton = createCheckButton(title, lessonTitle);
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Button detailsButton = createDetailsButton(title,"lessons");
+        detailsButton.setStyle(
+                " -fx-max-height: 30px; -fx-min-height:30px; -fx-max-width: 110px; -fx-min-width: 110px; -fx-padding: 0 10px; -fx-font-size: 13px;");
+
+        HBox lessonItem = new HBox(10, checkButton, lessonTitle, spacer, detailsButton);
+        lessonItem.setMargin(lessonTitle, new Insets(20, 0, 0, 0));
+        lessonItem.getStyleClass().add("lesson-item");
+        lessonItem.setAlignment(Pos.CENTER_LEFT);
+
+        return lessonItem;
+    }
+
+    private Button createCheckButton(String title, Label lessonTitle) {
+        Button checkButton = new Button("✖");
+        checkButton.getStyleClass().add("check-button");
+        final boolean[] isChecked = { false };
+
+        checkButton.setOnAction(event -> {
+            isChecked[0] = !isChecked[0];
+            updateCheckButtonState(checkButton, lessonTitle, title, isChecked[0]);
+        });
+
+        return checkButton;
+    }
+
+    private void updateCheckButtonState(Button checkButton, Label lessonTitle, String title, boolean isChecked) {
+        if (isChecked) {
+            checkButton.setText("✔");
+            checkButton.getStyleClass().remove("unchecked");
+            checkButton.getStyleClass().addAll("check-button", "checked");
+            lessonTitle.setStyle("-fx-strikethrough: true");
+            lessonTitle.setText(strikeThroughText(title));
+        } else {
+            checkButton.setText("✖");
+            checkButton.getStyleClass().remove("checked");
+            checkButton.getStyleClass().addAll("check-button", "unchecked");
+            lessonTitle.setStyle("-fx-strikethrough: false");
+            lessonTitle.setText(title);
+        }
+    }
+
+    private Button createDetailsButton(String title, String type) {
+        Button detailsButton = new Button("Ver Detalhes");
+        detailsButton.getStyleClass().add("outline-button");
+
+        if (type.equals("lessons")) {
+            detailsButton.setOnAction(event -> {
+                LessonModal modal = new LessonModal(detailsButton.getScene().getWindow());
+            });
+        }
+
+        return detailsButton;
+    }
+
+    private VBox createCourseDetailsVBox() {
         VBox courseDetailsVBox = new VBox(15);
         courseDetailsVBox.getStyleClass().add("content-card");
 

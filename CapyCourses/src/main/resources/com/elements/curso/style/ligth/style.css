@@ -525,4 +525,17 @@
     -fx-font-weight: bold;
 }
 
+.check-button {
+    -fx-background-radius: 20%;
+    -fx-border-radius: 20%;
+}
 
+.check-button.unchecked {
+    -fx-background-color: #f1f1f1;
+    -fx-text-fill: #333;
+}
+
+.check-button.checked {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+}
