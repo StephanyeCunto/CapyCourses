@@ -14,8 +14,8 @@
 
 <GridPane stylesheets="@style/dark/style.css" maxHeight="-Infinity"
   maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-  prefWidth="1280.0"
-  styleClass="container"
+  prefWidth="1280.0" fx:id="container"
+  styleClass="container" fx:controller="com.view.estudante.PaginaProgressoCurso"
   xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="240.0" />
@@ -25,24 +25,26 @@
     <RowConstraints minHeight="10.0" prefHeight="800.0" vgrow="SOMETIMES" />
   </rowConstraints>
   <children>
-   <VBox fx:id="sideMenu" styleClass="sideMenu" spacing="15" GridPane.columnIndex="0">
-   <Button fx:id="homeButton" text="Voltar" styleClass="outline-button" />
+    <VBox fx:id="sideMenu" styleClass="sideMenu" spacing="15">
+      <Button fx:id="homeButton" text="Voltar" styleClass="outline-button" />
       <VBox spacing="10" styleClass="quick-tips">
-        <Label styleClass="section-title" text="Dicas Rápidas" />
-        <Label styleClass="tip-text" text="• Adicione uma descrição clara e objetiva"
+        <Label styleClass="section-title" text="Frases Motivacionais" />
+        <Label styleClass="tip-text"
+          text="• O sucesso nasce da vontade, determinação e persistência"
           wrapText="true" />
-        <Label styleClass="tip-text" text="• Organize os módulos em ordem lógica"
+        <Label styleClass="tip-text"
+          text="• Cada novo curso é um passo em direção aos seus objetivos"
           wrapText="true" />
-        <Label styleClass="tip-text" text="• Defina uma carga horária realista"
+        <Label styleClass="tip-text" text="• Conhecimento é o melhor investimento"
           wrapText="true" />
       </VBox>
       <VBox spacing="10" styleClass="quick-tips">
-        <Label styleClass="section-title" text="Dicas Rápidas" />
-        <Label styleClass="tip-text" text="• Adicione uma descrição clara e objetiva"
+        <Label styleClass="section-title" text="Dicas de Estudo" />
+        <Label styleClass="tip-text" text="• Faça anotações durante as aulas"
           wrapText="true" />
-        <Label styleClass="tip-text" text="• Organize os módulos em ordem lógica"
+        <Label styleClass="tip-text" text="• Pratique os exercícios regularmente"
           wrapText="true" />
-        <Label styleClass="tip-text" text="• Defina uma carga horária realista"
+        <Label styleClass="tip-text" text="• Mantenha uma rotina de estudos"
           wrapText="true" />
       </VBox>
     </VBox>
@@ -68,64 +70,10 @@
                 styleClass="toggle-button" />
             </StackPane>
           </HBox>
-          <HBox spacing="20" alignment="CENTER">
-            <padding>
-              <Insets left="30" right="30" top="30" />
-            </padding>
-
-            <VBox styleClass="stat-card-container" HBox.hgrow="ALWAYS">
-              <Label text="Progresso Geral" styleClass="stat-card-container-text" />
-              <Label fx:id="progressPercentage" text="75%" styleClass="stat-card-container-static" />
-            </VBox>
-
-            <VBox styleClass="stat-card-container" HBox.hgrow="ALWAYS">
-              <Label text="Módulos Completados" styleClass="stat-card-container-text" />
-              <Label fx:id="completedModules" text="6/8" styleClass="stat-card-container-static" />
-            </VBox>
-
-            <VBox styleClass="stat-card-container" HBox.hgrow="ALWAYS">
-              <Label text="Tempo Total de Estudo" styleClass="stat-card-container-text" />
-              <Label fx:id="totalStudyTime" text="32h" styleClass="stat-card-container-static" />
-            </VBox>
-          </HBox>
-
-          <HBox spacing="20" alignment="CENTER">
-            <padding>
-              <Insets left="30" right="30" />
-            </padding>
-
-            <PieChart fx:id="activityDistribution" title="Distribuição de Atividades"
-              legendVisible="true" labelsVisible="true" HBox.hgrow="ALWAYS"
-              styleClass="stat-card-container" />
-
-            <BarChart fx:id="moduleProgress" title="Progresso por Módulo" HBox.hgrow="ALWAYS"
-              styleClass="stat-card-container">
-              <xAxis>
-                <CategoryAxis label="Módulos" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis label="Progresso (%)" />
-              </yAxis>
-            </BarChart>
-          </HBox>
-
-          <VBox spacing="10" styleClass="stat-card-container-text">
-            <padding>
-              <Insets left="30" right="30" bottom="30" />
-            </padding>
-
-            <Label text="Atividades Recentes" styleClass="activities-title" />
-            <TableView fx:id="recentActivities" VBox.vgrow="ALWAYS" styleClass="table-view-custom">
-              <columns>
-                <TableColumn text="Data" fx:id="dateColumn" prefWidth="120" />
-                <TableColumn text="Atividade" fx:id="activityColumn" prefWidth="300" />
-                <TableColumn text="Curso" fx:id="courseColumn" prefWidth="250" />
-                <TableColumn text="Módulo" fx:id="moduleColumn" prefWidth="250" />
-                <TableColumn text="Status" fx:id="statusColumn" prefWidth="120" />
-              </columns>
-            </TableView>
-
+          <VBox fx:id="content">
+         
           </VBox>
+
         </VBox>
       </content>
     </ScrollPane>

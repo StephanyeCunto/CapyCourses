@@ -453,3 +453,88 @@
 .theme-toggle-switch:hover .toggle-thumb {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0, 0, 2);
 }
+
+.quick-tips {
+    -fx-background-color: linear-gradient(to right bottom,  #9aabc0,#adc7db);
+    -fx-background-radius: 16;
+    -fx-padding: 16;
+}
+
+.stat-card-container {
+    -fx-background-radius: 20;
+    -fx-padding: 20;
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
+    -fx-padding: 15;
+}
+
+.stat-card-label {
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-text-fill: black;
+}
+
+.stat-card-info {
+    -fx-text-fill: black;
+}
+
+.stat-card-container-text{
+    -fx-font-family: "Franklin Gothic Medium";
+    -fx-text-fill: black;
+    -fx-font-size: 20px;
+}
+
+.stat-card-container-static{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.table-view-custom {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-border-color: #4A90E2; 
+    -fx-border-radius: 15; 
+    -fx-background-radius: 15; 
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 3); 
+}
+
+.table-view-custom .column-header {
+    -fx-background-color: rgba(74, 144, 226, 0.9); 
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI Bold"; 
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold; 
+    -fx-alignment: CENTER; 
+    -fx-border-color: #216abe; 
+}
+
+.table-view-custom .table-row-cell:hover {
+    -fx-background-color: rgba(74, 144, 226, 0.2);
+}
+
+.table-view-custom .table-cell {
+    -fx-padding: 10 20; 
+    -fx-font-size: 14px; 
+    -fx-text-fill: #1a1a1a;
+    -fx-alignment: CENTER; 
+}
+
+.table-view-custom .table-row-cell:odd {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+}
+
+.table-view-custom .table-row-cell:even {
+    -fx-background-color: rgba(74, 144, 226, 0.1);
+}
+
+.table-view-custom .table-row-cell:selected .table-cell {
+    -fx-background-color: #4A90E2;
+    -fx-text-fill: white;
+}
+
+.toggleButtonHBox{
+    -fx-padding: 30 30 0 0;
+}
