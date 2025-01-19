@@ -7,6 +7,7 @@ import com.dao.UserDAO;
 import com.dao.StudentDAO;
 import com.dao.TeacherDAO;
 import com.singleton.UserSession;
+import com.model.login_cadastro.Login;
 
 public class LoginController {
     private final UserDAO userDAO = new UserDAO();
@@ -61,5 +62,10 @@ public class LoginController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public boolean recuperarSenha(String email) {
+        Login login = new Login();
+        return login.recuperarSenha(email);
     }
 }

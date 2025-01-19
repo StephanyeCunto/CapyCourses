@@ -4,6 +4,7 @@ import com.dao.UserDAO;
 import com.dao.StudentDAO;
 import com.dao.TeacherDAO;
 import com.singleton.UserSession;
+import com.service.EmailService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,5 +61,39 @@ public class Login {
             e.printStackTrace();
             return "false";
         }
+    }
+
+    public boolean recuperarSenha(String email) {
+        try {
+            User userFound = userDAO.buscarPorEmail(email);
+            
+            if (userFound == null) {
+                return false;
+            }
+
+            String novaSenha = gerarSenhaTemporaria();
+            userFound.setPassword(novaSenha);
+            userDAO.atualizar(userFound);
+
+            EmailService emailService = new EmailService();
+            emailService.enviarEmailRecuperacao(email, novaSenha);
+            
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private String gerarSenhaTemporaria() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder senha = new StringBuilder();
+        java.util.Random rnd = new java.util.Random();
+        
+        for (int i = 0; i < 8; i++) {
+            senha.append(chars.charAt(rnd.nextInt(chars.length())));
+        }
+        
+        return senha.toString();
     }
 }

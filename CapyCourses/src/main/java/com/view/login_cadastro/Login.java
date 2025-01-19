@@ -239,4 +239,10 @@ public class Login extends BaseLoginCadastro implements Initializable {
             moonIcon.setVisible(!Modo.getInstance().getModo());
         }
     }
+
+    @FXML
+    private void abrirRecuperarSenha() {
+        Stage stage = (Stage) leftSection.getScene().getWindow();
+        super.redirectTo("/com/login_cadastro/recuperarSenha.fxml", stage);
+    }
 }

@@ -1,3 +1,4 @@
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Courses\LessonModal.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\controller\elements\LoadCoursesController.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\service\QuestionService.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\controller\elements\CadastroCursoController.java
@@ -29,6 +30,7 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\MenuEstudante\Menu.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Courses\LoadCourses.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\service\StudentCourseService.java
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\login_cadastro\elements\SuccessNotification.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\module-info.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Courses\Courses.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\login_cadastro\BaseLoginCadastro.java
@@ -44,6 +46,7 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Certificado\CertificateViewerModal.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\entity\Forum.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\elements\LoadForum.java
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\service\EmailService.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dao\QuestionaireDAO.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\controller\elements\LoadMyCourses.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\controller\elements\BibliotecaController.java
@@ -73,6 +76,7 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\singleton\App.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\professor\valid\CursoQuestoesValid.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Perfil\TermsOfUseModal.java
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\login_cadastro\RecuperarSenha.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\elements\Course\Questionaire.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\login_cadastro\CadastroTeacher.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Forum\LoadForumView.java
@@ -92,6 +96,7 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\professor\valid\CursoModulesValid.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\controller\login_cadastro\CadastroStudentController.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\login_cadastro\cadastro\valid\CadastroValid.java
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\util\PasswordMigration.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dto\QuestionarioDTO.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\login_cadastro\Student.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Perfil\SecuritySection.java

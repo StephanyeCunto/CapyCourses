@@ -111,7 +111,7 @@
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <CheckBox text="Lembrar-me" styleClass="custom-checkbox" selected="true" fx:id="lembrar"/>
                     <Region HBox.hgrow="ALWAYS" />
-                    <Hyperlink text="Esqueceu a senha?" styleClass="forgot-password-link" />
+                    <Hyperlink text="Esqueceu a senha?" styleClass="forgot-password-link" onAction="#abrirRecuperarSenha" />
                 </HBox>
 
 

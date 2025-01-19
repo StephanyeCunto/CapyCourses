@@ -281,4 +281,47 @@ public class CoursesService {
         
         return questoes;
     }
+
+    public List<ModuloDTO> getModulesByCourseId(Long courseId) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            // Busca o curso com os módulos carregados
+            Course course = em.createQuery(
+                "SELECT c FROM Course c LEFT JOIN FETCH c.modules WHERE c.id = :id", 
+                Course.class)
+                .setParameter("id", courseId)
+                .getSingleResult();
+            
+            List<ModuloDTO> modulosDTO = new ArrayList<>();
+            
+            for (Module module : course.getModules()) {
+                ModuloDTO dto = new ModuloDTO();
+                dto.setTitulo(module.getTitle());
+                dto.setDescricao(module.getDescription());
+                dto.setDuracao(module.getDuration());
+                dto.setNumeroModulo(module.getModuleNumber());
+                modulosDTO.add(dto);
+            }
+            
+            return modulosDTO;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<QuestionarioDTO> getReviewsByCourseId(Long courseId) {
+        Course course = findCourseById(courseId);
+        List<QuestionarioDTO> reviews = new ArrayList<>();
+        
+        for (Module module : course.getModules()) {
+            for (Questionaire questionaire : module.getQuestionaires()) {
+                QuestionarioDTO dto = new QuestionarioDTO();
+                dto.setTitulo(questionaire.getTitle());
+                dto.setDescricao(questionaire.getDescription());
+                reviews.add(dto);
+            }
+        }
+        
+        return reviews;
+    }
 }

@@ -8,6 +8,9 @@ module com {
     requires com.fasterxml.jackson.databind;
     requires itextpdf;
     requires bcrypt;
+    //requires commons.email;
+    requires javax.mail;
+    requires activation;
 
 
     
@@ -38,6 +41,7 @@ module com {
     opens com.view.professor to javafx.fxml;
     opens com.view.estudante to javafx.fxml;
     opens com.view.elements.Perfil to javafx.fxml;
+
 
    
     
@@ -73,6 +77,7 @@ module com {
     exports com.controller.login_cadastro to com.fasterxml.jackson.databind;
     exports com.controller.elements to com.fasterxml.jackson.databind;
     exports com.util to org.hibernate.orm.core;
+    
     
 }
 
