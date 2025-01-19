@@ -30,6 +30,7 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Courses\LoadCourses.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\service\StudentCourseService.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\module-info.java
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Courses\Courses.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\login_cadastro\BaseLoginCadastro.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\login_cadastro\Teacher.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\login_cadastro\CreateJson.java
@@ -43,7 +44,6 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Certificado\CertificateViewerModal.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\entity\Forum.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\elements\LoadForum.java
-C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Forum\ForumCardView.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dao\QuestionaireDAO.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\controller\elements\LoadMyCourses.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\controller\elements\BibliotecaController.java
@@ -60,6 +60,7 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\ForumDatabase.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\controller\login_cadastro\LoginJsonController.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Forum\PaginaForumView.java
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dao\ForumDAO.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\service\LessonService.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Perfil\ProfileCard.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\singleton\UserSession.java

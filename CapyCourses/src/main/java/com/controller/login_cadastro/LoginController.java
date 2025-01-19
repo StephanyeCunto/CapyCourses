@@ -17,7 +17,7 @@ public class LoginController {
         try {
             User user = userDAO.buscarPorEmail(email);
             
-            if (user == null || !user.getPassword().equals(password)) {
+            if (user == null || !user.checkPassword(password)) {
                 return "false";
             }
 

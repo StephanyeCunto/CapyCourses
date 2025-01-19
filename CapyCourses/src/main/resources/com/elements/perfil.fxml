@@ -27,60 +27,62 @@
 
         <VBox fx:id="sideMenu" styleClass="sideMenu" spacing="15">
         </VBox>
-        <ScrollPane fitToWidth="true"
-            styleClass="main-scroll"
-            id="mainContent"
-            GridPane.columnIndex="1">
-            <content>
-                <VBox spacing="30" styleClass="main-content">
-                    <HBox>
-                        <HBox alignment="CENTER_LEFT" spacing="20">
-                            <VBox>
-                                <Label text="Configurações" styleClass="page-title" />
-                                <Label text="Gerencie sua conta e preferências"
-                                    styleClass="page-subtitle" />
-                            </VBox>
-                        </HBox>
-                        <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox"
-                            HBox.hgrow="ALWAYS"
-                            fx:id="toggleButtonHBox">
-                            <StackPane alignment="CENTER" fx:id="toggleButtonStackPane"
-                                styleClass="theme-toggle-switch" prefWidth="50" prefHeight="25">
-                                <Rectangle fx:id="background" width="50" height="25"
-                                    styleClass="toggle-background"
-                                    arcWidth="25" arcHeight="25" />
-                                <StackPane fx:id="thumbContainer" styleClass="thumb-container">
-                                    <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
-                                    <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15"
-                                        visible="true" />
-                                    <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15"
-                                        visible="false" />
+        <StackPane fx:id="mainStackPane" GridPane.columnIndex="1">
+            <ScrollPane fitToWidth="true"
+                styleClass="main-scroll"
+                id="mainContent">
+                <content>
+                    <VBox spacing="30" styleClass="main-content">
+                        <HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="20">
+                                <VBox>
+                                    <Label text="Configurações" styleClass="page-title" />
+                                    <Label text="Gerencie sua conta e preferências"
+                                        styleClass="page-subtitle" />
+                                </VBox>
+                            </HBox>
+                            <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox"
+                                HBox.hgrow="ALWAYS"
+                                fx:id="toggleButtonHBox">
+                                <StackPane alignment="CENTER" fx:id="toggleButtonStackPane"
+                                    styleClass="theme-toggle-switch" prefWidth="50" prefHeight="25">
+                                    <Rectangle fx:id="background" width="50" height="25"
+                                        styleClass="toggle-background"
+                                        arcWidth="25" arcHeight="25" />
+                                    <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+                                        <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+                                        <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15"
+                                            visible="true" />
+                                        <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15"
+                                            visible="false" />
+                                    </StackPane>
+                                    <ToggleButton fx:id="toggleButton" mnemonicParsing="false"
+                                        styleClass="toggle-button" />
                                 </StackPane>
-                                <ToggleButton fx:id="toggleButton" mnemonicParsing="false"
-                                    styleClass="toggle-button" />
-                            </StackPane>
+                            </HBox>
                         </HBox>
-                    </HBox>
-                    <HBox spacing="15" style="-fx-padding: 10 0;">
-                        <Button styleClass="outline-button-selection" text="Perfil"
-                            fx:id="perfilBtn" />
-                        <Button styleClass="outline-button-not-selection" text="Segurança"
-                            fx:id="segurityBtn" />
-                        <Button styleClass="outline-button-not-selection" text="Preferências"
-                            fx:id="preferencesBtn" />
-                        <Button styleClass="outline-button-not-selection" text="Privacidade"
-                            fx:id="privacyBtn" />
-                    </HBox>
+                        <HBox spacing="15" style="-fx-padding: 10 0;">
+                            <Button styleClass="outline-button-selection" text="Perfil"
+                                fx:id="perfilBtn" />
+                            <Button styleClass="outline-button-not-selection" text="Segurança"
+                                fx:id="segurityBtn" />
+                            <Button styleClass="outline-button-not-selection" text="Preferências"
+                                fx:id="preferencesBtn" />
+                            <Button styleClass="outline-button-not-selection" text="Privacidade"
+                                fx:id="privacyBtn" />
+                        </HBox>
 
-                    <VBox fx:id="container"></VBox>
+                        <VBox fx:id="container"></VBox>
 
-                    <!-- Botões de Ação -->
-                    <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 20 0;">
-                        <Button styleClass="outline-button" text="Cancelar" />
-                        <Button styleClass="modern-button" text="Salvar Alterações" />
-                    </HBox>
-                </VBox>
-            </content>
-        </ScrollPane>
+                        <!-- Botões de Ação 
+                        <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 20 0;">
+                            <Button styleClass="outline-button" text="Cancelar" />
+                            <Button styleClass="modern-button" text="Salvar Alterações" />
+                        </HBox>
+                        -->
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </StackPane>
     </children>
 </GridPane>

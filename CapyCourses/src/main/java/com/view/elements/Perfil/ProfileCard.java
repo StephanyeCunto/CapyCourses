@@ -1,6 +1,14 @@
 package com.view.elements.Perfil;
 
 import com.singleton.UserSession;
+import com.dao.UserDAO;
+import com.model.login_cadastro.User;
+import com.dao.TeacherDAO;
+import com.dao.StudentDAO;
+import com.model.login_cadastro.Teacher;
+import com.model.login_cadastro.Student;
+import com.view.login_cadastro.elements.ErrorNotification;
+import com.view.login_cadastro.elements.SuccessNotification;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -11,9 +19,23 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+import javafx.scene.Scene;
+import javafx.scene.Node;
 
 public class ProfileCard {
+    private UserDAO userDAO;
+    private User currentUser;
+    private VBox vbox;
+
+    public ProfileCard() {
+        this.userDAO = new UserDAO();
+        loadCurrentUser();
+    }
+
+    private void loadCurrentUser() {
+        String userEmail = UserSession.getInstance().getUserEmail();
+        this.currentUser = userDAO.buscarPorEmail(userEmail);
+    }
 
     public VBox createProfileCard() {
         VBox vbox = new VBox(20);
@@ -53,9 +75,9 @@ public class ProfileCard {
         HBox.setHgrow(vboxNome, javafx.scene.layout.Priority.ALWAYS);
         Label labelNome = new Label("Nome Completo");
         labelNome.getStyleClass().add("field-label");
-        TextField textFieldNome = new TextField("João Silva");
+        TextField textFieldNome = new TextField();
         textFieldNome.getStyleClass().add("custom-text-field");
-      //  Label labelNomeError
+        textFieldNome.setText(currentUser.getName());
         vboxNome.getChildren().addAll(labelNome, textFieldNome);
 
         VBox vboxEmail = new VBox(5);
@@ -63,8 +85,9 @@ public class ProfileCard {
         HBox.setHgrow(vboxEmail, javafx.scene.layout.Priority.ALWAYS);
         Label labelEmail = new Label("Email");
         labelEmail.getStyleClass().add("field-label");
-        TextField textFieldEmail = new TextField("joao.silva@email.com");
+        TextField textFieldEmail = new TextField();
         textFieldEmail.getStyleClass().add("custom-text-field");
+        textFieldEmail.setText(currentUser.getEmail());
         vboxEmail.getChildren().addAll(labelEmail, textFieldEmail);
 
         VBox vboxTelefone = new VBox(5);
@@ -72,8 +95,9 @@ public class ProfileCard {
         HBox.setHgrow(vboxTelefone, javafx.scene.layout.Priority.ALWAYS);
         Label labelTelefone = new Label("Telefone");
         labelTelefone.getStyleClass().add("field-label");
-        TextField textFieldTelefone = new TextField("+55 (11) 99999-9999");
+        TextField textFieldTelefone = new TextField();
         textFieldTelefone.getStyleClass().add("custom-text-field");
+        textFieldTelefone.setText(getTelefoneByUserType());
         vboxTelefone.getChildren().addAll(labelTelefone, textFieldTelefone);
 
         hboxFields.getChildren().addAll(vboxNome, vboxEmail, vboxTelefone);
@@ -93,7 +117,78 @@ public class ProfileCard {
 
         vbox.getChildren().addAll(hboxTop, vboxPersonalInfo, vboxBio);
 
+        Button btnSalvar = new Button("Salvar Alterações");
+        btnSalvar.getStyleClass().add("outline-button-not-seletion");
+        btnSalvar.setOnAction(e -> salvarAlteracoes(textFieldNome.getText(), 
+                                                   textFieldEmail.getText(), 
+                                                   textFieldTelefone.getText(),
+                                                   textAreaBio.getText()));
+
+        vbox.getChildren().add(btnSalvar);
+
+        this.vbox = vbox;
         return vbox;
+    }
+
+    private String getTelefoneByUserType() {
+        String userEmail = UserSession.getInstance().getUserEmail();
+        String userType = UserSession.getInstance().getUserType();
+        
+        if (userType.equals("TEACHER")) {
+            TeacherDAO teacherDAO = new TeacherDAO();
+            Teacher teacher = teacherDAO.buscarPorEmail(userEmail);
+            return teacher != null ? teacher.getTelephone() : "";
+        } else if (userType.equals("STUDENT")) {
+            StudentDAO studentDAO = new StudentDAO();
+            Student student = studentDAO.buscarPorEmail(userEmail);
+            return student != null ? student.getTelephone() : "";
+        }
+        return "";
+    }
+
+    private void salvarAlteracoes(String nome, String email, String telefone, String bio) {
+        try {
+            // Encontra o StackPane raiz
+            Scene scene = vbox.getScene();
+            StackPane root = (StackPane) scene.lookup("#mainStackPane");
+            
+            if (nome.isEmpty() || email.isEmpty()) {
+                new ErrorNotification(root, "Nome e email são campos obrigatórios!").show();
+                return;
+            }
+            
+            currentUser.setName(nome);
+            currentUser.setEmail(email);
+            
+            userDAO.editar(currentUser);
+            
+            String userType = UserSession.getInstance().getUserType();
+            if (userType.equals("TEACHER")) {
+                TeacherDAO teacherDAO = new TeacherDAO();
+                Teacher teacher = teacherDAO.buscarPorEmail(email);
+                if (teacher != null) {
+                    teacher.setTelephone(telefone);
+                    teacherDAO.editar(teacher);
+                }
+            } else if (userType.equals("STUDENT")) {
+                StudentDAO studentDAO = new StudentDAO();
+                Student student = studentDAO.buscarPorEmail(email);
+                if (student != null) {
+                    student.setTelephone(telefone);
+                    studentDAO.editar(student);
+                }
+            }
+            
+            UserSession.getInstance().setUserName(nome);
+            UserSession.getInstance().setUserEmail(email);
+            
+            new SuccessNotification(root, "Alterações salvas com sucesso!").show();
+            
+        } catch (Exception e) {
+            Scene scene = vbox.getScene();
+            StackPane root = (StackPane) scene.lookup("#mainStackPane");
+            new ErrorNotification(root, "Erro ao salvar alterações: " + e.getMessage()).show();
+        }
     }
 
     private StackPane circleName() {

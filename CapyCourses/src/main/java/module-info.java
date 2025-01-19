@@ -7,12 +7,16 @@ module com {
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
     requires itextpdf;
+    requires bcrypt;
+
+
     
     requires java.desktop;
     requires org.controlsfx.controls;
     requires javafx.web;
     requires org.apache.pdfbox;
     requires javafx.swing;
+    
 
     requires transitive java.persistence;
     requires org.hibernate.orm.core;

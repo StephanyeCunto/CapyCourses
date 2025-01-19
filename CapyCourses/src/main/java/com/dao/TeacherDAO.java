@@ -83,7 +83,16 @@ public class TeacherDAO implements IDao<Teacher> {
             return null;
         }
     }
-
+    public Teacher buscarPorEmail(String email) {
+        try {
+            String jpql = "SELECT t FROM Teacher t WHERE t.email = :email";
+            return this.em.createQuery(jpql, Teacher.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
     public EntityManager getEntityManager() {
         return this.em;
     }

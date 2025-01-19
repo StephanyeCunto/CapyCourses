@@ -5,6 +5,7 @@ import com.model.login_cadastro.User;
 import javax.persistence.EntityManager;
 import java.util.List;
 import javax.persistence.NoResultException;
+import com.util.JPAUtil;
 
 public class UserDAO implements IDao<User> {
     private EntityManager em;
@@ -80,6 +81,17 @@ public class UserDAO implements IDao<User> {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void atualizar(User user) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(user);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
         }
     }
 } 

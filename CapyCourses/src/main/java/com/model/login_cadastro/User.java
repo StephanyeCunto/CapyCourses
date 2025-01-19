@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import lombok.Data;
 import java.time.LocalDateTime;
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 @Entity
 @Table(name = "users")
@@ -31,4 +32,12 @@ public class User {
     
     @Column(nullable = false)
     private String typeUser;
+
+    public void setPassword(String password) {
+        this.password = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+    }
+
+    public boolean checkPassword(String plainPassword) {
+        return BCrypt.verifyer().verify(plainPassword.toCharArray(), this.password).verified;
+    }
 } 

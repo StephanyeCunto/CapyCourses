@@ -1,6 +1,8 @@
 package com.view.elements.Perfil;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.ColumnConstraints;
@@ -8,8 +10,25 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
+import com.model.login_cadastro.User;
+import com.dao.UserDAO;
+import com.singleton.UserSession;
+import com.view.login_cadastro.elements.ErrorNotification;
+import com.view.login_cadastro.elements.SuccessNotification;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+
 
 public class SecuritySection {
+    private PasswordField currentPasswordField;
+    private PasswordField newPasswordField;
+    private PasswordField confirmPasswordField;
+    private VBox changePasswordSection;
+    private ErrorNotification errorNotification;
+    private SuccessNotification successNotification;
+    private StackPane root;
 
     public VBox createSecuritySection() {
         // VBox principal
@@ -21,7 +40,7 @@ public class SecuritySection {
         securityTitle.getStyleClass().add("card-title");
 
         // VBox interna para a seção de alteração de senha
-        VBox changePasswordSection = new VBox(20);
+        changePasswordSection = new VBox(20);
 
         // Título "Alterar Senha"
         Label changePasswordTitle = new Label("Alterar Senha");
@@ -49,7 +68,7 @@ public class SecuritySection {
         VBox currentPasswordBox = new VBox(8);
         Label currentPasswordLabel = new Label("Senha Atual");
         currentPasswordLabel.getStyleClass().add("field-label");
-        PasswordField currentPasswordField = new PasswordField();
+        currentPasswordField = new PasswordField();
         currentPasswordField.getStyleClass().add("custom-text-field");
         currentPasswordBox.getChildren().addAll(currentPasswordLabel, currentPasswordField);
         GridPane.setColumnIndex(currentPasswordBox, 0);
@@ -58,7 +77,7 @@ public class SecuritySection {
         VBox newPasswordBox = new VBox(8);
         Label newPasswordLabel = new Label("Nova Senha");
         newPasswordLabel.getStyleClass().add("field-label");
-        PasswordField newPasswordField = new PasswordField();
+        newPasswordField = new PasswordField();
         newPasswordField.getStyleClass().add("custom-text-field");
         newPasswordBox.getChildren().addAll(newPasswordLabel, newPasswordField);
         GridPane.setColumnIndex(newPasswordBox, 1);
@@ -67,7 +86,7 @@ public class SecuritySection {
         VBox confirmPasswordBox = new VBox(8);
         Label confirmPasswordLabel = new Label("Confirmar Nova Senha");
         confirmPasswordLabel.getStyleClass().add("field-label");
-        PasswordField confirmPasswordField = new PasswordField();
+        confirmPasswordField = new PasswordField();
         confirmPasswordField.getStyleClass().add("custom-text-field");
         confirmPasswordBox.getChildren().addAll(confirmPasswordLabel, confirmPasswordField);
         GridPane.setColumnIndex(confirmPasswordBox, 2);
@@ -90,6 +109,71 @@ public class SecuritySection {
         // Adicionando tudo ao VBox principal
         vbox.getChildren().addAll(securityTitle, changePasswordSection);
 
+        setupPasswordChangeHandler();
+
         return vbox;
+    }
+
+    private void setupPasswordChangeHandler() {
+        Button saveButton = new Button("Salvar Alterações");
+        saveButton.getStyleClass().add("outline-button-not-seletion");
+        
+        saveButton.setOnAction(e -> {
+            String currentPassword = currentPasswordField.getText();
+            String newPassword = newPasswordField.getText();
+            String confirmPassword = confirmPasswordField.getText();
+            
+            // Encontra o StackPane raiz da aplicação
+            Scene scene = changePasswordSection.getScene();
+            StackPane root = (StackPane) scene.lookup("#mainStackPane"); // Adicione um ID ao seu StackPane principal
+            
+            if (!newPassword.equals(confirmPassword)) {
+                new ErrorNotification(root, "As senhas não coincidem!").show();
+                return;
+            }
+            
+            if (newPassword.length() < 6) {
+                new ErrorNotification(root, "A senha deve ter no mínimo 6 caracteres!").show();
+                return;
+            }
+            
+            UserSession session = UserSession.getInstance();
+            UserDAO userDAO = new UserDAO();
+            User user = userDAO.buscarPorEmail(session.getUserEmail());
+            
+            if (!user.checkPassword(currentPassword)) {
+                new ErrorNotification(root, "Senha atual incorreta!").show();
+                return;
+            }
+            
+            user.setPassword(newPassword);
+            userDAO.atualizar(user);
+            
+            new SuccessNotification(root, "Senha alterada!").show();
+            clearFields();
+        });
+        
+        changePasswordSection.getChildren().add(saveButton);
+    }
+    
+    private StackPane findParentStackPane(Node node) {
+        Parent parent = node.getParent();
+        while (parent != null && !(parent instanceof StackPane)) {
+            parent = parent.getParent();
+        }
+        return (StackPane) parent;
+    }
+    
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    
+    private void clearFields() {
+        currentPasswordField.clear();
+        newPasswordField.clear();
+        confirmPasswordField.clear();
     }
 }
