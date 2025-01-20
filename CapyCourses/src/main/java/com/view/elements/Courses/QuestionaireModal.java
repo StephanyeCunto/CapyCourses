@@ -366,10 +366,10 @@ public class QuestionaireModal {
                 
                 studentAnswer.setAnswer(answerText);
                 studentAnswer.setCorrect(isCorrect);
-                studentAnswer.setScore(isCorrect ? question.getScore() : 0);
+                studentAnswer.setScore(isCorrect ? Double.parseDouble(question.getScore()) : 0.0);
                 
                 if (isCorrect) {
-                    totalScore += question.getScore();
+                    totalScore += Double.parseDouble(question.getScore());
                 }
                 
                 em.persist(studentAnswer);

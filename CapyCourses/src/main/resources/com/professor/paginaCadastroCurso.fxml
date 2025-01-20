@@ -38,7 +38,7 @@
             styleClass="side-menu">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
-                    <Button styleClass="outline-button" text="← VOLTAR" />
+                    <Button styleClass="outline-button" text="← VOLTAR" onAction="#voltarPaginaInicial"/>
                 </HBox>
 
                 <VBox spacing="15" styleClass="quick-tips">

@@ -25,6 +25,9 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.Parent;
 
 
 public class CadastroCurso implements Initializable {
@@ -1848,5 +1851,23 @@ public class CadastroCurso implements Initializable {
         return container.lookupAll("#" + id).stream()
                 .findFirst()
                 .orElse(null);
+    }
+
+    @FXML
+    private void voltarPaginaInicial() {
+        try {
+            Stage stage = (Stage) container.getScene().getWindow();
+            String pageNext = "/com/professor/PaginaCursos.fxml";
+            
+            Parent root = FXMLLoader.load(getClass().getResource(pageNext));
+            Scene currentScene = stage.getScene();
+            Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
+            
+            stage.setScene(newScene);
+            stage.show();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

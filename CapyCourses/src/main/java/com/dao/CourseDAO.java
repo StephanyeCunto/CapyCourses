@@ -6,6 +6,10 @@ import com.util.JPAUtil;
 import javax.persistence.EntityManager;  // mude de jakarta para javax
 import java.util.List;
 import javax.persistence.NoResultException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CourseDAO {
     
@@ -111,6 +115,19 @@ public class CourseDAO {
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Course> buscarCursosPorProfessor(String professorEmail) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery(
+                "FROM Course c WHERE c.name = :email", 
+                Course.class)
+                .setParameter("email", professorEmail)
+                .getResultList();
         } finally {
             em.close();
         }

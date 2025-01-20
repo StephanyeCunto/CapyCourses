@@ -9,6 +9,7 @@ import com.dto.PaginaPrincipalDTO;
 import com.dao.StudentDAO;
 import com.dao.StudentCourseDAO;
 import com.model.student.StudentCourse;
+import com.dao.CourseDAO;
 
 import java.util.*;
 
@@ -81,6 +82,41 @@ public class LoadMyCourses {
                 courses.add(dto);
             }
         }
+        return courses;
+    }
+
+    public List<PaginaPrincipalDTO> loadProfessorCourses() {
+        List<PaginaPrincipalDTO> courses = new ArrayList<>();
+        String professorEmail = UserSession.getInstance().getUserEmail();
+        
+        CourseDAO courseDAO = new CourseDAO();
+        List<Course> professorCourses = courseDAO.buscarCursosPorProfessor(professorEmail);
+        
+        for (Course course : professorCourses) {
+            PaginaPrincipalDTO dto = new PaginaPrincipalDTO();
+            
+            dto.loadCourses(
+                course.getName(), 
+                course.getTitle(), 
+                course.getDescription(),
+                course.getCategoria(), 
+                course.getNivel(), 
+                course.getRating()
+            );
+
+            CourseSettings settings = course.getCourseSettings();
+            if (settings != null) {
+                dto.loadCoursesSettings(
+                    settings.getDurationTotal(),
+                    settings.isCertificate(),
+                    "professor",
+                    100
+                );
+            }
+            
+            courses.add(dto);
+        }
+        
         return courses;
     }
 }

@@ -28,7 +28,7 @@ public class LoadCourses {
         setupCourseGrid();
         LoadMyCourses paginaMeusCursosController = new LoadMyCourses();
 
-        courses = paginaMeusCursosController.loadMyCoursesCompleted();
+        courses = paginaMeusCursosController.loadProfessorCourses();
 
         int numColumns = calculateColumns();
 
@@ -88,15 +88,12 @@ public class LoadCourses {
         Label titleLabel = createStyledLabel(course.getTitle(), "Franklin Gothic Medium", 24);
         titleLabel.getStyleClass().add("title");
 
-            HBox courseInfo = createCourseInfo(course);
-
-            Label descLabel = createDescriptionLabel(course.getDescription());
-            HBox statusInfo = createStatusInfo(course);
-            HBox buttonContainer = createButtonContainer(course);
-            content.getChildren().addAll(courseImage, categoryLabel, titleLabel,  courseInfo, descLabel,
-                    statusInfo, buttonContainer);  
-
-            content.getChildren().addAll(courseImage, categoryLabel, titleLabel,buttonContainer);
+        HBox courseInfo = createCourseInfo(course);
+        Label descLabel = createDescriptionLabel(course.getDescription());
+        HBox statusInfo = createStatusInfo(course);
+        HBox buttonContainer = createButtonContainer(course);
+        content.getChildren().addAll(courseImage, categoryLabel, titleLabel, courseInfo, descLabel,
+                statusInfo, buttonContainer);
 
         courseBox.getChildren().add(content);
         return courseBox;
@@ -165,10 +162,10 @@ public class LoadCourses {
         buttonContainer.setAlignment(Pos.CENTER_LEFT);
         buttonContainer.setPadding(new javafx.geometry.Insets(10, 0, 0, 0));
 
-            Button editButton = createEditButton(course);
-            Button viewButton = createViewButton(course);
-            buttonContainer.getChildren().addAll(viewButton,editButton);
-    
+        Button editButton = createEditButton(course);
+        Button viewButton = createViewButton(course);
+        buttonContainer.getChildren().addAll(viewButton, editButton);
+
         return buttonContainer;
     }
 

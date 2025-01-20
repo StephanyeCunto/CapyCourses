@@ -53,6 +53,7 @@ import javafx.util.Duration;
 import javafx.scene.Node;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javafx.scene.control.Separator;
 
 public class Courses implements Initializable {
     @FXML
@@ -351,7 +352,7 @@ public class Courses implements Initializable {
         lessonsBox.setVisible(false);
         lessonsBox.managedProperty().bind(lessonsBox.visibleProperty());
         
-        // Ordenando os módulos
+        // Ordenando as aulas
         if (module.getLessons() != null) {
             List<Lessons> sortedLessons = new ArrayList<>(module.getLessons());
             sortedLessons.sort((l1, l2) -> 
@@ -364,7 +365,19 @@ public class Courses implements Initializable {
             }
         }
         
+        // Adicionando questionários
         if (module.getQuestionaire() != null) {
+            // Adiciona um separador visual
+            Separator separator = new Separator();
+            separator.setPadding(new Insets(10, 0, 10, 0));
+            lessonsBox.getChildren().add(separator);
+            
+            // Adiciona o título "Avaliações"
+            Label avaliacoesLabel = createStyledLabel("Avaliações", "section-title");
+            avaliacoesLabel.setPadding(new Insets(0, 0, 10, 0));
+            lessonsBox.getChildren().add(avaliacoesLabel);
+            
+            // Cria o item do questionário
             HBox questionaireItem = createQuestionaireItem(module.getQuestionaire());
             questionaireItem.getStyleClass().add("questionaire-item");
             lessonsBox.getChildren().add(questionaireItem);
@@ -501,8 +514,9 @@ public class Courses implements Initializable {
         questionaireBox.setAlignment(Pos.CENTER_LEFT);
         questionaireBox.setPadding(new Insets(10));
         
-        Button checkButton = new Button("✖");
-        checkButton.getStyleClass().add("check-button");
+        // Ícone do questionário
+        Label iconLabel = new Label("📝");
+        iconLabel.getStyleClass().add("questionaire-icon");
         
         VBox questionaireDetails = new VBox(3);
         Label questionaireTitle = createStyledLabel(questionaire.getTitle(), "questionaire-title");
@@ -512,12 +526,21 @@ public class Courses implements Initializable {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         
-        Button startButton = new Button("Iniciar");
+        // Verifica se o questionário já foi respondido
+        boolean isCompleted = checkQuestionaireCompletion(questionaire);
+        
+        Button startButton = new Button(isCompleted ? "Revisar" : "Iniciar");
         startButton.getStyleClass().add("outline-button");
         startButton.setOnAction(e -> openQuestionaire(questionaire));
         
-        questionaireBox.getChildren().addAll(checkButton, questionaireDetails, spacer, startButton);
+        questionaireBox.getChildren().addAll(iconLabel, questionaireDetails, spacer, startButton);
         return questionaireBox;
+    }
+
+    private boolean checkQuestionaireCompletion(Questionaire questionaire) {
+        // Implementar lógica para verificar se o questionário já foi respondido
+        // Por enquanto, retorna false como padrão
+        return false;
     }
 
     private void openQuestionaire(Questionaire questionaire) {

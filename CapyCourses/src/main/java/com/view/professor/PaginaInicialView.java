@@ -65,9 +65,14 @@ public class PaginaInicialView implements Initializable {
     }
 
     private void loadCourses(){
-        courseContainer.getChildren().clear();
-        LoadCourses loadCourses = new LoadCourses();
-        courseContainer.getChildren().add(loadCourses.loadCoursesStarted());
+        try {
+            courseContainer.getChildren().clear();
+            LoadCourses loadCourses = new LoadCourses();
+            GridPane coursesGrid = loadCourses.loadCoursesStarted();
+            courseContainer.getChildren().add(coursesGrid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
