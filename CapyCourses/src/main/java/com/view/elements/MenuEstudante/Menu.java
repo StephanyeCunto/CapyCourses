@@ -83,7 +83,7 @@ public class Menu {
     private void fillMap() {
         buttonMenu.put("/com/estudante/paginaInicial", "Cursos Disponíveis");
         buttonMenu.put("/com/estudante/meusCursos/paginaMeusCursos", "Meus Cursos");
-        buttonMenu.put("/com/paginaProgresso", "Progresso");
+        buttonMenu.put("/com/estudante/progresso/paginaProgressoGeral", "Progresso");
         buttonMenu.put("/com/estudante/certificados/paginaCertificados", "Certificados");
         buttonMenu.put("/com/estudante/biblioteca/paginaBiblioteca", "Biblioteca");
         buttonMenu.put("/com/estudante/forum/paginaForum", "Forum");
@@ -164,6 +164,7 @@ public class Menu {
             e.printStackTrace();
         }
     }
+    
 private void animateSceneTransition(Scene currentScene, Scene newScene, Stage stage) {
  
 }

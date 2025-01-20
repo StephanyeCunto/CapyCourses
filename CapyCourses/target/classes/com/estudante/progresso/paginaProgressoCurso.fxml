@@ -4,17 +4,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
-
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+
 <GridPane stylesheets="@style/dark/style.css" maxHeight="-Infinity"
   maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-  prefWidth="1280.0"
-  style="-fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);"
+  prefWidth="1280.0" fx:id="container"
+  styleClass="container" fx:controller="com.view.estudante.PaginaProgressoCurso"
   xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="240.0" />
@@ -25,71 +26,54 @@
   </rowConstraints>
   <children>
     <VBox fx:id="sideMenu" styleClass="sideMenu" spacing="15">
+      <Button fx:id="homeButton" text="Voltar" styleClass="outline-button" />
+      <VBox spacing="10" styleClass="quick-tips">
+        <Label styleClass="section-title" text="Frases Motivacionais" />
+        <Label styleClass="tip-text"
+          text="• O sucesso nasce da vontade, determinação e persistência"
+          wrapText="true" />
+        <Label styleClass="tip-text"
+          text="• Cada novo curso é um passo em direção aos seus objetivos"
+          wrapText="true" />
+        <Label styleClass="tip-text" text="• Conhecimento é o melhor investimento"
+          wrapText="true" />
+      </VBox>
+      <VBox spacing="10" styleClass="quick-tips">
+        <Label styleClass="section-title" text="Dicas de Estudo" />
+        <Label styleClass="tip-text" text="• Faça anotações durante as aulas"
+          wrapText="true" />
+        <Label styleClass="tip-text" text="• Pratique os exercícios regularmente"
+          wrapText="true" />
+        <Label styleClass="tip-text" text="• Mantenha uma rotina de estudos"
+          wrapText="true" />
+      </VBox>
     </VBox>
     <ScrollPane fitToWidth="true" fx:id="courseScrollPane" GridPane.columnIndex="1"
       style="-fx-background: transparent; -fx-background-color: transparent;">
       <content>
         <VBox spacing="20" styleClass="main-container">
-          <HBox spacing="20" alignment="CENTER">
+          <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
+            fx:id="toggleButtonHBox">
             <padding>
-              <Insets left="30" right="30" top="30" />
+              <Insets top="30" right="30" />
             </padding>
-
-            <VBox styleClass="stat-card-container" HBox.hgrow="ALWAYS">
-              <Label text="Progresso Geral" styleClass="stat-card-container-text" />
-              <Label fx:id="progressPercentage" text="75%" styleClass="stat-card-container-static" />
-            </VBox>
-
-            <VBox styleClass="stat-card-container" HBox.hgrow="ALWAYS">
-              <Label text="Módulos Completados" styleClass="stat-card-container-text" />
-              <Label fx:id="completedModules" text="6/8" styleClass="stat-card-container-static" />
-            </VBox>
-
-            <VBox styleClass="stat-card-container" HBox.hgrow="ALWAYS">
-              <Label text="Tempo Total de Estudo" styleClass="stat-card-container-text" />
-              <Label fx:id="totalStudyTime" text="32h" styleClass="stat-card-container-static" />
-            </VBox>
+            <StackPane alignment="CENTER" fx:id="toggleButtonStackPane"
+              styleClass="theme-toggle-switch" prefWidth="50" prefHeight="25">
+              <Rectangle fx:id="background" width="50" height="25" styleClass="toggle-background"
+                arcWidth="25" arcHeight="25" />
+              <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+                <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+                <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15" visible="true" />
+                <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15" visible="false" />
+              </StackPane>
+              <ToggleButton fx:id="toggleButton" mnemonicParsing="false"
+                styleClass="toggle-button" />
+            </StackPane>
           </HBox>
-
-          <HBox spacing="20" alignment="CENTER">
-            <padding>
-              <Insets left="30" right="30" />
-            </padding>
-
-            <!-- Gráfico de Pizza - Distribuição de Atividades -->
-            <PieChart fx:id="activityDistribution" title="Distribuição de Atividades"
-              legendVisible="true" labelsVisible="true" HBox.hgrow="ALWAYS"
-              styleClass="stat-card-container" />
-
-            <!-- Gráfico de Barras - Progresso por Módulo -->
-            <BarChart fx:id="moduleProgress" title="Progresso por Módulo" HBox.hgrow="ALWAYS"
-              styleClass="stat-card-container">
-              <xAxis>
-                <CategoryAxis label="Módulos" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis label="Progresso (%)" />
-              </yAxis>
-            </BarChart>
-          </HBox>
-
-          <VBox spacing="10" styleClass="stat-card-container-text">
-            <padding>
-              <Insets left="30" right="30" bottom="30" />
-            </padding>
-
-            <Label text="Atividades Recentes" styleClass="activities-title" />
-            <TableView fx:id="recentActivities" VBox.vgrow="ALWAYS" styleClass="table-view-custom">
-              <columns>
-                <TableColumn text="Data" fx:id="dateColumn"  prefWidth="120"/>
-                <TableColumn text="Atividade" fx:id="activityColumn"  prefWidth="300"/>
-                <TableColumn text="Curso" fx:id="courseColumn" prefWidth="250"/>
-                <TableColumn text="Módulo" fx:id="moduleColumn"  prefWidth="250"/>
-                <TableColumn text="Status" fx:id="statusColumn"  prefWidth="120"/>
-              </columns>
-            </TableView>
-
+          <VBox fx:id="content">
+         
           </VBox>
+
         </VBox>
       </content>
     </ScrollPane>

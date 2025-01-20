@@ -24,7 +24,7 @@
 
 <GridPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="800"
     styleClass="main-container"
-    xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+    xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.view.professor.CadastroCurso">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="250" prefWidth="250" />

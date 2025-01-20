@@ -12,7 +12,10 @@ import com.view.elements.Certificado.GeradorCertificado;
 import com.service.StudentCourseService;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
@@ -72,6 +75,9 @@ public class LoadCourses {
             case "todos":
                 courses = paginaMeusCursosController.loadMyCourses();
                 break;
+            case "todosProgress":
+                courses = paginaMeusCursosController.loadMyCourses();
+                break;
             case "started":
                 courses = paginaMeusCursosController.loadMyCoursesStarted();
                 break;
@@ -88,14 +94,14 @@ public class LoadCourses {
         int i = 0;
 
         for (PaginaPrincipalDTO course : courses) {
-            VBox courseBox = createCourseBox(course, "started");
+            VBox courseBox = createCourseBox(course, status);
             courseGrid.add(courseBox, i % numColumns, i / numColumns);
             i++;
         }
 
         courseContainer.widthProperty().addListener((obs, oldVal, newVal) -> {
             int columns = calculateColumns();
-            reorganizeGrid(columns, "started");
+            reorganizeGrid(columns, status);
         });
 
         courseGrid.setAlignment(Pos.CENTER);
@@ -163,6 +169,7 @@ public class LoadCourses {
         ImageView courseImage = createCourseImage();
 
         if (status.equals("started") || status.equals("completed") || status.equals("todos")
+                || status.equals("todosProgress")
                 || status.equals("completedCertificado")) {
             HBox tagContainer = new HBox();
             tagContainer.setAlignment(Pos.CENTER_RIGHT);
@@ -189,8 +196,14 @@ public class LoadCourses {
             HBox buttonContainer = createButtonContainer(course, status);
             content.getChildren().addAll(courseImage, categoryLabel, titleLabel, authorLabel, courseInfo, descLabel,
                     statusInfo, buttonContainer);
-        } else if (status.equals("started") || status.equals("completed") || status.equals("todos")) {
-            HBox buttonContainer = createButtonContainer(course, status);
+        } else if (status.equals("started") || status.equals("completed") || status.equals("todos")
+                || status.equals("todosProgress")) {
+            HBox buttonContainer = new HBox();
+            if (status.equals("todosProgress")) {
+                buttonContainer = createButtonContainer(course, "todosProgress");
+            } else {
+                buttonContainer = createButtonContainer(course, "started");
+            }
             ProgressBar progressBarCourse = new ProgressBar();
             progressBarCourse.getStyleClass().add("progress-bar");
             String cssFile = getClass().getResource("/com/progressbar.css").toExternalForm();
@@ -309,9 +322,38 @@ public class LoadCourses {
             }
             Button continueButton = createContinueButton(course, status);
             buttonContainer.getChildren().addAll(continueButton);
+        } else if (status.equals("todosProgress")) {
+            Button progressButton = createButtonProgress();
+            buttonContainer.getChildren().add(progressButton);
         }
 
         return buttonContainer;
+    }
+
+    private Button createButtonProgress() {
+        Button button = new Button("Ver Progresso");
+        button.getStyleClass().add("simple-button");
+        button.setOnMouseClicked(e -> {
+            redirectTo(button);
+        });
+        return button;
+    }
+
+    private void redirectTo(Button button) {
+        try {
+            Stage stage = (Stage) button.getScene().getWindow();
+            String pageNext = "/com/estudante/progresso/paginaProgressoCurso.fxml";
+
+            Parent root = FXMLLoader.load(getClass().getResource(pageNext));
+            Scene currentScene = stage.getScene();
+            Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
+
+            stage.setScene(newScene);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private Button createCertificadoButton(PaginaPrincipalDTO course) {
@@ -430,7 +472,7 @@ public class LoadCourses {
             try {
                 StudentCourseService service = new StudentCourseService();
                 boolean inscrito = service.inscreverEmCurso(course.getTitle());
-                
+
                 if (inscrito) {
                     // Atualizar a interface
                     courseContainer.getChildren().clear();
