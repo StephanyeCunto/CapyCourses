@@ -41,14 +41,12 @@ public class Menu {
     public VBox createVBox() {
         VBox vbox = new VBox(12);
         Button meusCursosBtn = createButton("Meus Cursos");
-        Button cadastrarCursoBtn = createButton("Cadastrar Curso");
-        Button progressoBtn = createButton("Progresso");
         Button bibliotecaBtn = createButton("Biblioteca");
         Button forumBtn = createButton("Forum");
         Button configuracoesBtn = createButton("Configurações");
         Button sairBtn = createButton("Sair");
 
-        vbox.getChildren().addAll(meusCursosBtn, cadastrarCursoBtn, progressoBtn, bibliotecaBtn, forumBtn, configuracoesBtn);
+        vbox.getChildren().addAll(meusCursosBtn, bibliotecaBtn, forumBtn, configuracoesBtn);
         Platform.runLater(() -> {
             Scene currentScene = sairBtn.getScene();
             double sceneHeight = currentScene.getHeight();
@@ -80,11 +78,9 @@ public class Menu {
 
     private void fillMap() {
         buttonMenu.put("/com/professor/paginaCursos", "Meus Cursos");
-        buttonMenu.put("/com/professor/paginaCadastroCurso", "Cadastrar Curso");
-        buttonMenu.put("/com/professor/progresso/paginaProgressoGeral", "Progresso");
-        buttonMenu.put("/com/elements/biblioteca/paginaBiblioteca", "Biblioteca");
+        buttonMenu.put("/com/professor/biblioteca/paginaBiblioteca", "Biblioteca");
         buttonMenu.put("/com/professor/forum/paginaForum", "Forum");
-        buttonMenu.put("/com/elements/perfil", "Configurações");
+        buttonMenu.put("/com/professor/perfil/perfil", "Configurações");
         buttonMenu.put("/com/login_cadastro/paginaLogin", "Sair");
     }
 
