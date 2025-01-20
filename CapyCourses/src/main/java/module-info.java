@@ -8,19 +8,14 @@ module com {
     requires com.fasterxml.jackson.databind;
     requires itextpdf;
     requires bcrypt;
-    //requires commons.email;
     requires javax.mail;
     requires activation;
 
-
-    
     requires java.desktop;
     requires org.controlsfx.controls;
     requires javafx.web;
     requires org.apache.pdfbox;
     requires javafx.swing;
-    
-
     requires transitive java.persistence;
     requires org.hibernate.orm.core;
     requires java.sql;
@@ -35,17 +30,14 @@ module com {
     opens com.view.elements.Certificado to javafx.fxml;
     opens com.view.elements.Courses to javafx.fxml;
     opens com.view.elements.MenuEstudante to javafx.fxml;
+    opens com.view.elements.MenuProfessor to javafx.fxml;
     opens com.view.login_cadastro to javafx.fxml;
     opens com.view.login_cadastro.cadastro to javafx.fxml;
     opens com.view.login_cadastro.elements to javafx.fxml;
     opens com.view.professor to javafx.fxml;
     opens com.view.estudante to javafx.fxml;
     opens com.view.elements.Perfil to javafx.fxml;
-
-
    
-    
-    
     opens com.model.login_cadastro to org.hibernate.orm.core;
     opens com.model.elements to org.hibernate.orm.core;
     opens com.model.elements.Course to org.hibernate.orm.core;
@@ -72,12 +64,10 @@ module com {
     exports com.view.elements.Certificado;
     exports com.view.elements.Courses;
     exports com.view.elements.MenuEstudante;
+    exports com.view.elements.MenuProfessor;
     exports com.view.elements.Perfil to javafx.fxml;
     exports com.model.login_cadastro to com.fasterxml.jackson.databind;
     exports com.controller.login_cadastro to com.fasterxml.jackson.databind;
     exports com.controller.elements to com.fasterxml.jackson.databind;
     exports com.util to org.hibernate.orm.core;
-    
-    
 }
-

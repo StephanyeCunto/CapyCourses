@@ -128,7 +128,7 @@ public class Login extends BaseLoginCadastro implements Initializable {
                     super.redirectTo("/com/estudante/paginaInicial/paginaInicial.fxml", stage);
                     break;
                 case "TEACHER":
-                    super.redirectTo("/com/professor/paginaCadastroCurso.fxml", stage);
+                    super.redirectTo("/com/professor/paginaCursos.fxml", stage);
                     break;
                 default:
                     showError();
