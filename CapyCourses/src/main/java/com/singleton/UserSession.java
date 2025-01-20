@@ -7,6 +7,7 @@ public class UserSession {
     private boolean started = false;
     private String userName;
     private String userType;
+    private String currentCourseTitle;
 
     private UserSession() {}
 
@@ -45,7 +46,6 @@ public class UserSession {
         this.started = false;
     }
 
-    // Método para verificar se a sessão está válida
     public boolean isSessionValid() {
         return userEmail != null && !userEmail.trim().isEmpty();
     }
@@ -76,5 +76,13 @@ public class UserSession {
 
         this.userType = userType;
 
+    }
+
+    public void setCurrentCourseTitle(String title) {
+        this.currentCourseTitle = title;
+    }
+
+    public String getCurrentCourseTitle() {
+        return currentCourseTitle;
     }
 }

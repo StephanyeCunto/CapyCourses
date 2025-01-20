@@ -20,6 +20,10 @@ import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import java.io.IOException;
 
 public class LoadCourses {
     @FXML
@@ -346,6 +350,37 @@ public class LoadCourses {
             Button button = new Button("Continuar Curso");
             button.getStyleClass().add("outline-button");
             button.setOnMouseClicked(e -> {
+                try {
+                    // Armazena o título do curso na sessão
+                    UserSession.getInstance().setCurrentCourseTitle(course.getTitle());
+                    
+                    // Adicione um print para debug
+                    System.out.println("Título do curso armazenado: " + UserSession.getInstance().getCurrentCourseTitle());
+                    
+                    // Carrega a página do curso
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elements/curso/curso.fxml"));
+                    
+                    // Adicione um print para debug do erro
+                    if (loader.getLocation() == null) {
+                        System.out.println("FXML não encontrado!");
+                        return;
+                    }
+                    
+                    Parent root = loader.load();
+                    
+                    Scene currentScene = button.getScene();
+                    Stage stage = (Stage) currentScene.getWindow();
+                    Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
+                    stage.setScene(newScene);
+                    stage.show();
+                } catch (IOException ex) {
+                    ex.printStackTrace(); // Adicione isso para ver o stack trace completo
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Erro");
+                    alert.setHeaderText("Erro ao abrir curso");
+                    alert.setContentText("Não foi possível abrir a página do curso: " + ex.getMessage());
+                    alert.showAndWait();
+                }
             });
             button.setPrefHeight(35);
             return button;
@@ -401,7 +436,6 @@ public class LoadCourses {
                     courseContainer.getChildren().clear();
                     loadCoursesNotStarted();
                     
-                    // Mostrar mensagem de sucesso
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Sucesso");
                     alert.setHeaderText("Inscrição realizada");
@@ -418,6 +452,7 @@ public class LoadCourses {
                 alert.showAndWait();
             }
         });
+        
         button.setPrefHeight(35);
         return button;
     }

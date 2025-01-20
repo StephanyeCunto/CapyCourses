@@ -26,6 +26,10 @@ public class LessonModal {
     private static final double CONTENT_SPACING = 25;
     private static final double PADDING = 30;
     private static final double HEADER_SPACING = 20;
+    private String currentTitle = "";
+    private String currentDescription = "";
+    private String currentVideoUrl = "";
+    private String currentMaterialUrl = "";
 
     public void updateDimensions(double WIDTH, double HEIGHT) {
         this.WIDTH = WIDTH;
@@ -38,12 +42,11 @@ public class LessonModal {
         modalStage.initModality(Modality.APPLICATION_MODAL);
         modalStage.initStyle(StageStyle.TRANSPARENT);
         modalStage.initOwner(owner);
-        loadModel();
         setupCloseAnimation();
     }
 
     private void loadModel() {
-        showModel();
+        // Remover este método ou deixá-lo vazio
     }
 
     private void showModel() {
@@ -84,20 +87,20 @@ public class LessonModal {
         content.setAlignment(Pos.TOP_LEFT);
 
         Label descriptionLabel = createStyledLabel(
-            "Como configurar o ambiente para java no vscode?", 
+            currentDescription, 
             "Segoe UI", 
             18
         );
         descriptionLabel.getStyleClass().add("initials-label");
 
         Label videoAulaLabel = createVideoAulaLabel(
-            "https://www.youtube.com/watch?v=Hl-zzrqQoSE",
+            currentVideoUrl,
             "Video Aula"
         );
         videoAulaLabel.getStyleClass().add("page-title");
 
         Label complementoLabel = createVideoAulaLabel(
-            "https://www.youtube.com/watch?v=Hl-zzrqQoSE",
+            currentMaterialUrl,
             "Material Complementar"
         );
         complementoLabel.getStyleClass().add("page-title");
@@ -156,7 +159,7 @@ public class LessonModal {
         header.setPadding(new Insets(PADDING, PADDING, 0, PADDING));
 
         Label titleLabel = createStyledLabel(
-            "Aula 1 - Introdução a Java",
+            currentTitle,
             "Segue UI Bold",
             28
         );
@@ -173,7 +176,6 @@ public class LessonModal {
         HBox.setHgrow(spacer, Priority.ALWAYS);
         
         headerContainer.getChildren().addAll(titleLabel, spacer, closeButton);
-
         header.getChildren().add(headerContainer);
         return header;
     }
@@ -235,6 +237,24 @@ public class LessonModal {
     }
 
     public void show() {
-        modalStage.show();
+        // Criar e mostrar o modal apenas quando tivermos os dados
+        showModel();
+    }
+
+    public void setLessonData(String title, String description, String videoUrl, String materialUrl) {
+        this.currentTitle = title;
+        this.currentDescription = description;
+        this.currentVideoUrl = videoUrl;
+        this.currentMaterialUrl = materialUrl;
+    }
+
+    private void updateLink(Label label, String url) {
+        label.setOnMouseClicked(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI(url));
+            } catch (IOException | URISyntaxException ex) {
+                System.err.println("Erro ao abrir o link: " + ex.getMessage());
+            }
+        });
     }
 }

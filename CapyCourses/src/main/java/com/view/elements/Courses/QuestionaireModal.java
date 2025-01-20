@@ -1,7 +1,11 @@
 package com.view.elements.Courses;
 
 import com.view.Modo;
-
+import com.model.elements.Course.Question;
+import com.model.login_cadastro.Student;
+import com.model.elements.Course.StudentAnswer;
+import com.util.JPAUtil;
+import javafx.scene.control.Alert;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,6 +31,16 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
 public class QuestionaireModal {
     private final Stage modalStage;
     private double WIDTH;
@@ -34,20 +48,29 @@ public class QuestionaireModal {
     private static final double CONTENT_SPACING = 25;
     private static final double PADDING = 30;
     private static final double HEADER_SPACING = 20;
+    private VBox questionsContainer;
+    private String title;
+    private String description;
+    private String score;
+    private List<Question> questions;
+    private Student currentStudent;
+    private Map<Question, Object> answers = new HashMap<>(); // Armazena as respostas (RadioButton, CheckBox ou TextArea)
+
+    public QuestionaireModal() {
+        // Inicialização básica do modal
+        super();
+        updateDimensions(0, 0);
+        modalStage = new Stage();
+        modalStage.initModality(Modality.APPLICATION_MODAL);
+        modalStage.initStyle(StageStyle.TRANSPARENT);
+        questionsContainer = new VBox(10);
+        loadModel();
+        setupCloseAnimation();
+    }
 
     public void updateDimensions(double WIDTH, double HEIGHT) {
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
-    }
-
-    public QuestionaireModal(Window owner) {
-        updateDimensions(owner.getWidth(), owner.getHeight());
-        modalStage = new Stage();
-        modalStage.initModality(Modality.APPLICATION_MODAL);
-        modalStage.initStyle(StageStyle.TRANSPARENT);
-        modalStage.initOwner(owner);
-        loadModel();
-        setupCloseAnimation();
     }
 
     private void loadModel() {
@@ -91,179 +114,38 @@ public class QuestionaireModal {
         content.setPadding(new Insets(0, PADDING, PADDING, PADDING));
         content.setAlignment(Pos.TOP_LEFT);
 
+        // Cabeçalho do questionário com dados reais
+        Label titleLabel = new Label(this.title);
+        titleLabel.getStyleClass().add("title");
 
-        Label pergunta1 = createStyledLabel(
-            "Como configurar o ambiente para java no vscode?", 
-            "Segoe UI", 
-            18
-        );
+        Label descriptionLabel = new Label(this.description);
+        descriptionLabel.getStyleClass().add("description");
 
-        HBox questionNumberBox1 = new HBox(10);
-        questionNumberBox1.setAlignment(Pos.CENTER_LEFT);
+        Label scoreLabel = new Label("Pontuação: " + this.score);
+        scoreLabel.getStyleClass().add("score");
 
-        StackPane circleContainer = new StackPane();
-        Region circle = new Region();
-        circle.setStyle(" -fx-background-radius: 50%; -fx-min-width: 30; -fx-min-height: 30; -fx-max-width: 30; -fx-max-height: 30;");
-        circle.getStyleClass().add("avatar-circle");
+        content.getChildren().addAll(titleLabel, descriptionLabel, scoreLabel);
 
-        Label numberLabel = new Label("1");
-        numberLabel.setTextFill(Color.WHITE);
-        numberLabel.setStyle("-fx-font-weight: bold;");
+        // Container para as questões
+        ScrollPane scrollPane = new ScrollPane();
+        questionsContainer.getChildren().clear();
 
-        circleContainer.getChildren().addAll(circle, numberLabel);
-        questionNumberBox1.getChildren().addAll(circleContainer, pergunta1);
+        // Adiciona cada questão
+        for (Question question : this.questions) {
+            VBox questionBox = createQuestionBox(question);
+            questionsContainer.getChildren().add(questionBox);
+        }
 
+        scrollPane.setContent(questionsContainer);
+        scrollPane.setFitToWidth(true);
+        content.getChildren().add(scrollPane);
 
-        pergunta1.getStyleClass().add("initials-label");
+        Button submitButton = new Button("Enviar Respostas");
+        submitButton.getStyleClass().add("submit-button");
+        submitButton.setOnAction(e -> handleSubmit());
 
-        Label valor1= createStyledLabel(
-            "1 pts", 
-            "Segoe UI", 
-            14
-        );
+        content.getChildren().add(submitButton);
 
-        valor1.getStyleClass().add("progress-label");
-
-        TextArea resposta1_1 = new TextArea();
-        resposta1_1.getStyleClass().add("custom-text-area");
-
-        Label pergunta2 = createStyledLabel("Qual a máquina virtual do Java?","Segoe UI", 18);
-        pergunta2.getStyleClass().add("initials-label");
-
-        HBox questionNumberBox2 = new HBox(10);
-        questionNumberBox2.setAlignment(Pos.CENTER_LEFT);
-
-        StackPane circleContainer2 = new StackPane();
-        Region circle2 = new Region();
-        circle2.setStyle(" -fx-background-radius: 50%; -fx-min-width: 30; -fx-min-height: 30; -fx-max-width: 30; -fx-max-height: 30;");
-        circle2.getStyleClass().add("avatar-circle");
-
-        Label numberLabel2 = new Label("2");
-        numberLabel2.setTextFill(Color.WHITE);
-        numberLabel2.setStyle("-fx-font-weight: bold;");
-
-        circleContainer2.getChildren().addAll(circle2, numberLabel2);
-        questionNumberBox2.getChildren().addAll(circleContainer2, pergunta2);
-
-
-        Label valor2= createStyledLabel(
-            "2 pts", 
-            "Segoe UI", 
-            14
-        );
-
-        valor2.getStyleClass().add("progress-label");
-
-        HBox resposta1_2HBox = new HBox(10);
-        CheckBox resposta1_2CheckBox = new CheckBox();
-        resposta1_2CheckBox.getStyleClass().add("custom-checkbox");
-
-        Label resposta1_2Label = createStyledLabel("JVM (Java Virtual Machine)", "Segoe UI", 14);
-        resposta1_2Label.getStyleClass().add("professor-name");
-        resposta1_2HBox.getChildren().addAll(resposta1_2CheckBox, resposta1_2Label);
-
-        HBox resposta2_2HBox = new HBox(10);
-        CheckBox resposta2_2CheckBox = new CheckBox();
-        resposta2_2CheckBox.getStyleClass().add("custom-checkbox");
-
-        Label resposta2_2Label = createStyledLabel("JRE (Java Runtime Environment)", "Segoe UI", 14);
-        resposta2_2Label.getStyleClass().add("professor-name");
-        resposta2_2HBox.getChildren().addAll(resposta2_2CheckBox, resposta2_2Label);
-
-        HBox resposta3_2HBox = new HBox(10);
-        CheckBox resposta3_2CheckBox = new CheckBox();
-        resposta3_2CheckBox.getStyleClass().add("custom-checkbox");
-
-        Label resposta3_2Label = createStyledLabel("JDK (Java Development Kit)", "Segoe UI", 14);
-        resposta3_2Label.getStyleClass().add("professor-name");
-        resposta3_2HBox.getChildren().addAll(resposta3_2CheckBox, resposta3_2Label);
-
-        VBox alternativasBox = new VBox(10);
-        alternativasBox.getChildren().addAll(resposta1_2HBox, resposta2_2HBox, resposta3_2HBox);
-
-        Label pergunta3 = createStyledLabel("Qual a máquina virtual do Java?","Segoe UI", 18);
-        pergunta3.getStyleClass().add("initials-label");
-
-
-        HBox questionNumberBox3 = new HBox(10);
-        questionNumberBox3.setAlignment(Pos.CENTER_LEFT);
-
-        StackPane circleContainer3 = new StackPane();
-        Region circle3 = new Region();
-        circle3.setStyle(" -fx-background-radius: 50%; -fx-min-width: 30; -fx-min-height: 30; -fx-max-width: 30; -fx-max-height: 30;");
-        circle3.getStyleClass().add("avatar-circle");
-
-        Label numberLabel3 = new Label("3");
-        numberLabel3.setTextFill(Color.WHITE);
-        numberLabel3.setStyle("-fx-font-weight: bold;");
-
-        circleContainer3.getChildren().addAll(circle3, numberLabel3);
-        questionNumberBox3.getChildren().addAll(circleContainer3, pergunta3);
-        
-
-        Label valor3= createStyledLabel(
-            "2 pts", 
-            "Segoe UI", 
-            14
-        );
-
-        valor3.getStyleClass().add("progress-label");
-
-        HBox resposta1_3HBox = new HBox(10);
-        RadioButton resposta1_3Radio = new RadioButton();
-        resposta1_3Radio.getStyleClass().add("custom-radio");
-        Label resposta1_3Label = createStyledLabel("JVM (Java Virtual Machine)", "Segoe UI", 14);
-        resposta1_3Label.getStyleClass().add("professor-name");
-        resposta1_3HBox.getChildren().addAll(resposta1_3Radio, resposta1_3Label);
-
-        HBox resposta2_3HBox = new HBox(10);
-        RadioButton resposta2_3Radio = new RadioButton();
-        resposta2_3Radio.getStyleClass().add("custom-radio");
-        Label resposta2_3Label = createStyledLabel("JRE (Java Runtime Environment)", "Segoe UI", 14);
-        resposta2_3Label.getStyleClass().add("professor-name");
-        resposta2_3HBox.getChildren().addAll(resposta2_3Radio, resposta2_3Label);
-
-        HBox resposta3_3HBox = new HBox(10);
-        RadioButton resposta3_3Radio = new RadioButton();
-        resposta3_3Radio.getStyleClass().add("custom-radio");
-        Label resposta3_3Label = createStyledLabel("JDK (Java Development Kit)", "Segoe UI", 14);
-        resposta3_3Label.getStyleClass().add("professor-name");
-        resposta3_3HBox.getChildren().addAll(resposta3_3Radio, resposta3_3Label);
-
-        ToggleGroup toggleGroup = new ToggleGroup();
-        resposta1_3Radio.setToggleGroup(toggleGroup);
-        resposta2_3Radio.setToggleGroup(toggleGroup);
-        resposta3_3Radio.setToggleGroup(toggleGroup);
-
-        VBox alternativasBox2 = new VBox(10);
-        alternativasBox2.getChildren().addAll(resposta1_3HBox, resposta2_3HBox, resposta3_3HBox);
-
-
-        Button completeButton = new Button("Enviar Respostas");
-        completeButton.getStyleClass().add("simple-button");
-
-        Region spacer = new Region();
-        VBox.setVgrow(spacer, Priority.ALWAYS);
-
-        ScrollPane sPane = new ScrollPane();
-        sPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
-        VBox contentBox = new VBox(10);
-        contentBox.getChildren().addAll(
-            questionNumberBox1,
-            valor1,
-            resposta1_1,
-            questionNumberBox2,
-            valor2,
-            alternativasBox,
-            questionNumberBox3,
-            valor3,
-            alternativasBox2,
-            spacer,
-            completeButton
-        );
-        sPane.setContent(contentBox);
-
-        content.getChildren().add(sPane);
         return content;
     }
 
@@ -348,6 +230,188 @@ public class QuestionaireModal {
             fade.setOnFinished(e -> modalStage.hide());
             fade.play();
         });
+    }
+
+    public void setQuestionaireData(String title, String description, String score, List<Question> questions, Student student) {
+        this.title = title;
+        this.description = description;
+        this.score = score;
+        this.questions = questions;
+        this.currentStudent = student;
+        loadModel();
+    }
+
+    private VBox createQuestionBox(Question question) {
+        VBox questionBox = new VBox(10);
+        questionBox.getStyleClass().add("question-box");
+
+        // Número e texto da questão
+        Label questionLabel = new Label(question.getNumber() + ". " + question.getText());
+        questionLabel.getStyleClass().add("question-text");
+        questionLabel.setWrapText(true);
+
+        VBox answersBox = new VBox(5);
+        
+        switch (question.getType().toLowerCase()) {
+            case "multiple_choice":
+                if ("true".equals(question.getMultipleCorrectAnswers())) {
+                    createMultipleAnswerQuestion(answersBox, question);
+                } else {
+                    createSingleAnswerQuestion(answersBox, question);
+                }
+                break;
+            case "text":
+                createTextQuestion(answersBox, question);
+                break;
+        }
+
+        // Pontuação da questão
+        Label scoreLabel = new Label("Pontuação: " + question.getScore());
+        scoreLabel.getStyleClass().add("question-score");
+
+        questionBox.getChildren().addAll(questionLabel, answersBox, scoreLabel);
+        return questionBox;
+    }
+
+    private void createSingleAnswerQuestion(VBox container, Question question) {
+        ToggleGroup group = new ToggleGroup();
+        String[] answers = question.getAnswers().split(",");
+        
+        for (String answer : answers) {
+            RadioButton rb = new RadioButton(answer.trim());
+            rb.setToggleGroup(group);
+            rb.setWrapText(true);
+            container.getChildren().add(rb);
+        }
+        
+        // Armazena o ToggleGroup para recuperar a resposta depois
+        this.answers.put(question, group);
+    }
+
+    private void createMultipleAnswerQuestion(VBox container, Question question) {
+        List<CheckBox> checkBoxes = new ArrayList<>();
+        String[] answers = question.getAnswers().split(",");
+        
+        for (String answer : answers) {
+            CheckBox cb = new CheckBox(answer.trim());
+            cb.setWrapText(true);
+            container.getChildren().add(cb);
+            checkBoxes.add(cb);
+        }
+        
+        // Armazena a lista de CheckBoxes para recuperar as respostas depois
+        this.answers.put(question, checkBoxes);
+    }
+
+    private void createTextQuestion(VBox container, Question question) {
+        TextArea textArea = new TextArea();
+        textArea.setWrapText(true);
+        textArea.setPrefRowCount(3);
+        
+        if (question.getEvaluationCriteria() != null) {
+            Label criteriaLabel = new Label("Critérios de avaliação: " + question.getEvaluationCriteria());
+            criteriaLabel.getStyleClass().add("criteria-text");
+            container.getChildren().addAll(textArea, criteriaLabel);
+        } else {
+            container.getChildren().add(textArea);
+        }
+        
+        // Armazena o TextArea para recuperar a resposta depois
+        this.answers.put(question, textArea);
+    }
+
+    private void handleSubmit() {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            
+            double totalScore = 0;
+            
+            for (Question question : questions) {
+                StudentAnswer studentAnswer = new StudentAnswer();
+                studentAnswer.setStudent(currentStudent);
+                studentAnswer.setQuestion(question);
+                studentAnswer.setQuestionaire(question.getQuestionaire());
+                
+                Object answerComponent = answers.get(question);
+                String answerText = "";
+                boolean isCorrect = false;
+                
+                if (answerComponent instanceof ToggleGroup) {
+                    // Questão de única escolha
+                    RadioButton selectedButton = (RadioButton) ((ToggleGroup) answerComponent).getSelectedToggle();
+                    if (selectedButton != null) {
+                        answerText = selectedButton.getText();
+                        isCorrect = answerText.equals(question.getCorrectAnswers());
+                    }
+                } else if (answerComponent instanceof List) {
+                    // Questão de múltipla escolha
+                    @SuppressWarnings("unchecked")
+                    List<CheckBox> checkBoxes = (List<CheckBox>) answerComponent;
+                    List<String> selectedAnswers = checkBoxes.stream()
+                        .filter(CheckBox::isSelected)
+                        .map(CheckBox::getText)
+                        .collect(Collectors.toList());
+                    
+                    answerText = String.join(", ", selectedAnswers);
+                    String[] correctAnswers = question.getCorrectAnswers().split(",");
+                    isCorrect = Arrays.asList(correctAnswers).containsAll(selectedAnswers) 
+                               && selectedAnswers.size() == correctAnswers.length;
+                } else if (answerComponent instanceof TextArea) {
+                    // Questão dissertativa
+                    answerText = ((TextArea) answerComponent).getText();
+                    // Questões dissertativas precisam ser corrigidas manualmente
+                    isCorrect = false;
+                }
+                
+                studentAnswer.setAnswer(answerText);
+                studentAnswer.setCorrect(isCorrect);
+                studentAnswer.setScore(isCorrect ? question.getScore() : 0);
+                
+                if (isCorrect) {
+                    totalScore += question.getScore();
+                }
+                
+                em.persist(studentAnswer);
+            }
+            
+            // Atualiza o progresso do aluno no curso
+            updateStudentProgress(totalScore);
+            
+            em.getTransaction().commit();
+            
+            showSuccessMessage("Questionário enviado com sucesso!", 
+                             "Sua pontuação: " + totalScore + " pontos");
+            modalStage.close();
+            
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            showErrorMessage("Erro ao salvar respostas", 
+                           "Não foi possível salvar suas respostas: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
+    private void updateStudentProgress(double score) {
+        // Atualiza o progresso do aluno no curso
+        // Implementar lógica específica de acordo com suas necessidades
+    }
+
+    private void showSuccessMessage(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void showErrorMessage(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     public void show() {

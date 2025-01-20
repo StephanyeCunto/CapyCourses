@@ -9,15 +9,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
+import com.model.login_cadastro.Teacher;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import java.util.List;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "courses")
@@ -30,8 +36,8 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Module> modules = new ArrayList<>();
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Module> modules = new HashSet<>();
     
     public void addModule(Module module) {
         modules.add(module);
@@ -59,6 +65,10 @@ public class Course {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private CourseSettings courseSettings;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
     public Course(String title, String description, String instructor, String duration, String level, double rating) {
         this.title = title;
         this.description = description;
@@ -81,5 +91,13 @@ public class Course {
             settings.setCourse(this);
         }
         this.courseSettings = settings;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }

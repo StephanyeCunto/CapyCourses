@@ -79,5 +79,8 @@ module com {
     exports com.util to org.hibernate.orm.core;
     
     
+    
+    
+    
 }
 

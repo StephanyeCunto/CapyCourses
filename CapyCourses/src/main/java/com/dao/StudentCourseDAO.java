@@ -47,4 +47,17 @@ public class StudentCourseDAO {
             return null;
         }
     }
+
+    public void atualizar(StudentCourse obj) {
+        try {
+            this.em.getTransaction().begin();
+            this.em.merge(obj);
+            this.em.getTransaction().commit();
+        } catch (Exception e) {
+            if (this.em.getTransaction().isActive()) {
+                this.em.getTransaction().rollback();
+            }
+            throw e;
+        }
+    }
 } 

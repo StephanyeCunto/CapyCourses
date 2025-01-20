@@ -1,16 +1,38 @@
 package com.view.elements.Courses;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.view.Modo;
+import com.model.elements.Course.Course;
+import com.model.elements.Course.Module;
+import com.model.elements.Course.Lessons;
+import com.model.elements.Course.Questionaire;
+import com.model.login_cadastro.Student;
+import com.model.student.StudentCourse;
+import com.dao.CourseDAO;
+import com.dao.StudentDAO;
+import com.dao.StudentCourseDAO;
+import com.singleton.UserSession;
+import com.util.JPAUtil;
+import com.dao.UserDAO;
+import com.model.login_cadastro.User;
+import com.model.student.LessonProgress;
+import com.dao.LessonProgressDAO;
 
 import javafx.animation.FillTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -26,7 +48,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.Node;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 public class Courses implements Initializable {
     @FXML
@@ -49,9 +75,16 @@ public class Courses implements Initializable {
     private StackPane toggleButtonStackPane;
     @FXML
     private GridPane container;;
+    @FXML
+    private Button backButton;
+
+    private Course currentCourse;
+    private StudentCourse studentCourse;
+    private Student currentStudent;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loadCurrentCourseData();
         mainVBox.getChildren().add(createMain());
         content.getChildren().add(createFullCourseVBox());
         changeMode();
@@ -59,6 +92,58 @@ public class Courses implements Initializable {
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
+    }
+
+    public Courses() {
+        // Adicione um print para debug
+        System.out.println("Construtor Courses chamado");
+    }
+
+    private void loadCurrentCourseData() {
+        try {
+            EntityManager em = JPAUtil.getEntityManager();
+            String courseTitle = UserSession.getInstance().getCurrentCourseTitle();
+            
+            // Carrega o curso com seus módulos
+            currentCourse = em.createQuery(
+                "SELECT c FROM Course c " +
+                "LEFT JOIN FETCH c.modules " +
+                "WHERE c.title = :title", Course.class)
+                .setParameter("title", courseTitle)
+                .getSingleResult();
+            
+            // Carrega as aulas e questionários de cada módulo
+            em.createQuery(
+                "SELECT m FROM Module m " +
+                "LEFT JOIN FETCH m.lessons " +
+                "WHERE m IN :modules", Module.class)
+                .setParameter("modules", currentCourse.getModules())
+                .getResultList();
+                
+            em.createQuery(
+                "SELECT m FROM Module m " +
+                "LEFT JOIN FETCH m.questionaires " +
+                "WHERE m IN :modules", Module.class)
+                .setParameter("modules", currentCourse.getModules())
+                .getResultList();
+            
+            StudentDAO studentDAO = new StudentDAO();
+            StudentCourseDAO studentCourseDAO = new StudentCourseDAO();
+            
+            currentStudent = studentDAO.buscarPorEmail(UserSession.getInstance().getUserEmail());
+            studentCourse = studentCourseDAO.buscarPorAlunoECurso(currentStudent, currentCourse);
+            
+            if (currentCourse == null || studentCourse == null) {
+                throw new RuntimeException("Curso não encontrado");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Erro ao carregar curso");
+            alert.setContentText("Não foi possível carregar os dados do curso: " + e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     private void toggle() {
@@ -119,22 +204,41 @@ public class Courses implements Initializable {
         VBox mainVBox = new VBox(20);
         mainVBox.setPadding(new Insets(10));
 
+        VBox courseInfoCard = createCourseInfoCard();
+        VBox instructorCard = createInstructorCard();
+        
+       
+        List<Module> sortedModules = new ArrayList<>(currentCourse.getModules());
+        sortedModules.sort((m1, m2) -> Integer.compare(m1.getModuleNumber(), m2.getModuleNumber()));
+        
+        VBox modulesCard = createModulesCard();
+        VBox reviewsCard = createReviewsCard();
+
+        mainVBox.getChildren().addAll(courseInfoCard, instructorCard, modulesCard, reviewsCard);
+        return mainVBox;
+    }
+
+    private VBox createCourseInfoCard() {
         VBox courseInfoCard = new VBox(10);
         courseInfoCard.getStyleClass().add("content-card");
 
-        Label courseTitle = new Label("Programação em Java");
+        Label courseTitle = new Label(currentCourse.getTitle());
         courseTitle.getStyleClass().add("card-title");
 
         HBox courseDetails = new HBox(8);
         courseDetails.getChildren().addAll(
-                createStyledLabel("⭐ 4.8", "card-subtitle"),
-                createStyledLabel("•", "card-subtitle"),
-                createStyledLabel("40 horas", "card-subtitle"),
-                createStyledLabel("•", "card-subtitle"),
-                createStyledLabel("Intermediário", "card-subtitle"));
+            createStyledLabel("⭐ " + currentCourse.getRating(), "card-subtitle"),
+            createStyledLabel("•", "card-subtitle"),
+            createStyledLabel(currentCourse.getCourseSettings().getDurationTotal() + " horas", "card-subtitle"),
+            createStyledLabel("•", "card-subtitle"),
+            createStyledLabel(currentCourse.getNivel(), "card-subtitle")
+        );
 
         courseInfoCard.getChildren().addAll(courseTitle, courseDetails);
+        return courseInfoCard;
+    }
 
+    private VBox createInstructorCard() {
         VBox instructorCard = new VBox(15);
         instructorCard.getStyleClass().add("content-card");
 
@@ -148,120 +252,58 @@ public class Courses implements Initializable {
         Circle instructorAvatar = new Circle(30, Color.web("#6c63ff"));
 
         VBox instructorDetails = new VBox(5);
-        instructorDetails.getChildren().addAll(
-                createStyledLabel("Dr. João Silva", "card-title"),
-                createStyledLabel("PhD em Ciência da Computação • 15 anos de experiência", "card-subtitle"));
+        
+        try {
+            // Acessando diretamente através do currentCourse
+            if (currentCourse != null && currentCourse.getName() != null) {
+                // O nome do instrutor está armazenado no campo 'name' do Course
+                instructorDetails.getChildren().addAll(
+                    createStyledLabel(currentCourse.getName(), "card-title"),
+                    createStyledLabel("Professor do curso", "card-subtitle"));
+            } else {
+                instructorDetails.getChildren().addAll(
+                    createStyledLabel("Professor não encontrado", "card-title"),
+                    createStyledLabel("", "card-subtitle"));
+            }
+        } catch (Exception e) {
+            instructorDetails.getChildren().addAll(
+                createStyledLabel("Erro ao carregar professor", "card-title"),
+                createStyledLabel("", "card-subtitle"));
+            e.printStackTrace();
+        }
 
         instructorInfo.getChildren().addAll(instructorAvatar, instructorDetails);
         instructorCard.getChildren().addAll(instructorTitle, instructorInfo);
+        
+        return instructorCard;
+    }
 
+    private VBox createModulesCard() {
         VBox modulesCard = new VBox(15);
         modulesCard.getStyleClass().add("content-card");
 
         Label modulesTitle = new Label("Módulos do Curso");
         modulesTitle.getStyleClass().add("card-title");
 
-        VBox module1 = createModuleCard("1", "Introdução ao Java", "O que é Java?", "4 aulas • 2 horas", "Continuar",
-                "modern-button");
-        VBox module2 = createModuleCard("2", "Orientação a Objetos", "Como funciona OO em java?", "x6 aulas • 4 horas",
-                "Começar", "simple-button");
-
-        modulesCard.getChildren().addAll(modulesTitle, module1, module2);
-
-        VBox reviewsCard = new VBox(15);
-        reviewsCard.getStyleClass().add("content-card");
-
-        HBox reviewHeader = new HBox(20);
-        reviewHeader.setAlignment(Pos.CENTER_LEFT);
-
-        HBox ratingBox = new HBox(5);
-        ratingBox.setAlignment(Pos.CENTER_LEFT);
-        for (int i = 1; i <= 5; i++) {
-            Label star = new Label("☆");
-            star.getStyleClass().add("star-rating");
-            final int rating = i;
-
-            star.setOnMouseEntered(e -> {
-                for (int j = 0; j < rating; j++) {
-                    Label currentStar = (Label) ratingBox.getChildren().get(j);
-                    currentStar.setText("★");
-                }
-            });
-
-            star.setOnMouseExited(e -> {
-                for (int j = 0; j < ratingBox.getChildren().size(); j++) {
-                    Label currentStar = (Label) ratingBox.getChildren().get(j);
-                    if (!currentStar.getUserData().equals("selected")) {
-                        currentStar.setText("☆");
-                    }
-                }
-            });
-
-            star.setOnMouseClicked(e -> {
-                ratingBox.getChildren().forEach(node -> {
-                    node.setUserData(null);
-                    ((Label) node).setText("☆");
-                });
-
-                for (int j = 0; j < rating; j++) {
-                    Label currentStar = (Label) ratingBox.getChildren().get(j);
-                    currentStar.setText("★");
-                    currentStar.setUserData("selected");
-                }
-            });
-            star.setUserData(null);
-            ratingBox.getChildren().add(star);
+        for (Module module : currentCourse.getModules()) {
+            String buttonText = isModuleCompleted(module) ? "Continuar" : "Começar";
+            String buttonStyle = isModuleCompleted(module) ? "modern-button" : "simple-button";
+            
+            VBox moduleBox = createModuleCard(module);
+            
+            modulesCard.getChildren().add(moduleBox);
         }
 
-        TextArea reviewInput = new TextArea();
-        reviewInput.setPromptText("Aperte enter para enviar sua avaliação...");
-        reviewInput.setPrefRowCount(2);
-        reviewInput.setWrapText(true);
-        reviewInput.setMaxWidth(Double.MAX_VALUE);
-        reviewInput.getStyleClass().add("custom-text-area");
-        HBox.setHgrow(reviewInput, javafx.scene.layout.Priority.ALWAYS);
+        return modulesCard;
+    }
 
-        reviewInput.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                String review = reviewInput.getText().trim();
-                if (!review.isEmpty()) {
-                    reviewInput.clear();
-                    event.consume();
-                }
-            }
-        });
+    private boolean isModuleCompleted(Module module) {
+        // Implementar lógica para verificar se o módulo está completo
+        return false; // TODO: Implementar verificação real
+    }
 
-        HBox reviewHeaderHBox = new HBox(20);
-        reviewHeaderHBox.getChildren().addAll(
-                createStyledLabel("Avaliações do Curso", "card-title"),
-                createStyledLabel("⭐ 4.8", "card-subtitle"));
-
-        VBox reviewHeaderVBox = new VBox(20);
-        reviewHeaderVBox.getChildren().addAll(
-                reviewHeaderHBox,
-                ratingBox,
-                reviewInput);
-
-        reviewHeader.getChildren().addAll(
-                reviewHeaderVBox);
-
-        VBox reviewDetails = new VBox(10);
-        reviewDetails.getStyleClass().add("module-card");
-
-        Label reviewText = new Label("Excelente curso, muito didático e com muitos exemplos práticos!");
-        reviewText.getStyleClass().add("card-title");
-
-        HBox reviewerInfo = new HBox(10);
-        reviewerInfo.getChildren().addAll(
-                createStyledLabel("⭐ 5.0", "card-subtitle"),
-                createStyledLabel("• João", "card-subtitle"));
-
-        reviewDetails.getChildren().addAll(reviewText, reviewerInfo);
-        reviewsCard.getChildren().addAll(reviewHeader, reviewDetails);
-
-        mainVBox.getChildren().addAll(courseInfoCard, instructorCard, modulesCard, reviewsCard);
-
-        return mainVBox;
+    private String formatModuleDetails(Module module) {
+        return module.getLessons().size() + " aulas • " + module.getDuration() + " horas";
     }
 
     private Label createStyledLabel(String text, String styleClass) {
@@ -270,80 +312,178 @@ public class Courses implements Initializable {
         return label;
     }
 
-    private VBox createModuleCard(String moduleNumber, String moduleTitle, String moduleDescription,
-            String moduleDetails, String buttonText,
-            String buttonStyleClass) {
-        VBox moduleCard = new VBox(10);
-        moduleCard.getStyleClass().add("module-card");
-
-        HBox moduleInfo = new HBox(15);
-        moduleInfo.setAlignment(Pos.CENTER_LEFT);
-
-        Label moduleNumberLabel = createStyledLabel(moduleNumber, "module-number");
-
+    private VBox createModuleCard(Module module) {
+        VBox moduleBox = new VBox(10);
+        moduleBox.getStyleClass().add("module-card");
+        
+        HBox moduleHeader = new HBox(15);
+        moduleHeader.setAlignment(Pos.CENTER_LEFT);
+        moduleHeader.setPadding(new Insets(15));
+        
+        // Criando o círculo com o número do módulo
+        Label moduleNumberLabel = new Label(String.valueOf(module.getModuleNumber()));
+        moduleNumberLabel.getStyleClass().add("module-number");
+        Circle moduleCircle = new Circle(15, Color.web("#6c63ff"));
+        moduleNumberLabel.setTextFill(Color.WHITE);
+        StackPane numberContainer = new StackPane(moduleCircle, moduleNumberLabel);
+        
         VBox moduleDetailsBox = new VBox(5);
         moduleDetailsBox.getChildren().addAll(
-                createStyledLabel(moduleTitle, "card-title"),
-                createStyledLabel(moduleDescription, "card-subtitle"),
-                createStyledLabel(moduleDetails, "card-subtitle"));
-
-        Button actionButton = new Button(buttonText);
-        actionButton.getStyleClass().add(buttonStyleClass);
-
-        javafx.scene.layout.Region spacer = new javafx.scene.layout.Region();
-        HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
-
-        HBox moduleHeader = new HBox(10);
-        moduleHeader.setPadding(new Insets(15, 0, 0, 0));
-
-        ImageView arrowIcon = new ImageView(
-                new Image(getClass().getResourceAsStream("/com/icons/seta-baixo-dark.png")));
+            createStyledLabel(module.getTitle(), "card-title"),
+            createStyledLabel(formatModuleDetails(module), "card-subtitle")
+        );
+        
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        
+        Button actionButton = new Button(isModuleCompleted(module) ? "Continuar" : "Começar");
+        actionButton.getStyleClass().add(isModuleCompleted(module) ? "modern-button" : "simple-button");
+        
+        ImageView arrowIcon = new ImageView(new Image(getClass().getResourceAsStream("/com/icons/seta-baixo-dark.png")));
         arrowIcon.setFitWidth(20);
         arrowIcon.setFitHeight(20);
         arrowIcon.setRotate(180);
-
-        Label arrowIndicator = new Label("");
-        arrowIndicator.setGraphic(arrowIcon);
-
-        moduleHeader.getChildren().add(arrowIndicator);
-
-        VBox moduleContent = new VBox(10);
-        moduleContent.setVisible(false);
-        moduleContent.managedProperty().bind(moduleContent.visibleProperty());
-
-        moduleContent.getChildren().addAll(
-                createLessonItem("Aula 1 - Introdução ao Java"),
-                createLessonItem("Aula 2 - Variáveis e Tipos de Dados"),
-                createLessonItem("Aula 3 - Operadores e Expressões"),
-                createLessonItem("Aula 4 - Estruturas de Controle"),
-                createQuestionaireItem("Questionário 1- Introdução ao Java"));
-
-        moduleHeader.setOnMouseClicked(event -> {
-            boolean isCurrentlyVisible = moduleContent.isVisible();
-            moduleContent.setVisible(!isCurrentlyVisible);
-
-            arrowIcon.setRotate(isCurrentlyVisible ? 180 : 0);
-            arrowIndicator.getStyleClass().removeAll("collapsed", "expanded");
-            arrowIndicator.getStyleClass().add(isCurrentlyVisible ? "collapsed" : "expanded");
-
-            moduleHeader.setStyle(isCurrentlyVisible ? "-fx-border-width: 1px;" : "-fx-border-width: 1px 1px 0 1px;");
+        
+        moduleHeader.getChildren().addAll(arrowIcon, numberContainer, moduleDetailsBox, spacer, actionButton);
+        
+        VBox lessonsBox = new VBox(5);
+        lessonsBox.setPadding(new Insets(0, 15, 15, 15));
+        lessonsBox.setVisible(false);
+        lessonsBox.managedProperty().bind(lessonsBox.visibleProperty());
+        
+        // Ordenando os módulos
+        if (module.getLessons() != null) {
+            List<Lessons> sortedLessons = new ArrayList<>(module.getLessons());
+            sortedLessons.sort((l1, l2) -> 
+                Integer.compare(l1.getNumberOfLesson(), l2.getNumberOfLesson()));
+            
+            for (Lessons lesson : sortedLessons) {
+                HBox lessonItem = createLessonItem(lesson);
+                lessonItem.getStyleClass().add("lesson-item");
+                lessonsBox.getChildren().add(lessonItem);
+            }
+        }
+        
+        if (module.getQuestionaire() != null) {
+            HBox questionaireItem = createQuestionaireItem(module.getQuestionaire());
+            questionaireItem.getStyleClass().add("questionaire-item");
+            lessonsBox.getChildren().add(questionaireItem);
+        }
+        
+        moduleHeader.setOnMouseClicked(e -> {
+            lessonsBox.setVisible(!lessonsBox.isVisible());
+            arrowIcon.setRotate(lessonsBox.isVisible() ? 0 : 180);
         });
+        
+        moduleBox.getChildren().addAll(moduleHeader, lessonsBox);
+        return moduleBox;
+    }
 
-        actionButton.setOnMouseClicked(event -> {
-            boolean isCurrentlyVisible = moduleContent.isVisible();
-            moduleContent.setVisible(!isCurrentlyVisible);
-
-            arrowIcon.setRotate(isCurrentlyVisible ? 180 : 0);
-            arrowIndicator.getStyleClass().removeAll("collapsed", "expanded");
-            arrowIndicator.getStyleClass().add(isCurrentlyVisible ? "collapsed" : "expanded");
-
-            moduleHeader.setStyle(isCurrentlyVisible ? "-fx-border-width: 1px;" : "-fx-border-width: 1px 1px 0 1px;");
+    private HBox createLessonItem(Lessons lesson) {
+        HBox lessonBox = new HBox(10);
+        lessonBox.setAlignment(Pos.CENTER_LEFT);
+        lessonBox.setPadding(new Insets(10));
+        
+        Button checkButton = new Button("✖");
+        checkButton.getStyleClass().add("check-button");
+        
+        // Verificar se a aula já foi completada
+        LessonProgressDAO progressDAO = new LessonProgressDAO();
+        LessonProgress progress = progressDAO.buscarPorAulaECursoAluno(lesson, studentCourse);
+        boolean isCompleted = progress != null && progress.isCompleted();
+        
+        VBox lessonDetails = new VBox(3);
+        Label lessonTitle = createStyledLabel(
+            "Aula " + lesson.getNumberOfLesson() + ": " + lesson.getTitle(), 
+            "lesson-title"
+        );
+        
+        if (isCompleted) {
+            checkButton.setText("✔");
+            checkButton.getStyleClass().addAll("check-button", "checked");
+            lessonTitle.setStyle("-fx-strikethrough: true");
+            lessonTitle.setText(strikeThroughText(lessonTitle.getText()));
+        }
+        
+        Label durationLabel = createStyledLabel(lesson.getDuration() + " minutos", "lesson-duration");
+        lessonDetails.getChildren().addAll(lessonTitle, durationLabel);
+        
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        
+        Button watchButton = new Button(isCompleted ? "Rever" : "Assistir");
+        watchButton.getStyleClass().add("outline-button");
+        watchButton.setOnAction(e -> openLesson(lesson));
+        
+        checkButton.setOnAction(event -> {
+            try {
+                if (progress == null) {
+                    // Criar novo progresso
+                    LessonProgress newProgress = new LessonProgress();
+                    newProgress.setStudentCourse(studentCourse);
+                    newProgress.setLesson(lesson);
+                    newProgress.setCompleted(true);
+                    newProgress.setCompletionDate(java.time.LocalDateTime.now());
+                    
+                    // Salvar progresso e atualizar StudentCourse
+                    progressDAO.salvar(newProgress, studentCourse);
+                    
+                    // Atualizar UI
+                    checkButton.setText("✔");
+                    checkButton.getStyleClass().addAll("check-button", "checked");
+                    lessonTitle.setStyle("-fx-strikethrough: true");
+                    lessonTitle.setText(strikeThroughText(lessonTitle.getText()));
+                    watchButton.setText("Rever");
+                } else {
+                    // Alternar estado do progresso existente
+                    progress.setCompleted(!progress.isCompleted());
+                    
+                    // Salvar progresso e atualizar StudentCourse
+                    progressDAO.salvar(progress, studentCourse);
+                    
+                    // Atualizar UI
+                    if (progress.isCompleted()) {
+                        checkButton.setText("✔");
+                        checkButton.getStyleClass().addAll("check-button", "checked");
+                        lessonTitle.setStyle("-fx-strikethrough: true");
+                        lessonTitle.setText(strikeThroughText(lessonTitle.getText()));
+                        watchButton.setText("Rever");
+                    } else {
+                        checkButton.setText("✖");
+                        checkButton.getStyleClass().remove("checked");
+                        lessonTitle.setStyle("-fx-strikethrough: false");
+                        lessonTitle.setText("Aula " + lesson.getNumberOfLesson() + ": " + lesson.getTitle());
+                        watchButton.setText("Assistir");
+                    }
+                }
+                
+                // Atualizar a exibição do progresso
+                updateProgressDisplay();
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+                showError("Erro", "Não foi possível atualizar o progresso da aula");
+            }
         });
+        
+        lessonBox.getChildren().addAll(checkButton, lessonDetails, spacer, watchButton);
+        return lessonBox;
+    }
 
-        moduleInfo.getChildren().addAll(moduleHeader, moduleNumberLabel, moduleDetailsBox, spacer, actionButton);
-        moduleCard.getChildren().addAll(moduleInfo, moduleContent);
-
-        return moduleCard;
+    private void openLesson(Lessons lesson) {
+        try {
+            LessonModal modal = new LessonModal(backButton.getScene().getWindow());
+            modal.setLessonData(
+                "Aula " + lesson.getNumberOfLesson() + " - " + lesson.getTitle(),
+                lesson.getDescription(),
+                lesson.getVideoLink(),
+                lesson.getMaterials()
+            );
+            modal.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Erro ao abrir aula", "Não foi possível abrir os detalhes da aula.");
+        }
     }
 
     private String strikeThroughText(String text) {
@@ -356,97 +496,52 @@ public class Courses implements Initializable {
         return strikedText.toString();
     }
 
-    private HBox createQuestionaireItem(String title) {
-        Label questionaireTitle = createStyledLabel(title, "page-subtitle");
-
-        HBox buttonHBox = new HBox();
-        buttonHBox.setMargin(buttonHBox, new Insets(20, 0, 0, 0));
-
-        Button checkButton = createCheckButton(title, questionaireTitle);
-        buttonHBox.getChildren().add(checkButton);
-
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        Button detailsButton = createDetailsButton(title, "questionaire");
-        detailsButton.setStyle(
-                " -fx-max-height: 30px; -fx-min-height:30px; -fx-max-width: 110px; -fx-min-width: 110px; -fx-padding: 0 10px; -fx-font-size: 13px;");
-
-        HBox questionaireItem = new HBox(10, buttonHBox, questionaireTitle, spacer, detailsButton);
-        questionaireItem.setMargin(questionaireTitle, new Insets(20, 0, 0, 0));
-        questionaireItem.getStyleClass().add("lesson-item");
-        questionaireItem.setAlignment(Pos.CENTER_LEFT);
-
-        return questionaireItem;
-    }
-
-    private HBox createLessonItem(String title) {
-        Label lessonTitle = createStyledLabel(title, "page-subtitle");
-        HBox buttonHBox = new HBox();
-        buttonHBox.setMargin(buttonHBox, new Insets(20, 0, 0, 0));
-
-        Button checkButton = createCheckButton(title, lessonTitle);
-        buttonHBox.getChildren().add(checkButton);
-
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        Button detailsButton = createDetailsButton(title, "lessons");
-        detailsButton.setStyle(
-                " -fx-max-height: 30px; -fx-min-height:30px; -fx-max-width: 110px; -fx-min-width: 110px; -fx-padding: 0 10px; -fx-font-size: 13px;");
-
-        HBox lessonItem = new HBox(10, buttonHBox, lessonTitle, spacer, detailsButton);
-        lessonItem.setMargin(lessonTitle, new Insets(20, 0, 0, 0));
-        lessonItem.getStyleClass().add("lesson-item");
-        lessonItem.setAlignment(Pos.CENTER_LEFT);
-
-        return lessonItem;
-    }
-
-    private Button createCheckButton(String title, Label lessonTitle) {
+    private HBox createQuestionaireItem(Questionaire questionaire) {
+        HBox questionaireBox = new HBox(10);
+        questionaireBox.setAlignment(Pos.CENTER_LEFT);
+        questionaireBox.setPadding(new Insets(10));
+        
         Button checkButton = new Button("✖");
         checkButton.getStyleClass().add("check-button");
-        final boolean[] isChecked = { false };
-
-        checkButton.setOnAction(event -> {
-            isChecked[0] = !isChecked[0];
-            updateCheckButtonState(checkButton, lessonTitle, title, isChecked[0]);
-        });
-
-        return checkButton;
+        
+        VBox questionaireDetails = new VBox(3);
+        Label questionaireTitle = createStyledLabel(questionaire.getTitle(), "questionaire-title");
+        Label scoreLabel = createStyledLabel("Pontuação: " + questionaire.getScore() + " pontos", "questionaire-score");
+        questionaireDetails.getChildren().addAll(questionaireTitle, scoreLabel);
+        
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        
+        Button startButton = new Button("Iniciar");
+        startButton.getStyleClass().add("outline-button");
+        startButton.setOnAction(e -> openQuestionaire(questionaire));
+        
+        questionaireBox.getChildren().addAll(checkButton, questionaireDetails, spacer, startButton);
+        return questionaireBox;
     }
 
-    private void updateCheckButtonState(Button checkButton, Label lessonTitle, String title, boolean isChecked) {
-        if (isChecked) {
-            checkButton.setText("✔");
-            checkButton.getStyleClass().remove("unchecked");
-            checkButton.getStyleClass().addAll("check-button", "checked");
-            lessonTitle.setStyle("-fx-strikethrough: true");
-            lessonTitle.setText(strikeThroughText(title));
-        } else {
-            checkButton.setText("✖");
-            checkButton.getStyleClass().remove("checked");
-            checkButton.getStyleClass().addAll("check-button", "unchecked");
-            lessonTitle.setStyle("-fx-strikethrough: false");
-            lessonTitle.setText(title);
+    private void openQuestionaire(Questionaire questionaire) {
+        try {
+            QuestionaireModal modal = new QuestionaireModal();
+            modal.setQuestionaireData(
+                questionaire.getTitle(),
+                questionaire.getDescription(),
+                String.valueOf(questionaire.getScore()),
+                questionaire.getQuestions(),
+                currentStudent
+            );
+            modal.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Erro ao abrir questionário", "Não foi possível abrir o questionário.");
         }
     }
 
-    private Button createDetailsButton(String title, String type) {
-        Button detailsButton = new Button("Ver Detalhes");
-        detailsButton.getStyleClass().add("outline-button");
-
-        if (type.equals("lessons")) {
-            detailsButton.setOnAction(event -> {
-                LessonModal modal = new LessonModal(detailsButton.getScene().getWindow());
-            });
-        } else {
-            detailsButton.setOnAction(event -> {
-                QuestionaireModal modal = new QuestionaireModal(detailsButton.getScene().getWindow());
-            });
-        }
-
-        return detailsButton;
+    private void showError(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     private VBox createCourseDetailsVBox() {
@@ -473,20 +568,67 @@ public class Courses implements Initializable {
         Label progressTitle = new Label("Progresso do Curso");
         progressTitle.getStyleClass().add("card-title");
 
+        int completedLessons = studentCourse.getCompletedLessons() != null ? 
+            studentCourse.getCompletedLessons() : 0;
+        int totalLessons = studentCourse.getTotalLessons() != null ? 
+            studentCourse.getTotalLessons() : 0;
+        
+        String progressText = completedLessons + "/" + totalLessons;
+        String percentageText = "(" + String.format("%.1f", studentCourse.calculateProgress()) + "%)";
+
         VBox progressContent = new VBox(10);
         progressContent.getChildren().addAll(
-                createStyledLabel("Aulas Completadas:", "card-subtitle"),
-                createProgressDetailsHBox("2/10", "(20%)"),
-                createCustomProgressBar());
+            createStyledLabel("Aulas Completadas:", "card-subtitle"),
+            createProgressDetailsHBox(progressText, percentageText),
+            createCustomProgressBar(studentCourse.calculateProgress())
+        );
+
+        int completedQuestionaires = studentCourse.getCompletedQuestionaires() != null ? 
+            studentCourse.getCompletedQuestionaires() : 0;
+        int totalQuestionaires = studentCourse.getTotalQuestionaires() != null ? 
+            studentCourse.getTotalQuestionaires() : 0;
 
         VBox evaluationsContent = new VBox(10);
         evaluationsContent.setStyle("-fx-padding: 10 0 0 0;");
         evaluationsContent.getChildren().addAll(
-                createStyledLabel("Avaliações Concluídas:", "card-subtitle"),
-                createProgressDetailsHBox("0/3", null));
+            createStyledLabel("Avaliações Concluídas:", "card-subtitle"),
+            createProgressDetailsHBox(
+                completedQuestionaires + "/" + totalQuestionaires, 
+                null
+            )
+        );
 
         progressVBox.getChildren().addAll(progressTitle, progressContent, evaluationsContent);
         return progressVBox;
+    }
+
+    private HBox createProgressDetailsHBox(String progress, String percentage) {
+        HBox progressDetailsHBox = new HBox(10);
+        progressDetailsHBox.setAlignment(Pos.CENTER_LEFT);
+        if (percentage != null) {
+            progressDetailsHBox.getChildren().addAll(
+                    createStyledLabel(progress, "card-subtitle"),
+                    createStyledLabel(percentage, "card-subtitle"));
+        } else {
+            progressDetailsHBox.getChildren().add(createStyledLabel(progress, "card-subtitle"));
+        }
+        return progressDetailsHBox;
+    }
+
+    private HBox createCustomProgressBar(double progress) {
+        HBox progressBar = new HBox();
+        progressBar.getStyleClass().add("progress-bar");
+        progressBar.setMinHeight(10);
+        progressBar.setPrefHeight(10);
+
+        HBox progressBarFill = new HBox();
+        progressBarFill.getStyleClass().add("progress-bar-fill");
+        progressBarFill.setMinHeight(10);
+        progressBarFill.setPrefHeight(10);
+        progressBarFill.setPrefWidth(progress); // Percentagem do progresso
+
+        progressBar.getChildren().add(progressBarFill);
+        return progressBar;
     }
 
     public VBox createNextActivitiesVBox() {
@@ -503,35 +645,6 @@ public class Courses implements Initializable {
 
         activitiesVBox.getChildren().addAll(activitiesTitle, activitiesList);
         return activitiesVBox;
-    }
-
-    private HBox createProgressDetailsHBox(String progress, String percentage) {
-        HBox progressDetailsHBox = new HBox(10);
-        progressDetailsHBox.setAlignment(Pos.CENTER_LEFT);
-        if (percentage != null) {
-            progressDetailsHBox.getChildren().addAll(
-                    createStyledLabel(progress, "card-subtitle"),
-                    createStyledLabel(percentage, "card-subtitle"));
-        } else {
-            progressDetailsHBox.getChildren().add(createStyledLabel(progress, "card-subtitle"));
-        }
-        return progressDetailsHBox;
-    }
-
-    private HBox createCustomProgressBar() {
-        HBox progressBar = new HBox();
-        progressBar.getStyleClass().add("progress-bar");
-        progressBar.setMinHeight(10);
-        progressBar.setPrefHeight(10);
-
-        HBox progressBarFill = new HBox();
-        progressBarFill.getStyleClass().add("progress-bar .bar");
-        progressBarFill.setMinHeight(10);
-        progressBarFill.setPrefHeight(10);
-        progressBarFill.setPrefWidth(20);
-
-        progressBar.getChildren().add(progressBarFill);
-        return progressBar;
     }
 
     private HBox createActivityHBox(String icon, String title, String subtitle) {
@@ -559,5 +672,53 @@ public class Courses implements Initializable {
                 createNextActivitiesVBox());
 
         return fullCourseVBox;
+    }
+
+    private VBox createReviewsCard() {
+        VBox reviewsCard = new VBox(15);
+        reviewsCard.getStyleClass().add("content-card");
+
+        HBox reviewHeaderHBox = new HBox(20);
+        reviewHeaderHBox.getChildren().addAll(
+                createStyledLabel("Avaliações do Curso", "card-title"),
+                createStyledLabel("⭐ " + currentCourse.getRating(), "card-subtitle"));
+
+        VBox reviewHeaderVBox = new VBox(20);
+        reviewHeaderVBox.getChildren().add(reviewHeaderHBox);
+
+        reviewsCard.getChildren().add(reviewHeaderVBox);
+        return reviewsCard;
+    }
+
+    @FXML
+    private void handleBackButton() {
+        try {
+            // Carrega a página meus cursos - corrigindo o caminho do FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/estudante/meusCursos/paginaMeusCursos.fxml"));
+            Parent root = loader.load();
+            
+            // Obtém a cena atual
+            Scene currentScene = backButton.getScene();
+            Stage stage = (Stage) currentScene.getWindow();
+            
+            // Cria nova cena mantendo as dimensões atuais
+            Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
+            
+            // Define a nova cena no palco
+            stage.setScene(newScene);
+            stage.show();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Erro ao voltar");
+            alert.setContentText("Não foi possível retornar à página anterior: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private void updateProgressDisplay() {
+        // Atualizar o VBox de progresso
+        content.getChildren().clear();
+        content.getChildren().add(createFullCourseVBox());
     }
 }

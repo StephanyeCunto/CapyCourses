@@ -2,6 +2,8 @@ package com.model.elements.Course;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.Entity;
@@ -13,8 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import lombok.NoArgsConstructor;
 import javax.persistence.Column;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -31,8 +35,8 @@ public class Module {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Lessons> lessons = new ArrayList<>();
+    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Lessons> lessons = new HashSet<>();
     
     @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true) 
     private List<Questionaire> questionaires = new ArrayList<>();
@@ -47,6 +51,9 @@ public class Module {
     private String description;
     
     private String duration;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Questionaire questionaire;
 
     // Construtor para dados básicos
     public Module(int moduleNumber, String title, String description, String duration) {
@@ -97,5 +104,13 @@ public class Module {
         if (questionaires.remove(questionaire)) {
             questionaire.setModule(null);
         }
+    }
+
+    public Questionaire getQuestionaire() {
+        return questionaire;
+    }
+
+    public void setQuestionaire(Questionaire questionaire) {
+        this.questionaire = questionaire;
     }
 }

@@ -27,11 +27,14 @@ public class CourseSettings {
     private boolean isCertificate;
     private boolean isGradeMiniun;
     private boolean visibility;
+    private boolean isDateEnd;
 
     @OneToOne(mappedBy = "courseSettings")
     private Course course;
 
-    public CourseSettings() {}
+    public CourseSettings() {
+        this.isDateEnd = false;
+    }
 
     public CourseSettings(String title, LocalDate dateStart, 
             String durationTotal, boolean isCertificate,  boolean isGradeMiniun, boolean visibility) {
@@ -41,6 +44,7 @@ public class CourseSettings {
         this.isCertificate = isCertificate;
         this.isGradeMiniun = isGradeMiniun;
         this.visibility = visibility;
+        this.isDateEnd = false;
     }
 
     public void setCourse(Course course) {

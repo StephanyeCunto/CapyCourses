@@ -17,6 +17,7 @@
     <class>com.model.student.StudentCourse</class>
     <class>com.model.entity.Forum</class>
     <class>com.model.entity.ForumComment</class>
+    <class>com.model.student.LessonProgress</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:capycourses.db"/>
       <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>

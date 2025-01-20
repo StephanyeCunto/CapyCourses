@@ -21,7 +21,7 @@
         <VBox styleClass="side-menu" fx:id="sideMenu" spacing="15">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="15">
-                    <Button styleClass="outline-button" text="← Voltar" />
+                    <Button fx:id="backButton" styleClass="outline-button" text="← Voltar" onAction="#handleBackButton" />
                 </HBox>
                 <VBox spacing="10" styleClass="quick-tips">
                     <Label styleClass="section-title" text="Navegação" />

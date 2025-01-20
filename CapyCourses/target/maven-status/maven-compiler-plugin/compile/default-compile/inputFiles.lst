@@ -52,6 +52,7 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\controller\elements\BibliotecaController.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dto\CadastroCursoDTO.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dto\PaginaPrincipalDTO.java
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Courses\QuestionaireModal.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Forum\ModalAddForum.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Biblioteca\BibliotecaModal.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dao\CourseSettingsDAO.java
@@ -65,7 +66,9 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Forum\PaginaForumView.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dao\ForumDAO.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\service\LessonService.java
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\elements\Course\StudentAnswer.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Perfil\ProfileCard.java
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dao\LessonProgressDAO.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\singleton\UserSession.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\elements\Courses\CourseDetailsModal.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dao\StudentCourseDAO.java
@@ -106,7 +109,6 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\login_cadastro\CadastroStudent.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\factory\DatabaseJPA.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\student\StudentCourse.java
-C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\elements\MyCourseStudent.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\controller\login_cadastro\LoginController.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dto\ForumComentarioDTO.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\login_cadastro\cadastro\Cadastro.java
@@ -117,4 +119,5 @@ C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\elements\LoadBiblioteca.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\dao\ModuleDAO.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\professor\valid\CursoQuestionarioValid.java
+C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\model\student\LessonProgress.java
 C:\Users\julio\OneDrive\Área de Trabalho\CapyCourses\CapyCourses\src\main\java\com\view\login_cadastro\cadastro\valid\CadastroSecudarioValid.java
