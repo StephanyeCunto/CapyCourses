@@ -25,6 +25,7 @@
 - [FAQ](#-faq)
 - [Contribuições Futuras](#-contribuições-futuras)
 - [Segurança](#-segurança)
+- [Diagrama Entidade Relacionamento](#-diagrama-entidade-relacionamento)
 - [Comunicação](#-comunicação)
 - [Feedback](#-feedback)
 - [Roadmap Detalhado](#-roadmap-detalhado)
@@ -320,6 +321,184 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 ### Auditoria de Código
 - Realizamos auditorias periódicas para garantir a segurança do código.
 - Utilizamos ferramentas como [PMD](https://pmd.github.io) para análise estática.
+
+---
+
+## 📉 Diagrama Entidade Relacionamento
+
+```mermaid
+
+erDiagram
+    CourseSettings ||--o{ courses : configures
+    CourseSettings {
+        int id PK
+        date dateStart
+        string durationTotal
+        boolean isCertificate
+        boolean isDateEnd 
+        boolean isGradeMiniun
+        string title
+        boolean visibility
+    }
+
+
+student_courses ||--o{courses : has
+student_courses ||--o{ students : has
+student_courses ||--o{questions : has
+student_courses ||--o{lessons : has
+student_courses ||--o{lesson_progress : has
+    courses ||--o{ modules : contains
+    courses {
+        int id PK
+        string categoria
+        string description
+        string name
+        string nivel
+        float rating
+        string title
+        int courseSettings_id FK
+        int teacher_id FK
+    }
+
+    modules ||--o{ lessons : includes
+    modules {
+        int id PK
+        string description
+        string duration
+        int moduleNumber
+        string title
+        int course_id FK
+        int questionaire_id FK
+    }
+
+    lessons {
+        int id PK
+        string description
+        string duration
+        string materials
+        int moduleNumber
+        int numberOfLesson
+        string title
+        string video_link
+        int module_id FK
+    }
+
+    modules ||--o{ questionaire : has
+    questionaire {
+        int id PK
+        string description
+        string number
+        string score
+        string title
+        int module_id FK
+    }
+
+    questionaire ||--o{ questions : contains
+    questions {
+        int id PK
+        string answers
+        string correct_answers
+        string evaluation_criteria
+        string expected_answer
+        string multiple_correct_answers
+        string number
+        string score
+        string text
+        string type
+        int questionaire_id FK
+    }
+
+questions ||--o{ StudentAnswer : has
+
+    users ||--o{ students : has
+    users {
+        int id PK
+        datetime dateRegister
+        string email
+        string name
+        string password
+        string typeUser
+    }
+
+    students {
+        int id PK
+        string areaOfInterest
+        string cpf
+        datetime dateOfBirth
+        string education
+        string telephone
+        int user_id FK
+    }
+
+    teachers {
+        int id PK
+        string areaOfInterest
+        string cpf
+        datetime dateOfBirth
+        string education
+        string telephone
+        int user_id FK
+    }
+
+    courses ||--o{ students : enrolls
+    courses ||--o{ teachers : managed_by
+
+    StudentAnswer {
+        int id PK
+        string answer
+        boolean isCorrect
+        float score
+        int question_id FK
+        int questionaire_id FK
+        int student_id FK
+    }
+
+users ||--O{ forums : create
+forums ||--o{ forum_comments : has
+    forums {
+        int id PK
+        string author
+        string category
+        int commentsCount
+        datetime dateTime
+        string description
+        int likeCount
+        string question
+        string title
+        int viewCount
+    }
+
+    forum_comments {
+        int id PK
+        datetime commentDate
+        string commentText
+        string userName
+        int forum_id FK
+    }
+
+    lesson_progress {
+        int id PK
+        boolean completed
+        datetime completionDate
+        int lesson_id FK
+        int student_course_id FK
+    }
+
+    student_courses {
+        int id PK
+        int completedLessons
+        int completedQuestionaires
+        date completionDate
+        float grade
+        int progress
+        date startDate
+        string status
+        int totalLessons
+        int totalQuestionaires
+        int course_id FK
+        int student_id FK
+    }
+```
 
 ---
 
