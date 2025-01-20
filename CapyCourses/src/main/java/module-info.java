@@ -37,6 +37,7 @@ module com {
     opens com.view.professor to javafx.fxml;
     opens com.view.estudante to javafx.fxml;
     opens com.view.elements.Perfil to javafx.fxml;
+    opens com.view.professor.Forum to javafx.fxml;
    
     opens com.model.login_cadastro to org.hibernate.orm.core;
     opens com.model.elements to org.hibernate.orm.core;
@@ -65,6 +66,7 @@ module com {
     exports com.view.elements.Courses;
     exports com.view.elements.MenuEstudante;
     exports com.view.elements.MenuProfessor;
+    exports com.view.professor.Forum to javafx.fxml;
     exports com.view.elements.Perfil to javafx.fxml;
     exports com.model.login_cadastro to com.fasterxml.jackson.databind;
     exports com.controller.login_cadastro to com.fasterxml.jackson.databind;

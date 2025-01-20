@@ -5,9 +5,7 @@ import java.util.List;
 import com.controller.elements.LoadCoursesController;
 import com.controller.elements.LoadMyCourses;
 import com.dto.PaginaPrincipalDTO;
-import com.singleton.UserSession;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;

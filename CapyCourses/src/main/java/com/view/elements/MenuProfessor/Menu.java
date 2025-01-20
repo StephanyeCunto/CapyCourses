@@ -81,7 +81,7 @@ public class Menu {
         buttonMenu.put("/com/professor/paginaCursos", "Meus Cursos");
         buttonMenu.put("/com/professor/progresso/paginaProgressoGeral", "Progresso");
         buttonMenu.put("/com/elements/biblioteca/paginaBiblioteca", "Biblioteca");
-        buttonMenu.put("/com/elements/forum/paginaForum", "Forum");
+        buttonMenu.put("/com/professor/forum/paginaForum", "Forum");
         buttonMenu.put("/com/elements/perfil", "Configurações");
         buttonMenu.put("/com/login_cadastro/paginaLogin", "Sair");
     }
