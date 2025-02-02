@@ -6,7 +6,7 @@
 [![Java](https://img.shields.io/badge/Java-17%2B-brightgreen)](https://www.oracle.com/java/)
 [![JavaFX](https://img.shields.io/badge/JavaFX-19%2B-blue)](https://openjfx.io/)
 [![MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Wakatime](https://wakatime.com/badge/github/StephanyeCunto/CapyCourses.svg)](https://wakatime.com/badge/github/StephanyeCunto/CapyCourses)
+[![wakatime](https://wakatime.com/badge/user/5a343522-23db-45ae-b20b-54655c392390/project/777997fa-1d4e-4bf3-acd5-5b2f3fbbf946.svg)](https://wakatime.com/badge/user/5a343522-23db-45ae-b20b-54655c392390/project/777997fa-1d4e-4bf3-acd5-5b2f3fbbf946)
 [![wakatime](https://wakatime.com/badge/user/cfd3175d-aa54-44f0-b0c6-befacccd6793/project/b49cdaa5-fd26-4250-b17e-2c68c5875e52.svg)](https://wakatime.com/badge/user/cfd3175d-aa54-44f0-b0c6-befacccd6793/project/b49cdaa5-fd26-4250-b17e-2c68c5875e52)
 
 ---
