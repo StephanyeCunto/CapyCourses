@@ -57,14 +57,12 @@ public class QuestionaireModal {
     private Map<Question, Object> answers = new HashMap<>(); // Armazena as respostas (RadioButton, CheckBox ou TextArea)
 
     public QuestionaireModal() {
-        // Inicialização básica do modal
         super();
         updateDimensions(0, 0);
         modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
         modalStage.initStyle(StageStyle.TRANSPARENT);
         questionsContainer = new VBox(10);
-        loadModel();
         setupCloseAnimation();
     }
 
@@ -114,21 +112,24 @@ public class QuestionaireModal {
         content.setPadding(new Insets(0, PADDING, PADDING, PADDING));
         content.setAlignment(Pos.TOP_LEFT);
 
-        // Cabeçalho do questionário com dados reais
+        // Cabeçalho do questionário
         Label titleLabel = new Label(this.title);
-        titleLabel.getStyleClass().add("title");
+        titleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        titleLabel.setWrapText(true);
 
         Label descriptionLabel = new Label(this.description);
-        descriptionLabel.getStyleClass().add("description");
+        descriptionLabel.setStyle("-fx-font-size: 14px;");
+        descriptionLabel.setWrapText(true);
 
         Label scoreLabel = new Label("Pontuação: " + this.score);
-        scoreLabel.getStyleClass().add("score");
+        scoreLabel.setStyle("-fx-font-size: 14px;");
 
         content.getChildren().addAll(titleLabel, descriptionLabel, scoreLabel);
 
         // Container para as questões
         ScrollPane scrollPane = new ScrollPane();
-        questionsContainer.getChildren().clear();
+        questionsContainer = new VBox(10);
+        questionsContainer.setPadding(new Insets(10));
 
         // Adiciona cada questão
         for (Question question : this.questions) {
@@ -141,9 +142,8 @@ public class QuestionaireModal {
         content.getChildren().add(scrollPane);
 
         Button submitButton = new Button("Enviar Respostas");
-        submitButton.getStyleClass().add("submit-button");
+        submitButton.setStyle("-fx-font-size: 14px;");
         submitButton.setOnAction(e -> handleSubmit());
-
         content.getChildren().add(submitButton);
 
         return content;
@@ -233,11 +233,18 @@ public class QuestionaireModal {
     }
 
     public void setQuestionaireData(String title, String description, String score, List<Question> questions, Student student) {
+        System.out.println("Recebendo dados do questionário:");
+        System.out.println("Título: " + title);
+        System.out.println("Descrição: " + description);
+        System.out.println("Pontuação: " + score);
+        System.out.println("Número de questões: " + (questions != null ? questions.size() : "null"));
+        
         this.title = title;
         this.description = description;
         this.score = score;
         this.questions = questions;
         this.currentStudent = student;
+        
         loadModel();
     }
 

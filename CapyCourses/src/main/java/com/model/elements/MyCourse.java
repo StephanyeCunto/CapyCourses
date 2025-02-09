@@ -39,7 +39,7 @@ public class MyCourse {
                 .mapToInt(module -> module.getLessons().size())
                 .sum();
             this.questionaireTotal = course.getModules().stream()
-                .mapToInt(module -> module.getQuestionaires().size())
+                .mapToInt(module -> module.getQuestionaire() != null ? 1 : 0)
                 .sum();
             
             this.moduleCompleted = 0;

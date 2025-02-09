@@ -77,24 +77,18 @@ public class CourseDAO {
     public Course findByTitle(String title) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            // Primeiro, buscar o curso com seus módulos
+            // Carrega curso, módulos e questionários em uma única consulta
             Course course = em
                 .createQuery(
                     "SELECT DISTINCT c FROM Course c " +
-                    "LEFT JOIN FETCH c.modules " +
+                    "LEFT JOIN FETCH c.modules m " +
+                    "LEFT JOIN FETCH m.questionaire q " +
+                    "LEFT JOIN FETCH m.lessons " +
+                    "LEFT JOIN FETCH q.questions " +
                     "WHERE c.title = :title", 
                     Course.class)
                 .setParameter("title", title)
                 .getSingleResult();
-            
-            // Depois, carregar as aulas de cada módulo
-            em.createQuery(
-                "SELECT DISTINCT m FROM Module m " +
-                "LEFT JOIN FETCH m.lessons " +
-                "LEFT JOIN FETCH m.questionaire " +
-                "WHERE m IN :modules")
-                .setParameter("modules", course.getModules())
-                .getResultList();
             
             return course;
         } catch (NoResultException e) {

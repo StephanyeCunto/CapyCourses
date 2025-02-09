@@ -105,28 +105,16 @@ public class Courses implements Initializable {
             EntityManager em = JPAUtil.getEntityManager();
             String courseTitle = UserSession.getInstance().getCurrentCourseTitle();
             
-            // Carrega o curso com seus módulos
+            // Carrega o curso com seus módulos, aulas e questionários em uma única consulta
             currentCourse = em.createQuery(
-                "SELECT c FROM Course c " +
-                "LEFT JOIN FETCH c.modules " +
+                "SELECT DISTINCT c FROM Course c " +
+                "LEFT JOIN FETCH c.modules m " +
+                "LEFT JOIN FETCH m.lessons l " +
+                "LEFT JOIN FETCH m.questionaire q " +
+                "LEFT JOIN FETCH q.questions " +
                 "WHERE c.title = :title", Course.class)
                 .setParameter("title", courseTitle)
                 .getSingleResult();
-            
-            // Carrega as aulas e questionários de cada módulo
-            em.createQuery(
-                "SELECT m FROM Module m " +
-                "LEFT JOIN FETCH m.lessons " +
-                "WHERE m IN :modules", Module.class)
-                .setParameter("modules", currentCourse.getModules())
-                .getResultList();
-                
-            em.createQuery(
-                "SELECT m FROM Module m " +
-                "LEFT JOIN FETCH m.questionaires " +
-                "WHERE m IN :modules", Module.class)
-                .setParameter("modules", currentCourse.getModules())
-                .getResultList();
             
             StudentDAO studentDAO = new StudentDAO();
             StudentCourseDAO studentCourseDAO = new StudentCourseDAO();
@@ -545,18 +533,23 @@ public class Courses implements Initializable {
 
     private void openQuestionaire(Questionaire questionaire) {
         try {
+            if (questionaire == null || questionaire.getQuestions().isEmpty()) {
+                showError("Questionário não disponível", "Este questionário não possui questões.");
+                return;
+            }
+
             QuestionaireModal modal = new QuestionaireModal();
             modal.setQuestionaireData(
                 questionaire.getTitle(),
                 questionaire.getDescription(),
-                String.valueOf(questionaire.getScore()),
+                questionaire.getScore(),
                 questionaire.getQuestions(),
                 currentStudent
             );
             modal.show();
         } catch (Exception e) {
             e.printStackTrace();
-            showError("Erro ao abrir questionário", "Não foi possível abrir o questionário.");
+            showError("Erro ao abrir questionário", e.getMessage());
         }
     }
 

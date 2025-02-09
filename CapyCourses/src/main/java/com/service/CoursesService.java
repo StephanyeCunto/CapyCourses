@@ -312,10 +312,10 @@ public class CoursesService {
         List<QuestionarioDTO> reviews = new ArrayList<>();
         
         for (Module module : course.getModules()) {
-            for (Questionaire questionaire : module.getQuestionaires()) {
+            if (module.getQuestionaire() != null) {
                 QuestionarioDTO dto = new QuestionarioDTO();
-                dto.setTitulo(questionaire.getTitle());
-                dto.setDescricao(questionaire.getDescription());
+                dto.setTitulo(module.getQuestionaire().getTitle());
+                dto.setDescricao(module.getQuestionaire().getDescription());
                 reviews.add(dto);
             }
         }

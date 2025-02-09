@@ -31,45 +31,40 @@ public class Questionaire {
     @Column(columnDefinition = "TEXT")
     private String description;
     
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "module_id")
+    @OneToOne(mappedBy = "questionaire")
     private Module module;
 
     @OneToMany(
         mappedBy = "questionaire", 
-        cascade = {CascadeType.PERSIST, CascadeType.MERGE}, // Modificado aqui
+        cascade = CascadeType.ALL,
         orphanRemoval = true,
-        fetch = FetchType.LAZY
+        fetch = FetchType.EAGER
     )
     private List<Question> questions = new ArrayList<>();
     
-    // Método helper para Module modificado para ser mais seguro
+    // Método helper para Module
     public void setModule(Module module) {
-        if (module == null) {
-            throw new IllegalArgumentException("Module cannot be null");
-        }
-        
         if (this.module != module) {
             Module oldModule = this.module;
             this.module = module;
             
-            if (oldModule != null) {
-                oldModule.getQuestionaires().remove(this);
+            if (oldModule != null && oldModule.getQuestionaire() == this) {
+                oldModule.setQuestionaire(null);
             }
-            if (!module.getQuestionaires().contains(this)) {
-                module.getQuestionaires().add(this);
+            if (module != null && module.getQuestionaire() != this) {
+                module.setQuestionaire(this);
             }
         }
     }
     
-    // Método helper para Question melhorado
+    // Método helper para Question
     public void addQuestion(Question question) {
         if (question == null) {
             throw new IllegalArgumentException("Question cannot be null");
         }
         
-        if (!this.questions.contains(question)) {
-            this.questions.add(question);
+        if (!questions.contains(question)) {
+            questions.add(question);
             question.setQuestionaire(this);
         }
     }

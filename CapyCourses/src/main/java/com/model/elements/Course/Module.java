@@ -38,8 +38,9 @@ public class Module {
     @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Lessons> lessons = new HashSet<>();
     
-    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true) 
-    private List<Questionaire> questionaires = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "questionaire_id")
+    private Questionaire questionaire;
     
     @Column(nullable = false)
     private int moduleNumber;
@@ -51,9 +52,6 @@ public class Module {
     private String description;
     
     private String duration;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Questionaire questionaire;
 
     // Construtor para dados básicos
     public Module(int moduleNumber, String title, String description, String duration) {
@@ -84,14 +82,6 @@ public class Module {
             lesson.setModule(this);
         }
     }
-    
-    // Método helper melhorado para Questionaire
-    public void addQuestionaire(Questionaire questionaire) {
-        if (questionaire != null && !questionaires.contains(questionaire)) {
-            questionaires.add(questionaire);
-            questionaire.setModule(this);
-        }
-    }
 
     // Métodos para remover relacionamentos
     public void removeLesson(Lessons lesson) {
@@ -100,17 +90,15 @@ public class Module {
         }
     }
 
-    public void removeQuestionaire(Questionaire questionaire) {
-        if (questionaires.remove(questionaire)) {
-            questionaire.setModule(null);
-        }
-    }
-
-    public Questionaire getQuestionaire() {
-        return questionaire;
-    }
-
     public void setQuestionaire(Questionaire questionaire) {
-        this.questionaire = questionaire;
+        if (this.questionaire != questionaire) {
+            if (this.questionaire != null) {
+                this.questionaire.setModule(null);
+            }
+            this.questionaire = questionaire;
+            if (questionaire != null) {
+                questionaire.setModule(this);
+            }
+        }
     }
 }
