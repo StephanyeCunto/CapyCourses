@@ -1,6 +1,8 @@
 package com.view.login_cadastro.cadastro;
 
 import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.controller.login_cadastro.CadastroController;
 import com.view.login_cadastro.cadastro.valid.CadastroValid;
@@ -10,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class Cadastro {
+    private static final Logger LOGGER = Logger.getLogger(Cadastro.class.getName());
+
     @FXML
     private TextField textFieldName;
     @FXML
@@ -35,7 +39,8 @@ public class Cadastro {
 
     private final CadastroValid VALIDADOR = new CadastroValid();
 
-    private StringProperty page = new SimpleStringProperty("Cadastro");
+    @SuppressWarnings("PMD.ImmutableField")
+    private final StringProperty page = new SimpleStringProperty("Cadastro");
 
     public void initialize() {
         VALIDADOR.setupInitialState(textFieldName, textFieldEmail, passwordFieldPassword, passwordFieldPasswordConfirm,
@@ -43,44 +48,53 @@ public class Cadastro {
     }
 
     @FXML
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void createAccount() {
+        if (!VALIDADOR.validateFields()) {
+            return;
+        }
+
+        String userTypeSelected = (radioButtonStudent != null && radioButtonStudent.isSelected()) ? "STUDENT" : "TEACHER";
+
         try {
-            if (VALIDADOR.validateFields()) {
-                String userType = radioButtonStudent.isSelected() ? "STUDENT" : "TEACHER";
+            CadastroController controller = new CadastroController();
+            String result = controller.cadastrar(
+                    getTextOrEmpty(textFieldName),
+                    getTextOrEmpty(textFieldEmail),
+                    getTextOrEmpty(passwordFieldPassword),
+                    LocalDateTime.now(),
+                    userTypeSelected);
 
-                CadastroController controller = new CadastroController();
-                String result = controller.cadastrar(
-                        textFieldName.getText(),
-                        textFieldEmail.getText(),
-                        passwordFieldPassword.getText(),
-                        LocalDateTime.now(),
-                        userType);
-
-                        switch (result) {
-                            case "incomplete student":
-                                setPage("StudentRegister");
-                                break;
-                            case "incomplete teacher":
-                                setPage("TeacherRegister");
-                                break;
-                }
+            switch (result) {
+                case "incomplete student":
+                    setPage("StudentRegister");
+                    break;
+                case "incomplete teacher":
+                    setPage("TeacherRegister");
+                    break;
+                default:
+                    LOGGER.log(Level.WARNING, "Resultado inválido: {0}", result);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Erro durante o cadastro: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao cadastrar usuário", e);
         }
     }
 
+    private String getTextOrEmpty(TextField field) {
+        return (field != null && field.getText() != null) ? field.getText() : "";
+    }
+
     @FXML
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void login() {
         page.set("Login");
     }
 
-    public StringProperty getPage(){
+    public StringProperty getPage() {
         return page;
     }
 
-    private void setPage(String page){
+    private void setPage(String page) {
         this.page.set(page);
     }
 }
