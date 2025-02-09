@@ -45,15 +45,15 @@
             <version>1.1.1</version>
         </dependency>
         <dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-email</artifactId>
-		    <version>1.5</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.5</version>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
-            </dependency>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -123,28 +123,31 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.20.0</version>
-                <configuration>
-                    <format>xml</format>
-                    <format>html</format>
-                    <rulesets>
-                        <ruleset>category/java/bestpractices.xml</ruleset>
-                        <ruleset>category/java/errorprone.xml</ruleset>
-                        <ruleset>category/java/design.xml</ruleset>
-                    </rulesets>
-                    <failOnViolation>false</failOnViolation>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-pmd-plugin</artifactId>
+    <version>3.20.0</version>
+    <configuration>
+        <format>xml</format>
+        <format>html</format>
+        <rulesetFiles>
+            <rulesetFile>category/java/bestpractices.xml</rulesetFile>
+            <rulesetFile>category/java/errorprone.xml</rulesetFile>
+            <rulesetFile>category/java/design.xml</rulesetFile>
+        </rulesetFiles>
+        <excludes>
+            <exclude>**/LawOfDemeter.java</exclude>
+        </excludes>
+        <failOnViolation>false</failOnViolation>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>check</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -156,7 +159,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>  
+            </plugin>
         </plugins>
     </build>
 </project>

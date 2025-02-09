@@ -74,6 +74,7 @@ public class Cadastro {
                     break;
                 default:
                     LOGGER.log(Level.WARNING, "Resultado inválido: {0}", result);
+                    break;
             }
         } catch (IllegalArgumentException e) {
             LOGGER.log(Level.SEVERE, "Erro ao cadastrar usuário", e);
