@@ -9,9 +9,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.io.IOException;
 
 import javafx.beans.property.*;
 
@@ -87,7 +92,28 @@ public class Login implements Initializable {
     private void handleSuccessfulLogin(LoginController plc) {
         String userType = plc.getUserType(user.getText());
         UserSession.getInstance().setUserType(userType);
-        page.set(userType + "Entry");
+        
+        try {
+            String pagePath;
+            if (userType.equalsIgnoreCase("TEACHER")) {
+                pagePath = "/com/professor/paginaCadastroCurso.fxml";
+            } else {
+                pagePath = "/com/estudante/paginaInicial/paginaInicial.fxml";
+            }
+            
+
+            Parent root = FXMLLoader.load(getClass().getResource(pagePath));
+            Scene scene = user.getScene();
+            Stage stage = (Stage) scene.getWindow();
+            
+            Scene newScene = new Scene(root, scene.getWidth(), scene.getHeight());
+            stage.setScene(newScene);
+            stage.show();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Adicione tratamento de erro adequado aqui
+        }
     }
 
     private void handleIncompleteRegistration(String userType) {
