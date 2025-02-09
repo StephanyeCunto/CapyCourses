@@ -45,7 +45,7 @@ public class CadastroSecundario {
 
     private StringProperty page = new SimpleStringProperty("CadastroSecundario");
 
-    public void initialize() {
+    public void initial() {
         loadComboBox();
         loadCalendar();
         setupInterestButtons();

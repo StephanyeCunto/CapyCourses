@@ -127,7 +127,8 @@ public class Base implements Initializable {
             Parent root = loader.load();
            CadastroSecundario controller = loader.getController();
            controller.setPage(page);
-           controller.initialize();
+           controller.initial();
+           
              controller.getPage().addListener((observable, oldValue, newValue) -> {
                 page.set(controller.getPage().get());
             });
