@@ -3,10 +3,10 @@ name: CI/CD Pipeline for CapyCourses
 on:
   push:
     branches:
-      - main  # Executa o pipeline quando houver push na branch main
+      - main
   pull_request:
     branches:
-      - main  # Executa o pipeline quando houver um pull request para a branch main
+      - main
 
 jobs:
   build-and-test:

@@ -1,6 +1,5 @@
 #container {
     -fx-background-color: linear-gradient(to right top, #6896c4, #acacac);
-    /* Gradiente elegante */
 }
 
 .background-overlay {
@@ -9,7 +8,6 @@
 
 #mainPane {
     -fx-background-color: rgba(145, 143, 143, 0.164);
-    /* Fundo suave */
     -fx-background-radius: 24;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 20, 0, 0, 10);
     -fx-max-width: 1000px;
@@ -18,7 +16,6 @@
 
 .brand-section {
     -fx-background-color: rgba(255, 255, 255, 0.03);
-    /* Fundo translúcido */
     -fx-background-radius: 20 0 0 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
 }
@@ -32,7 +29,6 @@
     -fx-font-weight: bold;
     -fx-font-size: 36px;
     -fx-text-fill: linear-gradient(to right, #3498db, #2ecc71);
-    /* Gradiente de texto */
     -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.3), 10, 0, 0, 2);
 }
 
@@ -272,14 +268,6 @@ TextArea,
     -fx-padding: 10 10;
 }
 
-.theme-toggle-button:hover {
-    -fx-background-color: #f0f0f0;
-}
-
-.toggleButtonHBox {
-    -fx-padding: 20;
-}
-
 #container {
     -fx-background-color: linear-gradient(to right top, #6896c4, #acacac);
     -fx-alignment: center;
@@ -289,44 +277,6 @@ TextArea,
     -fx-background-color: rgba(141, 141, 141, 0.26);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 20, 0, 0, 10);
 }
-
-.theme-toggle-switch {
-    -fx-padding: 5;
-    -fx-min-width: 50;
-    -fx-min-height: 25;
-    -fx-max-width: 50;
-    -fx-max-height: 25;
-}
-
-.toggle-background {
-    -fx-fill: #FFA500;
-    /* Modo claro */
-    -fx-stroke: transparent;
-}
-
-.toggle-background.dark {
-    -fx-fill: #4169E1;
-    /* Modo escuro */
-}
-
-.toggle-thumb {
-    -fx-fill: white;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 1);
-}
-
-.toggle-button {
-    -fx-background-color: transparent;
-    -fx-opacity: 0;
-}
-
-.theme-toggle-switch:hover .toggle-background {
-    -fx-opacity: 0.9;
-}
-
-.theme-toggle-switch:hover .toggle-thumb {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0, 0, 2);
-}
-
 
 .combo-box {
     -fx-background-color: rgba(0, 0, 0, 0.05);
@@ -384,7 +334,6 @@ TextArea,
 .combo-box-popup .list-view .scroll-bar:vertical .thumb {
     -fx-background-radius: 6px;
 }
-
 
 .combo-box .cell {
     -fx-text-fill: #2C3E50;

@@ -51,6 +51,12 @@ module com {
     opens com.model.entity to org.hibernate.orm.core;
     opens com.dto to org.hibernate.orm.core;
 
+    opens com.view.login_cadastro.base to javafx.fxml;
+    opens com.view.elements.buttonModos to javafx.fxml;
+    opens com.view.login_cadastro.cadastro.valid to javafx.fxml;
+    opens com.view.login_cadastro.login to javafx.fxml;
+    opens com.view.login_cadastro.login.valid to javafx.fxml;
+
     exports com.singleton;
     exports com.view;
     exports com.view.login_cadastro;
@@ -72,9 +78,10 @@ module com {
     exports com.controller.login_cadastro to com.fasterxml.jackson.databind;
     exports com.controller.elements to com.fasterxml.jackson.databind;
     exports com.util to org.hibernate.orm.core;
-    
-    
-    
-    
-    
+
+    exports com.view.login_cadastro.base to javafx.fxml;
+    exports com.view.elements.buttonModos to javafx.fxml;
+    exports com.view.login_cadastro.cadastro.valid to javafx.fxml;
+    exports com.view.login_cadastro.login.valid to javafx.fxml;
+    exports com.view.login_cadastro.login to javafx.fxml;
 }

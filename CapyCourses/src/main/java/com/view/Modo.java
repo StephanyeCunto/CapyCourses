@@ -9,7 +9,11 @@ public class Modo {
 
     public static Modo getInstance() {
         if (instance == null) {
-            instance = new Modo();  
+            synchronized (Modo.class) { 
+                if (instance == null) {
+                    instance = new Modo();
+                }
+            }
         }
         return instance;
     }
@@ -21,4 +25,9 @@ public class Modo {
     public boolean getModo(){
         return modo;
     }
+
+    public static boolean isDarkMode() {
+        return Modo.getInstance().getModo();
+    }
+
 }

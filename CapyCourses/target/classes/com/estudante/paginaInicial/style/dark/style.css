@@ -363,3 +363,41 @@
     -fx-font-size: 14px;
  -fx-font-family: "Segoe UI";
 }
+
+.outline-button-seletion,
+ .outline-button-not-seletion:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6C8DFF;
+    -fx-border-color: #6C8DFF;
+    -fx-border-radius: 12;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 12 20;
+    -fx-cursor: hand;
+}
+
+.outline-button-seta:hover {
+    -fx-background-color: #6C8DFF;
+    -fx-text-fill: #1A1A1A;
+    -fx-border-color: rgba(255, 255, 255, 0);
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+}
+
+.outline-button:pressed,
+.outline-button-seta:pressed, .outline-button-not-seletion:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+.outline-button-not-seletion{
+    -fx-background-color: #6C8DFF;
+    -fx-text-fill: #1A1A1A;
+    -fx-border-color: rgba(255, 255, 255, 0);
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 12 20;
+    -fx-cursor: hand;
+}

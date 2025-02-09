@@ -40,7 +40,10 @@
                 styleClass="custom-text-field"
                 HBox.hgrow="ALWAYS" />
             </HBox>
-
+            <HBox spacing="20" style="-fx-padding: 0 0 0 25;">
+                <Button fx:id="addButton" text="+">
+                </Button>
+            </HBox>
             <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
               fx:id="toggleButtonHBox">
               <StackPane alignment="CENTER" fx:id="toggleButtonStackPane"
