@@ -41,7 +41,6 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     private RadioButton radioButtonStudent;
     @FXML
     private RadioButton radioButtonTeacher;
-
     @FXML
     private Hyperlink logar;
     @FXML
@@ -70,6 +69,7 @@ public class Cadastro extends BaseLoginCadastro implements Initializable {
     private HBox toggleButtonHBox;
     @FXML
     private StackPane toggleButtonStackPane;
+    
     private boolean isLightMode = Modo.getInstance().getModo();
     //private String typeUser;
     private final CadastroValid validator = new CadastroValid();

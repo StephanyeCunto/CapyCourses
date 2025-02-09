@@ -13,7 +13,7 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
     prefHeight="768.0" prefWidth="1366.0" stylesheets="@stylePerfil/dark/style.css"
-    fx:controller="com.view.professor.PaginaPerfil"
+    fx:controller="com.view.professor.Perfil.PaginaPerfil"
     styleClass="main-container" fx:id="content"
     xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>

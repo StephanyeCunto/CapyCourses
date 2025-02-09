@@ -15,7 +15,7 @@ public class App extends Application {
         Image icon = new Image(getClass().getResourceAsStream("/capyCourses 012.png"));
         stage.getIcons().add(icon);
         stage.setTitle("CapyCourses");
-        scene = new Scene(loadFXML("login_cadastro/paginaLogin"));
+        scene = new Scene(loadFXML("login_cadastro/paginaBase"));
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();

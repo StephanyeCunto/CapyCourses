@@ -3,10 +3,13 @@ package com.view.professor;
 import javafx.animation.*;
 import javafx.fxml.*;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.image.*;
 
@@ -42,6 +45,8 @@ public class PaginaInicialView implements Initializable {
     private StackPane toggleButtonStackPane;
     @FXML
     private GridPane container;
+    @FXML
+    private Button addButton;
 
     private static final Duration INITIAL_ANIMATION_DURATION = Duration.millis(1000);
     private static final Interpolator EASE_IN_OUT = Interpolator.SPLINE(0.42, 0.0, 0.58, 1.0);
@@ -61,6 +66,51 @@ public class PaginaInicialView implements Initializable {
         loadMenu();
         if (!UserSession.getInstance().getStarted()) {
             loadEffect();
+        }
+
+        addButton.getStyleClass().add("outline-button-not-seletion");
+
+        addButton.setOnMouseEntered(event -> {
+            addButton.setText("Criar Curso");
+            addButton.getStyleClass().clear();
+            addButton.getStyleClass().add("outline-button-not-seletion");
+
+            javafx.animation.Timeline timeline = new javafx.animation.Timeline(
+            new javafx.animation.KeyFrame(Duration.ZERO, new javafx.animation.KeyValue(addButton.prefWidthProperty(), 40)),
+            new javafx.animation.KeyFrame(Duration.millis(200), new javafx.animation.KeyValue(addButton.prefWidthProperty(), 120))
+            );
+            timeline.play();
+        });
+        
+        addButton.setOnMouseExited(event -> {
+            addButton.getStyleClass().clear();
+            addButton.setText("+");
+            addButton.getStyleClass().add("outline-button-not-seletion");
+
+            javafx.animation.Timeline timeline = new javafx.animation.Timeline(
+            new javafx.animation.KeyFrame(Duration.ZERO, new javafx.animation.KeyValue(addButton.prefWidthProperty(), 120)),
+            new javafx.animation.KeyFrame(Duration.millis(200), new javafx.animation.KeyValue(addButton.prefWidthProperty(), 40))
+            );
+            timeline.play();
+        });
+
+        addButton.setOnMouseClicked(event->redirectTo("/com/professor/paginaCadastroCurso") );
+
+    }
+
+      private void redirectTo(String pageNext) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(pageNext));
+            Image icon = new Image("/capyCourses 012.png");
+            Stage stage = (Stage) addButton.getScene().getWindow();
+            Scene currentScene = stage.getScene();
+            Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
+            stage.setScene(newScene);
+            stage.getIcons().add(icon);
+            stage.setTitle("CapyCourses");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

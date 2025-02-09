@@ -412,6 +412,7 @@ student_courses ||--o{lesson_progress : has
 questions ||--o{ StudentAnswer : has
 
     users ||--o{ students : has
+    users ||--o{teachers : has
     users {
         int id PK
         datetime dateRegister

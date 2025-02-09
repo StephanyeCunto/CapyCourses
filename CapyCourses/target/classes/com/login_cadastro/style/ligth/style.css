@@ -299,14 +299,8 @@ TextArea,
 }
 
 .toggle-background {
-    -fx-fill: #FFA500;
     /* Modo claro */
     -fx-stroke: transparent;
-}
-
-.toggle-background.dark {
-    -fx-fill: #4169E1;
-    /* Modo escuro */
 }
 
 .toggle-thumb {
