@@ -1,0 +1,80 @@
+
+.theme-toggle-switch {
+    -fx-padding: 5;
+    -fx-min-width: 50;
+    -fx-min-height: 25;
+    -fx-max-width: 50;
+    -fx-max-height: 25;
+}
+
+.toggle-background {
+    -fx-fill: #FFA500; 
+    -fx-stroke: transparent;
+}
+
+.toggle-background.dark {
+    -fx-fill: #4169E1; 
+}
+
+.toggle-thumb {
+    -fx-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
+}
+
+.toggle-button {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
+}
+
+.theme-toggle-switch:hover .toggle-background {
+    -fx-opacity: 0.9;
+}
+
+.theme-toggle-switch:hover .toggle-thumb {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0, 0, 2);
+}
+
+
+.theme-toggle-button:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.toggleButtonHBox {
+    -fx-padding: 20;
+}
+
+.theme-toggle-switch {
+    -fx-padding: 5;
+    -fx-min-width: 50;
+    -fx-min-height: 25;
+    -fx-max-width: 50;
+    -fx-max-height: 25;
+}
+
+.toggle-background {
+    -fx-fill: #FFA500;
+    -fx-stroke: transparent;
+}
+
+.toggle-background.dark {
+    -fx-fill: #4169E1;
+}
+
+.toggle-thumb {
+    -fx-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
+}
+
+.toggle-button {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
+}
+
+.theme-toggle-switch:hover .toggle-background {
+    -fx-opacity: 0.9;
+}
+
+.theme-toggle-switch:hover .toggle-thumb {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0, 0, 2);
+}
+

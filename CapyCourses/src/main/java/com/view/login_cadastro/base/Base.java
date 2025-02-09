@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.view.elements.buttonModos.ButtonModos;
+import com.view.login_cadastro.cadastro.Cadastro;
+import com.view.login_cadastro.cadastro.CadastroSecundario;
+import com.view.login_cadastro.login.Login;
 
 import javafx.beans.property.*;
 
@@ -65,9 +68,10 @@ public class Base implements Initializable {
         try {
             if (getPage().get().equals("Login")) {
                 loadLogin();
-            }
-            if (getPage().get().equals("Cadastro")) {
-                rightSection.getChildren().clear();
+            }else if (getPage().get().equals("Cadastro")) {
+                loadCadastro();
+            }else if(getPage().get().equals("TeacherRegister") || getPage().get().equals("StudentRegister")){
+                loadCadastroSecundario();
             }
 
         } catch (Exception e) {
@@ -82,7 +86,6 @@ public class Base implements Initializable {
                     getClass().getResource("/com/login_cadastro/login/paginaLogin.fxml"));
             Parent root = loader.load();
             Login controller = loader.getController();
-
             controller.getPage().addListener((observable, oldValue, newValue) -> {
                 page.set(controller.getPage().get());
             });
@@ -95,6 +98,46 @@ public class Base implements Initializable {
 
         } catch (Exception e) {
             System.out.println("Erro ao carregar página Login");
+            e.printStackTrace();
+        }
+    }
+
+    private void loadCadastro() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/login_cadastro/cadastro/paginaCadastro.fxml"));
+            Parent root = loader.load();
+            Cadastro controller = loader.getController();
+            controller.getPage().addListener((observable, oldValue, newValue) -> {
+                page.set(controller.getPage().get());
+            });
+
+            rightSection.getChildren().clear();
+            rightSection.getChildren().add(root);
+
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar página Cadastro");
+            e.printStackTrace();
+        }
+    }
+
+    private void loadCadastroSecundario() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/login_cadastro/cadastro/paginaCadastroSecundario.fxml"));
+            Parent root = loader.load();
+           CadastroSecundario controller = loader.getController();
+           controller.setPage(page);
+           controller.initialize();
+             controller.getPage().addListener((observable, oldValue, newValue) -> {
+                page.set(controller.getPage().get());
+            });
+
+            rightSection.getChildren().clear();
+            rightSection.getChildren().add(root);
+
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar página Cadastro Secundário");
             e.printStackTrace();
         }
     }

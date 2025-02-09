@@ -59,7 +59,7 @@
                 </Label>
             </VBox>
 
-            <VBox fx:id="rightSection" alignment="CENTER" spacing="24" styleClass="form-section"
+            <VBox fx:id="rightSection" alignment="CENTER" styleClass="form-section"
                 GridPane.columnIndex="1">
                 <padding>
                     <Insets top="40" right="40" bottom="40" left="40" />

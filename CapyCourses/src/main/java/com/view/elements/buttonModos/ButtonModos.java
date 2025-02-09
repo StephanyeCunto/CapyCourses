@@ -38,6 +38,8 @@ public class ButtonModos {
         sunIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/sun.png")));
         moonIcon.setImage(new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png")));
         toggleInitialize();
+
+        loadCSS();
     }
 
     public void setContainer(StackPane container) {
@@ -84,5 +86,9 @@ public class ButtonModos {
             ? darkStylePath
             : ligthStringPath;
         container.getStylesheets().add(getClass().getResource(stylePath).toExternalForm());
+    }
+
+    private void loadCSS(){
+        thumbContainer.getStylesheets().add(getClass().getResource("/com/elements/styleButton/styleButton.css").toExternalForm());
     }
 }

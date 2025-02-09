@@ -10,11 +10,12 @@
 }
 
 #mainPane {
-    -fx-background-color: rgba(255, 255, 255, 0.05);
     -fx-background-radius: 24;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0, 0, 10);
     -fx-max-width: 1000px;
     -fx-max-height: 680px;
+    -fx-background-color: #292f4cb3;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
 }
 
 .brand-section {
@@ -402,55 +403,7 @@
     -fx-translate-x: 8;
 }
 
-.theme-toggle-button:hover {
-    -fx-background-color: #f0f0f0;
-}
-
-.toggleButtonHBox {
-    -fx-padding: 20;
-}
-
 #container{
     -fx-background-color: linear-gradient(to right bottom, #1a1f2c, #2d3246, #424869);
     -fx-alignment: center;
-}
-
-#mainPane {
-  -fx-background-color: #292f4cb3;
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-}
-
-.theme-toggle-switch {
-    -fx-padding: 5;
-    -fx-min-width: 50;
-    -fx-min-height: 25;
-    -fx-max-width: 50;
-    -fx-max-height: 25;
-}
-
-.toggle-background {
-    -fx-fill: #FFA500; /* Modo claro */
-    -fx-stroke: transparent;
-}
-
-.toggle-background.dark {
-    -fx-fill: #4169E1; /* Modo escuro */
-}
-
-.toggle-thumb {
-    -fx-fill: white;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
-}
-
-.toggle-button {
-    -fx-background-color: transparent;
-    -fx-opacity: 0;
-}
-
-.theme-toggle-switch:hover .toggle-background {
-    -fx-opacity: 0.9;
-}
-
-.theme-toggle-switch:hover .toggle-thumb {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0, 0, 2);
 }

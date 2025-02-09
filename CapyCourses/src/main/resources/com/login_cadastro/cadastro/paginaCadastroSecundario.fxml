@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/23"
+    xmlns:fx="http://javafx.com/fxml/1" spacing="24" fx:controller="com.view.login_cadastro.cadastro.CadastroSecundario">
+
+    <VBox spacing="4">
+        <Label text="Cadastro" styleClass="welcome-text" fx:id="titleText">
+            <font>
+                <Font name="Plus Jakarta Sans Bold" size="28" />
+            </font>
+        </Label>
+        <Label text="Preencha seus dados para começar"
+            styleClass="subtitle-text" />
+    </VBox>
+
+    <VBox spacing="12">
+
+        <VBox spacing="4">
+            <Label text="DATA DE NASCIMENTO" styleClass="field-label" />
+            <VBox fx:id="date">
+
+            </VBox>
+        </VBox>
+
+        <VBox spacing="4">
+            <Label text="CPF" styleClass="field-label" />
+            <TextField fx:id="textFieldCPF" styleClass="custom-text-field"
+                prefHeight="40"
+                promptText="000.000.000-00" />
+            <Label fx:id="cpfErrorLabel" visible="false" styleClass="error-label"
+                managed="false" />
+        </VBox>
+
+        <VBox spacing="4">
+            <Label text="TELEFONE" styleClass="field-label" />
+            <TextField fx:id="textFieldPhone" styleClass="custom-text-field"
+                prefHeight="40"
+                promptText="(00) 00000-0000" />
+            <Label fx:id="phoneErrorLabel" visible="false" styleClass="error-label"
+                managed="false" />
+        </VBox>
+
+        <VBox spacing="4">
+            <Label text="NÍVEL DE ESCOLARIDADE" styleClass="field-label" />
+            <ComboBox fx:id="comboBoxEducation" styleClass="custom-text-field"
+                prefHeight="40"
+                maxWidth="Infinity" />
+            <Label fx:id="educationErrorLabel" visible="false" styleClass="error-label"
+                managed="false" />
+        </VBox>
+
+        <VBox spacing="4">
+            <Label text="ÁREA DE INTERESSE" styleClass="field-label" />
+            <Label text="Selecione as áreas que mais interessam você"
+                styleClass="subtitle-text" />
+            <FlowPane fx:id="interestContainer" hgap="5" vgap="5" alignment="CENTER"
+                maxHeight="60.0">
+                <Button text="Programação" styleClass="interest-button"
+                    fx:id="btnProgramming" />
+                <Button text="Dados" styleClass="interest-button" fx:id="btnData" />
+                <Button text="Desenvolvimento Web" styleClass="interest-button"
+                    fx:id="btnWebDev" />
+                <Button text="Mobile" styleClass="interest-button" fx:id="btnMobile" />
+                <Button text="Inteligência Artificial" styleClass="interest-button"
+                    fx:id="btnAI" />
+                <Button text="Cybersegurança" styleClass="interest-button"
+                    fx:id="btnCyber" />
+                <Label fx:id="interestErrorLabel" visible="false" styleClass="error-label"
+                    managed="false" />
+            </FlowPane>
+        </VBox>
+    </VBox>
+
+   <Button maxWidth="Infinity" styleClass="modern-button" onAction="#create"
+        text="CRIAR CONTA" /> 
+</VBox>

@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1"  alignment="CENTER" spacing="24" fx:controller="com.view.login_cadastro.base.Login">
+    xmlns:fx="http://javafx.com/fxml/1"  alignment="CENTER" spacing="24" fx:controller="com.view.login_cadastro.login.Login">
     <VBox spacing="8">
         <Label text="Bem-vindo de volta!" styleClass="welcome-text">
             <font>
@@ -49,7 +49,7 @@
 
 
     <!--<Button maxWidth="Infinity" onAction="#logar" styleClass="modern-button" text="ENTRAR"> -->
-    <Button maxWidth="Infinity" styleClass="modern-button" text="ENTRAR">
+    <Button maxWidth="Infinity" styleClass="modern-button" text="ENTRAR" onAction="#logar">
     </Button>
 
     <VBox alignment="CENTER" spacing="16">
