@@ -2,10 +2,9 @@ package com.view.elements.buttonModos;
 
 import lombok.Setter;
 import javafx.fxml.FXML;
-import javafx.animation.FillTransition;
-import javafx.animation.TranslateTransition;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.geometry.Insets;
+import javafx.animation.*;
+import javafx.scene.image.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -39,8 +38,8 @@ public class ButtonModos {
         Image moonImage = new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png"));
 
         sunIcon.setImage(sunImage);
-        sunIcon.setFitWidth(ICON_SIZE-2);
-        sunIcon.setFitHeight(ICON_SIZE-2);
+        sunIcon.setFitWidth(ICON_SIZE);
+        sunIcon.setFitHeight(ICON_SIZE);
         sunIcon.setPreserveRatio(true);
         sunIcon.setSmooth(true);
 
@@ -56,6 +55,7 @@ public class ButtonModos {
 
     public void setContainer(StackPane container) {
         this.container = container;
+
     }
 
     private void toggle() {

@@ -174,20 +174,6 @@ public class CadastroSecundario {
                     UserSession.getInstance().clearSession();
                 } 
             }
-            CadastroStudentController controller = new CadastroStudentController();
-            boolean success = controller.cadastrarStudent(
-                    email,
-                    date,
-                    textFieldCPF.getText(),
-                    textFieldPhone.getText(),
-                    comboBoxEducation.getValue(),
-                    interests);
-
-            if (success) {
-                UserSession.getInstance().setRegisterIncomplet("false");
-               page.set("Login");
-                UserSession.getInstance().clearSession();
-            } 
         }
     }
 
