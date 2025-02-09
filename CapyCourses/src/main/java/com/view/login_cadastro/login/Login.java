@@ -3,7 +3,7 @@ package com.view.login_cadastro.login;
 import com.controller.login_cadastro.LoginController;
 import com.singleton.UserSession;
 import com.view.login_cadastro.elements.ErrorNotification;
-import com.view.login_cadastro.valid.LoginValid;
+import com.view.login_cadastro.login.valid.LoginValid;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

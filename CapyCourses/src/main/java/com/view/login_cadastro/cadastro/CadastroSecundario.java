@@ -9,7 +9,7 @@ import com.controller.login_cadastro.CadastroTeacherController;
 import com.singleton.UserSession;
 import com.view.Modo;
 import com.view.elements.Calendario.Calendario;
-import com.view.login_cadastro.cadastro.valid.CadastroSecudarioValid;
+import com.view.login_cadastro.cadastro.valid.CadastroSecundarioValid;
 
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
@@ -41,7 +41,7 @@ public class CadastroSecundario {
     private Calendario dateInputPopup = new Calendario();
     private Set<String> selectedInterests = new HashSet<>();
 
-    private final CadastroSecudarioValid VALIDADOR = new CadastroSecudarioValid();
+    private final CadastroSecundarioValid VALIDADOR = new CadastroSecundarioValid();
 
     private StringProperty page = new SimpleStringProperty("CadastroSecundario");
 

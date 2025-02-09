@@ -39,8 +39,8 @@ public class ButtonModos {
         Image moonImage = new Image(getClass().getResourceAsStream("/com/login_cadastro/img/moon.png"));
 
         sunIcon.setImage(sunImage);
-        sunIcon.setFitWidth(ICON_SIZE);
-        sunIcon.setFitHeight(ICON_SIZE);
+        sunIcon.setFitWidth(ICON_SIZE-2);
+        sunIcon.setFitHeight(ICON_SIZE-2);
         sunIcon.setPreserveRatio(true);
         sunIcon.setSmooth(true);
 

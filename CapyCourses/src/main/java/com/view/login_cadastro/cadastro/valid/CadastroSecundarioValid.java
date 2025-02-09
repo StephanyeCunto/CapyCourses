@@ -10,7 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.control.*;
 
-public class CadastroSecudarioValid {
+public class CadastroSecundarioValid {
     @FXML
     private ComboBox<String> comboBoxEducation;
     @FXML
@@ -31,16 +31,22 @@ public class CadastroSecudarioValid {
     private static final ValidationSupport validationSupport = new ValidationSupport();
     private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
 
+    // Variáveis finais para as mensagens
+    private static final String CPF_INVALIDO_MSG = "CPF inválido. Formato esperado: 000.000.000-00";
+    private static final String TELEFONE_INVALIDO_MSG = "Telefone inválido. Formato esperado: (00)00000-0000";
+    private static final String EDUCACAO_NIVEL_SELECAO_MSG = "Selecione um nível de educação";
+
     @SuppressWarnings("unused")
-    public void setupInitialState(ComboBox<String> comboBoxEducation, TextField textFieldCPF, TextField textFieldPhone, Label cpfErrorLabel, Label educationErrorLabel,
-            Label phoneErrorLabel) {
+    public void setupInitialState(ComboBox<String> comboBoxEducation, TextField textFieldCPF, TextField textFieldPhone, 
+            Label cpfErrorLabel, Label educationErrorLabel, Label phoneErrorLabel) {
+        
         loadField(comboBoxEducation, textFieldCPF, textFieldPhone, cpfErrorLabel,
                 educationErrorLabel, phoneErrorLabel);
 
         textFieldCPF.textProperty().addListener((obs, old, newText) -> {
             String formatted = formatCPF(newText);
             textFieldCPF.setText(formatted);
-            if(sizeCPF()>13){
+            if(sizeCPF() > 13){
                 if (isValidCPF(newText)) {
                     updateErrorDisplay(textFieldCPF, cpfErrorLabel, false, null);
                 }
@@ -48,7 +54,7 @@ public class CadastroSecudarioValid {
         });
 
         textFieldCPF.setOnKeyReleased(event -> {
-            if(sizeCPF()>13){
+            if(sizeCPF() > 13){
                 checkSizeCPF(event);
             }
         });
@@ -77,11 +83,10 @@ public class CadastroSecudarioValid {
 
         textFieldPhone.textProperty().addListener((obs, old, newText) -> {
             String formatted = formatPhone(newText);
-            textFieldPhone.setText(formatted);        
-            if (sizePhone() == 14) {
-                updateErrorDisplay(textFieldPhone, phoneErrorLabel, false, null); 
-            } else {
-                updateErrorDisplay(textFieldPhone, phoneErrorLabel, true, "Por favor, insira um telefone válido"); // Mostra o erro
+            textFieldPhone.setText(formatted);  
+            
+            if(textFieldPhone.getText().length() > 13){
+                updateErrorDisplay(textFieldPhone, phoneErrorLabel, false, null);
             }
         });
 
@@ -106,7 +111,6 @@ public class CadastroSecudarioValid {
                 updateErrorDisplay(comboBoxEducation, educationErrorLabel, false, null);
             }
         });
-
     }
 
     private int calcularDigitoVerificador(String cpf, int peso) {
@@ -193,8 +197,9 @@ public class CadastroSecudarioValid {
         return value;
     }
 
-    private void loadField(ComboBox<String> comboBoxEducation, TextField textFieldCPF, TextField textFieldPhone, Label cpfErrorLabel, Label educationErrorLabel,
-            Label phoneErrorLabel) {
+    private void loadField(ComboBox<String> comboBoxEducation, TextField textFieldCPF, TextField textFieldPhone, 
+            Label cpfErrorLabel, Label educationErrorLabel, Label phoneErrorLabel) {
+        
         this.comboBoxEducation = comboBoxEducation;
         this.textFieldCPF = textFieldCPF;
         this.textFieldPhone = textFieldPhone;
@@ -219,15 +224,15 @@ public class CadastroSecudarioValid {
         boolean isValid = true;
     
         if (textFieldCPF.getText().isEmpty() || !isValidCPF(textFieldCPF.getText())) {
-            updateErrorDisplay(textFieldCPF, cpfErrorLabel, true, "Por favor, insira um CPF válido");
+            updateErrorDisplay(textFieldCPF, cpfErrorLabel, true, CPF_INVALIDO_MSG);
             isValid = false;
         }
         if (sizePhone() < 14) { 
-            updateErrorDisplay(textFieldPhone, phoneErrorLabel, true, "Por favor, insira um telefone válido");
+            updateErrorDisplay(textFieldPhone, phoneErrorLabel, true, TELEFONE_INVALIDO_MSG);
             isValid = false;
         }
         if (comboBoxEducation.getValue() == null || comboBoxEducation.getValue().trim().isEmpty()) {
-            updateErrorDisplay(comboBoxEducation, educationErrorLabel, true, "Por favor, selecione uma opção válida");
+            updateErrorDisplay(comboBoxEducation, educationErrorLabel, true, EDUCACAO_NIVEL_SELECAO_MSG);
             isValid = false;
         }
     

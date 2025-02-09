@@ -65,6 +65,8 @@ public class Cadastro {
                     LocalDateTime.now(),
                     userTypeSelected);
 
+            System.out.println(result);
+
             switch (result) {
                 case "incomplete student":
                     setPage("StudentRegister");
@@ -72,6 +74,8 @@ public class Cadastro {
                 case "incomplete teacher":
                     setPage("TeacherRegister");
                     break;
+                case "email_exists":
+                    VALIDADOR.updateErrorDisplay(textFieldEmail, userEmailErrorLabel, false, "Este email já está em uso. Tente outro ou recupere sua senha.");
                 default:
                     LOGGER.log(Level.WARNING, "Resultado inválido: {0}", result);
                     break;

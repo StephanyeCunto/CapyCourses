@@ -55,6 +55,7 @@ module com {
     opens com.view.elements.buttonModos to javafx.fxml;
     opens com.view.login_cadastro.cadastro.valid to javafx.fxml;
     opens com.view.login_cadastro.login to javafx.fxml;
+    opens com.view.login_cadastro.login.valid to javafx.fxml;
 
     exports com.singleton;
     exports com.view;
@@ -81,5 +82,6 @@ module com {
     exports com.view.login_cadastro.base to javafx.fxml;
     exports com.view.elements.buttonModos to javafx.fxml;
     exports com.view.login_cadastro.cadastro.valid to javafx.fxml;
+    exports com.view.login_cadastro.login.valid to javafx.fxml;
     exports com.view.login_cadastro.login to javafx.fxml;
 }
