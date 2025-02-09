@@ -111,4 +111,9 @@ public class Login implements Initializable {
     private void register() {
         page.set("Cadastro");
     }
+
+    @FXML
+    private void loadPasswordRecovery() {
+        page.set("passwordRecovery");
+    }
 }

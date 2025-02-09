@@ -4,12 +4,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.view.elements.buttonModos.ButtonModos;
+import com.view.login_cadastro.login.RecuperarSenha;
 import com.view.login_cadastro.cadastro.Cadastro;
 import com.view.login_cadastro.cadastro.CadastroSecundario;
 import com.view.login_cadastro.login.Login;
 
 import javafx.beans.property.*;
-
+import javafx.beans.value.ObservableObjectValue;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,7 +59,6 @@ public class Base implements Initializable {
             buttonModos.initialize();
             toggleButtonHBox.getChildren().add(root);
         } catch (Exception e) {
-            System.out.println("Erro ao carregar botão: ");
             e.printStackTrace();
         }
 
@@ -72,10 +72,11 @@ public class Base implements Initializable {
                 loadCadastro();
             }else if(getPage().get().equals("TeacherRegister") || getPage().get().equals("StudentRegister")){
                 loadCadastroSecundario();
+            }else if(getPage().get().equals("passwordRecovery")){
+                loadPasswordRecovery();
             }
 
         } catch (Exception e) {
-            System.out.println("Erro ao carregar página: ");
             e.printStackTrace();
         }
     }
@@ -97,7 +98,6 @@ public class Base implements Initializable {
             rightSection.getChildren().add(root);
 
         } catch (Exception e) {
-            System.out.println("Erro ao carregar página Login");
             e.printStackTrace();
         }
     }
@@ -116,7 +116,6 @@ public class Base implements Initializable {
             rightSection.getChildren().add(root);
 
         } catch (Exception e) {
-            System.out.println("Erro ao carregar página Cadastro");
             e.printStackTrace();
         }
     }
@@ -137,9 +136,24 @@ public class Base implements Initializable {
             rightSection.getChildren().add(root);
 
         } catch (Exception e) {
-            System.out.println("Erro ao carregar página Cadastro Secundário");
             e.printStackTrace();
         }
     }
 
+    private void loadPasswordRecovery() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/login_cadastro/login/paginaRecuperarSenha.fxml"));
+            Parent root = loader.load();
+            RecuperarSenha controller = loader.getController();
+            controller.getPage().addListener((observable, oldValue, newValue) -> {
+                page.set(((ObservableObjectValue<String>) controller.getPage()).get());
+            });
+            rightSection.getChildren().clear();
+            rightSection.getChildren().add(root);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
