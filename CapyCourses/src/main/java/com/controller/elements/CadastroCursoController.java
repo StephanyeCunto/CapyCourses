@@ -7,10 +7,7 @@ import com.dto.QuestaoDTO;
 import com.dto.QuestionarioDTO;
 import com.service.CoursesService;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CadastroCursoController {
   private final CoursesService coursesService;
