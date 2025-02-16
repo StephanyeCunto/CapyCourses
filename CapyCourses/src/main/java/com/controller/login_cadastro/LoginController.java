@@ -6,6 +6,7 @@ import com.dao.UserDAO;
 import com.model.login_cadastro.Login;
 import com.model.login_cadastro.Student;
 import com.model.login_cadastro.Teacher;
+import com.model.login_cadastro.User;
 import com.singleton.UserSession;
 
 public class LoginController {
