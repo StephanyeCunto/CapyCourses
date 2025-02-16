@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ForumComentarioDTO {
-    private String data;
-    private String usuario;
-    private String comentario;
+  private String data;
+  private String usuario;
+  private String comentario;
 }

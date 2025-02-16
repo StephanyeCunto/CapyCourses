@@ -9,32 +9,40 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuestionarioDTO {
-    private String titulo;
-    private String descricao;
-    private double notaMinima;
-    private List<QuestaoDTO> questoes;
+  private String titulo;
+  private String descricao;
+  private double notaMinima;
+  private List<QuestaoDTO> questoes;
 
-    @Override
-    public String toString() {
-        return "QuestionarioDTO{" +
-            "titulo='" + titulo + '\'' +
-            ", descricao='" + descricao + '\'' +
-            ", notaMinima=" + notaMinima +
-            ", questoes=" + (questoes != null ? questoes.size() : "null") +
-            '}';
-    }
+  @Override
+  public String toString() {
+    return "QuestionarioDTO{"
+        + "titulo='"
+        + titulo
+        + '\''
+        + ", descricao='"
+        + descricao
+        + '\''
+        + ", notaMinima="
+        + notaMinima
+        + ", questoes="
+        + (questoes != null ? questoes.size() : "null")
+        + '}';
+  }
 
-    public void setQuestions(List<Map<String, Object>> questionsData) {
-        if (questionsData != null) {
-            this.questoes = questionsData.stream()
-                .map(questionData -> {
+  public void setQuestions(List<Map<String, Object>> questionsData) {
+    if (questionsData != null) {
+      this.questoes =
+          questionsData.stream()
+              .map(
+                  questionData -> {
                     QuestaoDTO questao = new QuestaoDTO();
                     questao.setPergunta((String) questionData.get("questionText"));
                     questao.setScore((String) questionData.get("questionScore"));
                     questao.setOptions((List<Map<String, Object>>) questionData.get("options"));
                     return questao;
-                })
-                .collect(Collectors.toList());
-        }
+                  })
+              .collect(Collectors.toList());
     }
-} 
+  }
+}

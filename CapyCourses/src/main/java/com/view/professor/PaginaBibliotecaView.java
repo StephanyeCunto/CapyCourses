@@ -1,5 +1,3 @@
 package com.view.professor;
 
-public class PaginaBibliotecaView {
-    
-}
+public class PaginaBibliotecaView {}

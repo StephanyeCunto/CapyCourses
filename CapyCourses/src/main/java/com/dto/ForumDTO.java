@@ -7,13 +7,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ForumDTO {
-    private String author;
-    private String title;
-    private String description;
-    private String category;
-    private String dateTime;
-    private int view;
-    private int like;
-    private int comments;
-    private String question;
+  private String author;
+  private String title;
+  private String description;
+  private String category;
+  private String dateTime;
+  private int view;
+  private int like;
+  private int comments;
+  private String question;
 }

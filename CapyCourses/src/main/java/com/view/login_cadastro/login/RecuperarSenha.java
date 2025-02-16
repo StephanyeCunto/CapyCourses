@@ -1,8 +1,6 @@
 package com.view.login_cadastro.login;
 
-import com.controller.login_cadastro.LoginController;
 import com.view.login_cadastro.login.valid.RecuperarSenhaValid;
-
 import javafx.beans.property.*;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -10,36 +8,34 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class RecuperarSenha {
-    @FXML
-    private TextField emailField;
-    @FXML
-    private Label mensagemLabel;
+  @FXML private TextField emailField;
+  @FXML private Label mensagemLabel;
 
-    private StringProperty page = new SimpleStringProperty("passwordRecovery");
+  private StringProperty page = new SimpleStringProperty("passwordRecovery");
 
-    private final RecuperarSenhaValid VALIDADOR = new RecuperarSenhaValid();
+  private final RecuperarSenhaValid VALIDADOR = new RecuperarSenhaValid();
 
-    @FXML
-    private void enviarRecuperacao() {
+  @FXML
+  private void enviarRecuperacao() {
 
-        mensagemLabel.getStyleClass().add("error-label");
+    mensagemLabel.getStyleClass().add("error-label");
 
-        VALIDADOR.loadValues(emailField, mensagemLabel);
+    VALIDADOR.loadValues(emailField, mensagemLabel);
 
-        if(!VALIDADOR.validateFields()) {
-            return;
-        }else {
-            mensagemLabel.setText("Email de recuperação enviado com sucesso!");
-            mensagemLabel.setStyle("-fx-text-fill: green;");
-        } 
+    if (!VALIDADOR.validateFields()) {
+      return;
+    } else {
+      mensagemLabel.setText("Email de recuperação enviado com sucesso!");
+      mensagemLabel.setStyle("-fx-text-fill: green;");
     }
+  }
 
-    @FXML
-    private void voltar() {
-        page.set("Login");
-    }
+  @FXML
+  private void voltar() {
+    page.set("Login");
+  }
 
-    public StringProperty getPage() {
-        return page;
-    }
+  public StringProperty getPage() {
+    return page;
+  }
 }

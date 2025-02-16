@@ -7,9 +7,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BibliotecaDTO {
-    private String author;
-    private String title;
-    private String description;
-    private String category;
-    private boolean favorite;
+  private String author;
+  private String title;
+  private String description;
+  private String category;
+  private boolean favorite;
 }

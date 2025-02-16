@@ -11,18 +11,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ForumComment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "forum_id")
-    private Forum forum;
-    
-    private String userName;
-    
-    @Column(columnDefinition = "TEXT")
-    private String commentText;
-    
-    private LocalDateTime commentDate;
-} 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "forum_id")
+  private Forum forum;
+
+  private String userName;
+
+  @Column(columnDefinition = "TEXT")
+  private String commentText;
+
+  private LocalDateTime commentDate;
+}
