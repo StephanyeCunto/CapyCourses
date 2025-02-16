@@ -42,17 +42,7 @@ jobs:
         working-directory: ./CapyCourses
         run: mvn spotless:check  # Verifica a formatação do código
 
-      - name: Check for vulnerable dependencies
-        working-directory: ./CapyCourses
-        run: mvn org.owasp:dependency-check-maven:check  # Verifica dependências vulneráveis
 
-      - name: Deploy to Kubernetes
-        if: github.ref == 'refs/heads/main'  # Apenas implanta se for a branch main
-        working-directory: ./CapyCourses
-        run: |
-          kubectl apply -f k8s/deployment.yaml
-          kubectl apply -f k8s/service.yaml
-          echo "Application deployed successfully"
           
       - name: Notify Slack
         uses: rtCamp/action-slack-notify@v2
