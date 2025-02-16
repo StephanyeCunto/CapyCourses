@@ -1,10 +1,6 @@
 package com.controller.elements;
 
-import com.dto.AulaDTO;
-import com.dto.CadastroCursoDTO;
-import com.dto.ModuloDTO;
-import com.dto.QuestaoDTO;
-import com.dto.QuestionarioDTO;
+import com.dto.*;
 import com.service.CoursesService;
 import java.time.LocalDate;
 import java.util.*;
