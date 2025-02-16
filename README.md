@@ -1138,6 +1138,7 @@ forums ||--o{ forum_comments : has
 2. Implementar sistema de permissões avançado.
 3. Desenvolver módulo de análise de desempenho.
 
+
 ---
 
 ## 📜 Licenciamento
@@ -1163,25 +1164,52 @@ forums ||--o{ forum_comments : has
 | Maven Javadoc     | Apache 2.0    |
 | Maven Compiler    | Apache 2.0    |
 
+---
+
 ### Política de Uso
 - O projeto é distribuído sob a licença MIT.
 - Você pode usar, modificar e distribuir o código, desde que inclua a licença original.
-
 ---
 
-## 🙏 Agradecimentos
+## 💙 Agradecimentos  
 
-### Contribuidores
-- [Stephanye Cunto](https://github.com/StephanyeCunto)
-- [Julio Bossigia](https://github.com/juliobossigia)
+> "Nenhum grande projeto é construído sozinho. Cada linha de código, cada ideia compartilhada e cada desafio superado são peças fundamentais dessa jornada." ✨  
 
-### Agradecimentos Especiais
-- **JavaFX**: Por fornecer uma plataforma robusta para interfaces gráficas.
-- **SQLite**: Por oferecer um banco de dados leve e eficiente.
-- **PMD**: Por ajudar a manter a qualidade do código.
+### 🌟 Contribuidores Incríveis  
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/StephanyeCunto">
+        <img src="https://github.com/StephanyeCunto.png" width="100px;" alt="Stephanye Cunto"/>
+        <br />
+        <b>Stephanye Cunto</b>
+      </a>
+      <br />
+      💡 UI/UX | Frontend
+    </td>
+    <td align="center">
+      <a href="https://github.com/juliobossigia">
+        <img src="https://github.com/juliobossigia.png" width="100px;" alt="Julio Bossigia"/>
+        <br />
+        <b>Julio Bossigia</b>
+      </a>
+      <br />
+      🔧 Backend | Infra
+    </td>
+  </tr>
+</table>
+
+### 🦫 CapyCourses não seria o mesmo sem vocês!  
+Obrigado por cada linha de código, cada ajuste e cada inovação. 🚀💙  
 
 ### Reconhecimentos Especiais
 - Agradecemos a todos que contribuíram com feedback, código e ideias para o projeto.
+
+---
+## 💙 Agradecimentos
+
+> "Nenhum grande projeto é construído sozinho. Cada linha de código, cada ideia compartilhada e cada desafio superado são peças fundamentais dessa jornada." ✨
 
 ---
 
