@@ -12,10 +12,11 @@
         <sonar.host.url>${env.SONAR_HOST_URL}</sonar.host.url>
         <sonar.login>${env.SONAR_TOKEN}</sonar.login>
         <sonar.coverage.exclusions>**/test/**/*</sonar.coverage.exclusions>
+        <sonar.organization>stephanyecunto</sonar.organization>
     </properties>
     <dependencies>
         <dependency>
-    
+
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>23</version>
