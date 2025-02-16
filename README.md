@@ -28,6 +28,9 @@
 - [Segurança](#-segurança)
 - [Diagrama Entidade Relacionamento](#-diagrama-entidade-relacionamento)
 - [Comunicação](#-comunicação)
+- [PMD](#-alise-estatica-com-pmd)
+- [JavaDoc](#-documentacao-com-javadoc)
+- [SQLite](#-sqlite)
 - [Feedback](#-feedback)
 - [Roadmap Detalhado](#-roadmap-detalhado)
 - [Licenciamento](#-licenciamento)
@@ -113,33 +116,57 @@ O **CapyCourses** é uma plataforma de ensino online desenvolvida em JavaFX, pro
 
 ## 🚀 Começando
 
-### Pré-requisitos
-Certifique-se de ter instalado:
-- Java 17+
-- JavaFX 19+
-- Maven 3.6+
+### 💻 Requisitos
+
+### Sistema
+- **CPU**: Dual-core 2GHz ou superior
+- **RAM**: 4GB mínimo (8GB recomendado)
+- **Armazenamento**: 500MB de espaço livre
+- **Rede**: Conexão de internet estável (2Mbps+)
+
+### Software
+- **Sistema Operacional**: Windows 10/11, macOS 12+, Ubuntu 20.04+
+- **Java**: JDK 17 ou superior
+- **JavaFX**: 19 ou superior
+- **Maven**: 3.6 ou superior
+
+### 🚀 Instalação
+
+### Passo 1: Configuração do Ambiente
 
 ```bash
-# Verifique as versões instaladas
+# Verifique a instalação do Java
 java -version
+
+# Verifique a instalação do Maven
 mvn -version
-```
 
-## Instalação
-
-```bash
 # Clone o repositório
 git clone https://github.com/StephanyeCunto/CapyCourses.git
-
-# Entre no diretório
 cd CapyCourses
+```
 
+### Passo 2: Variáveis de Ambiente
+
+```bash
+# Linux/macOS
+export JAVA_HOME=/path/to/java
+export PATH=$JAVA_HOME/bin:$PATH
+
+# Windows (PowerShell)
+$env:JAVA_HOME = "C:\Program Files\Java\jdk-17"
+$env:Path += ";$env:JAVA_HOME\bin"
+```
+### Passo 3: Execução
+
+```bash
 # Instale as dependências
 mvn clean install
 
 # Execute o projeto
 mvn javafx:run
 ```
+
 ---
 ## 🔧 Integração Contínua (CI)
 
@@ -560,6 +587,314 @@ Os relatórios serão gerados em `target/pmd.xml` e `target/pmd.html`.
 - **Melhoria da Qualidade do Código**: Identifica e corrige problemas antes que se tornem bugs.
 - **Padronização**: Garante que o código siga boas práticas e padrões consistentes.
 - **Prevenção de Vulnerabilidades**: Detecta potenciais problemas de segurança.
+
+---
+
+## 📚 Documentação com JavaDoc
+
+O **JavaDoc** é uma ferramenta padrão para documentação de código Java que gera documentação HTML a partir de comentários no código-fonte. Esta ferramenta é fundamental para manter uma documentação clara, consistente e acessível do projeto.
+
+### Por que Usamos o JavaDoc?
+- **Documentação Padronizada**: Gera documentação em formato HTML consistente e profissional.
+- **Integração com IDEs**: Suporte nativo em todas as principais IDEs Java.
+- **Documentação Atualizada**: Mantém a documentação junto ao código, facilitando atualizações.
+- **Ferramenta Oficial**: Parte do JDK, sendo o padrão da indústria para documentação Java.
+
+### Como o JavaDoc é Integrado ao CapyCourses?
+O JavaDoc é executado durante o processo de build através do Maven, gerando documentação completa e atualizada do projeto. A documentação é gerada automaticamente em cada release.
+
+#### Configuração do JavaDoc no Projeto
+O JavaDoc está configurado no arquivo `pom.xml` do projeto através do plugin Maven:
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-javadoc-plugin</artifactId>
+    <version>3.5.0</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>javadoc</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+#### Padrões de Documentação
+1. **Documentação de Classes**:
+```java
+/**
+ * Gerencia as operações relacionadas aos cursos na plataforma.
+ * 
+ * @author Equipe CapyCourses
+ * @version 1.0
+ * @since 1.0
+ */
+public class CourseManager {
+    // implementação
+}
+```
+
+2. **Documentação de Métodos**:
+```java
+/**
+ * Cria um novo curso na plataforma.
+ * 
+ * @param course objeto contendo as informações do curso
+ * @return o ID do curso criado
+ * @throws IllegalArgumentException se os dados do curso forem inválidos
+ * @throws DatabaseException se houver erro ao salvar no banco de dados
+ */
+public Long createCourse(Course course) {
+    // implementação
+}
+```
+
+#### Como Gerar Documentação
+Para gerar a documentação localmente, use o seguinte comando Maven:
+
+```bash
+mvn javadoc:javadoc
+```
+
+A documentação será gerada em `target/site/apidocs/`.
+
+### Benefícios do JavaDoc para o CapyCourses
+
+1. **Para Desenvolvedores**:
+   - Compreensão rápida do código
+   - Documentação sempre atualizada
+   - Suporte da IDE para visualização
+   - Facilitação do processo de onboarding
+
+2. **Para o Projeto**:
+   - Documentação profissional
+   - Manutenção simplificada
+   - Redução de dúvidas técnicas
+   - Melhoria da qualidade do código
+
+3. **Para a Comunidade**:
+   - Facilidade de contribuição
+   - Documentação acessível
+   - Curva de aprendizado reduzida
+
+### Diretrizes de Documentação
+
+1. **Elementos Obrigatórios**:
+   - Descrição da classe/método
+   - Parâmetros (@param)
+   - Retorno (@return)
+   - Exceções (@throws)
+   - Autor (@author)
+   - Versão (@version)
+
+2. **Boas Práticas**:
+   - Manter documentação atualizada
+   - Usar linguagem clara e concisa
+   - Incluir exemplos quando necessário
+   - Documentar todos os métodos públicos
+   - Mencionar comportamentos especiais
+
+3. **Elementos Adicionais**:
+   - @see para referências
+   - @since para versionamento
+   - @deprecated para métodos obsoletos
+   - {@code} para trechos de código
+   - {@link} para referências a outras classes
+
+### Visualização da Documentação
+
+A documentação gerada pode ser acessada de várias formas:
+1. Localmente após geração (`target/site/apidocs/index.html`)
+2. Através da IDE (hover sobre classes/métodos)
+
+---
+
+## 🗄️ SQLite
+
+O **SQLite** é um sistema de gerenciamento de banco de dados relacional (RDBMS) que implementa um banco de dados SQL transacional, sem servidor e autocontido. Foi escolhido como a solução de banco de dados para o CapyCourses por suas características únicas e benefícios específicos para nossa aplicação.
+
+### Por que Escolhemos SQLite?
+
+#### Vantagens Principais
+- **Sem Servidor**: Opera sem necessidade de um processo de servidor separado
+- **Zero Configuração**: Não requer instalação ou configuração
+- **Portabilidade**: Todo o banco de dados fica em um único arquivo
+- **Confiabilidade**: Transações ACID compliant
+- **Performance**: Excelente desempenho para aplicações desktop
+- **Lightweight**: Biblioteca compacta (<600KB)
+
+### Como o SQLite é Integrado ao CapyCourses?
+
+#### Configuração no Projeto
+O SQLite está configurado através das seguintes dependências no `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>org.xerial</groupId>
+    <artifactId>sqlite-jdbc</artifactId>
+    <version>3.36.0.3</version>
+</dependency>
+<dependency>
+    <groupId>com.github.gwenn</groupId>
+    <artifactId>sqlite-dialect</artifactId>
+    <version>0.1.2</version>
+</dependency>
+```
+
+#### Configuração do Hibernate
+```xml
+<property name="hibernate.dialect">org.hibernate.dialect.SQLiteDialect</property>
+<property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+<property name="hibernate.connection.url">jdbc:sqlite:capycourses.db</property>
+```
+
+### Características Técnicas
+
+#### 1. Tipos de Dados Suportados
+- TEXT
+- INTEGER
+- REAL
+- BLOB
+- NULL
+
+#### 2. Limitações e Considerações
+- Sem suporte nativo a BOOLEAN (usa INTEGER 0/1)
+- Sem tipos DATE/TIME nativos (armazenados como TEXT/INTEGER)
+- Bloqueio a nível de arquivo durante escritas
+- Limite de tamanho prático: 128TB
+
+### Uso no CapyCourses
+
+#### 1. Estrutura de Dados
+```sql
+-- Exemplo de tabela de cursos
+CREATE TABLE courses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### 2. Boas Práticas Implementadas
+
+1. **Backups Automáticos**:
+```java
+public void backupDatabase() {
+    String dbPath = "capycourses.db";
+    String backupPath = "backup_" + System.currentTimeMillis() + ".db";
+    Files.copy(Paths.get(dbPath), Paths.get(backupPath));
+}
+```
+
+2. **Otimização de Performance**:
+```java
+// Uso de transações para operações em lote
+public void batchInsert(List<Course> courses) {
+    try (Connection conn = getConnection()) {
+        conn.setAutoCommit(false);
+        // ... operações em lote
+        conn.commit();
+    }
+}
+```
+
+### Benefícios para o CapyCourses
+
+1. **Para Usuários**:
+   - Instalação simplificada
+   - Operação offline
+   - Rápida inicialização
+   - Backups simples
+
+2. **Para Desenvolvedores**:
+   - Ambiente de desenvolvimento simples
+   - Debugging facilitado
+   - Testes unitários simplificados
+   - Controle de versão do banco
+
+3. **Para o Projeto**:
+   - Distribuição simplificada
+   - Menor complexidade de infraestrutura
+   - Custos reduzidos
+   - Manutenção simplificada
+
+### Práticas de Segurança
+
+1. **Proteção do Arquivo**:
+```java
+private void secureDatabase() {
+    File dbFile = new File("capycourses.db");
+    // Define permissões restritas
+    dbFile.setReadable(true, true);
+    dbFile.setWritable(true, true);
+}
+```
+
+2. **Prevenção de SQL Injection**:
+```java
+// Uso de PreparedStatement
+public Course getCourse(int id) {
+    String sql = "SELECT * FROM courses WHERE id = ?";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setInt(1, id);
+        // ... execução segura
+    }
+}
+```
+
+### Ferramentas de Desenvolvimento
+
+1. **DB Browser for SQLite**:
+   - Visualização e edição de dados
+   - Execução de queries
+   - Análise de estrutura
+
+2. **SQLite Expert**:
+   - Administração avançada
+   - Otimização de performance
+   - Análise de índices
+
+### Monitoramento e Manutenção
+
+1. **Verificação de Integridade**:
+```java
+public boolean checkDatabaseIntegrity() {
+    try (Statement stmt = conn.createStatement()) {
+        ResultSet rs = stmt.executeQuery("PRAGMA integrity_check;");
+        return "ok".equalsIgnoreCase(rs.getString(1));
+    }
+}
+```
+
+2. **Otimização Regular**:
+```java
+public void optimizeDatabase() {
+    try (Statement stmt = conn.createStatement()) {
+        stmt.execute("VACUUM;");
+        stmt.execute("ANALYZE;");
+    }
+}
+```
+
+### Migração e Versionamento
+
+1. **Sistema de Migrations**:
+   - Controle de versão do schema
+   - Atualizações incrementais
+   - Rollback seguro
+
+2. **Exemplo de Migration**:
+```java
+@Migration(version = "1.0")
+public void createInitialSchema() {
+    executeSQL("CREATE TABLE IF NOT EXISTS courses (...);");
+    executeSQL("CREATE INDEX idx_courses_title ON courses(title);");
+}
+```
 
 ---
 
