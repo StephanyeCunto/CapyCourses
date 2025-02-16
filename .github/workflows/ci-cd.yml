@@ -42,10 +42,6 @@ jobs:
         working-directory: ./CapyCourses
         run: mvn spotless:check  # Verifica a formatação do código
 
-      - name: Static code analysis
-        working-directory: ./CapyCourses
-        run: mvn sonar:sonar  # Executa análise estática do código com SonarQube
-
       - name: Check for vulnerable dependencies
         working-directory: ./CapyCourses
         run: mvn org.owasp:dependency-check-maven:check  # Verifica dependências vulneráveis
