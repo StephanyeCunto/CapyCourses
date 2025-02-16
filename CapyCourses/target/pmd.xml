@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd" version="6.53.0" timestamp="2025-02-16T16:44:14.531">
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd" version="6.53.0" timestamp="2025-02-16T16:56:58.409">
 <file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/controller/elements/CadastroCursoController.java">
 <violation beginline="178" endline="178" begincolumn="28" endcolumn="78" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.controller.elements" class="CadastroCursoController" method="processQuestions" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
 Avoid unused private methods such as 'processQuestions(Map)'.
@@ -16,46 +16,46 @@ These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/model/elements/Course/CourseReader.java">
-<violation beginline="27" endline="27" begincolumn="23" endcolumn="29" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseSettings" variable="dateEnd" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="27" endline="27" begincolumn="17" endcolumn="23" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseSettings" variable="dateEnd" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'dateEnd'.
 </violation>
-<violation beginline="29" endline="29" begincolumn="21" endcolumn="29" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseSettings" variable="isDateEnd" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="29" endline="29" begincolumn="15" endcolumn="23" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseSettings" variable="isDateEnd" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'isDateEnd'.
 </violation>
-<violation beginline="32" endline="32" begincolumn="20" endcolumn="35" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseSettings" variable="ComboBoxVisibily" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="32" endline="32" begincolumn="14" endcolumn="29" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseSettings" variable="ComboBoxVisibily" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'ComboBoxVisibily'.
 </violation>
-<violation beginline="69" endline="69" begincolumn="28" endcolumn="32" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseModule" variable="title" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="73" endline="73" begincolumn="18" endcolumn="22" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseModule" variable="title" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'title'.
 </violation>
-<violation beginline="70" endline="70" begincolumn="28" endcolumn="35" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseModule" variable="duration" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="74" endline="74" begincolumn="18" endcolumn="25" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseModule" variable="duration" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'duration'.
 </violation>
-<violation beginline="71" endline="71" begincolumn="28" endcolumn="38" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseModule" variable="description" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="75" endline="75" begincolumn="18" endcolumn="28" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseModule" variable="description" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'description'.
 </violation>
-<violation beginline="73" endline="73" begincolumn="35" endcolumn="41" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseModule" variable="lessons" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="77" endline="77" begincolumn="25" endcolumn="31" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseModule" variable="lessons" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'lessons'.
 </violation>
-<violation beginline="95" endline="95" begincolumn="28" endcolumn="33" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="module" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="99" endline="99" begincolumn="18" endcolumn="23" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="module" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'module'.
 </violation>
-<violation beginline="96" endline="96" begincolumn="25" endcolumn="38" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="numberOfLesson" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="100" endline="100" begincolumn="15" endcolumn="28" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="numberOfLesson" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'numberOfLesson'.
 </violation>
-<violation beginline="97" endline="97" begincolumn="28" endcolumn="32" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="title" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="101" endline="101" begincolumn="18" endcolumn="22" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="title" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'title'.
 </violation>
-<violation beginline="98" endline="98" begincolumn="28" endcolumn="36" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="videoLink" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="102" endline="102" begincolumn="18" endcolumn="26" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="videoLink" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'videoLink'.
 </violation>
-<violation beginline="99" endline="99" begincolumn="28" endcolumn="34" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="details" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="103" endline="103" begincolumn="18" endcolumn="24" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="details" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'details'.
 </violation>
-<violation beginline="100" endline="100" begincolumn="28" endcolumn="36" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="materials" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="104" endline="104" begincolumn="18" endcolumn="26" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="materials" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'materials'.
 </violation>
-<violation beginline="101" endline="101" begincolumn="28" endcolumn="35" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="duration" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+<violation beginline="105" endline="105" begincolumn="18" endcolumn="25" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseLessons" variable="duration" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'duration'.
 </violation>
 </file>
