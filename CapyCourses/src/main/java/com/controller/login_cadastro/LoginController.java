@@ -3,7 +3,9 @@ package com.controller.login_cadastro;
 import com.dao.StudentDAO;
 import com.dao.TeacherDAO;
 import com.dao.UserDAO;
-
+import com.model.login_cadastro.Login;
+import com.model.login_cadastro.Student;
+import com.model.login_cadastro.Teacher;
 import com.model.login_cadastro.*;
 import com.singleton.UserSession;
 
