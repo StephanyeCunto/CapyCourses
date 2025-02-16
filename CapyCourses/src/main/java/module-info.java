@@ -19,7 +19,6 @@ module com {
   requires org.hibernate.orm.core;
   requires java.sql;
   requires java.naming;
-  
 
   opens com.singleton to
       javafx.fxml;
