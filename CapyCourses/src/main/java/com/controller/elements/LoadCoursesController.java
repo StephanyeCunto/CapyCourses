@@ -1,8 +1,6 @@
 package com.controller.elements;
 
-import com.dao.StudentCourseDAO;
-import com.dao.StudentDAO;
-import com.dto.PaginaPrincipalDTO;
+import com.dao.*;
 import com.model.elements.Course.*;
 import com.model.login_cadastro.Student;
 import com.model.student.StudentCourse;
