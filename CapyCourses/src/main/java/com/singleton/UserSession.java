@@ -12,6 +12,7 @@ public class UserSession {
     private boolean started = false;
     private String userName;
     private String userType;
+    private String CurrentCourseTitle;
 
     public static UserSession getInstance() {
         if (instance == null) {

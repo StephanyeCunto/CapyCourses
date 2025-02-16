@@ -26,7 +26,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -108,6 +108,13 @@
                 <version>3.11.0</version>
                 <configuration>
                     <release>11</release>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.30</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
@@ -123,31 +130,31 @@
                     </execution>
                 </executions>
             </plugin>
-   <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-pmd-plugin</artifactId>
-    <version>3.20.0</version>
-    <configuration>
-        <format>xml</format>
-        <format>html</format>
-        <rulesetFiles>
-            <rulesetFile>category/java/bestpractices.xml</rulesetFile>
-            <rulesetFile>category/java/errorprone.xml</rulesetFile>
-            <rulesetFile>category/java/design.xml</rulesetFile>
-        </rulesetFiles>
-        <excludes>
-            <exclude>**/LawOfDemeter.java</exclude>
-        </excludes>
-        <failOnViolation>false</failOnViolation>
-    </configuration>
-    <executions>
-        <execution>
-            <goals>
-                <goal>check</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.20.0</version>
+                <configuration>
+                    <format>xml</format>
+                    <format>html</format>
+                    <rulesetFiles>
+                        <rulesetFile>category/java/bestpractices.xml</rulesetFile>
+                        <rulesetFile>category/java/errorprone.xml</rulesetFile>
+                        <rulesetFile>category/java/design.xml</rulesetFile>
+                    </rulesetFiles>
+                    <excludes>
+                        <exclude>**/LawOfDemeter.java</exclude>
+                    </excludes>
+                    <failOnViolation>false</failOnViolation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>

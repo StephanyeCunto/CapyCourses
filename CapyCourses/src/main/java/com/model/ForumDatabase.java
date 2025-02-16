@@ -129,7 +129,7 @@ public class ForumDatabase {
         }
     }
 
-    public List<ForumDTO> getForumsByAuthor(String author) {
+   /*  public List<ForumDTO> getForumsByAuthor(String author) {
         EntityManager em = JPAUtil.getEntityManager();
         
         try {
@@ -145,7 +145,7 @@ public class ForumDatabase {
             em.close();
         }
     }
-
+*/
     public Forum getForumByTitle(String title) {
         EntityManager em = JPAUtil.getEntityManager();
         

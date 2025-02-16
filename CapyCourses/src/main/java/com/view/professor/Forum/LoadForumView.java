@@ -31,9 +31,9 @@ public class LoadForumView {
     private static final VBox forumContainer = new VBox();
 
     public static VBox loadForum(String status) {
-        forum = status.equals("todos") ? 
-                forumDatabase.getAllForums() : 
-                forumDatabase.getForumsByAuthor(UserSession.getInstance().getUserName());
+      //  forum = status.equals("todos") ? 
+       //         forumDatabase.getAllForums() : 
+        //        forumDatabase.getForumsByAuthor(UserSession.getInstance().getUserName());
                 
         initializeGrid();
         displayForums();

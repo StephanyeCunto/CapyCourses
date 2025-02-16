@@ -1,6 +1,7 @@
 package com.view.login_cadastro.login;
 
 import com.controller.login_cadastro.LoginController;
+import com.view.login_cadastro.login.valid.RecuperarSenhaValid;
 
 import javafx.beans.property.*;
 import javafx.beans.property.StringProperty;
@@ -16,25 +17,21 @@ public class RecuperarSenha {
 
     private StringProperty page = new SimpleStringProperty("passwordRecovery");
 
-    private final LoginController loginController = new LoginController();
+    private final RecuperarSenhaValid VALIDADOR = new RecuperarSenhaValid();
 
     @FXML
     private void enviarRecuperacao() {
-        String email = emailField.getText().trim();
 
-        if (email.isEmpty()) {
-            mensagemLabel.setText("Por favor, insira um email.");
-            mensagemLabel.setStyle("-fx-text-fill: red;");
+        mensagemLabel.getStyleClass().add("error-label");
+
+        VALIDADOR.loadValues(emailField, mensagemLabel);
+
+        if(!VALIDADOR.validateFields()) {
             return;
-        }
-
-        if (loginController.recuperarSenha(email)) {
+        }else {
             mensagemLabel.setText("Email de recuperação enviado com sucesso!");
             mensagemLabel.setStyle("-fx-text-fill: green;");
-        } else {
-            mensagemLabel.setText("Email não encontrado no sistema.");
-            mensagemLabel.setStyle("-fx-text-fill: red;");
-        }
+        } 
     }
 
     @FXML
