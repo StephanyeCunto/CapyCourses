@@ -1,4 +1,4 @@
-# 🦫 CapyCourses - A Jornada do Saber Começa Aqui! 📚
+ƒ# 🦫 CapyCourses - A Jornada do Saber Começa Aqui! 📚
 
 > Transformando o aprendizado em uma experiência extraordinária com tecnologia e inovação.
 
@@ -1128,10 +1128,10 @@ forums ||--o{ forum_comments : has
 ### Cronograma
 | Etapa                  | Status       | Prazo Estimado |
 |------------------------|--------------|----------------|
-| Interface responsiva   | Concluído    | Out/2023       |
-| Integração com banco   | Em andamento | Dez/2023       |
-| Sistema de permissões  | Planejado    | Jan/2024       |
-| API REST               | Planejado    | Mar/2024       |
+| Interface responsiva   | Concluído    | Out/2024       |
+| Integração com banco   | Em andamento | Dez/2024       |
+| Sistema de permissões  | Planejado    | Jan/2025       |
+| API REST               | Planejado    | Mar/2025       |
 
 ### Prioridades
 1. Finalizar integração com banco de dados.
