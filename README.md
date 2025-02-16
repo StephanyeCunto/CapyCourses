@@ -1,4 +1,4 @@
-ƒ# 🦫 CapyCourses - A Jornada do Saber Começa Aqui! 📚
+# 🦫 CapyCourses - A Jornada do Saber Começa Aqui! 📚
 
 > Transformando o aprendizado em uma experiência extraordinária com tecnologia e inovação.
 
