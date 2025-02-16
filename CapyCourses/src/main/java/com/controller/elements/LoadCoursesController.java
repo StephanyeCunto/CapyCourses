@@ -1,6 +1,7 @@
 package com.controller.elements;
 
 import com.dao.*;
+import com.dto.PaginaPrincipalDTO;
 import com.model.elements.Course.*;
 import com.model.login_cadastro.Student;
 import com.model.student.StudentCourse;
