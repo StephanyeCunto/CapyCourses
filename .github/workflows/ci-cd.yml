@@ -42,7 +42,9 @@ jobs:
         working-directory: ./CapyCourses
         run: mvn spotless:check  # Verifica a formatação do código
 
-
+      - name: Check for vulnerable dependencies
+        working-directory: ./CapyCourses
+        run: mvn org.owasp:dependency-check-maven:check  # Verifica dependências vulneráveis
           
       - name: Notify Slack
         uses: rtCamp/action-slack-notify@v2
