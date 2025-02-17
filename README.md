@@ -1207,11 +1207,6 @@ Obrigado por cada linha de código, cada ajuste e cada inovação. 🚀💙
 - Agradecemos a todos que contribuíram com feedback, código e ideias para o projeto.
 
 ---
-## 💙 Agradecimentos
-
-> "Nenhum grande projeto é construído sozinho. Cada linha de código, cada ideia compartilhada e cada desafio superado são peças fundamentais dessa jornada." ✨
-
----
 
 <p align="center">
   <strong>CapyCourses</strong> - Desenvolvido com 🧡 pela equipe CapyCourses<br>
