@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.shape.Rectangle?> 
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.canvas.GraphicsContext?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.ToggleButton?>
+
+<StackPane fx:id="container" stylesheets="@style/light/styleAuthPage.css" xmlns="http://javafx.com/javafx/23"
+    xmlns:fx="http://javafx.com/fxml/1" >
+    <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
+        fx:id="toggleButtonHBox">
+
+    </HBox>
+    <GridPane fx:id="mainPane" alignment="CENTER" StackPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <children>
+            <VBox fx:id="leftSection" alignment="CENTER" style="-fx-background-radius: 20 0 0 20;"
+                styleClass="brand-section">
+                <padding>
+                    <Insets top="40" right="40" bottom="40" left="40" />
+                </padding>
+                <StackPane styleClass="logo-container">
+                    <ImageView fitHeight="300.0" fitWidth="250.0" pickOnBounds="true"
+                        preserveRatio="true" styleClass="hidden-image">
+                        <image>
+                            <Image url="@../img/capyCoursesLogo.png" />
+                        </image>
+                    </ImageView>
+                </StackPane>
+                <Label text="CapyCourses" styleClass="platform-name">
+                    <font>
+                        <Font name="Plus Jakarta Sans Bold" size="32" />
+                    </font>
+                </Label>
+
+                <Label text="Aprenda. Evolua. Conquiste." styleClass="tagline">
+                    <font>
+                        <Font name="Plus Jakarta Sans Medium" size="16" />
+                    </font>
+                </Label>
+            </VBox>
+
+            <VBox fx:id="rightSection" alignment="CENTER" styleClass="form-section"
+                GridPane.columnIndex="1">
+                <padding>
+                    <Insets top="40" right="40" bottom="40" left="40" />
+                </padding>
+
+            </VBox>
+        </children>
+    </GridPane>
+</StackPane>
