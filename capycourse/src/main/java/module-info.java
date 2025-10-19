@@ -1,7 +1,9 @@
 module com {
-    requires javafx.controls;
-    requires javafx.fxml;
+  requires javafx.controls;
+  requires javafx.fxml;
 
-    opens com to javafx.fxml;
-    exports com;
+  opens com.singleton to javafx.fxml;
+  opens com.view.auth to javafx.fxml;
+
+  exports com.singleton;
 }

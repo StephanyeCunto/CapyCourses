@@ -1,0 +1,42 @@
+@import url("../common.css");
+
+.primary-button {
+    -fx-background-color: linear-gradient(to right, #8BACC0, #9A8BC0);
+    -fx-text-fill: #FFFFFF;
+}
+
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to right, #97B8CC, #A697CC);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0, 0, 2);
+    -fx-text-fill: #FFFFFF;
+}
+
+.secundary-button {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+}
+
+.secundary-button .secundary-label {
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+}
+
+.secundary-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.1), 8, 0, 0, 2);
+}
+
+.custom-checkbox {
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+}
+
+.custom-checkbox .box {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+}
+
+.custom-checkbox:selected .box {
+   -fx-background-color: #6C8DFF;
+    -fx-border-color: #6C8DFF;
+}
+
