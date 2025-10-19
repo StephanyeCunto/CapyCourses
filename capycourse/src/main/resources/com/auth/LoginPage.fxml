@@ -5,7 +5,8 @@
 <?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1"  alignment="CENTER" spacing="24" stylesheets="@style/dark/styleForm.css">
+    xmlns:fx="http://javafx.com/fxml/1"  alignment="CENTER" spacing="24" stylesheets="@style/dark/styleForm.css" 
+    fx:controller="com.view.auth.LoginPage" fx:id="formSection">
     <VBox spacing="8">
         <Label text="Bem-vindo de volta!" styleClass="welcome-text">
             <font>
@@ -40,12 +41,12 @@
     </HBox>
 
 
-    <Button maxWidth="Infinity" styleClass="primary-button" text="ENTRAR" >
+    <Button maxWidth="Infinity" styleClass="primary-button" text="ENTRAR" onAction="#login">
     </Button>
 
     <VBox alignment="CENTER" spacing="16">
         <Label text="Não tem uma conta?" styleClass="secundary-prompt" />
-       <Button styleClass="secundary-button">
+       <Button styleClass="secundary-button" onAction="#register">
             <graphic>
                 <HBox spacing="8" alignment="CENTER">
                     <Label text="CRIAR CONTA" styleClass="secundary-label" />

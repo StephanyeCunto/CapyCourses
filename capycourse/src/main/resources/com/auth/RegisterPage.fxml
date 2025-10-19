@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="24" xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/light/styleForm.css">
+    xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/dark/styleForm.css" fx:id="formSection" >
 
     <VBox spacing="4">
         <Label text="Crie sua conta" styleClass="welcome-text">
