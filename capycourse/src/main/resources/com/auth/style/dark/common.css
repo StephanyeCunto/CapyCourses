@@ -37,6 +37,6 @@
 
 .custom-checkbox:selected .box {
    -fx-background-color: #6C8DFF;
--fx-border-color: #6C8DFF;
+    -fx-border-color: #6C8DFF;
 }
 

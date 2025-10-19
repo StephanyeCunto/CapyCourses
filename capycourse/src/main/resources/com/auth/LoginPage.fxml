@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1"  alignment="CENTER" spacing="24" stylesheets="@style/light/styleForm.css">
+    xmlns:fx="http://javafx.com/fxml/1"  alignment="CENTER" spacing="24" stylesheets="@style/dark/styleForm.css">
     <VBox spacing="8">
         <Label text="Bem-vindo de volta!" styleClass="welcome-text">
             <font>
@@ -48,7 +48,7 @@
        <Button styleClass="secundary-button">
             <graphic>
                 <HBox spacing="8" alignment="CENTER">
-                    <Label text="CRIAR CONTA" styleClass="register-label" />
+                    <Label text="CRIAR CONTA" styleClass="secundary-label" />
                 </HBox>
             </graphic>
         </Button>

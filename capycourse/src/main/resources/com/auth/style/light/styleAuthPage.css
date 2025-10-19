@@ -10,7 +10,7 @@
 }
 
 .brand-section {
-    -fx-background-color: rgba(255, 255, 255, 0.03);
+    -fx-background-color: rgba(188, 188, 188, 0.168);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
 }
 
