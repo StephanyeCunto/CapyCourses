@@ -18,8 +18,8 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.control.ToggleButton?>
 
-<StackPane fx:id="container" stylesheets="@style/light/styleAuthPage.css" xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1" >
+<StackPane fx:id="container" stylesheets=" @style/light/styleAuthPage.css" xmlns="http://javafx.com/javafx/23"
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.auth.AuthPage">
     <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox" HBox.hgrow="ALWAYS"
         fx:id="toggleButtonHBox">
 
@@ -59,7 +59,7 @@
                 </Label>
             </VBox>
 
-            <VBox fx:id="rightSection" alignment="CENTER" styleClass="form-section"
+            <VBox fx:id="formSection" alignment="CENTER" styleClass="form-section"
                 GridPane.columnIndex="1">
                 <padding>
                     <Insets top="40" right="40" bottom="40" left="40" />

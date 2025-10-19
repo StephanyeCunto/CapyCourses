@@ -1,0 +1,36 @@
+@import url("./common.css");
+@import url("../layout/styleForm.css");
+
+.welcome-text {
+    -fx-text-fill: black;
+}
+
+.field-label {
+    -fx-text-fill: rgba(0, 0, 0, 0.8);
+}
+
+.custom-text-field,.custom-text-area, TextArea {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+    -fx-border-color: rgba(0, 0, 0, 0.1);
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.5);
+}
+
+.custom-text-field:focused {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 10, 0, 0, 0);
+}
+
+.forgot-password-link:hover {
+    -fx-text-fill: #2ecc71;
+    -fx-underline: true;
+}
+
+.mordenLabel {
+   -fx-text-fill: white;
+}
+
+.register-prompt {
+    -fx-text-fill: rgba(0, 0, 0, 0.7);
+}
