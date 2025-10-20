@@ -17,13 +17,21 @@ public class LoginPage {
     @FXML
     private PasswordField password;
     @FXML
+    private Label passwordErrorLabel;
+    @FXML
     private VBox formSection;
+
+    private LoginValid valid;
+
+    @FXML
+    public void initialize(){
+        valid = new LoginValid(user, userErrorLabel, password, passwordErrorLabel);
+        valid.init();
+    }
 
     @FXML
     private void login(){
-       LoginValid valid = new LoginValid(user, userErrorLabel, password);
-       valid.teste();
-       valid.init();
+        valid.isCheck();
     }
 
     @FXML

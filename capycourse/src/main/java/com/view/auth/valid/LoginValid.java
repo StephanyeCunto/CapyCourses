@@ -1,42 +1,34 @@
 package com.view.auth.valid;
 
-import org.controlsfx.validation.ValidationSupport;
+import com.view.utility.ValidUtility;
 
-import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class LoginValid {
-    private static final ValidationSupport validationSupport = new ValidationSupport();
-    private static final PseudoClass ERROR_PSEUDO_CLASS = PseudoClass.getPseudoClass("error");
-    private static final String USER_REGEX = "^[A-Za-z]+[A-Za-z0-9+_.-]*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-
-    
-    @FXML 
+public class LoginValid implements AuthValid{
+    @FXML
     private TextField user;
     @FXML
     private Label userErrorLabel;
     @FXML 
     private PasswordField password;
+    @FXML
+    private Label passwordErrorLabel;
 
-
-  public void teste(){
-    System.out.println(user.getText());
-    System.out.println(password.getText());
-  }
-
+    @Override
     public void init(){
-        user.textProperty().addListener((observable) -> {
-            boolean updateError = user.textProperty().get().matches(USER_REGEX);
-            updateErrorDisplay(user, userErrorLabel, updateError, null);
-        });
+        ValidUtility.checkWithValidationSupport(user, USER_REGEX);
+        ValidUtility.checkWithValidationSupport(password, PASSWORD_REGEX);
     }
 
-    private void updateErrorDisplay(Control field, Label errorLabel, boolean isValid, String message) {
-        field.pseudoClassStateChanged(ERROR_PSEUDO_CLASS, !isValid);
-        errorLabel.setText(isValid ? "" : message);
-        errorLabel.setVisible(!isValid);
-    } 
+    @Override
+    public boolean isCheck(){
+        boolean isCheck = true;
+        if(!ValidUtility.isCheck(user, userErrorLabel, USER_REGEX, "Formato inválido (exemplo: nome@provedor.com)")) isCheck = false;
+        if(!ValidUtility.isCheck(password, passwordErrorLabel, PASSWORD_REGEX, "Senha inválida")) isCheck = false;
+
+        return isCheck;
+    }
 }
