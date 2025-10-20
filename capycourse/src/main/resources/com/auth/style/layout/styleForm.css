@@ -19,11 +19,6 @@
     -fx-border-width: 1.5px;
 }
 
-.error-label {
-    -fx-font-size: 12px;
-    -fx-padding: 4 0 0 8;
-}
-
 .forgot-password-link {
     -fx-font-size: 13px;
     -fx-border-color: transparent;
@@ -43,7 +38,7 @@
     -fx-font-size: 14px;
 }
 
-.custom-text-field:error ,.error-label{
+.custom-text-field:error{
     -fx-border-color: #FF5D73;
 }
 

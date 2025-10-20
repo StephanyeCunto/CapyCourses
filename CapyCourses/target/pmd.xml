@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd" version="6.53.0" timestamp="2025-02-16T16:56:58.409">
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/controller/elements/CadastroCursoController.java">
-<violation beginline="178" endline="178" begincolumn="28" endcolumn="78" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.controller.elements" class="CadastroCursoController" method="processQuestions" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd" version="6.53.0" timestamp="2025-10-19T01:22:47.031">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/controller/elements/CadastroCursoController.java">
+<violation beginline="171" endline="171" begincolumn="28" endcolumn="78" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.controller.elements" class="CadastroCursoController" method="processQuestions" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
 Avoid unused private methods such as 'processQuestions(Map)'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/controller/elements/LoadMyCourses.java">
-<violation beginline="40" endline="40" begincolumn="11" endcolumn="73" rule="SimplifiedTernary" ruleset="Design" package="com.controller.elements" class="LoadMyCourses" method="loadMyCourses" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_design.html#simplifiedternary" priority="3">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/controller/elements/LoadMyCourses.java">
+<violation beginline="36" endline="36" begincolumn="11" endcolumn="73" rule="SimplifiedTernary" ruleset="Design" package="com.controller.elements" class="LoadMyCourses" method="loadMyCourses" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_design.html#simplifiedternary" priority="3">
 Ternary operators that can be simplified with || or &amp;&amp;
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/dao/QuestionaireDAO.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/dao/QuestionaireDAO.java">
 <violation beginline="16" endline="18" begincolumn="9" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Design" package="com.dao" class="QuestionaireDAO" method="save" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/model/elements/Course/CourseReader.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/model/elements/Course/CourseReader.java">
 <violation beginline="27" endline="27" begincolumn="17" endcolumn="23" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements.Course" class="CourseReader" method="courseSettings" variable="dateEnd" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'dateEnd'.
 </violation>
@@ -59,17 +59,17 @@ Avoid unused local variables such as 'materials'.
 Avoid unused local variables such as 'duration'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/model/elements/Course/Questionaire.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/model/elements/Course/Questionaire.java">
 <violation beginline="83" endline="83" begincolumn="16" endcolumn="38" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.model.elements.Course" class="Questionaire" method="initializeCollections" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
 Avoid unused private methods such as 'initializeCollections()'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/model/elements/LoadBiblioteca.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/model/elements/LoadBiblioteca.java">
 <violation beginline="61" endline="62" begincolumn="7" endcolumn="5" rule="EmptyCatchBlock" ruleset="Error Prone" package="com.model.elements" class="LoadBiblioteca" method="addFavorite" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_errorprone.html#emptycatchblock" priority="3">
 Avoid empty catch blocks
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/model/elements/MyCourse.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/model/elements/MyCourse.java">
 <violation beginline="32" endline="32" begincolumn="17" endcolumn="25" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.model.elements" class="MyCourse" method="MyCourse" variable="moduleDAO" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'moduleDAO'.
 </violation>
@@ -80,7 +80,7 @@ Avoid unused local variables such as 'lessonDAO'.
 Avoid unused local variables such as 'questionaireDAO'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/model/professor/CadastroCurso.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/model/professor/CadastroCurso.java">
 <violation beginline="175" endline="175" begincolumn="14" endcolumn="49" rule="UselessParentheses" ruleset="Code Style" package="com.model.professor" class="CadastroCurso" method="registerQuestions" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
 Useless parentheses.
 </violation>
@@ -88,7 +88,7 @@ Useless parentheses.
 Useless parentheses.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/service/CoursesService.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/service/CoursesService.java">
 <violation beginline="21" endline="21" begincolumn="27" endcolumn="35" rule="UnusedPrivateField" ruleset="Best Practices" package="com.service" class="CoursesService" variable="moduleDAO" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'moduleDAO'.
 </violation>
@@ -117,7 +117,7 @@ Avoid unused private methods such as 'createQuestion(QuestaoDTO)'.
 Avoid unused private methods such as 'mapQuestionsFromData(List)'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/Modo.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/Modo.java">
 <violation beginline="10" endline="19" begincolumn="17" endcolumn="3" rule="DoubleCheckedLocking" ruleset="Multithreading" package="com.view" class="Modo" method="getInstance" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_multithreading.html#doublecheckedlocking" priority="1">
 Double checked locking is not thread safe in Java.
 </violation>
@@ -125,12 +125,12 @@ Double checked locking is not thread safe in Java.
 Useless parentheses.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Biblioteca/Biblioteca.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Biblioteca/Biblioteca.java">
 <violation beginline="97" endline="97" begincolumn="27" endcolumn="31" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.view.elements.Biblioteca" class="Biblioteca" method="createBibliotecaBox" variable="modal" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'modal'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Calendario/Calendario.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Calendario/Calendario.java">
 <violation beginline="112" endline="112" begincolumn="10" endcolumn="50" rule="UselessParentheses" ruleset="Code Style" package="com.view.elements.Calendario" class="Calendario" method="createDayButton" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
 Useless parentheses.
 </violation>
@@ -138,12 +138,12 @@ Useless parentheses.
 Useless parentheses.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Certificado/CertificateViewerModal.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Certificado/CertificateViewerModal.java">
 <violation beginline="126" endline="126" begincolumn="48" endcolumn="53" rule="UnusedFormalParameter" ruleset="Best Practices" package="com.view.elements.Certificado" class="CertificateViewerModal" method="createHeader" variable="course" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
 Avoid unused method parameters such as 'course'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Certificado/GeradorCertificado.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Certificado/GeradorCertificado.java">
 <violation beginline="93" endline="93" begincolumn="10" endcolumn="14" rule="DontUseFloatTypeForLoopIndices" ruleset="Error Prone" package="com.view.elements.Certificado" class="GeradorCertificado" method="aplicarFundoCapyCourse" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_errorprone.html#dontusefloattypeforloopindices" priority="3">
 Dont use floating point for loop indices. If you must use floating point, use double.
 </violation>
@@ -163,7 +163,7 @@ Useless parentheses.
 Avoid unused method parameters such as 'writer'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Courses/Courses.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Courses/Courses.java">
 <violation beginline="60" endline="60" begincolumn="3" endcolumn="3" rule="UnnecessarySemicolon" ruleset="Code Style" package="com.view.elements.Courses" class="Courses" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_codestyle.html#unnecessarysemicolon" priority="3">
 Unnecessary semicolon
 </violation>
@@ -183,7 +183,7 @@ Avoid unused method parameters such as 'questionaire'.
 Avoid unused private methods such as 'handleBackButton()'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Courses/LessonModal.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Courses/LessonModal.java">
 <violation beginline="46" endline="46" begincolumn="16" endcolumn="26" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.view.elements.Courses" class="LessonModal" method="loadModel" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
 Avoid unused private methods such as 'loadModel()'.
 </violation>
@@ -191,7 +191,7 @@ Avoid unused private methods such as 'loadModel()'.
 Avoid unused private methods such as 'updateLink(Label,String)'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Courses/LoadCourses.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Courses/LoadCourses.java">
 <violation beginline="395" endline="395" begincolumn="20" endcolumn="23" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.view.elements.Courses" class="LoadCourses" method="createCertificadoButton" variable="path" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'path'.
 </violation>
@@ -202,17 +202,17 @@ Avoid unused local variables such as 'certificateViewer'.
 Avoid unused method parameters such as 'status'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Courses/QuestionaireModal.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Courses/QuestionaireModal.java">
 <violation beginline="404" endline="404" begincolumn="45" endcolumn="49" rule="UnusedFormalParameter" ruleset="Best Practices" package="com.view.elements.Courses" class="QuestionaireModal" method="updateStudentProgress" variable="score" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
 Avoid unused method parameters such as 'score'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Forum/CreateJsonForum.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Forum/CreateJsonForum.java">
 <violation beginline="10" endline="10" begincolumn="31" endcolumn="39" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.elements.Forum" class="CreateJsonForum" variable="JSON_PATH" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'JSON_PATH'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Forum/ForumDetailView.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Forum/ForumDetailView.java">
 <violation beginline="25" endline="25" begincolumn="31" endcolumn="41" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.elements.Forum" class="ForumDetailView" variable="FONT_FAMILY" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'FONT_FAMILY'.
 </violation>
@@ -220,12 +220,12 @@ Avoid unused private fields such as 'FONT_FAMILY'.
 Avoid unused private methods such as 'updateLikeCount()'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Forum/LoadForumView.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Forum/LoadForumView.java">
 <violation beginline="281" endline="281" begincolumn="42" endcolumn="48" rule="UnusedFormalParameter" ruleset="Best Practices" package="com.view.elements.Forum" class="LoadForumView" method="reorganizeGrid" variable="columns" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
 Avoid unused method parameters such as 'columns'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/MenuEstudante/Menu.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/MenuEstudante/Menu.java">
 <violation beginline="174" endline="174" begincolumn="45" endcolumn="56" rule="UnusedFormalParameter" ruleset="Best Practices" package="com.view.elements.MenuEstudante" class="Menu" method="animateSceneTransition" variable="currentScene" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
 Avoid unused method parameters such as 'currentScene'.
 </violation>
@@ -236,7 +236,7 @@ Avoid unused method parameters such as 'newScene'.
 Avoid unused method parameters such as 'stage'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/MenuProfessor/Menu.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/MenuProfessor/Menu.java">
 <violation beginline="160" endline="160" begincolumn="45" endcolumn="56" rule="UnusedFormalParameter" ruleset="Best Practices" package="com.view.elements.MenuProfessor" class="Menu" method="animateSceneTransition" variable="currentScene" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
 Avoid unused method parameters such as 'currentScene'.
 </violation>
@@ -247,34 +247,34 @@ Avoid unused method parameters such as 'newScene'.
 Avoid unused method parameters such as 'stage'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Perfil/PaginaPerfil.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Perfil/PaginaPerfil.java">
 <violation beginline="42" endline="42" begincolumn="18" endcolumn="21" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.elements.Perfil" class="PaginaPerfil" variable="tela" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'tela'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Perfil/ProfileCard.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Perfil/ProfileCard.java">
 <violation beginline="150" endline="150" begincolumn="84" endcolumn="86" rule="UnusedFormalParameter" ruleset="Best Practices" package="com.view.elements.Perfil" class="ProfileCard" method="salvarAlteracoes" variable="bio" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
 Avoid unused method parameters such as 'bio'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Perfil/SecuritySection.java">
-<violation beginline="27" endline="27" begincolumn="29" endcolumn="45" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.elements.Perfil" class="SecuritySection" variable="errorNotification" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Perfil/SecuritySection.java">
+<violation beginline="20" endline="20" begincolumn="29" endcolumn="45" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.elements.Perfil" class="SecuritySection" variable="errorNotification" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'errorNotification'.
 </violation>
-<violation beginline="28" endline="28" begincolumn="31" endcolumn="49" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.elements.Perfil" class="SecuritySection" variable="successNotification" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+<violation beginline="21" endline="21" begincolumn="31" endcolumn="49" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.elements.Perfil" class="SecuritySection" variable="successNotification" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'successNotification'.
 </violation>
-<violation beginline="29" endline="29" begincolumn="21" endcolumn="24" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.elements.Perfil" class="SecuritySection" variable="root" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+<violation beginline="22" endline="22" begincolumn="21" endcolumn="24" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.elements.Perfil" class="SecuritySection" variable="root" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'root'.
 </violation>
-<violation beginline="162" endline="162" begincolumn="21" endcolumn="50" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.view.elements.Perfil" class="SecuritySection" method="findParentStackPane" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
+<violation beginline="155" endline="155" begincolumn="21" endcolumn="50" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.view.elements.Perfil" class="SecuritySection" method="findParentStackPane" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
 Avoid unused private methods such as 'findParentStackPane(Node)'.
 </violation>
-<violation beginline="170" endline="170" begincolumn="16" endcolumn="54" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.view.elements.Perfil" class="SecuritySection" method="showAlert" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
+<violation beginline="163" endline="163" begincolumn="16" endcolumn="54" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.view.elements.Perfil" class="SecuritySection" method="showAlert" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
 Avoid unused private methods such as 'showAlert(String,String)'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/elements/Perfil/valid/ProfileCardValid.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/elements/Perfil/valid/ProfileCardValid.java">
 <violation beginline="9" endline="9" begincolumn="42" endcolumn="58" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.elements.Perfil.valid" class="ProfileCardValid" variable="validationSupport" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'validationSupport'.
 </violation>
@@ -282,17 +282,17 @@ Avoid unused private fields such as 'validationSupport'.
 Avoid unused private fields such as 'ERROR_PSEUDO_CLASS'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/estudante/PaginaMeusCursosView.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/estudante/PaginaMeusCursosView.java">
 <violation beginline="71" endline="71" begincolumn="19" endcolumn="24" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.view.estudante" class="PaginaMeusCursosView" method="buttonSelection" variable="course" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
 Avoid unused local variables such as 'course'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/CreateJson.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/CreateJson.java">
 <violation beginline="31" endline="32" begincolumn="7" endcolumn="5" rule="EmptyCatchBlock" ruleset="Error Prone" package="com.view.login_cadastro" class="CreateJson" method="verifyAndDeleteLoginData" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_errorprone.html#emptycatchblock" priority="3">
 Avoid empty catch blocks
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/cadastro/Cadastro.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/cadastro/Cadastro.java">
 <violation beginline="52" endline="52" begincolumn="10" endcolumn="70" rule="UselessParentheses" ruleset="Code Style" package="com.view.login_cadastro.cadastro" class="Cadastro" method="createAccount" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
 Useless parentheses.
 </violation>
@@ -300,7 +300,7 @@ Useless parentheses.
 Useless parentheses.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/cadastro/valid/CadastroSecudarioValid.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/cadastro/valid/CadastroSecudarioValid.java">
 <violation beginline="49" endline="51" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Design" package="com.view.login_cadastro.cadastro.valid" class="CadastroSecudarioValid" method="setupInitialState" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
 These nested if statements could be combined
 </violation>
@@ -320,7 +320,7 @@ These nested if statements could be combined
 These nested if statements could be combined
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/cadastro/valid/CadastroSecundarioValid.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/cadastro/valid/CadastroSecundarioValid.java">
 <violation beginline="56" endline="58" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Design" package="com.view.login_cadastro.cadastro.valid" class="CadastroSecundarioValid" method="setupInitialState" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
 These nested if statements could be combined
 </violation>
@@ -340,7 +340,7 @@ These nested if statements could be combined
 These nested if statements could be combined
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/login/Login.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/login/Login.java">
 <violation beginline="62" endline="62" begincolumn="16" endcolumn="22" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.view.login_cadastro.login" class="Login" method="logar" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
 Avoid unused private methods such as 'logar()'.
 </violation>
@@ -351,7 +351,7 @@ Avoid unused private methods such as 'register()'.
 Avoid unused private methods such as 'loadPasswordRecovery()'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/login/RecuperarSenha.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/login/RecuperarSenha.java">
 <violation beginline="19" endline="19" begincolumn="16" endcolumn="34" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.view.login_cadastro.login" class="RecuperarSenha" method="enviarRecuperacao" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
 Avoid unused private methods such as 'enviarRecuperacao()'.
 </violation>
@@ -359,7 +359,7 @@ Avoid unused private methods such as 'enviarRecuperacao()'.
 Avoid unused private methods such as 'voltar()'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/CadastroCurso.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/CadastroCurso.java">
 <violation beginline="74" endline="74" begincolumn="16" endcolumn="27" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.professor" class="CadastroCurso" variable="selectedFile" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'selectedFile'.
 </violation>
@@ -394,12 +394,12 @@ Avoid unused private methods such as 'findNodeById(VBox,String)'.
 Avoid unused private methods such as 'voltarPaginaInicial()'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/Forum/LoadForumView.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/Forum/LoadForumView.java">
 <violation beginline="281" endline="281" begincolumn="42" endcolumn="48" rule="UnusedFormalParameter" ruleset="Best Practices" package="com.view.professor.Forum" class="LoadForumView" method="reorganizeGrid" variable="columns" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
 Avoid unused method parameters such as 'columns'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/LoadCourses.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/LoadCourses.java">
 <violation beginline="183" endline="183" begincolumn="16" endcolumn="40" rule="UnusedPrivateMethod" ruleset="Best Practices" package="com.view.professor" class="LoadCourses" method="redirectTo" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
 Avoid unused private methods such as 'redirectTo(Button)'.
 </violation>
@@ -413,7 +413,7 @@ Avoid unused method parameters such as 'course'.
 Avoid unused method parameters such as 'course'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/PaginaInicialView.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/PaginaInicialView.java">
 <violation beginline="65" endline="65" begincolumn="11" endcolumn="35" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="com.view.professor" class="PaginaInicialView" method="initialize" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
 Unnecessary use of fully qualified name 'javafx.animation.Timeline' due to existing import 'javafx.animation.*'
 </violation>
@@ -451,12 +451,12 @@ Unnecessary use of fully qualified name 'javafx.animation.KeyFrame' due to exist
 Unnecessary use of fully qualified name 'javafx.animation.KeyValue' due to existing import 'javafx.animation.*'
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/PaginaPerfil.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/PaginaPerfil.java">
 <violation beginline="46" endline="46" begincolumn="18" endcolumn="21" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.professor" class="PaginaPerfil" variable="tela" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'tela'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/valid/CursoAulasValid.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/valid/CursoAulasValid.java">
 <violation beginline="80" endline="128" begincolumn="7" endcolumn="7" rule="EmptyControlStatement" ruleset="Code Style" package="com.view.professor.valid" class="CursoAulasValid" method="loadValues" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_codestyle.html#emptycontrolstatement" priority="3">
 Empty if statement
 </violation>
@@ -464,17 +464,17 @@ Empty if statement
 Useless parentheses.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/valid/CursoModulesValid.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/valid/CursoModulesValid.java">
 <violation beginline="24" endline="24" begincolumn="16" endcolumn="25" rule="UnusedPrivateField" ruleset="Best Practices" package="com.view.professor.valid" class="CursoModulesValid" variable="lessonList" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'lessonList'.
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/valid/CursoQuestionarioValid.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/valid/CursoQuestionarioValid.java">
 <violation beginline="293" endline="299" begincolumn="7" endcolumn="7" rule="CollapsibleIfStatements" ruleset="Design" package="com.view.professor.valid" class="CursoQuestionarioValid" method="validateFields" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
-<file name="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/valid/CursoQuestoesValid.java">
+<file name="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/valid/CursoQuestoesValid.java">
 <violation beginline="283" endline="334" begincolumn="9" endcolumn="9" rule="EmptyControlStatement" ruleset="Code Style" package="com.view.professor.valid" class="CursoQuestoesValid" method="validateFields" externalInfoUrl="https://pmd.github.io/pmd-6.53.0/pmd_rules_java_codestyle.html#emptycontrolstatement" priority="3">
 Empty if statement
 </violation>
@@ -482,8 +482,8 @@ Empty if statement
 Empty else statement
 </violation>
 </file>
-<suppressedviolation filename="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/cadastro/Cadastro.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'login()'." usermsg=""></suppressedviolation>
-<suppressedviolation filename="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/cadastro/Cadastro.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'createAccount()'." usermsg=""></suppressedviolation>
-<suppressedviolation filename="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/CadastroCurso.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'addNewModule()'." usermsg=""></suppressedviolation>
-<suppressedviolation filename="/Users/stephanye/Documents/CapyCourses/CapyCourses/src/main/java/com/view/professor/CadastroCurso.java" suppressiontype="annotation" msg="Avoid unused method parameters such as 'moduleNumber'." usermsg=""></suppressedviolation>
+<suppressedviolation filename="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/cadastro/Cadastro.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'login()'." usermsg=""></suppressedviolation>
+<suppressedviolation filename="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/login_cadastro/cadastro/Cadastro.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'createAccount()'." usermsg=""></suppressedviolation>
+<suppressedviolation filename="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/CadastroCurso.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'addNewModule()'." usermsg=""></suppressedviolation>
+<suppressedviolation filename="/Users/stephanye/Documents/Capy_Courses_Refatorado/CapyCourses/CapyCourses/src/main/java/com/view/professor/CadastroCurso.java" suppressiontype="annotation" msg="Avoid unused method parameters such as 'moduleNumber'." usermsg=""></suppressedviolation>
 </pmd>

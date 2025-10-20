@@ -6,7 +6,8 @@
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="24" xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/dark/styleForm.css" fx:id="formSection" >
+    xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/dark/styleForm.css" fx:id="formSection" 
+    fx:controller="com.view.auth.RegisterPage">
 
     <VBox spacing="4">
         <Label text="Crie sua conta" styleClass="welcome-text">
@@ -71,10 +72,10 @@
     </VBox>
 
      <Button maxWidth="Infinity" styleClass="primary-button"
-        text="CRIAR CONTA" /> 
+        text="CRIAR CONTA" onAction="#register"/> 
 
     <HBox alignment="CENTER" spacing="4">
         <Label text="Já tem uma conta?" styleClass="secundary-prompt" />
-        <Hyperlink text="Fazer login" fx:id="logar" styleClass="login-link"/>
+        <Hyperlink text="Fazer login" fx:id="logar" styleClass="login-link" onAction="#login"/>
     </HBox>
 </VBox>
