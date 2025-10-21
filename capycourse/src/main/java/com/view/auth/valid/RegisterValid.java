@@ -40,7 +40,7 @@ public class RegisterValid implements AuthValid{
         if(!ValidUtility.isCheck(textFieldName, userNameErrorLabel, NAME_REGEX, "Nome inválido! Digite nome e sobrenome (exemplo: Maria Silva)")) isCheck = false;
         if(!ValidUtility.isCheck(textFieldEmail, userEmailErrorLabel, USER_REGEX, "Formato inválido (exemplo: nome@provedor.com)")) isCheck = false;
         if(!ValidUtility.isCheck(passwordFieldPassword, passwordErrorLabel, PASSWORD_REGEX,"Senha inválida! Use 8-20 caracteres com maiúscula, número e símbolo.")) isCheck = false;
-        if (!ValidUtility.areEqual(passwordFieldPassword, passwordFieldPasswordConfirm, passwordConfirmErrorLabel, "As senhas não coincidem.")) isCheck = false;
+        if(!ValidUtility.areEqual(passwordFieldPassword, passwordFieldPasswordConfirm, passwordConfirmErrorLabel, "As senhas não coincidem.")) isCheck = false;
 
         return isCheck;
     }

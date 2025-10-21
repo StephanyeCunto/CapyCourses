@@ -6,7 +6,8 @@
 <?import javafx.scene.text.Font?>
 
 <VBox xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1" spacing="24" stylesheets="@style/dark/styleForm.css">
+    xmlns:fx="http://javafx.com/fxml/1" spacing="24" stylesheets="@style/dark/styleForm.css"
+    fx:controller="com.view.auth.RegisterPageSecundary">
 
     <VBox spacing="4">
         <Label text="Cadastro" styleClass="welcome-text" fx:id="titleText">
@@ -23,7 +24,6 @@
         <VBox spacing="4">
             <Label text="DATA DE NASCIMENTO" styleClass="field-label" />
             <VBox fx:id="date">
-
             </VBox>
         </VBox>
 

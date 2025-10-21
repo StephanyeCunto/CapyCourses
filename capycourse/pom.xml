@@ -99,6 +99,19 @@
             <artifactId>sqlite-dialect</artifactId>
             <version>0.1.2</version>
         </dependency>
+
+           <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>23.0.1</version>
+    </dependency>
+
+    <!-- ControlsFX -->
+    <dependency>
+        <groupId>org.controlsfx</groupId>
+        <artifactId>controlsfx</artifactId>
+        <version>11.2.1</version>
+    </dependency>
     </dependencies>
     <build>
         <plugins>
