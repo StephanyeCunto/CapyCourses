@@ -1,0 +1,55 @@
+MongoDB Tips,Ana Costa,Utilizo o índice composto para otimizar queries de agregação,2023-05-22
+MongoDB Tips,Carlos Silva,Recomendo usar explain() para análise de performance,2023-05-22
+MongoDB Tips,Marina Luz,Sharding ajudou muito com nossa base distribuída,2023-05-23
+MongoDB Tips,Pedro Santos,Como lidam com consistency em writes?,2023-05-23
+MongoDB Tips,João Paulo,Alguém tem experiência com time-series collections?,2023-05-24
+
+Vue.js Setup,Lucas Mendes,TypeScript + Vue 3 Composition API é excelente,2023-05-23
+Vue.js Setup,Amanda Silva,Vite tem sido ótimo para desenvolvimento,2023-05-23
+Vue.js Setup,Ricardo Costa,Pinia ou Vuex para gerenciamento de estado?,2023-05-24
+Vue.js Setup,Julia Santos,Vue DevTools ajuda muito no debug,2023-05-24
+Vue.js Setup,Fernando Lima,Como configuraram os testes com Jest?,2023-05-25
+
+Linux Commands,Bruno Dias,Awk e Sed são essenciais para processamento,2023-05-24
+Linux Commands,Carol Souza,Cron é fundamental para automação,2023-05-24
+Linux Commands,Daniel Lima,systemctl para gerenciar serviços,2023-05-25
+Linux Commands,Eva Santos,rsync para backup automatizado,2023-05-25
+Linux Commands,Fábio Costa,Como usam ansible na infraestrutura?,2023-05-26
+
+Dúvida sobre Java,Beatriz Lima,Interfaces são base para inversão de controle,2023-05-15
+Dúvida sobre Java,Thiago Silva,Default methods ajudam na evolução da API,2023-05-15
+Dúvida sobre Java,Laura Costa,Como lidam com diamond problem?,2023-05-16
+Dúvida sobre Java,Gabriel Santos,Spring usa muito esse conceito,2023-05-16
+Dúvida sobre Java,Mariana Luz,Alguém usa interfaces funcionais?,2023-05-17
+
+SQL Básico,Roberto Carlos,CTEs melhoram muito a legibilidade,2023-05-16
+SQL Básico,Sofia Mendes,Índices são cruciais para performance,2023-05-16
+SQL Básico,Tiago Costa,Window functions são poderosas,2023-05-17
+SQL Básico,Vanessa Lima,Como otimizam subqueries?,2023-05-17
+SQL Básico,Wilson Santos,Materializar views ajudou muito,2023-05-18
+
+Python Tips,Diego Lima,Type hints melhoram manutenção,2023-05-17
+Python Tips,Elena Costa,dataclasses são muito úteis,2023-05-17
+Python Tips,Felipe Silva,async/await para performance,2023-05-18
+Python Tips,Gisele Santos,Como organizam projetos grandes?,2023-05-18
+Python Tips,Hugo Lima,Poetry para gerenciamento de deps,2023-05-19
+
+Git Help,Igor Costa,Rebase interativo é muito útil,2023-05-18
+Git Help,Juliana Silva,Git flow tem funcionado bem,2023-05-18
+Git Help,Leandro Lima,Cherry-pick para backports,2023-05-19
+Git Help,Monica Santos,Como lidam com grandes refactors?,2023-05-19
+Git Help,Nelson Costa,Squash commits antes do merge,2023-05-20
+
+CSS Flexbox,Otávio Lima,gap property é game changer,2023-05-21
+CSS Flexbox,Paula Silva,flex-grow vs flex-basis,2023-05-21
+CSS Flexbox,Renato Costa,Grid para layout, Flexbox para componentes,2023-05-22
+CSS Flexbox,Sandra Santos,Como lidam com suporte IE?,2023-05-22
+CSS Flexbox,Tadeu Lima,Prefixos ainda são necessários?,2023-05-23
+MongoDB Tips,ste cunto,2025-01-05,teste
+MongoDB Tips,ste cunto,agr vai,2025-01-05
+MongoDB Tips,ste cunto,braços abertos,2025-01-05
+MongoDB Tips,ste cunto,esperança,2025-01-05
+MongoDB Tips,ste cunto,teste,2025-01-05
+MongoDB Tips,ste cunto,velocidade,2025-01-05
+MongoDB Tips,ste cunto,arte de viver da fé,2025-01-05
+MongoDB Tips,Ste Cunto,hjfgf,2025-01-14
