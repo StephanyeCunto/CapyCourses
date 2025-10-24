@@ -1,5 +1,6 @@
 @import url("./common.css");
 @import url("../layout/styleForm.css");
+@import url("./styleDatepicker.css");
 
 .welcome-text {
     -fx-text-fill: black;
@@ -39,3 +40,4 @@
     -fx-text-fill: rgba(0, 0, 0, 0.7);
     -fx-font-size: 14px;
 }
+

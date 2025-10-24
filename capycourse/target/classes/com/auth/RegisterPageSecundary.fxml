@@ -4,9 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.DatePicker?>
 
 <VBox xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1" spacing="24" stylesheets="@style/dark/styleForm.css"
+    xmlns:fx="http://javafx.com/fxml/1" spacing="24" stylesheets="@style/light/styleForm.css"
     fx:controller="com.view.auth.RegisterPageSecundary">
 
     <VBox spacing="4">
@@ -24,6 +25,7 @@
         <VBox spacing="4">
             <Label text="DATA DE NASCIMENTO" styleClass="field-label" />
             <VBox fx:id="date">
+                    <DatePicker fx:id="dataPicker" styleClass="date-picker" promptText="Escolher data"/>
             </VBox>
         </VBox>
 
