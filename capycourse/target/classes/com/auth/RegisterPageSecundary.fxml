@@ -21,11 +21,12 @@
     </VBox>
 
     <VBox spacing="12">
-
         <VBox spacing="4">
             <Label text="DATA DE NASCIMENTO" styleClass="field-label" />
             <VBox fx:id="date">
-                    <DatePicker fx:id="dataPicker" styleClass="date-picker" promptText="Escolher data"/>
+                    <DatePicker fx:id="datePicker" styleClass="date-picker" promptText="Escolher data"/>
+                     <Label fx:id="dateErrorLabel" visible="false" styleClass="error-label"
+                managed="false" />
             </VBox>
         </VBox>
 
@@ -49,9 +50,7 @@
 
         <VBox spacing="4">
             <Label text="NÍVEL DE ESCOLARIDADE" styleClass="field-label" />
-            <ComboBox fx:id="comboBoxEducation" styleClass="custom-text-field"
-                prefHeight="40"
-                maxWidth="Infinity" />
+            <ComboBox fx:id="comboBoxEducation" styleClass="custom-text-field" maxWidth="Infinity" />
             <Label fx:id="educationErrorLabel" visible="false" styleClass="error-label"
                 managed="false" />
         </VBox>
@@ -79,5 +78,5 @@
     </VBox>
 
    <Button maxWidth="Infinity" styleClass="primary-button" 
-        text="CRIAR CONTA" /> 
+        text="CRIAR CONTA"  onAction="#register"/> 
 </VBox>

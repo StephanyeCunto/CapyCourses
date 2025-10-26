@@ -39,8 +39,7 @@ public class RegisterPage {
 
     @FXML
     public void register()throws IOException{
-       // if(valid.isCheck())
-         ViewLoader.load("/com/auth/RegisterPageSecundary.fxml", formSection);
+       if(valid.isCheck()) ViewLoader.load("/com/auth/RegisterPageSecundary.fxml", formSection);
     }
 
      @FXML
