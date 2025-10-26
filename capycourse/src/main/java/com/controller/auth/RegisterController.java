@@ -11,4 +11,9 @@ public class RegisterController {
         Register rgt = new Register();
         rgt.isRegister(user);
     }
+
+    public boolean emailExists(String email){
+        Register rgt = new Register();
+        return rgt.emailExists(email);
+    }
 }
