@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?> 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx/23"
+    xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER" fx:id="toggleButtonStackPane" styleClass="theme-toggle-switch" prefWidth="50"
+            prefHeight="25" fx:controller="com.view.elements.buttonModos.ButtonModos">
+            <padding>
+    <Insets top="20" right="20"/>
+</padding>
+     <Rectangle fx:id="background" width="50" height="25" styleClass="toggle-background"
+                arcWidth="25" arcHeight="25"/>
+            <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+                <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+                <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15" visible="true" />
+                <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15" visible="false" />
+            </StackPane>
+</StackPane>

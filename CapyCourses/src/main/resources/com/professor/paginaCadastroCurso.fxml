@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.StackPane?>
+
+<GridPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="800"
+    styleClass="main-container"
+    xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.view.professor.CadastroCurso">
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" minWidth="250" prefWidth="250" />
+        <ColumnConstraints hgrow="ALWAYS" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="600.0" vgrow="ALWAYS" />
+    </rowConstraints>
+    <children>
+        <VBox fx:id="sideMenu" spacing="20"
+            styleClass="side-menu">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Button styleClass="outline-button" text="← VOLTAR" onAction="#voltarPaginaInicial"/>
+                </HBox>
+
+                <VBox spacing="15" styleClass="quick-tips">
+                    <Label styleClass="section-title" text="Progresso do Cadastro" />
+                    <ProgressBar fx:id="progressBar" styleClass="custom-progress-bar" />
+                    <Label fx:id="progressLabel" styleClass="progress-text" text="33% Completo" />
+
+                    <VBox spacing="10" styleClass="steps-container">
+                        <Label fx:id="basicInformation" text=" Informações Básicas" />
+                        <Label fx:id="modules" text=" Módulos" />
+                        <Label fx:id="settings" text="Configurações" />
+                    </VBox>
+                </VBox>
+
+                <VBox spacing="10" styleClass="quick-tips">
+                    <Label styleClass="section-title" text="Dicas Rápidas" />
+                    <Label styleClass="tip-text" text="• Adicione uma descrição clara e objetiva"
+                        wrapText="true" />
+                    <Label styleClass="tip-text" text="• Organize os módulos em ordem lógica"
+                        wrapText="true" />
+                    <Label styleClass="tip-text" text="• Defina uma carga horária realista"
+                        wrapText="true" />
+                </VBox>
+
+            </children>
+        </VBox>
+
+        <ScrollPane fitToWidth="true" styleClass="main-scroll" GridPane.columnIndex="1">
+            <content>
+                <VBox spacing="30" styleClass="main-content">
+
+                    <VBox spacing="15" styleClass="page-header">
+                        <HBox alignment="TOP_RIGHT" styleClass="toggleButtonHBox"
+                            HBox.hgrow="ALWAYS"
+                            fx:id="toggleButtonHBox">
+                            <StackPane alignment="CENTER" styleClass="theme-toggle-switch"
+                                fx:id="toggleButtonStackPane"
+                            >
+                                <Rectangle fx:id="background" width="50" height="25"
+                                    styleClass="toggle-background"
+                                    arcWidth="25" arcHeight="25" />
+                                <StackPane fx:id="thumbContainer" styleClass="thumb-container">
+                                    <Circle fx:id="thumb" radius="12" styleClass="toggle-thumb" />
+                                    <ImageView fx:id="sunIcon" fitWidth="15" fitHeight="15"
+                                        visible="true" />
+                                    <ImageView fx:id="moonIcon" fitWidth="15" fitHeight="15"
+                                        visible="false" />
+                                </StackPane>
+                                <ToggleButton fx:id="toggleButton" mnemonicParsing="false"
+                                    styleClass="toggle-button" />
+                            </StackPane>
+                        </HBox>
+                    </VBox>
+
+                    <GridPane hgap="30" vgap="25">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="550" prefWidth="1250"
+                                maxWidth="1250" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="350" prefWidth="350"
+                                maxWidth="350" />
+                        </columnConstraints>
+
+                        <VBox spacing="25" GridPane.columnIndex="0">
+                            <VBox spacing="20" styleClass="content-card">
+                                <HBox alignment="CENTER_LEFT" spacing="15">
+                                    <Label styleClass="card-title" text="Informações Básicas" />
+                                    <Label styleClass="required-fields" text="*Campos obrigatórios" />
+                                </HBox>
+
+                                <VBox spacing="20">
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Título do Curso*" />
+                                        <HBox alignment="CENTER" spacing="10">
+                                            <TextField fx:id="titleCourse"
+                                                promptText="Ex: Desenvolvimento Web Completo"
+                                                styleClass="custom-text-field" HBox.hgrow="ALWAYS" />
+                                            <Label fx:id="coutTitleCourse" styleClass="char-counter"
+                                                text="0/100" />
+                                        </HBox>
+                                        <Label fx:id="basicsTitleErrorLabel" visible="false"
+                                            styleClass="error-label"
+                                            managed="false" />
+                                    </VBox>
+
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Descrição do Curso*" />
+                                        <TextArea fx:id="descritionCourse"
+                                            promptText="Descreva o conteúdo e objetivos do curso..."
+                                            wrapText="false"
+                                            styleClass="custom-text-area" />
+                                        <Label fx:id="descritionBasicsErrorLabel" visible="false"
+                                            styleClass="error-label"
+                                            managed="false" />
+                                    </VBox>
+
+                                    <HBox spacing="16">
+                                        <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                            <Label styleClass="field-label" text="Categoria*" />
+                                            <ComboBox fx:id="categoryCourse" maxWidth="300"
+                                                promptText="Selecione uma categoria"
+                                                styleClass="combo-box" />
+                                            <Label fx:id="categoryCourseErrorLabel" visible="false"
+                                                styleClass="error-label"
+                                                managed="false" />
+                                        </VBox>
+                                        <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                            <Label styleClass="field-label" text="Nível*" />
+                                            <ComboBox fx:id="levelCourse" maxWidth="300"
+                                                promptText="Selecione o nível"
+                                                styleClass="combo-box" />
+                                            <Label fx:id="levelCourseErrorLabel" visible="false"
+                                                styleClass="error-label"
+                                                managed="false" />
+                                        </VBox>
+                                    </HBox>
+
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Tags" />
+                                        <FlowPane fx:id="interestContainer" hgap="10"
+                                            styleClass="tags-container" vgap="10">
+                                            <Button styleClass="interest-button" text="JavaScript" />
+                                            <Button styleClass="interest-button" text="Frontend" />
+                                            <Button styleClass="interest-button" text="+ Adicionar" />
+                                        </FlowPane>
+                                    </VBox>
+                                </VBox>
+                            </VBox>
+
+                            <VBox spacing="20" styleClass="content-card">
+                                <HBox alignment="CENTER_LEFT" spacing="20">
+                                    <VBox spacing="5">
+                                        <Label styleClass="card-title" text="Módulos do Curso" />
+                                        <Label styleClass="card-subtitle"
+                                            text="Arraste para reordenar" />
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button onAction="#addNewModule" styleClass="modern-button"
+                                        text="+ Adicionar Módulo" />
+                                </HBox>
+                            </VBox>
+                            <VBox spacing="20">
+
+                                <VBox fx:id="modulesList" spacing="15" styleClass="modules-list">
+
+                                </VBox>
+
+                            </VBox>
+                        </VBox>
+
+                        <VBox spacing="20" GridPane.columnIndex="1">
+                            <VBox spacing="15" styleClass="content-card">
+                                <Label styleClass="card-title" text="Preview" />
+                                <ImageView fx:id="coursePreviewImage" fitHeight="120" fitWidth="200"
+                                    styleClass="course-preview-image" />
+                                <Button fx:id="uploadButton" maxWidth="Infinity"
+                                    styleClass="outline-button" text="Fazer Upload da Capa" />
+                            </VBox>
+
+                            <VBox spacing="15" styleClass="content-card">
+                                <Label styleClass="card-title" text="Configurações" />
+
+                                <VBox spacing="20">
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label"
+                                            text="Duração Total (horas)*" />
+                                        <TextField fx:id="durationTotal" promptText="Ex: 40"
+                                            styleClass="custom-text-field" />
+                                        <Label fx:id="durationTotalErrorLabel" visible="false"
+                                            styleClass="error-label" managed="false" />
+                                    </VBox>
+
+                                    <VBox fx:id="date" spacing="8">
+                                        <Label styleClass="field-label" text="Período do Curso" />
+                                        <HBox spacing="10">
+
+                                        </HBox>
+                                    </VBox>
+
+                                    <VBox spacing="15">
+                                        <Label styleClass="field-label" text="Certificação" />
+                                        <CheckBox fx:id="isCertificate" styleClass="custom-checkbox"
+                                            text="Emitir certificado ao concluir" />
+                                        <CheckBox fx:id="isGradeMiniun" styleClass="custom-checkbox"
+                                            text="Exigir nota mínima" />
+                                    </VBox>
+
+                                    <VBox spacing="8">
+                                        <Label styleClass="field-label" text="Visibilidade" />
+                                        <ComboBox fx:id="ComboBoxVisibily" maxWidth="Infinity"
+                                            promptText="Selecione" styleClass="custom-combo-box" />
+                                        <Label fx:id="comboBoxVisibilityErrorLabel" visible="false"
+                                            styleClass="error-label" managed="false" />
+                                    </VBox>
+                                </VBox>
+                            </VBox>
+
+                            <VBox spacing="15">
+                                <Button maxWidth="Infinity" onAction="#createCourse"
+                                    styleClass="modern-button" text="Publicar Curso" />
+                                <Button maxWidth="Infinity" styleClass="outline-button"
+                                    text="Salvar Como Rascunho" />
+                                <Button maxWidth="Infinity" styleClass="simple-button"
+                                    text="Visualizar">
+                                    <padding>
+                                        <Insets bottom="12.0" top="12.0" />
+                                    </padding>
+                                </Button>
+                            </VBox>
+                        </VBox>
+                        <rowConstraints>
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</GridPane>
