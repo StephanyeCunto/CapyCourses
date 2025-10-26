@@ -1,5 +1,10 @@
 package com.model.auth;
 
-public class login {
-    String emailUser, password;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+public class Login {
+    public String isCheck(String emailUser, String password){
+        return "true";
+    }
 }

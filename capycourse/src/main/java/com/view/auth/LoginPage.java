@@ -35,7 +35,7 @@ public class LoginPage {
 
     private void performLogin()throws IOException{
         loginController lgc = new loginController();
-        if(lgc.isCheck(user.getText(), password.getText())) logar();
+        if(lgc.isCheck(user.getText(), password.getText()).equals("true")) logar();
         else valid.printError();
     }
 

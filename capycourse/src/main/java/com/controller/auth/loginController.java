@@ -1,7 +1,13 @@
 package com.controller.auth;
 
-public class loginController {
-    public boolean isCheck(String userEmail, String password){
-        return false;
+import com.model.auth.Login;
+
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+public class LoginController {
+    public String isCheck(String userEmail,String password){
+        Login lgn = new Login();
+        return lgn.isCheck(userEmail,password);
     }
 }

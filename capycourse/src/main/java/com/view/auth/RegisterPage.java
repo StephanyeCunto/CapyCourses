@@ -2,6 +2,7 @@ package com.view.auth;
 
 import java.io.IOException;
 
+import com.controller.auth.RegisterController;
 import com.view.auth.valid.RegisterValid;
 import com.view.utility.ViewLoader;
 
@@ -18,6 +19,8 @@ public class RegisterPage {
     private PasswordField passwordFieldPassword, passwordFieldPasswordConfirm;
     @FXML
     private VBox formSection;
+    @FXML 
+    private RadioButton radioButtonStudent;
 
     private RegisterValid valid;
 
@@ -29,11 +32,20 @@ public class RegisterPage {
 
     @FXML
     public void register()throws IOException{
-       if(valid.isCheck()) ViewLoader.load("/com/auth/RegisterPageSecundary.fxml", formSection);
+       if(valid.isCheck()){
+            RegisterController rgc = new RegisterController();
+            String isRegister = rgc.isRegister(textFieldName.getText(),textFieldEmail.getText(),passwordFieldPassword.getText(),getUserType());
+            if(isRegister.equals("true")) ViewLoader.load("/com/auth/RegisterPageSecundary.fxml", formSection);
+
+       }
     }
 
-     @FXML
+    @FXML
     private void login()throws IOException{
         ViewLoader.load("/com/auth/LoginPage.fxml", formSection);
+    }
+
+    private String getUserType(){
+        return (radioButtonStudent.isSelected()) ? "STUDENT" : "TEACHER";
     }
 }
