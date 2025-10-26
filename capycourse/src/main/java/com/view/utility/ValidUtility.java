@@ -42,9 +42,9 @@ public class ValidUtility {
     }
 
     public static boolean areEqual(PasswordField field1, PasswordField field2, Label errorLabel, String message) {
-        if(field1.getText().equals(field2.getText())) return true;
-        updateErrorDisplay(field2, errorLabel, false, message);
-        return false;
+        boolean areEqual = field1.getText().equals(field2.getText());
+        updateErrorDisplay(field2, errorLabel, areEqual, message);
+        return areEqual;
     }
 
     public static void updateErrorDisplay(Control field, Label errorLabel, boolean isValid, String message) {

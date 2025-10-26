@@ -6,13 +6,13 @@ import lombok.*;
 
 @Getter
 @Setter
-public class UserRegister {
-    private static UserRegister instance;
+public class User {
+    private static User instance;
     private String userName, userEmail, password, type, cpf, phone, education;
     private LocalDate date;
 
-    public static UserRegister getInstance() {
-        if (instance == null) instance = new UserRegister();
+    public static User getInstance() {
+        if (instance == null) instance = new User();
         return instance;
     }
 

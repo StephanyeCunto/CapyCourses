@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import com.view.auth.valid.RegisterValidSecundary;
 import com.view.utility.ViewLoader;
-import com.singleton.UserRegister;
+import com.singleton.User;
 import com.controller.auth.RegisterController;
 
 import javafx.fxml.FXML;
@@ -44,8 +44,8 @@ public class RegisterPageSecundary {
         }
     }
 
-    private UserRegister loadUser(){
-        UserRegister user = UserRegister.getInstance();
+    private User loadUser(){
+        User user = User.getInstance();
         user.setDate(datePicker.getValue());
         user.setCpf(textFieldCPF.getText());
         user.setPhone(textFieldPhone.getText());
@@ -54,9 +54,9 @@ public class RegisterPageSecundary {
         return user;
     }
 
-    private void loadController(UserRegister user){
+    private void loadController(User user){
         RegisterController rgc = new RegisterController();
-        rgc.isRegister(user);
+        rgc.register(user);
     }
 
     private void loadDate(){

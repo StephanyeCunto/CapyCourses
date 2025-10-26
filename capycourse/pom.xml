@@ -99,19 +99,6 @@
             <artifactId>sqlite-dialect</artifactId>
             <version>0.1.2</version>
         </dependency>
-
-           <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-controls</artifactId>
-        <version>23.0.1</version>
-    </dependency>
-
-    <!-- ControlsFX -->
-    <dependency>
-        <groupId>org.controlsfx</groupId>
-        <artifactId>controlsfx</artifactId>
-        <version>11.2.1</version>
-    </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -143,33 +130,31 @@
                     </execution>
                 </executions>
             </plugin>
-             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-pmd-plugin</artifactId>
-            <version>3.21.2</version>
-            <configuration>
-                <failOnViolation>false</failOnViolation>
-                <printFailingErrors>true</printFailingErrors>
-                <rulesets>
-                    <ruleset>category/java/bestpractices.xml</ruleset>
-                    <ruleset>category/java/codestyle.xml</ruleset>
-                    <ruleset>category/java/errorprone.xml</ruleset>
-                    <ruleset>category/java/performance.xml</ruleset>
-                </rulesets>
-                <rule ref="category/java/documentation.xml">
-                    <exclude name="AtLeastOneConstructor"/>
-                    <exclude name="CommentRequired"/>
-                </rule>
-            </configuration>
-            <executions>
-                <execution>
-                    <phase>verify</phase>
-                    <goals>
-                        <goal>check</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.20.0</version>
+                <configuration>
+                    <format>xml</format>
+                    <format>html</format>
+                    <rulesetFiles>
+                        <rulesetFile>category/java/bestpractices.xml</rulesetFile>
+                        <rulesetFile>category/java/errorprone.xml</rulesetFile>
+                        <rulesetFile>category/java/design.xml</rulesetFile>
+                    </rulesetFiles>
+                    <excludes>
+                        <exclude>**/LawOfDemeter.java</exclude>
+                    </excludes>
+                    <failOnViolation>false</failOnViolation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>

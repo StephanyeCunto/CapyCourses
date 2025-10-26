@@ -2,7 +2,7 @@ package com.view.auth;
 
 import java.io.IOException;
 
-import com.singleton.UserRegister;
+import com.singleton.User;
 import com.view.auth.valid.RegisterValid;
 import com.view.utility.ViewLoader;
 
@@ -38,6 +38,7 @@ public class RegisterPage {
 
     @FXML
     public void register()throws IOException{
+        System.out.println("valid.isCheck(): "+valid.isCheck());
        if(valid.isCheck()){
             loadUser();
             ViewLoader.load("/com/auth/RegisterPageSecundary.fxml", formSection);
@@ -45,7 +46,7 @@ public class RegisterPage {
     }
 
     private void loadUser(){
-        UserRegister user = UserRegister.getInstance();
+        User user = User.getInstance();
         user.setUserName(textFieldName.getText());
         user.setUserEmail(textFieldEmail.getText());
         user.setPassword(passwordFieldPassword.getText());
