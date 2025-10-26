@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class LoginController {
-    public String isCheck(String userEmail,String password){
+    public boolean isCheck(String userEmail,String password){
         Login lgn = new Login();
         return lgn.isCheck(userEmail,password);
     }

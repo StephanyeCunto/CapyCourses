@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class Register {
-    private  File folder = new File(System.getProperty("user.home") + "CapyCourses/capycourse");
+    private File folder = new File(System.getProperty("user.home") + "CapyCourses/capycourse");
+
     public void isRegister(UserRegister user){
         if (!folder.exists()) folder.mkdirs();
 
@@ -28,8 +29,7 @@ public class Register {
 
         File file = new File(folder, "userLogin.csv");
 
-         try (BufferedReader br = new BufferedReader(
-                new FileReader(file))) {
+         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
