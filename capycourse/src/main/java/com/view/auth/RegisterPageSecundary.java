@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import com.view.auth.valid.RegisterValidSecundary;
 import com.view.utility.ViewLoader;
+import com.singleton.UserRegister;
+import com.controller.auth.RegisterController;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -36,8 +38,25 @@ public class RegisterPageSecundary {
 
     @FXML
     public void register()throws IOException{
-        valid.isCheck();
-       if(valid.isCheck()) ViewLoader.load("/com/auth/LoginPage.fxml", formSection);
+       if(valid.isCheck()){
+            loadController(loadUser());
+            ViewLoader.load("/com/auth/LoginPage.fxml", formSection);
+        }
+    }
+
+    private UserRegister loadUser(){
+        UserRegister user = UserRegister.getInstance();
+        user.setDate(datePicker.getValue());
+        user.setCpf(textFieldCPF.getText());
+        user.setPhone(textFieldPhone.getText());
+        user.setEducation(comboBoxEducation.getValue());
+
+        return user;
+    }
+
+    private void loadController(UserRegister user){
+        RegisterController rgc = new RegisterController();
+        rgc.isRegister(user);
     }
 
     private void loadDate(){
