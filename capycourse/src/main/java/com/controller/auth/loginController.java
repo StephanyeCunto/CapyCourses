@@ -1,13 +1,14 @@
 package com.controller.auth;
 
-import com.model.auth.Login;
+import com.model.auth.dao.UserDAO;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class LoginController {
+    private UserDAO userDAO = new UserDAO();
+
     public boolean isCheck(String userEmail,String password){
-        Login lgn = new Login();
-        return lgn.isCheck(userEmail,password);
+        return userDAO.login(userEmail, password);
     }
 }
