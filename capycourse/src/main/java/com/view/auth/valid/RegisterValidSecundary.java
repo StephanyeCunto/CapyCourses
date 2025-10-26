@@ -11,17 +11,11 @@ public class RegisterValidSecundary implements AuthValid{
     @FXML
     private DatePicker datePicker;
     @FXML
-    private TextField textFieldCPF;
+    private TextField textFieldCPF,textFieldPhone;
     @FXML
-    private Label cpfErrorLabel;
-    @FXML
-    private TextField textFieldPhone;
-    @FXML
-    private Label phoneErrorLabel;
+    private Label cpfErrorLabel,phoneErrorLabel,educationErrorLabel;
     @FXML
     private ComboBox<String> comboBoxEducation;
-    @FXML
-    private Label educationErrorLabel;
 
     @Override
     public void init(){

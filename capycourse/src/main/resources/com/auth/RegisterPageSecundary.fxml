@@ -7,7 +7,7 @@
 <?import javafx.scene.control.DatePicker?>
 
 <VBox xmlns="http://javafx.com/javafx/23"
-    xmlns:fx="http://javafx.com/fxml/1" spacing="24" stylesheets="@style/light/styleForm.css"
+    xmlns:fx="http://javafx.com/fxml/1" spacing="24" stylesheets="@style/dark/styleForm.css"
     fx:controller="com.view.auth.RegisterPageSecundary">
 
     <VBox spacing="4">

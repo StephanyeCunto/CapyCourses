@@ -14,17 +14,11 @@ public class RegisterPageSecundary {
     @FXML
     private DatePicker datePicker;
     @FXML
-    private TextField textFieldCPF;
+    private TextField textFieldCPF,textFieldPhone;
     @FXML
-    private Label cpfErrorLabel;
-    @FXML
-    private TextField textFieldPhone;
-    @FXML
-    private Label phoneErrorLabel;
+    private Label phoneErrorLabel,cpfErrorLabel,educationErrorLabel;
     @FXML
     private ComboBox<String> comboBoxEducation;
-    @FXML
-    private Label educationErrorLabel;
     @FXML
     private VBox formSection;
 
@@ -36,7 +30,7 @@ public class RegisterPageSecundary {
         loadCPF();
         loadPhone();
         loadDataCombobox();
-        valid = new RegisterValidSecundary(datePicker, textFieldCPF, cpfErrorLabel, textFieldPhone, phoneErrorLabel, comboBoxEducation, educationErrorLabel);
+        valid = new RegisterValidSecundary(datePicker, textFieldCPF, textFieldPhone, cpfErrorLabel, phoneErrorLabel, educationErrorLabel, comboBoxEducation);
         valid.init();
     }
 

@@ -11,21 +11,11 @@ import javafx.scene.layout.VBox;
 
 public class RegisterPage {
     @FXML
-    private TextField textFieldName;
+    private TextField textFieldName,textFieldEmail;
     @FXML
-    private Label userNameErrorLabel;
+    private Label userNameErrorLabel,userEmailErrorLabel,passwordErrorLabel,passwordConfirmErrorLabel;
     @FXML
-    private TextField textFieldEmail;
-    @FXML
-    private Label userEmailErrorLabel;
-    @FXML
-    private PasswordField passwordFieldPassword;
-    @FXML
-    private Label passwordErrorLabel;
-    @FXML
-    private PasswordField passwordFieldPasswordConfirm;
-    @FXML
-    private Label passwordConfirmErrorLabel;
+    private PasswordField passwordFieldPassword, passwordFieldPasswordConfirm;
     @FXML
     private VBox formSection;
 
@@ -33,7 +23,7 @@ public class RegisterPage {
 
     @FXML
     public void initialize(){
-        valid = new RegisterValid(textFieldName, userNameErrorLabel, textFieldEmail, userEmailErrorLabel, passwordFieldPassword, passwordErrorLabel, passwordFieldPasswordConfirm, passwordConfirmErrorLabel);
+        valid = new RegisterValid(textFieldName, textFieldEmail,userNameErrorLabel, userEmailErrorLabel, passwordErrorLabel, passwordConfirmErrorLabel, passwordFieldPassword,passwordFieldPasswordConfirm);
         valid.init();
     }
 

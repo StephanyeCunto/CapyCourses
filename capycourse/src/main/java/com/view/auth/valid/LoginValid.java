@@ -31,4 +31,9 @@ public class LoginValid implements AuthValid{
 
         return isCheck;
     }
+
+    public void printError(){
+        ValidUtility.updateErrorDisplay(user, userErrorLabel, false, "Email ou senha incorreto");
+        ValidUtility.updateErrorDisplay(password, passwordErrorLabel, false, "Email ou senha incorreto");
+    }
 }
