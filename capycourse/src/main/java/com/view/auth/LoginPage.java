@@ -2,7 +2,7 @@ package com.view.auth;
 
 import java.io.IOException;
 
-import com.controller.auth.loginController;
+import com.controller.auth.LoginController;
 import com.view.auth.valid.LoginValid;
 import com.view.utility.ViewLoader;
 
@@ -34,8 +34,8 @@ public class LoginPage {
     }
 
     private void performLogin()throws IOException{
-        loginController lgc = new loginController();
-        if(lgc.isCheck(user.getText(), password.getText()).equals("true")) logar();
+        LoginController lgc = new LoginController();
+        if(lgc.isCheck(user.getText(), password.getText())) logar();
         else valid.printError();
     }
 

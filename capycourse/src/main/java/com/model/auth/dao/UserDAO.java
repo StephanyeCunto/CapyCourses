@@ -5,6 +5,8 @@ import com.model.auth.entity.UserEntity;
 
 import javax.persistence.EntityManager;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class UserDAO {
 
     public void save(UserEntity user) {
@@ -35,7 +37,7 @@ public class UserDAO {
             UserEntity user = em.createQuery("SELECT u FROM UserEntity u WHERE u.email = :email", UserEntity.class)
             .setParameter("email", email).getSingleResult();
 
-            if (user != null && user.getPassword().equals(password))  return true;
+            if (user != null && BCrypt.checkpw(password, user.getPassword()))  return true;
             else return false;
         } catch (javax.persistence.NoResultException e) {
             return false;

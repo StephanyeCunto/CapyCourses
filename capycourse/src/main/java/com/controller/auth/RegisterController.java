@@ -4,6 +4,8 @@ import com.model.auth.dao.UserDAO;
 import com.model.auth.entity.UserEntity;
 import com.singleton.User;
 
+import org.mindrot.jbcrypt.BCrypt; 
+
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -15,7 +17,8 @@ public class RegisterController {
         UserEntity entity = new UserEntity();
         entity.setUserName(user.getUserName());
         entity.setEmail(user.getUserEmail());
-        entity.setPassword(user.getPassword());
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        entity.setPassword(hashedPassword);
         entity.setType(user.getType());
         entity.setCpf(user.getCpf());
         entity.setPhone(user.getPhone());
