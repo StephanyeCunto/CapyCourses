@@ -8,6 +8,6 @@ CapyCourses/target/*
 
 capycourses/target/site/apidocs/
 capycourses/build/docs/javadoc/
-capycourses/target/*
+capycourse/target/*
 
 
