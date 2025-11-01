@@ -2,6 +2,8 @@ package com.view.auth;
 
 import java.io.IOException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.controller.auth.LoginController;
 import com.view.auth.valid.LoginValid;
 import com.view.utility.ViewLoader;
@@ -35,7 +37,8 @@ public class LoginPage {
 
     private void performLogin()throws IOException{
         LoginController lgc = new LoginController();
-        if(lgc.isCheck(user.getText(), password.getText())) logar();
+
+        if(lgc.isCheck(user.getText(),BCrypt.hashpw(password.getText(), BCrypt.gensalt()))) logar();
         else valid.printError();
     }
 
