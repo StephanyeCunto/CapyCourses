@@ -10,4 +10,7 @@ capycourses/target/site/apidocs/
 capycourses/build/docs/javadoc/
 capycourse/target/*
 
+.DS_Store
+*/.DS_Store
+
 
